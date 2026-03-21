@@ -93,7 +93,7 @@ export function ImmersiveAboutSection() {
             
             {/* Header Slot */}
             <motion.div 
-              style={mounted ? { opacity: headerOpacity, y: headerY } : { opacity: 1, y: 0 }}
+              style={{ opacity: headerOpacity, y: headerY }}
               className="absolute top-[8vh] left-0 right-0 flex flex-col items-center pointer-events-none z-30"
             >
               <div className="px-5 py-2 bg-slate-900 border border-slate-700 text-white rounded-full flex items-center gap-3 shadow-2xl mb-6">
@@ -107,12 +107,12 @@ export function ImmersiveAboutSection() {
 
             {/* Narrative Slot - Sentence-based for Performance */}
             <motion.div 
-              style={mounted ? { 
+              style={{ 
                 opacity: textOpacity, 
                 y: textY, 
                 top: "50%",
                 translateY: "-50%"
-              } : { opacity: 0, top: "50%", translateY: "-50%" }}
+              }}
               className="absolute left-0 right-0 flex justify-center text-center z-20 pointer-events-none px-4"
             >
               <h2 className="text-xl md:text-2xl lg:text-[42px] font-bold text-slate-800 leading-[1.4] md:leading-[1.6] tracking-tight max-w-5xl mt-[25px]">
@@ -123,26 +123,25 @@ export function ImmersiveAboutSection() {
             </motion.div>
 
             {/* Video Visual Slot */}
-            {mounted && (
-              <motion.div 
-                style={{ 
-                  opacity: boxOpacity, 
-                  top: "50%",
-                  translateY: "-50%",
-                  scale: boxScale,
-                  y: boxY
-                }}
-                className="absolute left-0 right-0 flex flex-col items-center justify-center z-10"
-              >
+            <motion.div 
+              style={{ 
+                opacity: boxOpacity, 
+                top: "50%",
+                translateY: "-50%",
+                scale: boxScale,
+                y: boxY
+              }}
+              className="absolute left-0 right-0 flex flex-col items-center justify-center z-10"
+            >
                 <div className="absolute inset-0 flex items-center justify-center -z-10 translate-y-[-20px]">
-                  {mounted && sparks.slice(0, isMobile ? 4 : SPARK_COUNT).map((spark) => (
-                    <SingleSpark key={spark.id} spark={spark} progress={smoothProgress} />
+                  {sparks.slice(0, isMobile ? 4 : SPARK_COUNT).map((spark) => (
+                    <SingleSpark key={spark.id} spark={spark} progress={smoothProgress} isMobile={isMobile} />
                   ))}
                 </div>
 
                 <motion.div
                   style={{ width: boxWidth, height: boxHeight }}
-                  className="shadow-[0_80px_160px_-40px_rgba(0,0,0,0.6)] rounded-[24px] relative overflow-hidden group border border-white/10"
+                  className="shadow-[0_40px_80px_-20px_rgba(0,0,0,0.6)] rounded-[24px] relative overflow-hidden group border border-white/10 will-change-[width,height]"
                 >
                   <Image
                     src={aboutThumbnail}
@@ -177,7 +176,6 @@ export function ImmersiveAboutSection() {
                   />
                 </motion.div>
               </motion.div>
-            )}
 
           </div>
         </div>
@@ -185,7 +183,7 @@ export function ImmersiveAboutSection() {
   );
 }
 
-function SingleSpark({ spark, progress }: { spark: any; progress: MotionValue<number> }) {
+function SingleSpark({ spark, progress, isMobile }: { spark: any; progress: MotionValue<number>; isMobile: boolean }) {
   const start = 0.5 + spark.delay;
   const end = 0.85;
   return (
@@ -198,9 +196,9 @@ function SingleSpark({ spark, progress }: { spark: any; progress: MotionValue<nu
         backgroundColor: spark.color,
         width: spark.size,
         height: spark.size,
-        boxShadow: `0 0 25px ${spark.color}`,
+        boxShadow: isMobile ? "none" : `0 0 25px ${spark.color}`,
       }}
-      className="absolute rounded-full blur-[1px] pointer-events-none will-change-transform"
+      className="absolute rounded-full pointer-events-none will-change-transform"
     />
   );
 }
@@ -216,11 +214,11 @@ function Sentence({ text, index, total, progress, isMobile, mounted }: { text: s
 
   return (
     <motion.span 
-      style={mounted ? { 
+      style={{ 
         opacity, 
         y, 
         filter: isMobile ? "none" : blurVal 
-      } : { opacity: 0 }} 
+      }} 
       className="inline-block w-full mb-2 will-change-transform font-bold"
     >
       {text}

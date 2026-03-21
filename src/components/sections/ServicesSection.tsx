@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import {
   Search,
@@ -498,12 +498,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.1 });
 
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => { setMounted(true); }, []);
-
-  const currentMonth = mounted
-    ? new Date().toLocaleString('en-US', { month: 'long' })
-    : "this Month";
+  const currentMonth = new Date().toLocaleString('en-US', { month: 'long' });
 
   return (
     <motion.div
@@ -582,7 +577,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
 
           <div className="flex items-center justify-center gap-2 text-slate-400 transition-opacity opacity-60">
             <Clock className="w-3.5 h-3.5" />
-            <span className="text-[8px] font-black uppercase tracking-widest">Limited Slots for {currentMonth}</span>
+            <span suppressHydrationWarning className="text-[8px] font-black uppercase tracking-widest">Limited Slots for {currentMonth}</span>
           </div>
         </div>
       </div>
@@ -597,12 +592,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
 export function ServicesSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.1 });
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => { setMounted(true); }, []);
-
-  const currentMonth = mounted
-    ? new Date().toLocaleString('en-US', { month: 'long' })
-    : "this Month";
+  const currentMonth = new Date().toLocaleString('en-US', { month: 'long' });
 
   const helperItems = [
     { goal: "More Google Leads", action: "SEO & GMB" },
@@ -687,7 +677,7 @@ export function ServicesSection() {
                 <motion.div
                   key={idx}
                   whileHover={{ y: -4 }}
-                  className="flex items-center gap-4 bg-white/80 backdrop-blur-md p-5 rounded-2xl border border-blue-100/50 shadow-sm hover:shadow-md hover:border-blue-200 transition-all group"
+                  className="flex items-center gap-4 bg-white/95 md:bg-white/80 md:backdrop-blur-md p-5 rounded-2xl border border-blue-100/50 shadow-sm hover:shadow-md hover:border-blue-200 transition-all group"
                 >
                   <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shrink-0 shadow-lg shadow-blue-600/20 group-hover:scale-110 transition-transform">
                     <ChevronRight className="w-5 h-5" />
@@ -729,7 +719,7 @@ export function ServicesSection() {
               <p className="text-slate-900 text-xl font-black tracking-tight mb-2 uppercase">Your Success is Our Only Metric.</p>
               <div className="flex items-center justify-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-                <p className="text-slate-500 text-[10px] font-black uppercase tracking-[0.3em]">Currently accepting 2 new clients for {currentMonth}</p>
+                <p suppressHydrationWarning className="text-slate-500 text-[10px] font-black uppercase tracking-[0.3em]">Currently accepting 2 new clients for {currentMonth}</p>
               </div>
             </div>
           </div>

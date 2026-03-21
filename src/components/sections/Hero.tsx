@@ -94,17 +94,17 @@ export function Hero() {
         <motion.div 
           animate={{ x: [0, 50, 0], y: [0, 30, 0] }}
           transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute -top-[10%] -right-[10%] w-[600px] h-[600px] rounded-full bg-orange-400/10 blur-[100px]" 
+          className="absolute -top-[10%] -right-[10%] w-[600px] h-[600px] rounded-full bg-[radial-gradient(circle,rgba(251,146,60,0.12)_0%,transparent_70%)] will-change-transform" 
         />
         <motion.div 
           animate={{ x: [0, -40, 0], y: [0, 50, 0] }}
           transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          className="absolute top-[20%] -left-[10%] w-[500px] h-[500px] rounded-full bg-blue-500/10 blur-[120px]" 
+          className="absolute top-[20%] -left-[10%] w-[500px] h-[500px] rounded-full bg-[radial-gradient(circle,rgba(59,130,246,0.12)_0%,transparent_70%)] will-change-transform" 
         />
         <motion.div 
           animate={{ x: [0, 30, 0], y: [0, -40, 0] }}
           transition={{ duration: 20, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-          className="absolute bottom-[-10%] left-[20%] w-[700px] h-[700px] rounded-full bg-pink-500/10 blur-[130px]" 
+          className="absolute bottom-[-10%] left-[20%] w-[700px] h-[700px] rounded-full bg-[radial-gradient(circle,rgba(236,72,153,0.12)_0%,transparent_70%)] will-change-transform" 
         />
       </div>
 
@@ -118,7 +118,7 @@ export function Hero() {
               initial={{ opacity: 1, scale: 0.9, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               transition={{ duration: 0.5, ease: "easeOut" }}
-              className="inline-flex items-center space-x-4 bg-white/60 backdrop-blur-md px-4 py-2.5 rounded-full border border-slate-200/60 shadow-sm mb-8"
+              className="inline-flex items-center space-x-4 bg-white/95 md:bg-white/60 md:backdrop-blur-md px-4 py-2.5 rounded-full border border-slate-200/60 shadow-sm mb-8"
             >
               <div className="flex -space-x-2">
                 {[1, 2, 3].map((i) => (
@@ -172,7 +172,7 @@ export function Hero() {
            className="flex flex-col sm:flex-row gap-4 mb-12 relative z-20"
         >
               <AnimatedCTA text="Get Your Free Growth Audit" className="w-full sm:w-auto shadow-[0_8px_30px_rgb(249,115,22,0.3)]" />
-              <Button variant="outline" size="lg" className="h-14 px-8 text-lg font-bold bg-white/50 backdrop-blur-sm border-slate-200 text-slate-700 hover:bg-white hover:text-blue-600">
+              <Button variant="outline" size="lg" className="h-14 px-8 text-lg font-bold bg-white/95 md:bg-white/50 md:backdrop-blur-sm border-slate-200 text-slate-700 hover:bg-white hover:text-blue-600">
                 View Our Case Studies
               </Button>
             </motion.div>
@@ -253,7 +253,7 @@ export function Hero() {
                   pointerEvents: currentSlide === idx ? "auto" : "none"
                 }}
                 transition={{ duration: 0.5, type: "spring", stiffness: 100 }}
-                className="absolute top-[20%] left-0 lg:-left-12 bg-white/90 backdrop-blur-xl p-4 rounded-2xl shadow-[0_20px_40px_-15px_rgba(0,0,0,0.15)] border border-white flex items-center gap-4 z-20 scale-90 lg:scale-100"
+                className="absolute top-[20%] left-0 lg:-left-12 bg-white/95 md:bg-white/90 md:backdrop-blur-xl p-4 rounded-2xl shadow-[0_20px_40px_-15px_rgba(0,0,0,0.15)] border border-white flex items-center gap-4 z-20 scale-90 lg:scale-100 will-change-transform"
               >
                 <div className="bg-orange-100 text-orange-600 p-3 rounded-xl flex-shrink-0">
                   {(() => {
@@ -281,7 +281,7 @@ export function Hero() {
                   pointerEvents: currentSlide === idx ? "auto" : "none"
                 }}
                 transition={{ duration: 0.5, delay: 0.1, type: "spring" }}
-                className="absolute bottom-[15%] right-0 lg:-right-8 bg-white/95 backdrop-blur-xl p-5 rounded-3xl shadow-[0_20px_40px_-15px_rgba(0,0,0,0.15)] border border-white z-20 scale-90 lg:scale-100"
+                className="absolute bottom-[15%] right-0 lg:-right-8 bg-white/95 md:bg-white/95 md:backdrop-blur-xl p-5 rounded-3xl shadow-[0_20px_40px_-15px_rgba(0,0,0,0.15)] border border-white z-20 scale-90 lg:scale-100 will-change-transform"
               >
                 <div className="flex items-center gap-3 mb-2">
                   <div className="bg-green-100 text-green-600 p-2.5 rounded-xl shrink-0">
