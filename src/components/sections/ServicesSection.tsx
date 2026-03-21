@@ -717,10 +717,14 @@ export function ServicesSection() {
             </div>
             <div>
               <p className="text-slate-900 text-xl font-black tracking-tight mb-2 uppercase">Your Success is Our Only Metric.</p>
-              <div className="flex items-center justify-center gap-2">
+              <div className="flex items-center justify-center gap-2 mb-8">
                 <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
                 <p suppressHydrationWarning className="text-slate-500 text-[10px] font-black uppercase tracking-[0.3em]">Currently accepting 2 new clients for {currentMonth}</p>
               </div>
+              <Link href="/services" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-full text-[11px] font-black uppercase tracking-widest transition-all shadow-lg shadow-blue-600/20 active:scale-95 group">
+                View All Services
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
             </div>
           </div>
         </motion.div>

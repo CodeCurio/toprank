@@ -101,7 +101,7 @@ const PLATFORMS = [
   },
   {
     id: "apple",
-    name: "Apple Maps",
+    name: "Apple Business",
     proof: "iOS Reach",
     rating: "Verified",
     status: "Connected",
@@ -112,7 +112,18 @@ const PLATFORMS = [
 ];
 export function TrustBar() {
   const [mounted, setMounted] = useState(false);
-  useEffect(() => { setMounted(true); }, []);
+  const [duration, setDuration] = useState(22);
+
+  useEffect(() => { 
+    setMounted(true);
+    const handleResize = () => {
+      // Faster on mobile, slightly faster on PC
+      setDuration(window.innerWidth < 768 ? 8 : 18);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   // 2x duplication for perfect infinite loop
   const marqueeItems = [...PLATFORMS, ...PLATFORMS];
@@ -121,18 +132,18 @@ export function TrustBar() {
   return (
     <section className="relative z-20 px-4 sm:px-6 lg:px-8 mt-[-32px] lg:mt-[-52px] pointer-events-none">
       <div className="max-w-7xl mx-auto pointer-events-auto">
-        <div className="bg-white border md:border-white/50 rounded-[3rem] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.1)] p-8 lg:px-14 lg:py-12 overflow-hidden ring-1 ring-slate-900/5 relative group min-h-[180px]">
+        <div className="bg-white border md:border-white/50 rounded-3xl sm:rounded-[3rem] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.1)] p-5 sm:p-8 lg:px-14 lg:py-12 overflow-hidden ring-1 ring-slate-900/5 relative group min-h-[160px] sm:min-h-[180px]">
           {/* Subtle Radiant Glow */}
           <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/5 rounded-full blur-[100px] pointer-events-none -translate-y-1/2 translate-x-1/2" />
           <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-500/5 rounded-full blur-[100px] pointer-events-none translate-y-1/2 -translate-x-1/2" />
 
-          <div className="mb-10 text-center relative z-10">
+          <div className="mb-6 sm:mb-10 text-center relative z-10">
             <div className="flex flex-col items-center">
-              <div className="inline-flex items-center gap-2 bg-blue-50 border border-blue-100 px-4 py-2 rounded-full mb-6">
-                 <Zap className="w-4 h-4 text-blue-500" />
-                 <span className="text-[11px] font-black text-blue-600 uppercase tracking-[0.2em]">Authentic Verification</span>
+              <div className="inline-flex items-center gap-1.5 sm:gap-2 bg-blue-50 border border-blue-100 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full mb-4 sm:mb-6">
+                 <Zap className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-500" />
+                 <span className="text-[10px] sm:text-[11px] font-black text-blue-600 uppercase tracking-[0.2em]">Authentic Verification</span>
               </div>
-              <h2 className="text-3xl lg:text-5xl font-black text-slate-900 tracking-tight">
+              <h2 className="text-2xl sm:text-3xl lg:text-5xl font-black text-slate-900 tracking-tight">
                 Verified Multi-Channel <span className="text-blue-600 italic">Reach</span>
               </h2>
             </div>
@@ -144,33 +155,51 @@ export function TrustBar() {
             <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
 
             {mounted ? (
-              <motion.div
-                initial={{ x: "0%" }}
-                animate={{ x: "-50%" }}
-                transition={{ duration: 22, ease: "linear", repeat: Infinity }}
-                className="flex whitespace-nowrap pb-4"
-              >
+              <>
+                <style>{`
+                  @keyframes smooth-scroll {
+                    0% { transform: translate3d(0, 0, 0); }
+                    100% { transform: translate3d(-50%, 0, 0); }
+                  }
+                  .animate-smooth-scroll {
+                    animation: smooth-scroll ${duration}s linear infinite;
+                    will-change: transform;
+                    /* Ensure rendering forces GPU and bypasses subpixel rounding jitters */
+                    backface-visibility: hidden;
+                    -webkit-font-smoothing: antialiased;
+                  }
+                  @media (prefers-reduced-motion: reduce) {
+                    .animate-smooth-scroll {
+                      animation: none;
+                      transform: translate3d(0, 0, 0);
+                    }
+                  }
+                `}</style>
+                <div
+                  className="flex w-max whitespace-nowrap pb-4 animate-smooth-scroll"
+                >
                 {marqueeItems.map((item, idx) => (
-                  <div key={idx} className="mx-4 md:mx-6 lg:mx-10 relative flex-shrink-0">
-                    <div className="flex items-center bg-white border border-slate-100 p-5 rounded-[2rem] shadow-[0_10px_30px_-5px_rgba(0,0,0,0.05)]">
-                      <div className={`${item.color} mr-5 p-3 rounded-2xl ${item.bg}`}>
+                  <div key={idx} className="mx-3 md:mx-6 lg:mx-10 relative flex-shrink-0">
+                    <div className="flex items-center bg-white border border-slate-100 p-3.5 sm:p-5 rounded-2xl sm:rounded-[2rem] shadow-[0_10px_30px_-5px_rgba(0,0,0,0.05)] scale-90 sm:scale-100 origin-center">
+                      <div className={`${item.color} mr-3 sm:mr-5 p-2 sm:p-3 rounded-xl sm:rounded-2xl ${item.bg}`}>
                         {item.icon}
                       </div>
-                      <div className="pr-2">
-                        <div className="flex items-center gap-2 mb-1">
-                          <h3 className="text-lg font-black text-slate-900 tracking-tight">{item.name}</h3>
-                          <CheckCircle2 className="w-4 h-4 text-blue-500" />
+                      <div className="pr-1 sm:pr-2">
+                        <div className="flex items-center gap-1.5 sm:gap-2 mb-0.5 sm:mb-1">
+                          <h3 className="text-base sm:text-lg font-black text-slate-900 tracking-tight">{item.name}</h3>
+                          <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-blue-500" />
                         </div>
-                        <div className="flex items-center gap-3">
-                          <span className={`text-[13px] font-black ${item.color}`}>{item.rating}</span>
+                        <div className="flex items-center gap-2 sm:gap-3">
+                          <span className={`text-[11px] sm:text-[13px] font-black ${item.color}`}>{item.rating}</span>
                           <span className="h-1 w-1 rounded-full bg-slate-200" />
-                          <span className="text-[12px] font-bold text-slate-500 uppercase tracking-widest">{item.proof}</span>
+                          <span className="text-[10px] sm:text-[12px] font-bold text-slate-500 uppercase tracking-widest">{item.proof}</span>
                         </div>
                       </div>
                     </div>
                   </div>
                 ))}
-              </motion.div>
+                </div>
+              </>
             ) : (
                <div className="h-24 w-full flex items-center justify-center text-slate-400 font-bold uppercase tracking-widest text-xs">Initializing Authorities...</div>
             )}

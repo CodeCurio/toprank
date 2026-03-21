@@ -130,7 +130,10 @@ export function FloatingContact() {
           {!isOpen ? (
             <motion.button
               key="button"
-              initial={false}
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0, opacity: 0 }}
+              transition={{ type: "spring", stiffness: 300, damping: 25 }}
               onClick={() => setIsOpen(true)}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -146,10 +149,6 @@ export function FloatingContact() {
               <div className="absolute inset-0 bg-slate-950 rounded-full" />
               
               <motion.div 
-                initial={{ rotate: -90, scale: 0 }}
-                animate={{ rotate: 0, scale: 1 }}
-                exit={{ rotate: 90, scale: 0 }}
-                transition={{ duration: 0.3 }}
                 className="relative z-10 text-white flex items-center justify-center"
               >
                 <Bot className="w-8 h-8 text-blue-400 drop-shadow-[0_0_8px_rgba(59,130,246,0.8)]" />
@@ -161,7 +160,11 @@ export function FloatingContact() {
           ) : (
             <motion.div
               key="widget"
-              className="relative w-[340px] bg-slate-950/90 backdrop-blur-xl border border-slate-800 rounded-3xl shadow-[0_20px_50px_-10px_rgba(0,0,0,0.5)] p-5 overflow-hidden flex flex-col"
+              initial={{ opacity: 0, scale: 0.8, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.8, y: 20 }}
+              transition={{ type: "spring", stiffness: 300, damping: 25 }}
+              className="relative w-[calc(100vw-3rem)] sm:w-[360px] max-w-[400px] origin-bottom-right bg-slate-950/90 backdrop-blur-xl border border-slate-800 rounded-3xl shadow-[0_20px_50px_-10px_rgba(0,0,0,0.5)] p-5 overflow-hidden flex flex-col"
             >
               {/* Top ambient glow */}
               <div className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-20 bg-blue-500/20 blur-[50px] pointer-events-none" />

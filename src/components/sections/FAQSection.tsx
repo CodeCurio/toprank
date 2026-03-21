@@ -136,32 +136,37 @@ export function FAQSection() {
             >
               {/* Floating Trust Element */}
               <motion.div
-                animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute -top-12 -left-4 lg:-left-8 bg-white p-3 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-slate-100 hidden md:flex items-center gap-3 z-20"
+                animate={{ y: [0, -15, 0] }}
+                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute -top-48 -left-4 lg:-left-12 bg-white p-5 rounded-[2.5rem] shadow-[0_30px_60px_rgba(0,0,0,0.12)] border border-slate-100 hidden md:flex items-center gap-5 z-20 hover:scale-105 transition-transform cursor-pointer group"
               >
-                <div className="bg-green-100 p-2 rounded-xl text-green-600">
-                  <ThumbsUp className="w-5 h-5" />
+                <div className="bg-green-500 p-3 rounded-2xl text-white shadow-lg shadow-green-500/30 group-hover:rotate-12 transition-transform">
+                  <ThumbsUp className="w-7 h-7" />
                 </div>
                 <div>
-                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Client Success</p>
-                  <p className="text-sm font-black text-slate-900">98% Satisfaction</p>
+                  <p className="text-[11px] font-black text-slate-400 uppercase tracking-[0.3em] mb-1">Client Success</p>
+                  <p className="text-lg font-black text-slate-900 leading-none">98% Satisfaction</p>
                 </div>
               </motion.div>
 
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white border border-slate-200 rounded-full text-blue-600 text-xs font-black uppercase tracking-[0.2em] mb-6 shadow-sm relative z-10">
-                <span className="w-1.5 h-1.5 rounded-full bg-blue-600 animate-pulse" />
-                Expert Answers
+              <div className="flex flex-col mb-12">
+                <motion.div 
+                  initial={{ opacity: 0, x: -10 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  className="text-blue-600 font-black text-[11px] uppercase tracking-[0.4em] mb-5 flex items-center gap-4"
+                >
+                   <div className="w-12 h-px bg-blue-600/30" /> STRATEGIC ANSWERS
+                </motion.div>
+                <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-slate-900 leading-[1.05] tracking-tighter mb-10 relative z-10">
+                  Got Questions? <br />
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-rose-500">
+                    We Have Strategy.
+                  </span>
+                </h2>
+                <p className="text-slate-600 text-lg md:text-xl font-medium leading-relaxed relative z-10 max-w-sm border-l-4 border-slate-100 pl-6 py-2">
+                  Everything you need to know about how TopRank accelerates your business growth and dominates local search results.
+                </p>
               </div>
-              <h2 className="text-4xl md:text-5xl font-black text-slate-900 leading-[1.1] tracking-tight mb-6 relative z-10">
-                You have questions.<br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-pink-500 hover:opacity-80 transition-opacity cursor-default">
-                  We have strategy.
-                </span>
-              </h2>
-              <p className="text-slate-600 text-lg leading-relaxed mb-8 relative z-10">
-                Everything you need to know about how TopRank accelerates your business growth, generates leads, and dominates local search.
-              </p>
 
               {/* Trust Indicators - Customer Avatars */}
               <div className="flex items-center gap-4 mb-10 pb-10 border-b border-slate-200 relative z-10">

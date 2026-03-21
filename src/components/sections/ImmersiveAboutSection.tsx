@@ -1,36 +1,17 @@
 "use client";
 
-import { useRef, useState, useEffect, useMemo } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform, useSpring, MotionValue } from "framer-motion";
-import { Play, Sparkles, Zap, Globe, Target, MousePointer2, ArrowRight } from "lucide-react";
+import { Play, Sparkles, ArrowRight, Target, TrendingUp, Zap, ShieldCheck } from "lucide-react";
 import { AnimatedCTA } from "@/components/ui/animated-cta";
 import Image from "next/image";
+import Link from "next/link";
 import aboutThumbnail from "@/components/images/About-section-thumbnail.webp";
-
-// Stable Seeded Random
-function seededRandom(seed: number) {
-  const x = Math.sin(seed++) * 10000;
-  return x - Math.floor(x);
-}
-
-const BRAND_COLORS = ["#f97316", "#ec4899", "#3b82f6"];
-const SPARK_COUNT = 16;
 
 export function ImmersiveAboutSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
   const [mounted, setMounted] = useState(false);
-
-  const sparks = useMemo(() => {
-    return Array.from({ length: SPARK_COUNT }).map((_, i) => ({
-      id: i,
-      x: (seededRandom(i + 1) - 0.5) * 140, 
-      y: (seededRandom(i + 2) - 0.5) * 140,
-      color: BRAND_COLORS[i % BRAND_COLORS.length],
-      size: seededRandom(i + 3) * 6 + 4,
-      delay: seededRandom(i + 4) * 0.1,
-    }));
-  }, []);
 
   useEffect(() => {
     setMounted(true);
@@ -46,115 +27,218 @@ export function ImmersiveAboutSection() {
   });
 
   const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 70,
-    damping: 35,
-    mass: 0.1,
+    stiffness: 60,
+    damping: 25,
+    restDelta: 0.001
   });
 
   // --- 1. Header Logic ---
-  const headerOpacity = useTransform(smoothProgress, [0, 0.15, 0.25], [1, 1, 0]);
-  const headerY = useTransform(smoothProgress, [0, 0.15, 0.25], [0, 0, -20]);
+  const headerOpacity = useTransform(smoothProgress, [0, 0.1], [1, 0]);
+  const headerY = useTransform(smoothProgress, [0, 0.1], [0, -40]);
 
-  // --- 2. Narrative Logic ---
-  const sentences = [
-    "At TopRank, we don’t just follow digital trends—we turn them into growth opportunities.",
-    "Our mission is to help local businesses dominate their market through high-impact SEO",
-    "and conversion-focused digital experiences that don’t just stop the scroll,",
-    "but turn attention into real customers and consistent business growth."
+  // --- 2. Narrative Logic - Deep Dive Selling Content ---
+  const cards = [
+    {
+      title: "The Reality of SEO in 2024",
+      content: "Most marketing agencies sell vanity metrics—likes, generic traffic, or beautiful designs that never actually convert. TopRank was built to solve the real problem: engineering predictable lead generation that moves the needle.",
+      icon: <Target className="w-6 h-6 text-blue-600" />,
+      bgZ: "z-0",
+      badge: "ROI-Focused",
+      trust: "5.0 ★ Rating"
+    },
+    {
+      title: "Our Transparent Philosophy",
+      content: "We believe in ruthless transparency and data-driven performance. No guesswork. Every backlink, every piece of content, and every UI tweak is calculated with a strict focus on maximizing your Return on Investment.",
+      icon: <TrendingUp className="w-6 h-6 text-indigo-600" />,
+      bgZ: "z-10",
+      badge: "Ruthless Transparency",
+      trust: "Verified Results"
+    },
+    {
+      title: "AI-Driven Growth Stack",
+      content: "We leverage proprietary AI frameworks to identify high-intent search patterns before your competitors do. It's not just marketing; it's digital intelligence applied to dominate your local market.",
+      icon: <Zap className="w-6 h-6 text-amber-500" />,
+      bgZ: "z-0",
+      badge: "Next-Gen Tech",
+      trust: "AI-Powered"
+    },
+    {
+      title: "Scalable Acquisition Systems",
+      content: "Our methodology is built for scale. We don't just 'do SEO'—we build a predictable customer acquisition machine that grows with your business ambitions.",
+      icon: <ShieldCheck className="w-6 h-6 text-emerald-600" />,
+      bgZ: "z-10",
+      badge: "Industry Leader",
+      hasCTA: true
+    }
   ];
-  
-  const textOpacity = useTransform(smoothProgress, [0.3, 0.4, 0.45, 0.55], [0, 1, 1, 0]);
-  const textY = useTransform(smoothProgress, [0.3, 0.4, 0.45, 0.55], [40, 0, 0, -60]);
 
-  // --- 3. Linear Expansion Sequence (Box -> Full Immersion -> Persistent) ---
-  const boxOpacity = useTransform(smoothProgress, [0.45, 0.55], [0, 1]);
-  const boxScale = useTransform(smoothProgress, [0.45, 0.55], [0.9, 1]);
-  
-  // No shrinking back. Stay large for high-impact CTA reveal.
-  const widthVal = isMobile ? "92vw" : "85vw";
-  const heightVal = isMobile ? "35vh" : "55vh";
-  const boxWidth = useTransform(smoothProgress, [0.55, 0.85], [isMobile ? "280px" : "400px", widthVal]);
-  const boxHeight = useTransform(smoothProgress, [0.55, 0.85], [isMobile ? "180px" : "240px", heightVal]);
-  
-  // Slide it slightly up at the end to make room for the button
-  const boxY = useTransform(smoothProgress, [0.55, 0.85, 0.95], [80, 0, -50]);
+  const leftColOpacity = useTransform(smoothProgress, [0, 0.05, 0.70, 0.78], [0, 1, 1, 0]);
+  const leftColY = useTransform(smoothProgress, [0, 0.05, 0.70, 0.78], [40, 0, 0, -40]);
 
-  const ctaOpacity = useTransform(smoothProgress, [0.88, 0.98], [0, 1]);
-  const ctaY = useTransform(smoothProgress, [0.88, 0.98], [25, 0]);
+  const rightColOpacity = useTransform(smoothProgress, [0.1, 0.2, 0.70, 0.78], [0, 1, 1, 0]);
+  const rightColY = useTransform(smoothProgress, [0.1, 0.78], [isMobile ? "60vh" : "15vh", isMobile ? "-140vh" : "-55vh"]);
+
+  // Curve Drawing Progress
+  const pathProgress = useTransform(smoothProgress, [0.05, 0.70], [0, 1]);
+
+  // --- 3. Cinematic Video Expansion (Overlapped for Gap Fix) ---
+  const videoOpacity = useTransform(smoothProgress, [0.68, 0.78], [0, 1]);
+  const videoY = useTransform(smoothProgress, [0.68, 0.95], [80, 0]);
+  
+  // High-performance clip-path reveal
+  const clipPathMobile = useTransform(smoothProgress, [0.70, 0.95], ["inset(30% 20% 30% 20% round 40px)", "inset(0% 0% 0% 0% round 24px)"]);
+  const clipPathDesktop = useTransform(smoothProgress, [0.70, 0.95], ["inset(25% 30% 25% 30% round 48px)", "inset(0% 0% 0% 0% round 24px)"]);
+  const clipPathBase = isMobile ? clipPathMobile : clipPathDesktop;
+
+  const imageScale = useTransform(smoothProgress, [0.70, 0.95], [1.3, 1]);
+  const glowOpacity = useTransform(smoothProgress, [0.70, 0.95], [0, 0.5]);
+
+  const ctaOpacity = useTransform(smoothProgress, [0.90, 1.0], [0, 1]);
+  const ctaY = useTransform(smoothProgress, [0.90, 1.0], [30, 0]);
 
   return (
     <section 
       ref={containerRef} 
-      className="relative h-[400vh] bg-white z-0"
+      className="relative h-[480vh] bg-white z-0"
       id="about-immersive"
     >
-      <div className="sticky top-20 h-[calc(100vh-80px)] w-full overflow-hidden z-20 px-4 md:px-0">
-        <div className="relative w-full h-full max-w-7xl mx-auto px-6">
-            
-            {/* Header Slot */}
-            <motion.div 
-              style={{ opacity: headerOpacity, y: headerY }}
-              className="absolute top-[8vh] left-0 right-0 flex flex-col items-center pointer-events-none z-30"
-            >
-              <div className="px-5 py-2 bg-slate-900 border border-slate-700 text-white rounded-full flex items-center gap-3 shadow-2xl mb-6">
-                 <Sparkles className="w-4 h-4 text-orange-400 fill-orange-400" />
-                 <span className="text-[10px] font-black uppercase tracking-[0.4em] whitespace-nowrap">The Methodology</span>
-              </div>
-              <h2 className="text-3xl md:text-5xl font-black text-slate-900 tracking-tighter mb-2">
-                 Precision Digital <span className="text-blue-600">Acquisition</span>
-              </h2>
-            </motion.div>
+      <div className="sticky top-20 h-[calc(100vh-80px)] w-full overflow-hidden z-20 px-4 md:px-0 flex flex-col items-center justify-center">
+        
+        {/* --- GLOBAL CONTINUOUS WAVY LINE (Lusion Style Loop) --- */}
+        <div className="absolute inset-0 w-full h-full pointer-events-none -z-10">
+           <svg className="w-full h-full drop-shadow-2xl opacity-90" viewBox="0 0 1000 1000" preserveAspectRatio="none" fill="none">
+             <motion.path 
+                d={isMobile 
+                  ? "M 1100,100 C 800,50 400,200 400,400 C 400,600 900,700 600,900 C 300,1100 -200,900 -200,900" 
+                  : "M 1100,200 C 700,200 600,300 400,300 C 200,300 50,250 50,450 C 50,650 250,700 400,600 C 600,450 400,900 200,1100"}
+                stroke="url(#lusion-blue)"
+                strokeWidth={isMobile ? "40" : "45"}
+                strokeLinecap="round"
+                style={{ pathLength: pathProgress }}
+             />
+             <defs>
+               <linearGradient id="lusion-blue" x1="0" y1="0" x2="1" y2="1">
+                 <stop offset="0%" stopColor="#4f46e5" />
+                 <stop offset="50%" stopColor="#3b82f6" />
+                 <stop offset="100%" stopColor="#8b5cf6" />
+               </linearGradient>
+             </defs>
+           </svg>
+        </div>
 
-            {/* Narrative Slot - Sentence-based for Performance */}
-            <motion.div 
-              style={{ 
-                opacity: textOpacity, 
-                y: textY, 
-                top: "50%",
-                translateY: "-50%"
-              }}
-              className="absolute left-0 right-0 flex justify-center text-center z-20 pointer-events-none px-4"
-            >
-              <h2 className="text-xl md:text-2xl lg:text-[42px] font-bold text-slate-800 leading-[1.4] md:leading-[1.6] tracking-tight max-w-5xl mt-[25px]">
-                {sentences.map((sentence, i) => (
-                  <Sentence key={i} text={sentence} index={i} total={sentences.length} progress={smoothProgress} isMobile={isMobile} mounted={mounted} />
+        <div className="relative w-full h-full max-w-7xl mx-auto px-6 flex flex-col items-center justify-center">
+            
+            {/* Narrative 2-Column Deep Dive */}
+            <div className="absolute inset-0 max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center md:items-start pt-[8vh] md:pt-[20vh] pointer-events-none z-20">
+              
+              {/* Left Column: Sticky-like Headline */}
+              <motion.div 
+                style={{ opacity: leftColOpacity, y: leftColY }} 
+                className="w-full md:w-[40%] flex flex-col mb-12 md:mb-0 md:pr-10 text-center md:text-left pointer-events-auto"
+              >
+                <div className="inline-flex mx-auto md:mx-0 items-center justify-center md:justify-start gap-2 px-4 py-2 bg-blue-50 border border-blue-100/50 rounded-full w-max text-blue-600 font-bold text-xs uppercase tracking-widest mb-6">
+                  Who we are
+                </div>
+                <h2 className="text-3xl lg:text-5xl xl:text-6xl font-black text-slate-900 leading-[1.1] tracking-tighter shadow-sm relative z-20">
+                  Beyond Traffic. <br className="hidden md:block" />
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">True Growth.</span>
+                </h2>
+                <p className="mt-4 md:mt-6 text-slate-600 text-base md:text-xl font-medium leading-relaxed relative z-20 mb-8">
+                  We bridge the gap between aesthetics and actual revenue generation for ambitious brands.
+                </p>
+
+                <div className="flex items-center justify-center md:justify-start gap-4">
+                  <Link href="/about" className="px-8 py-4 bg-slate-900 hover:bg-black text-white rounded-2xl text-[11px] font-black uppercase tracking-widest transition-all shadow-xl shadow-slate-900/10 active:scale-95 flex items-center gap-2">
+                    Learn More About Us <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </div>
+              </motion.div>
+
+              {/* Right Column: Scrolling Cards */}
+              <motion.div 
+                style={{ opacity: rightColOpacity, y: rightColY }} 
+                className="w-full md:w-[60%] flex flex-col gap-6 md:gap-10 md:pl-10 relative"
+              >
+
+                {cards.map((card, i) => (
+                  <div key={i} className="relative p-6 md:p-10 group">
+                     {/* Frosted Glass Background (Z varies to create weaving effect) */}
+                     <div className={`absolute inset-0 bg-white/70 backdrop-blur-2xl border border-slate-200/60 rounded-[2rem] shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-all duration-500 group-hover:bg-white/95 group-hover:shadow-[0_40px_80px_-20px_rgba(59,130,246,0.1)] ${card.bgZ}`} />
+                     
+                     {/* Content (Always on Top) */}
+                     <div className="relative z-20">
+                         <div className="flex items-center justify-between mb-6">
+                            <div className="w-10 h-10 md:w-12 md:h-12 bg-white rounded-xl md:rounded-2xl flex items-center justify-center shadow-md border border-slate-100 group-hover:scale-110 transition-transform">
+                               {card.icon}
+                            </div>
+                            <div className="flex flex-col items-end gap-1">
+                               {card.badge && (
+                                 <span className="px-3 py-1 bg-slate-900 text-white text-[8px] font-black uppercase tracking-widest rounded-full">
+                                    {card.badge}
+                                 </span>
+                               )}
+                               {card.trust && (
+                                 <span className="text-[7px] font-bold text-blue-600 uppercase tracking-widest flex items-center gap-1 text-right">
+                                    <Sparkles className="w-2 h-2" /> {card.trust}
+                                 </span>
+                               )}
+                            </div>
+                         </div>
+                         <h3 className="text-xl md:text-3xl font-black text-slate-900 tracking-tight mb-3 md:mb-5 drop-shadow-sm group-hover:text-blue-600 transition-colors">
+                            {card.title}
+                         </h3>
+                         <p className="text-slate-600 text-sm md:text-lg leading-relaxed font-medium drop-shadow-sm mb-6">
+                            {card.content}
+                         </p>
+
+                         {card.hasCTA && (
+                           <Link href="#contact" className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all active:scale-95 shadow-lg shadow-blue-600/20">
+                              Build My Strategy <ArrowRight className="w-3 h-3" />
+                           </Link>
+                         )}
+                     </div>
+                  </div>
                 ))}
-              </h2>
-            </motion.div>
+              </motion.div>
+            </div>
 
             {/* Video Visual Slot */}
             <motion.div 
               style={{ 
-                opacity: boxOpacity, 
-                top: "50%",
-                translateY: "-50%",
-                scale: boxScale,
-                y: boxY
+                opacity: videoOpacity, 
+                y: videoY,
+                position: "absolute",
               }}
-              className="absolute left-0 right-0 flex flex-col items-center justify-center z-10"
+              className="w-full flex flex-col items-center justify-center z-10 pointer-events-auto"
             >
-                <div className="absolute inset-0 flex items-center justify-center -z-10 translate-y-[-20px]">
-                  {sparks.slice(0, isMobile ? 4 : SPARK_COUNT).map((spark) => (
-                    <SingleSpark key={spark.id} spark={spark} progress={smoothProgress} isMobile={isMobile} />
-                  ))}
-                </div>
+                {/* Cinematic Core Glow */}
+                <motion.div 
+                  style={{ opacity: glowOpacity }}
+                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[40vh] bg-blue-500/30 blur-[120px] rounded-full -z-10 pointer-events-none"
+                />
 
                 <motion.div
-                  style={{ width: boxWidth, height: boxHeight }}
-                  className="shadow-[0_40px_80px_-20px_rgba(0,0,0,0.6)] rounded-[24px] relative overflow-hidden group border border-white/10 will-change-[width,height]"
+                  style={{ 
+                    clipPath: mounted ? clipPathBase : "none",
+                    WebkitClipPath: mounted ? clipPathBase : "none" 
+                  }}
+                  className="w-[92vw] md:w-[85vw] h-[45vh] md:h-[65vh] relative group border border-slate-200/50 will-change-[clip-path]"
                 >
-                  <Image
-                    src={aboutThumbnail}
-                    alt="TopRank Digital Service – Strategy Showreel"
-                    fill
-                    className="object-cover object-center"
-                    priority
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/40 to-slate-950/20 z-10" />
+                  <motion.div style={{ scale: imageScale }} className="absolute inset-0 w-full h-full origin-center">
+                    <Image
+                      src={aboutThumbnail}
+                      alt="TopRank Digital Service – Strategy Showreel"
+                      fill
+                      className="object-cover object-center"
+                      priority
+                    />
+                  </motion.div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent z-10 transition-opacity duration-700" />
                   <div className="absolute inset-0 flex flex-col items-center justify-center z-20">
                      <motion.div 
                        whileHover={{ scale: 1.1 }}
-                       className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white/90 backdrop-blur-sm text-slate-950 flex items-center justify-center shadow-2xl cursor-pointer"
+                       whileTap={{ scale: 0.95 }}
+                       className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white/90 backdrop-blur-md text-slate-950 flex items-center justify-center shadow-[0_10px_40px_rgba(0,0,0,0.3)] cursor-pointer"
                      >
                         <Play className="w-6 h-6 md:w-8 md:h-8 fill-current ml-1.5" />
                      </motion.div>
@@ -164,6 +248,7 @@ export function ImmersiveAboutSection() {
                   </div>
                 </motion.div>
 
+                {/* Animated CTA Slot */}
                 <motion.div 
                   style={{ opacity: ctaOpacity, y: ctaY }}
                   className="mt-12 flex flex-col items-center gap-6"
@@ -172,7 +257,7 @@ export function ImmersiveAboutSection() {
                     text="Read More About Us" 
                     tooltipText="Behind the scenes"
                     icon={<ArrowRight className="w-5 h-5" />}
-                    className="shadow-[0_8px_30px_rgb(249,115,22,0.3)]"
+                    className="shadow-[0_8px_30px_rgb(59,130,246,0.2)]"
                   />
                 </motion.div>
               </motion.div>
@@ -183,45 +268,4 @@ export function ImmersiveAboutSection() {
   );
 }
 
-function SingleSpark({ spark, progress, isMobile }: { spark: any; progress: MotionValue<number>; isMobile: boolean }) {
-  const start = 0.5 + spark.delay;
-  const end = 0.85;
-  return (
-    <motion.div
-      style={{
-        x: useTransform(progress, [start, end], [`${spark.x}vw`, "0vw"]),
-        y: useTransform(progress, [start, end], [`${spark.y}vh`, "0px"]),
-        scale: useTransform(progress, [start, end], [3.5, 0]),
-        opacity: useTransform(progress, [start, start + 0.1, end], [0, 0.8, 0]),
-        backgroundColor: spark.color,
-        width: spark.size,
-        height: spark.size,
-        boxShadow: isMobile ? "none" : `0 0 25px ${spark.color}`,
-      }}
-      className="absolute rounded-full pointer-events-none will-change-transform"
-    />
-  );
-}
 
-function Sentence({ text, index, total, progress, isMobile, mounted }: { text: string; index: number; total: number; progress: MotionValue<number>; isMobile: boolean; mounted: boolean }) {
-  const start = (index / total) * 0.45;
-  const end = start + (0.5 / total);
-  
-  // Create transforms but don't apply until mounted to avoid hydration blur mismatch
-  const opacity = useTransform(progress, [start, end], [0, 1]);
-  const y = useTransform(progress, [start, end], [20, 0]);
-  const blurVal = useTransform(progress, [start, end], ["blur(12px)", "blur(0px)"]);
-
-  return (
-    <motion.span 
-      style={{ 
-        opacity, 
-        y, 
-        filter: isMobile ? "none" : blurVal 
-      }} 
-      className="inline-block w-full mb-2 will-change-transform font-bold"
-    >
-      {text}
-    </motion.span>
-  );
-}

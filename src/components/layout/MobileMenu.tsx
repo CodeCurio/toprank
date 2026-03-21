@@ -158,7 +158,7 @@ export function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
                     animate="center"
                     exit="exit"
                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                    className="absolute inset-0 w-full h-full overflow-y-auto px-6 py-4 pb-32 transform-gpu"
+                    className="absolute inset-0 w-full h-full overflow-y-auto px-6 py-4 pb-48 transform-gpu"
                   >
                     <div className="space-y-1">
                       {MAIN_LINKS.map((link) => (
@@ -214,7 +214,7 @@ export function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
                     animate="center"
                     exit="exit"
                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                    className="absolute inset-0 w-full h-full overflow-y-auto px-6 py-4 pb-32 transform-gpu bg-slate-50/50"
+                    className="absolute inset-0 w-full h-full overflow-y-auto px-6 py-4 pb-48 transform-gpu bg-slate-50/50"
                   >
                     <h2 className="text-3xl font-black tracking-tight text-slate-900 mb-6">Our Services</h2>
                     
@@ -252,7 +252,7 @@ export function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
                     animate="center"
                     exit="exit"
                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                    className="absolute inset-0 w-full h-full overflow-y-auto px-6 py-4 pb-32 transform-gpu bg-slate-50/50"
+                    className="absolute inset-0 w-full h-full overflow-y-auto px-6 py-4 pb-48 transform-gpu bg-slate-50/50"
                   >
                     <h2 className="text-3xl font-black tracking-tight text-slate-900 mb-6">Our Locations</h2>
                     
@@ -282,8 +282,8 @@ export function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
             </div>
 
             {/* Sticky Bottom CTA */}
-            <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-white via-white to-transparent pt-12">
-               <Button variant="gradient" className="w-full rounded-2xl shadow-xl font-black tracking-wide py-6 text-[17px]" onClick={closeMenu}>
+            <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-white via-white to-transparent pt-12 z-20 pointer-events-none">
+               <Button variant="gradient" className="w-full rounded-2xl shadow-xl font-black tracking-wide py-6 text-[17px] pointer-events-auto" onClick={closeMenu}>
                 Book a Strategy Call
               </Button>
             </div>

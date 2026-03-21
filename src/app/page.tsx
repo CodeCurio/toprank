@@ -2,6 +2,7 @@ import { Hero } from "@/components/sections/Hero";
 import { TrustBar } from "@/components/sections/TrustBar";
 import { ImmersiveAboutSection } from "@/components/sections/ImmersiveAboutSection";
 import { WhatMakesUsDifferent } from "@/components/sections/WhatMakesUsDifferent";
+import { ServingAreas } from "@/components/sections/ServingAreas";
 import { ServicesSection } from "@/components/sections/ServicesSection";
 import { HowWeGrow } from "@/components/sections/HowWeGrow";
 import { ReviewsSection } from "@/components/sections/ReviewsSection";
@@ -17,6 +18,7 @@ export default function Home() {
         <TrustBar />
         <ImmersiveAboutSection />
         <ServicesSection />
+        <ServingAreas />
         <WhatMakesUsDifferent />
         <HowWeGrow />
         <ReviewsSection />

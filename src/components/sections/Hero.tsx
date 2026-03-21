@@ -136,7 +136,9 @@ export function Hero() {
                   </div>
                   <span className="font-bold text-slate-900 text-sm">4.9/5</span>
                 </div>
-                <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mt-0.5">Top Rated on Google & Trustpilot</span>
+                <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mt-0.5">
+                  Top Rated on <span className="inline-flex items-center mx-1 gap-1"><svg viewBox="0 0 24 24" className="w-3.5 h-3.5 text-[#4285F4]" fill="currentColor"><path d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z" /></svg><span className="font-bold text-slate-700 capitalize relative top-[0.5px]">Google</span></span> &amp; <span className="inline-flex items-center mx-1 gap-1"><Star className="w-3 h-3 fill-[#00b67a] text-[#00b67a] relative top-[0.5px]" /><span className="font-bold text-slate-700 capitalize relative top-[0.5px]">Trustpilot</span></span>
+                </span>
               </div>
             </motion.div>
 
@@ -203,8 +205,22 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] as const }}
             className="relative block mt-12 lg:mt-0 perspective-1000"
           >
-            <div className="relative rounded-3xl overflow-hidden shadow-2xl border-[6px] border-white bg-slate-100 aspect-[4/5] w-full max-w-[500px] ml-auto rotate-1 hover:rotate-0 transition-transform duration-700 ease-out z-10">
-              <div className="relative aspect-[4/5] w-full overflow-hidden">
+            <div className="relative rounded-3xl shadow-2xl border-[4px] sm:border-[6px] border-white bg-slate-100 aspect-[4/5] w-full max-w-[500px] ml-auto lg:rotate-1 lg:hover:rotate-0 transition-transform duration-700 ease-out z-10">
+              <div className="relative w-full h-full overflow-hidden rounded-2xl sm:rounded-[1.25rem]">
+                <motion.div 
+                  className="absolute inset-0 z-30 touch-none cursor-grab active:cursor-grabbing"
+                  drag="x"
+                  dragConstraints={{ left: 0, right: 0 }}
+                  dragElastic={0.2}
+                  onDragEnd={(e, { offset }) => {
+                    const swipe = offset.x;
+                    if (swipe < -40) {
+                      setCurrentSlide((prev) => (prev + 1) % HERO_SLIDES.length);
+                    } else if (swipe > 40) {
+                      setCurrentSlide((prev) => (prev - 1 + HERO_SLIDES.length) % HERO_SLIDES.length);
+                    }
+                  }}
+                />
                 {HERO_SLIDES.map((slide, idx) => (
                   <motion.div
                     key={slide.id}
@@ -221,7 +237,7 @@ export function Hero() {
                       src={slide.image}
                       alt={slide.alt}
                       fill
-                      className="object-cover object-top"
+                      className="object-cover object-center"
                       priority={idx === 0}
                     />
                   </motion.div>
@@ -232,11 +248,13 @@ export function Hero() {
               <div className="absolute inset-0 bg-gradient-to-tr from-orange-400/10 via-transparent to-transparent mix-blend-multiply pointer-events-none" />
 
               {/* Progress Indicator Dots */}
-              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2 z-20">
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2 z-40">
                 {HERO_SLIDES.map((_, idx) => (
-                  <div 
+                  <button 
                     key={idx} 
-                    className={`h-2 rounded-full transition-all duration-300 ${currentSlide === idx ? "w-6 bg-white shadow-sm" : "w-2 bg-white/50"}`} 
+                    onClick={() => setCurrentSlide(idx)}
+                    className={`h-2 rounded-full transition-all duration-300 ${currentSlide === idx ? "w-6 bg-white shadow-sm" : "w-2 bg-white/50 hover:bg-white/80"}`} 
+                    aria-label={`Go to slide ${idx + 1}`}
                   />
                 ))}
               </div>
@@ -253,9 +271,9 @@ export function Hero() {
                   pointerEvents: currentSlide === idx ? "auto" : "none"
                 }}
                 transition={{ duration: 0.5, type: "spring", stiffness: 100 }}
-                className="absolute top-[20%] left-0 lg:-left-12 bg-white/95 md:bg-white/90 md:backdrop-blur-xl p-4 rounded-2xl shadow-[0_20px_40px_-15px_rgba(0,0,0,0.15)] border border-white flex items-center gap-4 z-20 scale-90 lg:scale-100 will-change-transform"
+                className="absolute -top-6 -left-2 sm:top-[20%] lg:-left-12 bg-white/95 md:bg-white/90 md:backdrop-blur-xl p-3 sm:p-4 rounded-xl sm:rounded-2xl shadow-[0_20px_40px_-15px_rgba(0,0,0,0.15)] border border-white flex items-center gap-3 sm:gap-4 z-40 scale-90 sm:scale-100 origin-top-left will-change-transform"
               >
-                <div className="bg-orange-100 text-orange-600 p-3 rounded-xl flex-shrink-0">
+                <div className="bg-orange-100 text-orange-600 p-2 sm:p-3 rounded-lg sm:rounded-xl flex-shrink-0">
                   {(() => {
                     const Icon = slide.m1_icon;
                     return <Icon className="w-6 h-6 fill-orange-500" />;
@@ -281,10 +299,10 @@ export function Hero() {
                   pointerEvents: currentSlide === idx ? "auto" : "none"
                 }}
                 transition={{ duration: 0.5, delay: 0.1, type: "spring" }}
-                className="absolute bottom-[15%] right-0 lg:-right-8 bg-white/95 md:bg-white/95 md:backdrop-blur-xl p-5 rounded-3xl shadow-[0_20px_40px_-15px_rgba(0,0,0,0.15)] border border-white z-20 scale-90 lg:scale-100 will-change-transform"
+                className="absolute -bottom-6 -right-2 sm:bottom-[15%] lg:-right-8 bg-white/95 md:bg-white/95 md:backdrop-blur-xl p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl shadow-[0_20px_40px_-15px_rgba(0,0,0,0.15)] border border-white z-40 scale-[0.85] sm:scale-100 origin-bottom-right will-change-transform"
               >
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="bg-green-100 text-green-600 p-2.5 rounded-xl shrink-0">
+                <div className="flex items-center gap-2 sm:gap-3 mb-1 sm:mb-2">
+                  <div className="bg-green-100 text-green-600 p-2 sm:p-2.5 rounded-lg sm:rounded-xl shrink-0">
                     {(() => {
                       const Icon = slide.m2_icon;
                       return <Icon className="w-5 h-5 stroke-2" />;

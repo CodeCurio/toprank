@@ -2,7 +2,8 @@
 
 import { useRef, useState, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
-import { Star, Quote, CheckCircle2 } from "lucide-react";
+import { Star, Quote, CheckCircle2, ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 // Authentic Google G Logo SVG
 const GoogleLogo = () => (
@@ -195,22 +196,22 @@ export function ReviewsSection() {
             <motion.div
               key={i}
               variants={cardVariants}
-              className="break-inside-avoid bg-white border border-slate-200 rounded-[2.5rem] p-8 md:p-10 flex flex-col shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.12)] hover:-translate-y-1 transition-all duration-300 relative group"
+              className="break-inside-avoid bg-white border border-slate-200 rounded-[2rem] p-6 md:p-8 flex flex-col shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.12)] hover:border-blue-200 hover:-translate-y-1 transition-all duration-300 relative group"
             >
               {/* Visual Quote mark */}
-              <Quote className="absolute top-8 right-8 w-12 h-12 text-slate-100 group-hover:text-blue-50 transition-colors duration-500 -z-0" />
+              <Quote className="absolute top-6 right-6 w-10 h-10 text-slate-100 group-hover:text-blue-50 transition-colors duration-500 -z-0" />
 
               <div className="relative z-10">
                 {/* Rating Line */}
-                <div className="flex items-center gap-1 mb-5">
+                <div className="flex items-center gap-1 mb-4">
                   {[...Array(review.rating)].map((_, index) => (
-                    <Star key={index} className="w-4 h-4 fill-amber-400 text-amber-400" />
+                    <Star key={index} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
                   ))}
                 </div>
 
                 {/* Review Text */}
-                <h4 className="text-slate-900 font-bold text-xl lg:text-2xl mb-4 leading-snug tracking-tight">"{review.title}"</h4>
-                <p className="text-slate-600 leading-relaxed font-medium text-[15px] lg:text-base">
+                <h4 className="text-slate-900 font-bold text-lg lg:text-xl mb-3 leading-snug tracking-tight">"{review.title}"</h4>
+                <p className="text-slate-600 leading-relaxed font-medium text-[14px] lg:text-[15px]">
                   {review.content}
                 </p>
 
@@ -266,10 +267,21 @@ export function ReviewsSection() {
 
         {/* Section Footer / Verification Link */}
         <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          className="text-center mt-20 md:mt-24 mb-16"
+        >
+          <Link href="/reviews" className="inline-flex items-center gap-3 px-10 py-5 bg-white border-2 border-slate-200 hover:border-blue-600 hover:text-blue-600 text-slate-900 rounded-2xl text-[11px] font-black uppercase tracking-widest transition-all shadow-xl shadow-slate-200/10 active:scale-95 group">
+             Read All Reviews (100+) <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </Link>
+        </motion.div>
+
+        <motion.div
           initial={false}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-20 md:mb-28"
+          className="text-center mb-8"
         >
           <p className="text-slate-500 font-semibold text-lg">
             100% verified customer reviews tracking tangible results. Read more on our <a href="#" className="text-blue-600 hover:text-blue-700 font-black underline underline-offset-4 decoration-blue-200">Google Business Profile</a>.
