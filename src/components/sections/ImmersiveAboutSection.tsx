@@ -115,37 +115,57 @@ export function ImmersiveAboutSection() {
   ];
 
   const leftColOpacity = useTransform(smoothProgress, 
-    isMobile ? [0, 0.45, 0.55] : [0, 0.08, 0.65, 0.75], 
+    isMobile ? [0, 0.20, 0.25] : [0, 0.08, 0.65, 0.75], 
     isMobile ? [1, 1, 0] : [1, 1, 0, 0]
   );
   const leftColY = useTransform(smoothProgress, 
-    isMobile ? [0, 0.45, 0.55] : [0, 0.1, 0.65, 0.75], 
+    isMobile ? [0, 0.20, 0.25] : [0, 0.1, 0.65, 0.75], 
     isMobile ? [0, 0, -80] : [0, 0, -60, -100]
   );
 
   const rightColOpacity = useTransform(smoothProgress, 
-    isMobile ? [0.40, 0.50, 0.85, 0.95] : [0.05, 0.15, 0.70, 0.78], 
+    isMobile ? [0.22, 0.30, 0.58, 0.62] : [0.05, 0.15, 0.70, 0.78], 
     [0, 1, 1, 0]
   );
   const rightColY = useTransform(smoothProgress, 
-    isMobile ? [0.40, 0.85] : [0.05, 0.78], 
-    [isMobile ? "80vh" : "20vh", isMobile ? "-140vh" : "-60vh"]
+    isMobile ? [0.22, 0.62] : [0.05, 0.78], 
+    [isMobile ? "80vh" : "20vh", isMobile ? "-180vh" : "-60vh"]
   );
 
   // Curve Drawing Progress
   const pathProgress = useTransform(smoothProgress, [0.05, 0.70], [0, 1]);
 
   // --- 3. Cinematic Video Expansion (Overlapped for Gap Fix) ---
-  const videoOpacity = useTransform(smoothProgress, [0.68, 0.75], [0, 1]);
-  const videoY = useTransform(smoothProgress, [0.68, 0.85], [80, 0]);
+  const videoOpacity = useTransform(smoothProgress, 
+    isMobile ? [0.60, 0.68] : [0.68, 0.75], 
+    [0, 1]
+  );
+  const videoY = useTransform(smoothProgress, 
+    isMobile ? [0.60, 0.75] : [0.68, 0.85], 
+    [80, 0]
+  );
   
   // High-performance clip-path reveal
-  const clipPathMobile = useTransform(smoothProgress, [0.70, 0.85], ["inset(30% 20% 30% 20% round 40px)", "inset(0% 0% 0% 0% round 24px)"]);
+  const clipPathMobile = useTransform(smoothProgress, 
+    [0.65, 0.78, 0.85, 0.95], 
+    [
+      "inset(30% 20% 30% 20% round 40px)", 
+      "inset(0% 0% 0% 0% round 24px)",
+      "inset(0% 0% 0% 0% round 24px)",
+      "inset(15% 10% 15% 10% round 40px)"
+    ]
+  );
   const clipPathDesktop = useTransform(smoothProgress, [0.70, 0.85], ["inset(25% 30% 25% 30% round 48px)", "inset(0% 0% 0% 0% round 24px)"]);
   const clipPathBase = isMobile ? clipPathMobile : clipPathDesktop;
 
-  const imageScale = useTransform(smoothProgress, [0.70, 0.85], [1.3, 1]);
-  const glowOpacity = useTransform(smoothProgress, [0.70, 0.85], [0, 0.5]);
+  const imageScale = useTransform(smoothProgress, 
+    isMobile ? [0.65, 0.78, 0.85, 0.95] : [0.70, 0.85], 
+    isMobile ? [1.3, 1, 1, 1.1] : [1.3, 1]
+  );
+  const glowOpacity = useTransform(smoothProgress, 
+    isMobile ? [0.65, 0.78] : [0.70, 0.85], 
+    [0, 0.5]
+  );
 
   const ctaOpacity = useTransform(smoothProgress, [0.85, 0.95], [0, 1]);
   const ctaY = useTransform(smoothProgress, [0.85, 0.95], [30, 0]);

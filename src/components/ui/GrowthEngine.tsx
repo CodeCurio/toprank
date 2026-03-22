@@ -22,13 +22,22 @@ const NODES = [
 
 export function GrowthEngine() {
   const [activeNode, setActiveNode] = useState(0);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const interval = setInterval(() => {
       setActiveNode((prev) => (prev + 1) % NODES.length);
     }, 3000);
     return () => clearInterval(interval);
   }, []);
+
+  if (!mounted) return (
+     <div className="relative w-full aspect-square max-w-[500px] mx-auto flex items-center justify-center overflow-visible">
+        {/* Simple placeholder or nothing during SSR to avoid mismatch */}
+        <div className="w-32 h-32 md:w-40 md:h-40 rounded-full bg-slate-950/20 animate-pulse" />
+     </div>
+  );
 
   return (
     <div className="relative w-full aspect-square max-w-[500px] mx-auto flex items-center justify-center group overflow-visible">
@@ -74,8 +83,8 @@ export function GrowthEngine() {
 
          {NODES.map((node, i) => {
             const rad = (node.angle * Math.PI) / 180;
-            const x2 = 200 + Math.cos(rad) * 140;
-            const y2 = 200 + Math.sin(rad) * 140;
+            const x2 = Number((200 + Math.cos(rad) * 140).toFixed(3));
+            const y2 = Number((200 + Math.sin(rad) * 140).toFixed(3));
             
             return (
                <g key={`beam-${node.id}`}>
@@ -110,8 +119,8 @@ export function GrowthEngine() {
       {/* 3. INDUSTRY SUCCESS NODES */}
       {NODES.map((node, i) => {
          const rad = (node.angle * Math.PI) / 180;
-         const x = Math.cos(rad) * 145;
-         const y = Math.sin(rad) * 145;
+         const x = Number((Math.cos(rad) * 145).toFixed(3));
+         const y = Number((Math.sin(rad) * 145).toFixed(3));
 
          const Icon = node.icon;
 
