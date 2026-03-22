@@ -7,6 +7,48 @@ import { AnimatedCTA } from "@/components/ui/animated-cta";
 import Image from "next/image";
 import Link from "next/link";
 import aboutThumbnail from "@/components/images/About-section-thumbnail.webp";
+import React from "react";
+
+const CardItem = React.memo(({ card, i }: { card: any, i: number }) => (
+  <div key={i} className="relative p-6 md:p-10 group transform-gpu">
+     {/* Frosted Glass Background (Z varies to create weaving effect) */}
+     <div className={`absolute inset-0 bg-white/95 backdrop-blur-2xl border border-slate-200/60 rounded-[2rem] shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-all duration-500 group-hover:bg-white group-hover:shadow-[0_40px_80px_-20px_rgba(59,130,246,0.1)] ${card.bgZ}`} />
+     
+     {/* Content (Always on Top) */}
+     <div className="relative z-20">
+         <div className="flex items-center justify-between mb-6">
+            <div className="w-10 h-10 md:w-12 md:h-12 bg-white rounded-xl md:rounded-2xl flex items-center justify-center shadow-md border border-slate-100 group-hover:scale-110 transition-transform">
+               {card.icon}
+            </div>
+            <div className="flex flex-col items-end gap-1">
+               {card.badge && (
+                 <span className="px-3 py-1 bg-slate-900 text-white text-[8px] font-black uppercase tracking-widest rounded-full">
+                    {card.badge}
+                 </span>
+               )}
+               {card.trust && (
+                 <span className="text-[7px] font-bold text-blue-600 uppercase tracking-widest flex items-center gap-1 text-right">
+                    <Sparkles className="w-2 h-2" /> {card.trust}
+                 </span>
+               )}
+            </div>
+         </div>
+         <h3 className="text-xl md:text-3xl font-black text-slate-900 tracking-tight mb-3 md:mb-5 drop-shadow-sm group-hover:text-blue-600 transition-colors">
+            {card.title}
+         </h3>
+         <p className="text-slate-600 text-sm md:text-lg leading-relaxed font-medium drop-shadow-sm mb-6">
+            {card.content}
+         </p>
+
+         {card.hasCTA && (
+           <Link href="#contact" className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all active:scale-95 shadow-lg shadow-blue-600/20">
+              Build My Strategy <ArrowRight className="w-3 h-3" />
+           </Link>
+         )}
+     </div>
+  </div>
+));
+CardItem.displayName = "CardItem";
 
 export function ImmersiveAboutSection() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -27,9 +69,9 @@ export function ImmersiveAboutSection() {
   });
 
   const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 60,
-    damping: 25,
-    restDelta: 0.001
+    stiffness: 50,
+    damping: 30,
+    restDelta: 0.01
   });
 
   // --- 1. Header Logic ---
@@ -72,29 +114,41 @@ export function ImmersiveAboutSection() {
     }
   ];
 
-  const leftColOpacity = useTransform(smoothProgress, [0, 0.05, 0.70, 0.78], [0, 1, 1, 0]);
-  const leftColY = useTransform(smoothProgress, [0, 0.05, 0.70, 0.78], [40, 0, 0, -40]);
+  const leftColOpacity = useTransform(smoothProgress, 
+    isMobile ? [0, 0.45, 0.55] : [0, 0.08, 0.65, 0.75], 
+    isMobile ? [1, 1, 0] : [1, 1, 0, 0]
+  );
+  const leftColY = useTransform(smoothProgress, 
+    isMobile ? [0, 0.45, 0.55] : [0, 0.1, 0.65, 0.75], 
+    isMobile ? [0, 0, -80] : [0, 0, -60, -100]
+  );
 
-  const rightColOpacity = useTransform(smoothProgress, [0.1, 0.2, 0.70, 0.78], [0, 1, 1, 0]);
-  const rightColY = useTransform(smoothProgress, [0.1, 0.78], [isMobile ? "60vh" : "15vh", isMobile ? "-140vh" : "-55vh"]);
+  const rightColOpacity = useTransform(smoothProgress, 
+    isMobile ? [0.40, 0.50, 0.85, 0.95] : [0.05, 0.15, 0.70, 0.78], 
+    [0, 1, 1, 0]
+  );
+  const rightColY = useTransform(smoothProgress, 
+    isMobile ? [0.40, 0.85] : [0.05, 0.78], 
+    [isMobile ? "80vh" : "20vh", isMobile ? "-140vh" : "-60vh"]
+  );
 
   // Curve Drawing Progress
   const pathProgress = useTransform(smoothProgress, [0.05, 0.70], [0, 1]);
 
   // --- 3. Cinematic Video Expansion (Overlapped for Gap Fix) ---
-  const videoOpacity = useTransform(smoothProgress, [0.68, 0.78], [0, 1]);
-  const videoY = useTransform(smoothProgress, [0.68, 0.95], [80, 0]);
+  const videoOpacity = useTransform(smoothProgress, [0.68, 0.75], [0, 1]);
+  const videoY = useTransform(smoothProgress, [0.68, 0.85], [80, 0]);
   
   // High-performance clip-path reveal
-  const clipPathMobile = useTransform(smoothProgress, [0.70, 0.95], ["inset(30% 20% 30% 20% round 40px)", "inset(0% 0% 0% 0% round 24px)"]);
-  const clipPathDesktop = useTransform(smoothProgress, [0.70, 0.95], ["inset(25% 30% 25% 30% round 48px)", "inset(0% 0% 0% 0% round 24px)"]);
+  const clipPathMobile = useTransform(smoothProgress, [0.70, 0.85], ["inset(30% 20% 30% 20% round 40px)", "inset(0% 0% 0% 0% round 24px)"]);
+  const clipPathDesktop = useTransform(smoothProgress, [0.70, 0.85], ["inset(25% 30% 25% 30% round 48px)", "inset(0% 0% 0% 0% round 24px)"]);
   const clipPathBase = isMobile ? clipPathMobile : clipPathDesktop;
 
-  const imageScale = useTransform(smoothProgress, [0.70, 0.95], [1.3, 1]);
-  const glowOpacity = useTransform(smoothProgress, [0.70, 0.95], [0, 0.5]);
+  const imageScale = useTransform(smoothProgress, [0.70, 0.85], [1.3, 1]);
+  const glowOpacity = useTransform(smoothProgress, [0.70, 0.85], [0, 0.5]);
 
-  const ctaOpacity = useTransform(smoothProgress, [0.90, 1.0], [0, 1]);
-  const ctaY = useTransform(smoothProgress, [0.90, 1.0], [30, 0]);
+  const ctaOpacity = useTransform(smoothProgress, [0.85, 0.95], [0, 1]);
+  const ctaY = useTransform(smoothProgress, [0.85, 0.95], [30, 0]);
 
   return (
     <section 
@@ -109,7 +163,7 @@ export function ImmersiveAboutSection() {
            <svg className="w-full h-full drop-shadow-2xl opacity-90" viewBox="0 0 1000 1000" preserveAspectRatio="none" fill="none">
              <motion.path 
                 d={isMobile 
-                  ? "M 1100,100 C 800,50 400,200 400,400 C 400,600 900,700 600,900 C 300,1100 -200,900 -200,900" 
+                  ? "M 1000,100 Q 800,50 400,400 T 600,900" 
                   : "M 1100,200 C 700,200 600,300 400,300 C 200,300 50,250 50,450 C 50,650 250,700 400,600 C 600,450 400,900 200,1100"}
                 stroke="url(#lusion-blue)"
                 strokeWidth={isMobile ? "40" : "45"}
@@ -134,7 +188,7 @@ export function ImmersiveAboutSection() {
               {/* Left Column: Sticky-like Headline */}
               <motion.div 
                 style={{ opacity: leftColOpacity, y: leftColY }} 
-                className="w-full md:w-[40%] flex flex-col mb-12 md:mb-0 md:pr-10 text-center md:text-left pointer-events-auto"
+                className="w-full md:w-[40%] flex flex-col mb-12 md:mb-0 md:pr-10 text-center md:text-left pointer-events-auto will-change-[transform,opacity]"
               >
                 <div className="inline-flex mx-auto md:mx-0 items-center justify-center md:justify-start gap-2 px-4 py-2 bg-blue-50 border border-blue-100/50 rounded-full w-max text-blue-600 font-bold text-xs uppercase tracking-widest mb-6">
                   Who we are
@@ -157,48 +211,12 @@ export function ImmersiveAboutSection() {
               {/* Right Column: Scrolling Cards */}
               <motion.div 
                 style={{ opacity: rightColOpacity, y: rightColY }} 
-                className="w-full md:w-[60%] flex flex-col gap-6 md:gap-10 md:pl-10 relative"
+                className="w-full md:w-[60%] flex flex-col gap-6 md:gap-10 md:pl-10 relative will-change-transform transform-gpu"
               >
 
-                {cards.map((card, i) => (
-                  <div key={i} className="relative p-6 md:p-10 group">
-                     {/* Frosted Glass Background (Z varies to create weaving effect) */}
-                     <div className={`absolute inset-0 bg-white/70 backdrop-blur-2xl border border-slate-200/60 rounded-[2rem] shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-all duration-500 group-hover:bg-white/95 group-hover:shadow-[0_40px_80px_-20px_rgba(59,130,246,0.1)] ${card.bgZ}`} />
-                     
-                     {/* Content (Always on Top) */}
-                     <div className="relative z-20">
-                         <div className="flex items-center justify-between mb-6">
-                            <div className="w-10 h-10 md:w-12 md:h-12 bg-white rounded-xl md:rounded-2xl flex items-center justify-center shadow-md border border-slate-100 group-hover:scale-110 transition-transform">
-                               {card.icon}
-                            </div>
-                            <div className="flex flex-col items-end gap-1">
-                               {card.badge && (
-                                 <span className="px-3 py-1 bg-slate-900 text-white text-[8px] font-black uppercase tracking-widest rounded-full">
-                                    {card.badge}
-                                 </span>
-                               )}
-                               {card.trust && (
-                                 <span className="text-[7px] font-bold text-blue-600 uppercase tracking-widest flex items-center gap-1 text-right">
-                                    <Sparkles className="w-2 h-2" /> {card.trust}
-                                 </span>
-                               )}
-                            </div>
-                         </div>
-                         <h3 className="text-xl md:text-3xl font-black text-slate-900 tracking-tight mb-3 md:mb-5 drop-shadow-sm group-hover:text-blue-600 transition-colors">
-                            {card.title}
-                         </h3>
-                         <p className="text-slate-600 text-sm md:text-lg leading-relaxed font-medium drop-shadow-sm mb-6">
-                            {card.content}
-                         </p>
-
-                         {card.hasCTA && (
-                           <Link href="#contact" className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all active:scale-95 shadow-lg shadow-blue-600/20">
-                              Build My Strategy <ArrowRight className="w-3 h-3" />
-                           </Link>
-                         )}
-                     </div>
-                  </div>
-                ))}
+                  {cards.map((card, i) => (
+                    <CardItem key={i} card={card} i={i} />
+                  ))}
               </motion.div>
             </div>
 
@@ -209,7 +227,7 @@ export function ImmersiveAboutSection() {
                 y: videoY,
                 position: "absolute",
               }}
-              className="w-full flex flex-col items-center justify-center z-10 pointer-events-auto"
+              className="w-full flex flex-col items-center justify-center z-10 pointer-events-auto will-change-[transform,opacity]"
             >
                 {/* Cinematic Core Glow */}
                 <motion.div 
@@ -222,9 +240,9 @@ export function ImmersiveAboutSection() {
                     clipPath: mounted ? clipPathBase : "none",
                     WebkitClipPath: mounted ? clipPathBase : "none" 
                   }}
-                  className="w-[92vw] md:w-[85vw] h-[45vh] md:h-[65vh] relative group border border-slate-200/50 will-change-[clip-path]"
+                  className="w-[92vw] md:w-[85vw] h-[45vh] md:h-[65vh] relative group border border-slate-200/50 will-change-[clip-path] transform-gpu backface-hidden"
                 >
-                  <motion.div style={{ scale: imageScale }} className="absolute inset-0 w-full h-full origin-center">
+                  <motion.div style={{ scale: imageScale }} className="absolute inset-0 w-full h-full origin-center transform-gpu">
                     <Image
                       src={aboutThumbnail}
                       alt="TopRank Digital Service – Strategy Showreel"

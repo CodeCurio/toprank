@@ -1,28 +1,26 @@
 "use client";
- 
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+  
+import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { 
   Building2, 
   ShoppingBag, 
   GraduationCap, 
-  Stethoscope, 
   Home, 
   Utensils, 
   Briefcase,
   MapPin,
   CheckCircle2,
-  Sparkles,
   ArrowRight,
-  ShieldCheck,
   TrendingUp,
   HeartPulse,
   Activity,
   Globe2,
-  Zap,
-  Target
+  Target,
+  Zap
 } from "lucide-react";
 import Link from "next/link";
+import { GrowthEngine } from "@/components/ui/GrowthEngine";
 
 const cities = [
   "Lucknow", "Delhi NCR", "Mumbai", "Bangalore", "Kanpur", "Hyderabad", "Pune", "Chandigarh", "Jaipur", "Ahmedabad"
@@ -78,120 +76,81 @@ const industries = [
     metrics: { label: "Qualified Leads", value: "3x" },
     color: "from-slate-600 to-slate-800",
     bg: "bg-slate-50/20"
-  },
-  {
-    name: "Custom Verticals",
-    description: "Don't see your industry? We build custom growth engines for any high-stakes sector.",
-    icon: <Target className="w-6 h-6" />,
-    metrics: { label: "Success Rate", value: "100%" },
-    color: "from-slate-800 to-slate-950",
-    bg: "bg-slate-50/10"
   }
 ];
 
 export function ServingAreas() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"]
-  });
-
-  const y1 = useTransform(scrollYProgress, [0, 1], [0, -100]);
-  const y2 = useTransform(scrollYProgress, [0, 1], [0, 100]);
-  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
 
   return (
-    <section ref={sectionRef} className="relative py-32 md:py-48 bg-white overflow-hidden" id="serving-areas">
+    <section ref={sectionRef} className="relative py-24 md:py-32 bg-white overflow-hidden" id="serving-areas">
       
-      {/* 1. IMMERSIVE BACKGROUND: SCANNING MESH */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-         {/* Adaptive Digital Grid */}
-         <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:60px_60px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
-         
-         {/* Animated Scanning Radar Lines */}
-         <motion.div 
-            style={{ y: y1, opacity }}
-            className="absolute top-0 left-0 w-full h-[600px] bg-gradient-to-b from-blue-50/25 to-transparent"
-         />
-         
-         {/* Floating Decorative Orbs */}
-         <motion.div 
-            style={{ y: y2 }}
-            className="absolute top-1/4 -right-24 w-[30rem] h-[30rem] bg-blue-100/20 rounded-full blur-[120px]" 
-         />
-         <motion.div 
-            style={{ y: y1 }}
-            className="absolute bottom-1/4 -left-24 w-[28rem] h-[28rem] bg-rose-100/10 rounded-full blur-[120px]" 
-         />
-      </div>
+      {/* Background Ambience (Consistent with Services/Hero) */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[600px] bg-[radial-gradient(circle_at_50%_0%,#e2e8f0,transparent)] opacity-40 pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(#0f172a08_1px,transparent_1px)] [background-size:48px_48px] pointer-events-none" />
 
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
         
-        {/* 2. KINETIC HEADER: AUTHORITY TITLE */}
-        <div className="flex flex-col mb-24 md:mb-32">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="inline-flex items-center gap-3 px-5 py-2 bg-slate-900 rounded-full text-white text-[10px] font-black uppercase tracking-[0.4em] mb-12 shadow-2xl shadow-slate-950/20 w-fit"
-          >
-            <Globe2 className="w-3.5 h-3.5 text-blue-400" /> GLOBAL INFRASTRUCTURE
-          </motion.div>
+        {/* PREMIUM HEADER - REDESIGNED FOR CONSISTENCY */}
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-12 mb-24 lg:mb-32 relative">
           
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-12">
-            <h2 className="text-6xl md:text-8xl lg:text-[10rem] font-black text-slate-900 tracking-tighter leading-[0.8] mb-4">
-              <motion.span 
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                className="block"
-              >
-                Scalable.
-              </motion.span>
-              <motion.span 
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-rose-500 block"
-              >
+          <div className="max-w-3xl flex-1 relative z-10">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="inline-flex items-center gap-2.5 px-4 py-2 bg-slate-900 border border-slate-800 rounded-full text-white text-[10px] font-black uppercase tracking-[0.4em] mb-8 shadow-xl shadow-slate-950/20"
+            >
+              <Globe2 className="w-3.5 h-3.5 text-blue-400" /> Global Infrastructure
+            </motion.div>
+            
+            <h2 className="text-4xl md:text-5xl lg:text-7xl font-black text-slate-900 tracking-tighter leading-[1.05] mb-8">
+              Scalable Systems. <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-rose-500">
                 Zero Borders.
-              </motion.span>
+              </span>
             </h2>
 
-            <motion.div 
-               initial={{ opacity: 0, scale: 0.9 }}
-               whileInView={{ opacity: 1, scale: 1 }}
-               className="max-w-sm lg:pb-6 border-l-2 border-slate-100 pl-8 ml-4"
-            >
-               <p className="text-slate-500 text-lg md:text-xl font-bold leading-relaxed mb-8 italic">
-                  Digital dominance across every major city and high-stakes industry.
-               </p>
-               <div className="flex items-center gap-8">
-                  <div className="flex flex-col">
-                     <span className="text-3xl font-black text-slate-900 leading-none">10+</span>
-                     <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-2">Active Hubs</span>
-                  </div>
-                  <div className="w-px h-10 bg-slate-100" />
-                  <div className="flex flex-col">
-                     <span className="text-3xl font-black text-slate-900 leading-none">100%</span>
-                     <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-2">Sector Ready</span>
-                  </div>
-               </div>
-            </motion.div>
+            <div className="max-w-xl lg:pt-4 border-l-4 border-blue-600 pl-6 lg:pl-8">
+              <p className="text-slate-600 text-lg md:text-xl font-bold leading-relaxed mb-8 italic">
+                Digital dominance across every major city and high-stakes industry, built to capture authority on a global scale.
+              </p>
+              <div className="flex items-center gap-12">
+                 <div className="flex flex-col">
+                    <span className="text-4xl font-black text-slate-900 leading-none">10+</span>
+                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-2">Active Hubs</span>
+                 </div>
+                 <div className="w-px h-10 bg-slate-200" />
+                 <div className="flex flex-col">
+                    <span className="text-4xl font-black text-slate-900 leading-none">100%</span>
+                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-2">Sector Ready</span>
+                 </div>
+              </div>
+            </div>
+          </div>
+
+          {/* REAL-TIME GROWTH ENGINE - RELATABLE & CREATIVE */}
+          <div className="hidden lg:block w-full max-w-[500px] relative z-0 mt-8 lg:mt-0">
+             <GrowthEngine />
+             {/* Decorative Label Connector */}
+             <div className="absolute -left-12 top-1/2 -translate-y-1/2 flex items-center gap-4 opacity-40">
+                <div className="w-24 h-px bg-slate-300" />
+                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest whitespace-nowrap">Success Engine</span>
+             </div>
           </div>
         </div>
 
-        {/* 3. CITY GROWTH TICKER (Animated) */}
-        <div className="relative mb-32 overflow-hidden py-10 opacity-70 border-y border-slate-50">
+        {/* CITY GROWTH TICKER - REFINED FOR CONSISTENCY */}
+        <div className="relative mb-24 overflow-hidden py-10 opacity-70 border-y border-slate-100/60 bg-white/40 backdrop-blur-sm">
            <motion.div 
               animate={{ x: [0, -1800] }}
-              transition={{ duration: 35, repeat: Infinity, ease: "linear" }}
+              transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
               className="flex gap-4 items-center whitespace-nowrap"
            >
               {[...cities, ...cities, ...cities].map((city, idx) => (
                 <div 
                   key={idx}
-                  className="px-8 py-4 bg-white border border-slate-100 rounded-[2rem] text-slate-950 text-[10px] font-black uppercase tracking-[0.3em] flex items-center gap-3 hover:border-blue-400 hover:text-blue-600 transition-all shadow-sm"
+                  className="px-8 py-4 bg-white border border-slate-100 rounded-full text-slate-950 text-[10px] font-black uppercase tracking-[0.3em] flex items-center gap-3 hover:border-blue-300 hover:text-blue-600 transition-all shadow-sm"
                 >
                   <MapPin className="w-3.5 h-3.5 text-blue-600" />
                   {city}
@@ -200,176 +159,138 @@ export function ServingAreas() {
            </motion.div>
         </div>
 
-        {/* 4. SYMMETRICAL ZERO-GAP GRID */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        {/* BALANCED GRID - ALIGNED WITH SERVICES SECTION */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-10">
           
-          {/* COLUMN 1, ROW 1-2: HEALTHCARE HERO */}
+          {/* HEALTHCARE HERO CARD */}
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="lg:row-span-2 relative group"
+            className="lg:row-span-2 relative group flex flex-col h-full"
           >
-            <div className="absolute -inset-1 bg-gradient-to-r from-rose-500 to-pink-600 rounded-[3rem] blur opacity-20 group-hover:opacity-35 transition duration-1000" />
-            <div className="relative h-full bg-white border border-rose-100 rounded-[3rem] p-8 md:p-10 overflow-hidden flex flex-col shadow-2xl shadow-rose-500/5">
-               {/* Background Ghost Accent */}
+            <div className="absolute -inset-1 bg-gradient-to-r from-rose-500/20 to-pink-600/20 rounded-[2.5rem] blur opacity-20 group-hover:opacity-40 transition duration-1000" />
+            <div className="relative h-full bg-white border border-rose-100 rounded-[2.5rem] p-8 md:p-10 flex flex-col shadow-2xl shadow-rose-500/5 overflow-hidden">
+               {/* Background Accent */}
                <HeartPulse className="absolute -bottom-10 -right-10 w-64 h-64 text-rose-500/5 rotate-12 pointer-events-none group-hover:text-rose-500/10 transition-colors" />
                
-               {/* Scan Overlay Effect */}
-               <motion.div 
-                  animate={{ y: ["-100%", "200%"] }}
-                  transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                  className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-rose-500/10 to-transparent skew-y-12 pointer-events-none"
-               />
-
-               <div className="flex justify-between items-start mb-14 relative z-10">
-                  <div className="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-rose-500 to-pink-600 rounded-[2rem] flex items-center justify-center text-white shadow-xl shadow-rose-500/30 group-hover:rotate-12 transition-transform duration-700">
-                     <HeartPulse className="w-10 h-10" />
+               <div className="flex justify-between items-start mb-12">
+                  <div className="w-16 h-16 bg-gradient-to-br from-rose-500 to-pink-600 rounded-2xl flex items-center justify-center text-white shadow-xl shadow-rose-500/30 group-hover:scale-110 transition-transform duration-500">
+                     <HeartPulse className="w-9 h-9" />
                   </div>
-                  <div className="flex flex-col items-end">
-                     <div className="px-4 py-1.5 bg-rose-500 text-white text-[9px] font-black uppercase tracking-[0.4em] rounded-full shadow-lg shadow-rose-500/20 mb-3">
+                  <div className="flex flex-col items-end gap-2">
+                     <div className="px-4 py-1.5 bg-rose-500 text-white text-[9px] font-black uppercase tracking-widest rounded-full shadow-lg shadow-rose-500/20">
                         Vertical Hero
                      </div>
-                     <div className="flex items-center gap-2 text-rose-500 text-[9px] font-black uppercase tracking-widest bg-rose-50 px-3 py-1 rounded-lg border border-rose-100">
+                     <div className="flex items-center gap-1.5 text-rose-500 text-[10px] font-black uppercase tracking-widest bg-rose-50 px-3 py-1 rounded-lg border border-rose-100">
                         <Activity className="w-3 h-3 animate-pulse" /> Live Pulse
                      </div>
                   </div>
                </div>
 
-               <div className="flex-grow relative z-10">
-                  <h3 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter leading-[0.9] mb-8">
+               <div className="flex-grow">
+                  <h3 className="text-3xl md:text-4xl font-black text-slate-900 tracking-tight leading-none mb-6 italic">
                      Healthcare & <br />
-                     <span className="text-rose-500">Practice.</span>
+                     <span className="text-rose-500">Dominance.</span>
                   </h3>
                   
-                  <div className="space-y-3 mb-10">
+                  <p className="text-slate-500 text-sm font-medium leading-relaxed mb-8">
+                     Specialized patient acquisition systems for hospitals and clinics where trust is the primary driver.
+                  </p>
+
+                  <div className="space-y-4 mb-10 pt-6 border-t border-slate-100">
                      {industries[0].services?.map((s) => (
                         <div key={s} className="flex items-center gap-3">
-                           <CheckCircle2 className="w-4 h-4 text-rose-500" />
+                           <CheckCircle2 className="w-4 h-4 text-rose-500/60" />
                            <span className="text-[11px] font-black text-slate-600 uppercase tracking-widest">{s}</span>
                         </div>
                      ))}
                   </div>
-
-                  <div className="p-6 bg-slate-50 rounded-[2rem] border border-slate-100 mb-10 text-center">
-                      <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-2">{industries[0].metrics?.label}</span>
-                      <span className="text-4xl font-black text-rose-500 leading-none tracking-tighter">{industries[0].metrics?.value}</span>
-                  </div>
                </div>
 
-               <Link href="#contact" className="w-full py-5 bg-slate-950 hover:bg-rose-600 text-white rounded-[1.5rem] text-[11px] font-black uppercase tracking-[0.3em] flex items-center justify-center gap-2 transition-all active:scale-95 shadow-xl shadow-slate-900/20 group/btn">
-                  Scale Practice <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-               </Link>
+               <div className="mt-auto">
+                 <div className="p-6 bg-rose-50/50 rounded-2xl border border-rose-100 mb-8 text-center backdrop-blur-sm">
+                     <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest block mb-2">{industries[0].metrics?.label}</span>
+                     <span className="text-4xl font-black text-rose-600 leading-none tracking-tighter">{industries[0].metrics?.value}</span>
+                 </div>
+
+                 <Link href="#contact" className="w-full py-5 bg-slate-900 hover:bg-black text-white rounded-2xl text-[11px] font-black uppercase tracking-widest flex items-center justify-center gap-2 transition-all active:scale-95 shadow-xl shadow-slate-900/10 group/btn">
+                    Scale Practice <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1.5 transition-transform" />
+                 </Link>
+               </div>
             </div>
           </motion.div>
 
-          {/* DENSE SECONDARY CARDS (Filling Row 1 & 2 after Hero) */}
-          {industries.filter(i => !i.isSpecialty).slice(0, 4).map((industry, index) => (
+          {/* SECONDARY INDUSTRY CARDS */}
+          {industries.filter(i => !i.isSpecialty).map((industry, index) => (
             <motion.div
               key={industry.name}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              whileHover={{ y: -8 }}
-              className={`p-8 ${industry.bg} border border-slate-100 rounded-[2.5rem] hover:bg-white hover:border-blue-200 hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-500 group relative overflow-hidden flex flex-col`}
+              className="p-8 md:p-10 bg-white border border-slate-200/60 rounded-[2.5rem] hover:shadow-2xl hover:shadow-blue-500/10 hover:border-blue-200 transition-all duration-500 group relative overflow-hidden flex flex-col shadow-sm"
             >
-              <div className="absolute -bottom-4 -right-4 text-slate-900/5 group-hover:text-blue-600/10 transition-colors duration-500 scale-150 rotate-6">
+              <div className="absolute -bottom-4 -right-4 text-slate-200/40 group-hover:text-blue-500/10 transition-colors duration-500 scale-150 rotate-6">
                 {industry.icon}
               </div>
 
-              <div className="flex items-center justify-between mb-8 relative z-10">
-                 <div className="w-12 h-12 rounded-xl bg-white border border-slate-100 flex items-center justify-center shadow-md text-slate-900 group-hover:text-blue-600">
+              <div className="flex items-start justify-between mb-10">
+                 <div className="w-14 h-14 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-center shadow-sm text-slate-900 group-hover:bg-blue-600 group-hover:text-white transition-all duration-500">
                     {industry.icon}
                  </div>
-                 <div className="bg-white/80 backdrop-blur-sm px-3 py-1.5 rounded-xl border border-slate-100 text-right">
-                    <span className="text-[12px] font-black text-slate-900 leading-none block">{industry.metrics?.value}</span>
-                    <span className="text-[7px] font-black text-slate-400 uppercase tracking-widest">{industry.metrics?.label}</span>
+                 <div className="bg-slate-50 border border-slate-100 px-4 py-2 rounded-xl text-right group-hover:bg-white transition-colors">
+                    <span className="text-sm font-black text-slate-900 leading-none block">{industry.metrics?.value}</span>
+                    <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest mt-1 block">{industry.metrics?.label}</span>
                  </div>
               </div>
               
-              <h3 className="text-xl font-black text-slate-900 tracking-tight mb-3 group-hover:text-blue-600 transition-colors relative z-10">
+              <h3 className="text-2xl font-black text-slate-900 tracking-tight mb-4 group-hover:text-blue-600 transition-colors">
                 {industry.name}
               </h3>
-              <p className="text-slate-500 text-[12px] font-bold leading-relaxed mb-8 relative z-10 flex-grow pr-2">
+              <p className="text-slate-500 text-sm font-medium leading-relaxed mb-10 pr-4">
                 {industry.description}
               </p>
 
-              <div className="flex items-center justify-between pt-5 border-t border-slate-950/5 relative z-10">
-                 <div className="flex items-center gap-2 text-[8px] font-black text-slate-400 uppercase tracking-[0.2em] group-hover:text-blue-600 transition-colors">
-                    <TrendingUp className="w-3.5 h-3.5" /> High Precision
+              <div className="mt-auto flex items-center justify-between pt-6 border-t border-slate-100">
+                 <div className="flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-widest group-hover:text-blue-600 transition-colors">
+                    <TrendingUp className="w-4 h-4" /> Global Systems
                  </div>
-                 <div className="w-8 h-8 rounded-full bg-slate-950 flex items-center justify-center text-white scale-90 group-hover:scale-100 group-hover:bg-blue-600 transition-all shadow-lg group-hover:shadow-blue-500/30">
-                    <ArrowRight className="w-4 h-4" />
+                 <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-900 group-hover:bg-blue-600 group-hover:text-white transition-all shadow-sm active:scale-95 cursor-pointer">
+                    <ArrowRight className="w-5 h-5" />
                  </div>
               </div>
             </motion.div>
           ))}
 
-          {/* ROW 3: LAST INDUSTRY + SPANNING CTA */}
+          {/* SPANNING CTA CARD - ALIGNED WITH STRATEGY BOX */}
           <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              whileHover={{ y: -8 }}
-              className={`p-8 ${industries[5].bg} border border-slate-100 rounded-[2.5rem] hover:bg-white hover:border-blue-200 hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-500 group relative overflow-hidden flex flex-col`}
-          >
-              <div className="absolute -bottom-4 -right-4 text-slate-900/5 group-hover:text-blue-600/10 transition-colors duration-500 scale-150 rotate-6">
-                {industries[5].icon}
-              </div>
-
-              <div className="flex items-center justify-between mb-8 relative z-10">
-                 <div className="w-12 h-12 rounded-xl bg-white border border-slate-100 flex items-center justify-center shadow-md text-slate-900 group-hover:text-blue-600">
-                    {industries[5].icon}
-                 </div>
-                 <div className="bg-white/80 backdrop-blur-sm px-3 py-1.5 rounded-xl border border-slate-100 text-right">
-                    <span className="text-[12px] font-black text-slate-900 leading-none block">{industries[5].metrics?.value}</span>
-                    <span className="text-[7px] font-black text-slate-400 uppercase tracking-widest">{industries[5].metrics?.label}</span>
-                 </div>
-              </div>
-              
-              <h3 className="text-xl font-black text-slate-900 tracking-tight mb-3 group-hover:text-blue-600 transition-colors relative z-10">
-                {industries[5].name}
-              </h3>
-              <p className="text-slate-500 text-[12px] font-bold leading-relaxed mb-8 relative z-10 flex-grow pr-2">
-                {industries[5].description}
-              </p>
-
-              <div className="flex items-center justify-between pt-5 border-t border-slate-950/5 relative z-10">
-                 <div className="flex items-center gap-2 text-[8px] font-black text-slate-400 uppercase tracking-[0.2em] group-hover:text-blue-600 transition-colors">
-                    <TrendingUp className="w-3.5 h-3.5" /> High Precision
-                 </div>
-                 <div className="w-8 h-8 rounded-full bg-slate-950 flex items-center justify-center text-white scale-90 group-hover:scale-100 group-hover:bg-blue-600 transition-all shadow-lg group-hover:shadow-blue-500/30">
-                    <ArrowRight className="w-4 h-4" />
-                 </div>
-              </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0.98 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="md:col-span-2 p-10 bg-slate-950 rounded-[2.5rem] relative overflow-hidden group flex flex-col justify-center"
+            className="md:col-span-2 p-10 lg:p-14 bg-slate-950 rounded-[2.5rem] relative overflow-hidden group flex flex-col justify-center shadow-2xl shadow-slate-900/40"
           >
-             <div className="absolute top-0 right-0 w-64 h-64 bg-blue-600/20 rounded-full blur-[80px]" />
-             <div className="absolute bottom-0 left-0 w-64 h-64 bg-rose-600/10 rounded-full blur-[80px]" />
+             {/* Decorative Elements */}
+             <div className="absolute top-0 right-0 w-80 h-80 bg-blue-600/20 rounded-full blur-[100px] -mr-20 -mt-20" />
+             <div className="absolute bottom-0 left-0 w-80 h-80 bg-rose-600/10 rounded-full blur-[100px] -ml-20 -mb-20" />
              
-             <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-10">
-                <div className="flex items-center gap-8">
-                   <div className="w-20 h-20 rounded-full bg-white/5 border border-white/10 flex items-center justify-center animate-spin-slow grow-0 shrink-0">
-                      <Globe2 className="w-10 h-10 text-white" />
+             <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-12">
+                <div className="flex items-center gap-10">
+                   <div className="w-24 h-24 rounded-full bg-white/5 border border-white/10 flex items-center justify-center animate-spin-slow grow-0 shrink-0 shadow-2xl">
+                      <Globe2 className="w-12 h-12 text-white" />
                    </div>
                    <div className="text-left">
-                      <h3 className="text-3xl font-black text-white tracking-tighter leading-none mb-3 uppercase">
-                         Zero Borders.
+                      <h3 className="text-3xl md:text-4xl font-black text-white tracking-tighter leading-tight mb-4 uppercase italic">
+                         Zero Borders. <br />
+                         <span className="text-blue-500">Maximum Impact.</span>
                       </h3>
-                      <p className="text-slate-400 text-[11px] font-bold leading-relaxed max-w-[240px]">
-                         Regardless of your sector, we build the digital infrastructure that captures authority.
+                      <p className="text-slate-400 text-sm font-medium leading-relaxed max-w-sm">
+                         Regardless of your sector, we build the digital infrastructure that captures authority and scales as you grow.
                       </p>
                    </div>
                 </div>
-                <Link href="#contact" className="inline-flex items-center gap-4 px-10 py-5 bg-white hover:bg-blue-400 text-slate-950 hover:text-white font-black text-[12px] uppercase tracking-widest rounded-2xl transition-all active:scale-95 group/btn shadow-[0_20px_40px_-5px_rgba(255,255,255,0.15)] shrink-0">
-                   Start Dominance <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
+                <Link href="#contact" className="inline-flex items-center gap-4 px-10 py-5 bg-white hover:bg-blue-600 text-slate-950 hover:text-white font-black text-xs uppercase tracking-widest rounded-2xl transition-all active:scale-95 group/btn shadow-xl shadow-white/5 shrink-0">
+                   Capture Market Authority <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-2 transition-transform" />
                 </Link>
              </div>
           </motion.div>
@@ -379,5 +300,3 @@ export function ServingAreas() {
     </section>
   );
 }
-
-
