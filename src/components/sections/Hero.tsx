@@ -302,7 +302,7 @@ export function Hero() {
                 className="absolute -bottom-6 -right-2 sm:bottom-[15%] lg:-right-8 bg-white/95 md:bg-white/95 md:backdrop-blur-xl p-3.5 sm:p-5 rounded-2xl sm:rounded-3xl shadow-[0_20px_40px_-15px_rgba(0,0,0,0.15)] border border-white z-40 scale-[0.85] sm:scale-100 origin-bottom-right will-change-transform"
               >
                 <div className="flex items-center gap-2 sm:gap-3 mb-1 sm:mb-2">
-                  <div className="bg-green-100 text-green-600 p-2 sm:p-2.5 rounded-lg sm:rounded-xl shrink-0">
+                  <div className="bg-blue-100 text-blue-600 p-2 sm:p-2.5 rounded-lg sm:rounded-xl shrink-0">
                     {(() => {
                       const Icon = slide.m2_icon;
                       return <Icon className="w-5 h-5 stroke-2" />;
@@ -311,11 +311,11 @@ export function Hero() {
                   <p className="font-bold text-slate-800 tracking-tight">{slide.m2_label}</p>
                 </div>
                 <p className="text-3xl font-black text-slate-900 flex items-end tracking-tight">
-                  {slide.m2_value} <span className="text-sm font-black text-green-500 ml-1 mb-1">↑</span>
+                  {slide.m2_value} <span className="text-sm font-black text-blue-500 ml-1 mb-1">↑</span>
                 </p>
                 
                 <div className="mt-4 pt-3 border-t border-slate-100/80 flex items-center gap-2 text-[13px] font-bold text-slate-600 whitespace-nowrap">
-                  <CheckCircle className="w-4 h-4 text-green-500 fill-green-100" /> {slide.m2_sub}
+                  <CheckCircle className="w-4 h-4 text-blue-500 fill-blue-100" /> {slide.m2_sub}
                 </div>
               </motion.div>
             ))}

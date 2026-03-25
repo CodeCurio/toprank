@@ -195,8 +195,8 @@ function InteractiveJourney() {
            className="absolute inset-0 bg-white z-30 flex flex-col p-5"
         >
            {/* Top Success Banner */}
-           <div className="flex items-center gap-3 bg-green-50 border border-green-100 p-3 rounded-lg mb-4">
-              <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center shrink-0">
+           <div className="flex items-center gap-3 bg-blue-50 border border-blue-100 p-3 rounded-lg mb-4">
+              <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center shrink-0 shadow-lg shadow-blue-600/20">
                 <CheckCircle2 className="w-5 h-5 text-white" />
               </div>
               <div className="flex flex-col">
@@ -418,7 +418,7 @@ export function HowWeGrow() {
                  <div className="absolute -inset-1 bg-gradient-to-r from-orange-400 to-pink-500 rounded-xl blur opacity-30 group-hover:opacity-70 transition duration-700" />
                  <button className="relative px-6 py-3.5 bg-white border border-orange-100 rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.06)] flex items-center gap-2 font-bold text-slate-800 pointer-events-none">
                    Book Appointment
-                   <CheckCircle2 className="w-5 h-5 text-green-500 transition-transform duration-500 group-hover:scale-125" />
+                   <CheckCircle2 className="w-5 h-5 text-blue-600 transition-transform duration-500 group-hover:scale-125" />
                  </button>
               </div>
               <motion.div 

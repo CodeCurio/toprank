@@ -50,8 +50,8 @@ const industries = [
     description: "Scaling D2C brands via automated sales engines and high-ROAS targeting.",
     icon: <ShoppingBag className="w-6 h-6" />,
     metrics: { label: "ROAS Growth", value: "4.8x" },
-    color: "from-emerald-500 to-teal-600",
-    bg: "bg-emerald-50/20"
+    color: "from-blue-500 to-blue-600",
+    bg: "bg-blue-50/20"
   },
   {
     name: "Education",

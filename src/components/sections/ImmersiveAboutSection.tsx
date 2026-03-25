@@ -107,7 +107,7 @@ export function ImmersiveAboutSection() {
     {
       title: "Scalable Acquisition Systems",
       content: "Our methodology is built for scale. We don't just 'do SEO'—we build a predictable customer acquisition machine that grows with your business ambitions.",
-      icon: <ShieldCheck className="w-6 h-6 text-emerald-600" />,
+      icon: <ShieldCheck className="w-6 h-6 text-blue-600" />,
       bgZ: "z-10",
       badge: "Industry Leader",
       hasCTA: true

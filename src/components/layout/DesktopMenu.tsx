@@ -8,7 +8,8 @@ import { ChevronDown, Code, Megaphone, Search, PenTool, MapPin,
   BarChart, Smartphone, Users, Globe, ShoppingCart, Video, 
   LayoutTemplate, Palette, Workflow, Mail, MessageSquare,
   Monitor, Layout, Database, TrendingUp, Presentation,
-  Layers, Navigation, Phone, ArrowRight, Map
+  Layers, Navigation, Phone, ArrowRight, Map, Target, ShieldCheck,
+  FileText, MessageCircle, Sparkles, Share2, Zap, ClipboardCheck
 } from "lucide-react";
 
 import LkoOfficeImg from "../images/TopRank LKO office 1.jpg";
@@ -16,60 +17,148 @@ import ChdOfficeImg from "../images/Chandigarh Office TopRank.jpg";
 
 // Rich Service Data Structure with Sub-Services
 const SERVICES_DATA = {
-  "web-dev": {
-    name: "Web Development",
-    icon: Code,
-    bgColor: "bg-orange-50",
-    color: "text-orange-600",
-    description: "High-performance websites & web apps built for speed.",
-    href: "/services/web-development",
+  "digital-marketing": {
+    name: "Digital Marketing",
+    icon: Megaphone,
+    bgColor: "bg-blue-50",
+    color: "text-blue-600",
+    description: "Multi-channel growth strategies to scale your brand.",
+    href: "/services/digital-marketing",
     subServices: [
-      { name: "CMS Development", desc: "Easily manage your content", icon: Layers, href: "/services/web-development/cms" },
-      { name: "E-Commerce Stores", desc: "High-conversion online shops", icon: ShoppingCart, href: "/services/web-development/ecommerce" },
-      { name: "WordPress Development", desc: "Custom themes & plugins", icon: Layout, href: "/services/web-development/wordpress" },
-      { name: "Custom Web Apps", desc: "React, Next.js & Node.js", icon: Monitor, href: "/services/web-development/custom" },
+      { name: "Social Media Marketing", desc: "Build brand awareness", icon: Share2, href: "/services/digital-marketing/social-media" },
+      { name: "Social Media Management", desc: "Professional profile handling", icon: Users, href: "/services/digital-marketing/management" },
+      { name: "Content Marketing", desc: "Value-driven content strategy", icon: FileText, href: "/services/digital-marketing/content" },
+      { name: "Influencer Marketing", desc: "Leverage industry authority", icon: Sparkles, href: "/services/digital-marketing/influencer" },
+      { name: "Online Reputation (ORM)", desc: "Maintain a positive image", icon: ShieldCheck, href: "/services/digital-marketing/orm" },
+      { name: "Lead Generation", desc: "High-intent lead capture", icon: Target, href: "/services/digital-marketing/leads" },
     ]
   },
   "seo": {
-    name: "SEO Optimization",
+    name: "SEO Services",
     icon: Search,
-    bgColor: "bg-blue-50",
-    color: "text-blue-600",
+    bgColor: "bg-indigo-50",
+    color: "text-indigo-600",
     description: "Dominate search rankings and drive organic traffic.",
     href: "/services/seo",
     subServices: [
-      { name: "Local SEO (GMB)", desc: "Dominate your local market", icon: MapPin, href: "/services/seo/local" },
+      { name: "On-Page SEO", desc: "Content & Keyword tuning", icon: LayoutTemplate, href: "/services/seo/on-page" },
+      { name: "Off-Page SEO", desc: "Authority & Link building", icon: Globe, href: "/services/seo/off-page" },
       { name: "Technical SEO", desc: "Site speed & architecture", icon: Database, href: "/services/seo/technical" },
-      { name: "On-Page Optimization", desc: "Keyword-rich content tuning", icon: LayoutTemplate, href: "/services/seo/on-page" },
-      { name: "Link Building", desc: "High-authority backlinks", icon: Globe, href: "/services/seo/link-building" },
+      { name: "Keyword Research", desc: "High-intent search terms", icon: Search, href: "/services/seo/keywords" },
+      { name: "Competitor Analysis", desc: "Outrank your rivals", icon: BarChart, href: "/services/seo/competitor" },
+      { name: "SEO Audit", desc: "Complete health check-up", icon: ClipboardCheck, href: "/services/seo/audit" },
     ]
   },
-  "marketing": {
-    name: "Digital Marketing",
-    icon: Megaphone,
+  "local-seo": {
+    name: "Local SEO & GMB",
+    icon: MapPin,
+    bgColor: "bg-orange-50",
+    color: "text-orange-600",
+    description: "Dominate the local 'near me' search market.",
+    href: "/services/local-seo",
+    subServices: [
+      { name: "GMB Setup", desc: "Official business profile", icon: MapPin, href: "/services/local-seo/gmb-setup" },
+      { name: "GMB Optimization", desc: "Rank in the Local Pack", icon: Zap, href: "/services/local-seo/gmb-optimization" },
+      { name: "Map Ranking", desc: "Top visibility on Maps", icon: Navigation, href: "/services/local-seo/map-ranking" },
+      { name: "Review Management", desc: "Build customer trust", icon: MessageSquare, href: "/services/local-seo/reviews" },
+    ]
+  },
+  "web-dev": {
+    name: "Web Development",
+    icon: Code,
     bgColor: "bg-pink-50",
     color: "text-pink-600",
-    description: "Comprehensive strategies that convert clicks into clients.",
-    href: "/services/digital-marketing",
+    description: "High-performance websites built for conversion.",
+    href: "/services/web-development",
     subServices: [
-      { name: "B2B Lead Generation", desc: "High-quality targeted leads", icon: BarChart, href: "/services/digital-marketing/b2b" },
-      { name: "PPC & Google Ads", desc: "Maximized ROI campaigns", icon: TrendingUp, href: "/services/digital-marketing/ppc" },
-      { name: "Social Media Ads", desc: "Meta, LinkedIn & TikTok", icon: Users, href: "/services/digital-marketing/social-ads" },
-      { name: "Email Marketing", desc: "Automated nurturing flows", icon: Mail, href: "/services/digital-marketing/email" },
+      { name: "Business Website", desc: "Lead-focused corporate sites", icon: Monitor, href: "/services/web-development/business" },
+      { name: "E-commerce Development", desc: "Online stores that sell", icon: ShoppingCart, href: "/services/web-development/ecommerce" },
+      { name: "WordPress Development", desc: "Flexible & scalable sites", icon: Layout, href: "/services/web-development/wordpress" },
+      { name: "Website Speed", desc: "Lightning fast performance", icon: Zap, href: "/services/web-development/speed" },
     ]
   },
-  "brand": {
-    name: "Branding & Content",
+  "google-ads": {
+    name: "Google Ads / PPC",
+    icon: Target,
+    bgColor: "bg-rose-50",
+    color: "text-rose-600",
+    description: "Instant traffic and ROI-focused search ads.",
+    href: "/services/google-ads",
+    subServices: [
+      { name: "Search Ads", desc: "Appear at the top of Google", icon: Search, href: "/services/google-ads/search" },
+      { name: "Display Ads", desc: "Visual ads across the web", icon: Monitor, href: "/services/google-ads/display" },
+      { name: "YouTube Ads", desc: "Video ads that engage", icon: Video, href: "/services/google-ads/youtube" },
+      { name: "Remarketing", desc: "Target previous visitors", icon: Workflow, href: "/services/google-ads/remarketing" },
+    ]
+  },
+  "meta-ads": {
+    name: "Meta Ads (FB & IG)",
+    icon: Share2,
+    bgColor: "bg-blue-50",
+    color: "text-blue-500",
+    description: "Powerful social advertising that converts.",
+    href: "/services/meta-ads",
+    subServices: [
+      { name: "Facebook Ads", desc: "Target specific demographics", icon: Users, href: "/services/meta-ads/facebook" },
+      { name: "Instagram Ads", desc: "Visual storytelling for ROI", icon: Smartphone, href: "/services/meta-ads/instagram" },
+      { name: "Lead Ads", desc: "Direct customer acquisition", icon: Target, href: "/services/meta-ads/leads" },
+      { name: "Ad Creative Strategy", desc: "Winning ad designs", icon: Palette, href: "/services/meta-ads/strategy" },
+    ]
+  },
+  "whatsapp": {
+    name: "WhatsApp & AI",
+    icon: MessageCircle,
+    bgColor: "bg-blue-50",
+    color: "text-blue-600",
+    description: "Automated customer handling and support.",
+    href: "/services/whatsapp-automation",
+    subServices: [
+      { name: "WhatsApp API", desc: "Official Business API setup", icon: MessageCircle, href: "/services/whatsapp-automation/api" },
+      { name: "Chatbot Automation", desc: "24/7 automated support", icon: Workflow, href: "/services/whatsapp-automation/chatbot" },
+      { name: "Auto Reply System", desc: "Instant response triggers", icon: MessageSquare, href: "/services/whatsapp-automation/reply" },
+      { name: "AI Customer Handling", desc: "Smarter automated chats", icon: Monitor, href: "/services/whatsapp-automation/ai" },
+    ]
+  },
+  "branding": {
+    name: "Branding & Design",
     icon: Palette,
     bgColor: "bg-purple-50",
     color: "text-purple-600",
-    description: "Engaging content that tells your brand's unique story.",
+    description: "Creative visuals that define your brand.",
     href: "/services/branding",
     subServices: [
-      { name: "Brand Identity Design", desc: "Logos, Typography, Colors", icon: Palette, href: "/services/branding/identity" },
-      { name: "Video Production", desc: "High-end commercials & reels", icon: Video, href: "/services/branding/video" },
-      { name: "Copywriting", desc: "Persuasive sales copy", icon: PenTool, href: "/services/branding/copywriting" },
-      { name: "Pitch Decks", desc: "Investor-ready presentations", icon: Presentation, href: "/services/branding/pitch-decks" },
+      { name: "Logo Design", desc: "Iconic brand identity", icon: Palette, href: "/services/branding/logo" },
+      { name: "Social Media Creatives", desc: "Engaging post designs", icon: LayoutTemplate, href: "/services/branding/social-posts" },
+      { name: "Ad Creatives", desc: "High-CTR static & motion ads", icon: TrendingUp, href: "/services/branding/ads" },
+      { name: "Banner & Poster", desc: "Marketing collateral design", icon: Layout, href: "/services/branding/marketing-docs" },
+    ]
+  },
+  "content": {
+    name: "Content Creation",
+    icon: Video,
+    bgColor: "bg-red-50",
+    color: "text-red-500",
+    description: "Engaging video and written content.",
+    href: "/services/content-creation",
+    subServices: [
+      { name: "Reel / Short Video", desc: "Viral vertical video content", icon: Video, href: "/services/content-creation/reels" },
+      { name: "Video Editing", desc: "Professional post-production", icon: Monitor, href: "/services/content-creation/editing" },
+      { name: "Blog Writing", desc: "SEO-optimized articles", icon: FileText, href: "/services/content-creation/blogs" },
+      { name: "Copywriting", desc: "Persuasive sales copy", icon: PenTool, href: "/services/content-creation/copywriting" },
+    ]
+  },
+  "hosting": {
+    name: "Hosting & Support",
+    icon: ShieldCheck,
+    bgColor: "bg-slate-50",
+    color: "text-slate-600",
+    description: "Reliable infrastructure for your site.",
+    href: "/services/hosting",
+    subServices: [
+      { name: "Website Hosting", desc: "Cloud-based fast hosting", icon: Globe, href: "/services/hosting/cloud" },
+      { name: "Domain Management", desc: "DNS & Domain registration", icon: Search, href: "/services/hosting/domains" },
+      { name: "Website Maintenance", desc: "Software & plugin updates", icon: Workflow, href: "/services/hosting/maintenance" },
+      { name: "Security & Backup", desc: "Peace of mind for your data", icon: ShieldCheck, href: "/services/hosting/security" },
     ]
   }
 };
@@ -131,41 +220,39 @@ export function DesktopMenu() {
             >
               <div className="flex flex-row min-h-[440px]">
                 {/* Left Side: Service Categories */}
-                <div className="w-[45%] p-8 bg-white border-r border-slate-100 flex flex-col justify-between">
-                  <div>
-                    <h3 className="text-[13px] font-black tracking-widest text-slate-400 uppercase mb-6">Our Expertise</h3>
-                    <div className="flex flex-col space-y-2">
-                      {(Object.entries(SERVICES_DATA) as [keyof typeof SERVICES_DATA, typeof SERVICES_DATA[keyof typeof SERVICES_DATA]][]).map(([key, service]) => {
-                        const isActive = activeService === key;
-                        return (
-                          <div
-                            key={key}
-                            onMouseEnter={() => setActiveService(key)}
-                            className={`flex flex-row items-center p-3.5 rounded-xl cursor-pointer transition-all duration-200 ${
-                              isActive ? "bg-slate-50 ring-1 ring-slate-900/5 shadow-sm" : "hover:bg-slate-50/50"
-                            }`}
-                          >
-                            <div className={`flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-lg border border-slate-100/50 ${service.bgColor} ${service.color} transition-transform duration-300 ${isActive ? 'scale-110' : ''}`}>
-                              <service.icon className="h-5 w-5" />
-                            </div>
-                            <div className="ml-4">
-                              <p className={`text-[15px] font-bold transition-colors ${isActive ? "text-blue-600" : "text-slate-900"}`}>
-                                {service.name}
-                              </p>
-                              <p className="mt-0.5 text-[13px] text-slate-500 line-clamp-1">
-                                {service.description}
-                              </p>
-                            </div>
-                            {isActive && (
-                              <motion.div layoutId="active-indicator" className="ml-auto w-1.5 h-8 bg-blue-600 rounded-full" />
-                            )}
+                <div className="w-[45%] p-8 bg-white border-r border-slate-100 flex flex-col">
+                  <h3 className="text-[13px] font-black tracking-widest text-slate-400 uppercase mb-6 flex-shrink-0">Our Expertise</h3>
+                  <div className="flex flex-col space-y-1.5 overflow-y-auto pr-3 custom-scrollbar max-h-[500px]">
+                    {(Object.entries(SERVICES_DATA) as [keyof typeof SERVICES_DATA, typeof SERVICES_DATA[keyof typeof SERVICES_DATA]][]).map(([key, service]) => {
+                      const isActive = activeService === key;
+                      return (
+                        <div
+                          key={key}
+                          onMouseEnter={() => setActiveService(key)}
+                          className={`flex flex-row items-center p-3 rounded-xl cursor-pointer transition-all duration-200 ${
+                            isActive ? "bg-slate-50 ring-1 ring-slate-100 shadow-sm" : "hover:bg-slate-50/50"
+                          }`}
+                        >
+                          <div className={`flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-lg border border-slate-100/50 ${service.bgColor} ${service.color} transition-transform duration-300 ${isActive ? 'scale-110' : ''}`}>
+                            <service.icon className="h-4.5 w-4.5" />
                           </div>
-                        );
-                      })}
-                    </div>
+                          <div className="ml-4">
+                            <p className={`text-[14px] font-bold transition-colors ${isActive ? "text-blue-600" : "text-slate-900"}`}>
+                              {service.name}
+                            </p>
+                            <p className="mt-0.5 text-[12px] text-slate-500 line-clamp-1">
+                              {service.description}
+                            </p>
+                          </div>
+                          {isActive && (
+                            <motion.div layoutId="active-indicator" className="ml-auto w-1 h-6 bg-blue-600 rounded-full" />
+                          )}
+                        </div>
+                      );
+                    })}
                   </div>
                   
-                  <div className="mt-8 pt-6 border-t border-slate-100">
+                  <div className="mt-auto pt-6 border-t border-slate-100">
                      <Link href="/services" className="text-[14px] font-black text-blue-600 hover:text-blue-700 flex items-center group">
                         Explore All Services 
                         <motion.span className="ml-1 font-normal group-hover:translate-x-1 transition-transform" aria-hidden="true">→</motion.span>
@@ -307,7 +394,7 @@ export function DesktopMenu() {
                   </div>
 
                   <div className="flex gap-2.5">
-                      <Link href="/locations/lucknow" className="flex-1 bg-white border border-slate-200 hover:border-orange-200 hover:text-orange-600 text-slate-700 text-[13px] font-bold py-2.5 px-3 rounded-xl text-center transition-all shadow-sm">
+                      <Link href="/lucknow" className="flex-1 bg-white border border-slate-200 hover:border-orange-200 hover:text-orange-600 text-slate-700 text-[13px] font-bold py-2.5 px-3 rounded-xl text-center transition-all shadow-sm">
                         View Local SEO
                       </Link>
                       <a href="https://maps.google.com/?q=TopRank+Digital+Service+Lucknow" target="_blank" rel="noreferrer" className="bg-slate-900 hover:bg-slate-800 text-white p-2.5 px-4 rounded-xl flex items-center justify-center transition-colors">
@@ -339,7 +426,7 @@ export function DesktopMenu() {
                   </div>
 
                   <div className="flex gap-2.5">
-                      <Link href="/locations/chandigarh" className="flex-1 bg-white border border-slate-200 hover:border-blue-200 hover:text-blue-600 text-slate-700 text-[13px] font-bold py-2.5 px-3 rounded-xl text-center transition-all shadow-sm">
+                      <Link href="/chandigarh" className="flex-1 bg-white border border-slate-200 hover:border-blue-200 hover:text-blue-600 text-slate-700 text-[13px] font-bold py-2.5 px-3 rounded-xl text-center transition-all shadow-sm">
                         View Local SEO
                       </Link>
                       <a href="https://maps.google.com/?q=TopRank+Digital+Service+Chandigarh" target="_blank" rel="noreferrer" className="bg-slate-900 hover:bg-slate-800 text-white p-2.5 px-4 rounded-xl flex items-center justify-center transition-colors">

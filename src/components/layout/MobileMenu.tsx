@@ -20,43 +20,125 @@ const SECONDARY_LINKS = [
 
 const SERVICES_CATEGORIES = [
   {
-    id: "web-dev",
-    name: "Web Development",
+    id: "digital-marketing",
+    name: "Digital Marketing",
     items: [
-      { name: "CMS Development", href: "/services/web-development/cms" },
-      { name: "E-Commerce Stores", href: "/services/web-development/ecommerce" },
-      { name: "WordPress Development", href: "/services/web-development/wordpress" },
-      { name: "Custom Web Apps", href: "/services/web-development/custom" },
+      { name: "Social Media Marketing", href: "/services/digital-marketing/social-media" },
+      { name: "Social Media Management", href: "/services/digital-marketing/management" },
+      { name: "Content Marketing", href: "/services/digital-marketing/content" },
+      { name: "Influencer Marketing", href: "/services/digital-marketing/influencer" },
+      { name: "Online Reputation (ORM)", href: "/services/digital-marketing/orm" },
+      { name: "Lead Generation", href: "/services/digital-marketing/leads" },
     ]
   },
   {
     id: "seo",
-    name: "SEO Optimization",
+    name: "SEO Services",
     items: [
-      { name: "Local SEO (GMB)", href: "/services/seo/local" },
+      { name: "On-Page SEO", href: "/services/seo/on-page" },
+      { name: "Off-Page SEO", href: "/services/seo/off-page" },
       { name: "Technical SEO", href: "/services/seo/technical" },
-      { name: "On-Page Optimization", href: "/services/seo/on-page" },
-      { name: "Link Building", href: "/services/seo/link-building" },
+      { name: "Keyword Research", href: "/services/seo/keywords" },
+      { name: "Competitor Analysis", href: "/services/seo/competitor" },
+      { name: "SEO Audit", href: "/services/seo/audit" },
+      { name: "E-commerce SEO", href: "/services/seo/ecommerce" },
     ]
   },
   {
-    id: "marketing",
-    name: "Digital Marketing",
+    id: "local-seo",
+    name: "Local SEO & GMB",
     items: [
-      { name: "B2B Lead Generation", href: "/services/digital-marketing/b2b" },
-      { name: "PPC & Google Ads", href: "/services/digital-marketing/ppc" },
-      { name: "Social Media Ads", href: "/services/digital-marketing/social-ads" },
-      { name: "Email Marketing", href: "/services/digital-marketing/email" },
+      { name: "GMB Setup", href: "/services/local-seo/gmb-setup" },
+      { name: "GMB Optimization", href: "/services/local-seo/gmb-optimization" },
+      { name: "GMB Ranking", href: "/services/local-seo/gmb-ranking" },
+      { name: "Local Citation", href: "/services/local-seo/local-citation" },
+      { name: "Map Ranking", href: "/services/local-seo/map-ranking" },
+      { name: "Review Management", href: "/services/local-seo/reviews" },
+      { name: "GMB Post Creation", href: "/services/local-seo/gmb-posts" },
     ]
   },
   {
-    id: "brand",
-    name: "Branding & Content",
+    id: "web-dev",
+    name: "Web Design & Dev",
     items: [
-      { name: "Brand Identity Design", href: "/services/branding/identity" },
-      { name: "Video Production", href: "/services/branding/video" },
-      { name: "Copywriting", href: "/services/branding/copywriting" },
-      { name: "Pitch Decks", href: "/services/branding/pitch-decks" },
+      { name: "Business Website", href: "/services/web-development/business" },
+      { name: "E-commerce Dev", href: "/services/web-development/ecommerce" },
+      { name: "Landing Page Design", href: "/services/web-development/landing-page" },
+      { name: "WordPress Dev", href: "/services/web-development/wordpress" },
+      { name: "Custom Website Dev", href: "/services/web-development/custom" },
+      { name: "Website Redesign", href: "/services/web-development/redesign" },
+      { name: "Speed Optimization", href: "/services/web-development/speed" },
+    ]
+  },
+  {
+    id: "google-ads",
+    name: "Google Ads / Paid",
+    items: [
+      { name: "Search Ads", href: "/services/google-ads/search" },
+      { name: "Display Ads", href: "/services/google-ads/display" },
+      { name: "YouTube Ads", href: "/services/google-ads/youtube" },
+      { name: "Remarketing Ads", href: "/services/google-ads/remarketing" },
+      { name: "Conversion Tracking", href: "/services/google-ads/conversion" },
+      { name: "PPC Management", href: "/services/google-ads/ppc" },
+    ]
+  },
+  {
+    id: "meta-ads",
+    name: "Meta Ads (FB & IG)",
+    items: [
+      { name: "Facebook Ads", href: "/services/meta-ads/facebook" },
+      { name: "Instagram Ads", href: "/services/meta-ads/instagram" },
+      { name: "Lead Ads", href: "/services/meta-ads/leads" },
+      { name: "Retargeting Ads", href: "/services/meta-ads/retargeting" },
+      { name: "Creative Strategy", href: "/services/meta-ads/strategy" },
+      { name: "Ads Optimization", href: "/services/meta-ads/optimization" },
+    ]
+  },
+  {
+    id: "whatsapp",
+    name: "WhatsApp & AI",
+    items: [
+      { name: "WhatsApp API", href: "/services/whatsapp-automation/api" },
+      { name: "Chatbot Automation", href: "/services/whatsapp-automation/chatbot" },
+      { name: "Auto Reply System", href: "/services/whatsapp-automation/reply" },
+      { name: "Bulk Messaging", href: "/services/whatsapp-automation/bulk" },
+      { name: "CRM Integration", href: "/services/whatsapp-automation/crm" },
+      { name: "AI Customer Handling", href: "/services/whatsapp-automation/ai" },
+    ]
+  },
+  {
+    id: "branding",
+    name: "Branding & Creative",
+    items: [
+      { name: "Logo Design", href: "/services/branding/logo" },
+      { name: "Brand Identity", href: "/services/branding/identity" },
+      { name: "Social Creatives", href: "/services/branding/social-creatives" },
+      { name: "Ad Creatives", href: "/services/branding/ad-creatives" },
+      { name: "Banner & Poster", href: "/services/branding/banner-poster" },
+      { name: "Stationery Design", href: "/services/branding/stationery" },
+    ]
+  },
+  {
+    id: "content",
+    name: "Content Creation",
+    items: [
+      { name: "Reel / Short Video", href: "/services/content-creation/reels" },
+      { name: "Video Editing", href: "/services/content-creation/editing" },
+      { name: "Script Writing", href: "/services/content-creation/script" },
+      { name: "Blog Writing", href: "/services/content-creation/blogs" },
+      { name: "SEO Content", href: "/services/content-creation/seo-content" },
+      { name: "Copywriting", href: "/services/content-creation/copywriting" },
+    ]
+  },
+  {
+    id: "hosting",
+    name: "Hosting & Maintenance",
+    items: [
+      { name: "Website Hosting", href: "/services/hosting/cloud" },
+      { name: "Domain Management", href: "/services/hosting/domains" },
+      { name: "Website Maintenance", href: "/services/hosting/maintenance" },
+      { name: "Security & Backup", href: "/services/hosting/security" },
+      { name: "Technical Support", href: "/services/hosting/support" },
     ]
   }
 ];
@@ -65,12 +147,12 @@ const LOCATIONS = [
   { 
     name: "Lucknow (HQ)", 
     address: "A47/32, Sector 01, Gomti Nagar", 
-    href: "/locations/lucknow" 
+    href: "/lucknow" 
   },
   { 
     name: "Chandigarh", 
     address: "Shop No. 8, Sector 34B", 
-    href: "/locations/chandigarh" 
+    href: "/chandigarh" 
   }
 ];
 

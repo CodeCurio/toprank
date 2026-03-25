@@ -33,9 +33,9 @@ const differentiators = [
   },
   {
     icon: MessageSquare,
-    color: "text-green-500",
-    bg: "bg-green-50",
-    border: "border-green-100",
+    color: "text-blue-500",
+    bg: "bg-blue-50",
+    border: "border-blue-100",
     title: "WhatsApp & Funnel Automation",
     desc: "Systems that capture every enquiry automatically — day or night — so no lead slips through.",
   },
@@ -168,8 +168,8 @@ export function WhatMakesUsDifferent() {
               transition={{ delay: 0.6, duration: 0.5 }}
               className="absolute bottom-5 left-5 z-20 bg-white/95 backdrop-blur-md border border-white shadow-[0_8px_24px_rgba(0,0,0,0.18)] rounded-2xl px-4 py-3 flex items-center gap-3"
             >
-              <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
-                <TrendingUp className="w-4 h-4 text-green-600" />
+              <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
+                <TrendingUp className="w-4 h-4 text-blue-600" />
               </div>
               <div>
                 <p className="text-slate-900 text-sm font-black leading-tight">+82% Avg. Traffic Growth</p>

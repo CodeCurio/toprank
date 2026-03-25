@@ -14,7 +14,7 @@ import {
 const NODES = [
   { id: "health", icon: HeartPulse, label: "Healthcare", metric: "+340% ROI", color: "from-rose-500 to-pink-600", angle: -60 },
   { id: "realestate", icon: Home, label: "Real Estate", metric: "-22% CPL", color: "from-blue-500 to-indigo-600", angle: 0 },
-  { id: "ecom", icon: ShoppingBag, label: "E-commerce", metric: "4.8x ROAS", color: "from-emerald-500 to-teal-600", angle: 60 },
+  { id: "ecom", icon: ShoppingBag, label: "E-commerce", metric: "4.8x ROAS", color: "from-pink-500 to-orange-600", angle: 60 },
   { id: "edu", icon: GraduationCap, label: "Education", metric: "65% Growth", color: "from-amber-500 to-orange-600", angle: 120 },
   { id: "hospitality", icon: Utensils, label: "Hospitality", metric: "+40% Bookings", color: "from-indigo-500 to-violet-600", angle: 180 },
   { id: "pro", icon: Briefcase, label: "Pro Services", metric: "3x Leads", color: "from-slate-600 to-slate-800", angle: 240 },

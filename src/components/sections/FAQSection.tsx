@@ -140,7 +140,7 @@ export function FAQSection() {
                 transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
                 className="absolute -top-48 -left-4 lg:-left-12 bg-white p-5 rounded-[2.5rem] shadow-[0_30px_60px_rgba(0,0,0,0.12)] border border-slate-100 hidden md:flex items-center gap-5 z-20 hover:scale-105 transition-transform cursor-pointer group"
               >
-                <div className="bg-green-500 p-3 rounded-2xl text-white shadow-lg shadow-green-500/30 group-hover:rotate-12 transition-transform">
+                <div className="bg-blue-500 p-3 rounded-2xl text-white shadow-lg shadow-blue-500/30 group-hover:rotate-12 transition-transform">
                   <ThumbsUp className="w-7 h-7" />
                 </div>
                 <div>
@@ -296,8 +296,8 @@ export function FAQSection() {
                                     onClick={(e) => handleFeedback(faq.id, 'up', e)}
                                     className={`p-2 rounded-full transition-all ${
                                       feedbackState[faq.id] === 'up' 
-                                        ? 'bg-green-100 text-green-600' 
-                                        : 'bg-slate-100 text-slate-400 hover:bg-slate-200 hover:text-green-500'
+                                        ? 'bg-blue-100 text-blue-600' 
+                                        : 'bg-slate-100 text-slate-400 hover:bg-slate-200 hover:text-blue-500'
                                     }`}
                                   >
                                     <ThumbsUp className="w-4 h-4" />
@@ -319,7 +319,7 @@ export function FAQSection() {
                                     animate={{ opacity: 1, x: 0 }}
                                     className="text-xs font-bold text-slate-700 flex items-center gap-1"
                                   >
-                                    <CheckCircle2 className="w-3 h-3 text-green-500" /> Feedback sent
+                                    <CheckCircle2 className="w-3 h-3 text-blue-500" /> Feedback sent
                                   </motion.span>
                                 )}
                               </div>

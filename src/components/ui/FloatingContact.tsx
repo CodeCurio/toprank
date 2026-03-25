@@ -177,11 +177,12 @@ export function FloatingContact() {
                       <Sparkles className="w-5 h-5 text-white" />
                     </div>
                     {/* Online indicator */}
-                    <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-500 border-2 border-slate-950 rounded-full" />
+                    <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-blue-500 border-2 border-slate-950 rounded-full" />
+                    <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-blue-500 border-2 border-slate-950 rounded-full animate-ping opacity-50" />
                   </div>
                   <div>
                     <h3 className="text-white font-bold text-sm tracking-wide">TopRank Assistant</h3>
-                    <p className="text-green-400 text-[10px] font-bold uppercase tracking-widest">Online Now</p>
+                    <p className="text-blue-400 text-[10px] font-bold uppercase tracking-widest">Online Now</p>
                   </div>
                 </div>
                 
@@ -217,7 +218,7 @@ export function FloatingContact() {
                   title="Chat on WhatsApp"
                   subtitle="Instantly connect"
                   href="https://wa.me/919305030523"
-                  colorClass="bg-gradient-to-br from-green-400 to-emerald-600"
+                  colorClass="bg-gradient-to-br from-blue-400 to-indigo-600 shadow-[0_4px_15px_rgba(37,99,235,0.4)]"
                   delay={0.3}
                   isMobile={isMobile}
                 />

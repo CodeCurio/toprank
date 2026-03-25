@@ -211,7 +211,7 @@ export function ContactSection() {
                         <span className="text-lg sm:text-xl font-black tracking-tight whitespace-nowrap">+91 93050 30523</span>
                       </a>
                       <button onClick={handleCopyEmail} className="flex items-center gap-4 text-white hover:text-pink-400 truncate transition-all group/link text-left">
-                        <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center transition-all shrink-0 ${copied ? 'bg-green-500 text-white' : 'bg-pink-500/10 group-hover/link:bg-pink-500 group-hover/link:text-white'}`}>
+                        <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center transition-all shrink-0 ${copied ? 'bg-blue-600 text-white shadow-[0_0_15px_rgba(37,99,235,0.4)]' : 'bg-pink-500/10 group-hover/link:bg-pink-500 group-hover/link:text-white'}`}>
                           {copied ? <CheckCircle2 className="w-5 h-5 sm:w-6 sm:h-6" /> : <Mail className="w-5 h-5 sm:w-6 sm:h-6" />}
                         </div>
                         <span className="text-lg sm:text-xl font-black tracking-tight break-all sm:break-normal">connect@toprankindia.com</span>
