@@ -34,6 +34,7 @@ import {
   ClipboardCheck
 } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 interface Service {
   id: string;
@@ -425,7 +426,7 @@ export function ServicesSection() {
             <div className="flex -space-x-3 mb-2">
               {[1, 2, 3, 4, 5, 6].map(i => (
                 <div key={i} className="w-12 h-12 rounded-full border-4 border-slate-50 overflow-hidden shadow-md">
-                  <img src={`https://i.pravatar.cc/150?img=${i + 20}`} alt="Client" />
+                  <Image src={`https://i.pravatar.cc/150?img=${i + 20}`} alt="Client" width={48} height={48} className="object-cover" />
                 </div>
               ))}
               <div className="w-12 h-12 rounded-full border-4 border-slate-50 bg-white flex items-center justify-center shadow-md text-[10px] font-black text-slate-900">

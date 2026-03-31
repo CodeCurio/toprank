@@ -4,6 +4,7 @@ import { useRef, useState, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 import { Star, Quote, CheckCircle2, ArrowRight } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 // Authentic Google G Logo SVG
 const GoogleLogo = () => (
@@ -218,9 +219,10 @@ export function ReviewsSection() {
                 {/* Attached Image Evidence (User Uploaded Look) */}
                 {review.attachedImage && (
                   <div className="mt-6 mb-2 rounded-2xl overflow-hidden border-4 border-slate-50 shadow-md relative group/attachment cursor-pointer bg-slate-100 transition-transform duration-500 hover:scale-105">
-                    <img
+                    <Image
                       src={review.attachedImage}
                       alt={`Evidence attachment for ${review.title}`}
+                      width={400} height={200}
                       className="w-full h-auto object-cover max-h-[160px] md:max-h-[220px]"
                     />
                   </div>
@@ -240,9 +242,10 @@ export function ReviewsSection() {
                     </div>
                   ) : (
                     <div className="w-14 h-14 rounded-full relative shadow-sm border-[3px] border-white">
-                      <img
+                      <Image
                         src={review.image}
                         alt={review.name}
+                        width={56} height={56}
                         className="w-full h-full rounded-full object-cover"
                       />
                       <div className="absolute -bottom-1 -right-1 bg-white rounded-full p-1 shadow-sm flex items-center justify-center">
@@ -284,7 +287,7 @@ export function ReviewsSection() {
           className="text-center mb-8"
         >
           <p className="text-slate-500 font-semibold text-lg">
-            100% verified customer reviews tracking tangible results. Read more on our <a href="#" className="text-blue-600 hover:text-blue-700 font-black underline underline-offset-4 decoration-blue-200">Google Business Profile</a>.
+            100% verified customer reviews tracking tangible results. Read more on our <a href="https://maps.app.goo.gl/TopRank" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-700 font-black underline underline-offset-4 decoration-blue-200">Google Business Profile</a>.
           </p>
         </motion.div>
 

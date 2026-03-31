@@ -123,7 +123,7 @@ export function Hero() {
               <div className="flex -space-x-2">
                 {[1, 2, 3].map((i) => (
                    <div key={i} style={{ zIndex: 5 - i }} className="w-8 h-8 rounded-full border-2 border-white bg-slate-200 overflow-hidden shadow-sm flex items-center justify-center">
-                     <img src={`https://i.pravatar.cc/100?img=${i+10}`} alt={`Client ${i}`} className="w-full h-full object-cover" />
+                     <Image src={`https://i.pravatar.cc/100?img=${i+10}`} alt={`Client ${i}`} width={32} height={32} className="w-full h-full object-cover" />
                    </div>
                 ))}
               </div>

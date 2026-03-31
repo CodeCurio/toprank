@@ -26,11 +26,15 @@ export function GrowthEngine() {
 
   useEffect(() => {
     setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
     const interval = setInterval(() => {
       setActiveNode((prev) => (prev + 1) % NODES.length);
     }, 3000);
     return () => clearInterval(interval);
-  }, []);
+  }, [mounted]);
 
   if (!mounted) return (
      <div className="relative w-full aspect-square max-w-[500px] mx-auto flex items-center justify-center overflow-visible">

@@ -13,135 +13,12 @@ const MAIN_LINKS = [
 
 const SECONDARY_LINKS = [
   { name: "Portfolio", href: "/portfolio" },
-  { name: "Case Studies", href: "/case-studies" },
+  { name: "Blog", href: "/blog" },
   { name: "Reviews", href: "/reviews" },
   { name: "Contact Us", href: "/contact" },
 ];
 
-const SERVICES_CATEGORIES = [
-  {
-    id: "digital-marketing",
-    name: "Digital Marketing",
-    items: [
-      { name: "Social Media Marketing", href: "/services/digital-marketing/social-media" },
-      { name: "Social Media Management", href: "/services/digital-marketing/management" },
-      { name: "Content Marketing", href: "/services/digital-marketing/content" },
-      { name: "Influencer Marketing", href: "/services/digital-marketing/influencer" },
-      { name: "Online Reputation (ORM)", href: "/services/digital-marketing/orm" },
-      { name: "Lead Generation", href: "/services/digital-marketing/leads" },
-    ]
-  },
-  {
-    id: "seo",
-    name: "SEO Services",
-    items: [
-      { name: "On-Page SEO", href: "/services/seo/on-page" },
-      { name: "Off-Page SEO", href: "/services/seo/off-page" },
-      { name: "Technical SEO", href: "/services/seo/technical" },
-      { name: "Keyword Research", href: "/services/seo/keywords" },
-      { name: "Competitor Analysis", href: "/services/seo/competitor" },
-      { name: "SEO Audit", href: "/services/seo/audit" },
-      { name: "E-commerce SEO", href: "/services/seo/ecommerce" },
-    ]
-  },
-  {
-    id: "local-seo",
-    name: "Local SEO & GMB",
-    items: [
-      { name: "GMB Setup", href: "/services/local-seo/gmb-setup" },
-      { name: "GMB Optimization", href: "/services/local-seo/gmb-optimization" },
-      { name: "GMB Ranking", href: "/services/local-seo/gmb-ranking" },
-      { name: "Local Citation", href: "/services/local-seo/local-citation" },
-      { name: "Map Ranking", href: "/services/local-seo/map-ranking" },
-      { name: "Review Management", href: "/services/local-seo/reviews" },
-      { name: "GMB Post Creation", href: "/services/local-seo/gmb-posts" },
-    ]
-  },
-  {
-    id: "web-dev",
-    name: "Web Design & Dev",
-    items: [
-      { name: "Business Website", href: "/services/web-development/business" },
-      { name: "E-commerce Dev", href: "/services/web-development/ecommerce" },
-      { name: "Landing Page Design", href: "/services/web-development/landing-page" },
-      { name: "WordPress Dev", href: "/services/web-development/wordpress" },
-      { name: "Custom Website Dev", href: "/services/web-development/custom" },
-      { name: "Website Redesign", href: "/services/web-development/redesign" },
-      { name: "Speed Optimization", href: "/services/web-development/speed" },
-    ]
-  },
-  {
-    id: "google-ads",
-    name: "Google Ads / Paid",
-    items: [
-      { name: "Search Ads", href: "/services/google-ads/search" },
-      { name: "Display Ads", href: "/services/google-ads/display" },
-      { name: "YouTube Ads", href: "/services/google-ads/youtube" },
-      { name: "Remarketing Ads", href: "/services/google-ads/remarketing" },
-      { name: "Conversion Tracking", href: "/services/google-ads/conversion" },
-      { name: "PPC Management", href: "/services/google-ads/ppc" },
-    ]
-  },
-  {
-    id: "meta-ads",
-    name: "Meta Ads (FB & IG)",
-    items: [
-      { name: "Facebook Ads", href: "/services/meta-ads/facebook" },
-      { name: "Instagram Ads", href: "/services/meta-ads/instagram" },
-      { name: "Lead Ads", href: "/services/meta-ads/leads" },
-      { name: "Retargeting Ads", href: "/services/meta-ads/retargeting" },
-      { name: "Creative Strategy", href: "/services/meta-ads/strategy" },
-      { name: "Ads Optimization", href: "/services/meta-ads/optimization" },
-    ]
-  },
-  {
-    id: "whatsapp",
-    name: "WhatsApp & AI",
-    items: [
-      { name: "WhatsApp API", href: "/services/whatsapp-automation/api" },
-      { name: "Chatbot Automation", href: "/services/whatsapp-automation/chatbot" },
-      { name: "Auto Reply System", href: "/services/whatsapp-automation/reply" },
-      { name: "Bulk Messaging", href: "/services/whatsapp-automation/bulk" },
-      { name: "CRM Integration", href: "/services/whatsapp-automation/crm" },
-      { name: "AI Customer Handling", href: "/services/whatsapp-automation/ai" },
-    ]
-  },
-  {
-    id: "branding",
-    name: "Branding & Creative",
-    items: [
-      { name: "Logo Design", href: "/services/branding/logo" },
-      { name: "Brand Identity", href: "/services/branding/identity" },
-      { name: "Social Creatives", href: "/services/branding/social-creatives" },
-      { name: "Ad Creatives", href: "/services/branding/ad-creatives" },
-      { name: "Banner & Poster", href: "/services/branding/banner-poster" },
-      { name: "Stationery Design", href: "/services/branding/stationery" },
-    ]
-  },
-  {
-    id: "content",
-    name: "Content Creation",
-    items: [
-      { name: "Reel / Short Video", href: "/services/content-creation/reels" },
-      { name: "Video Editing", href: "/services/content-creation/editing" },
-      { name: "Script Writing", href: "/services/content-creation/script" },
-      { name: "Blog Writing", href: "/services/content-creation/blogs" },
-      { name: "SEO Content", href: "/services/content-creation/seo-content" },
-      { name: "Copywriting", href: "/services/content-creation/copywriting" },
-    ]
-  },
-  {
-    id: "hosting",
-    name: "Hosting & Maintenance",
-    items: [
-      { name: "Website Hosting", href: "/services/hosting/cloud" },
-      { name: "Domain Management", href: "/services/hosting/domains" },
-      { name: "Website Maintenance", href: "/services/hosting/maintenance" },
-      { name: "Security & Backup", href: "/services/hosting/security" },
-      { name: "Technical Support", href: "/services/hosting/support" },
-    ]
-  }
-];
+import { SERVICES_DATA } from "@/lib/services-data";
 
 const LOCATIONS = [
   { 
@@ -301,18 +178,29 @@ export function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
                     <h2 className="text-3xl font-black tracking-tight text-slate-900 mb-6">Our Services</h2>
                     
                     <div className="space-y-6">
-                      {SERVICES_CATEGORIES.map((category) => (
-                        <div key={category.id} className="bg-white rounded-2xl p-5 shadow-sm border border-slate-100">
-                          <h3 className="text-sm font-black tracking-widest text-slate-400 uppercase mb-3">
-                            {category.name}
-                          </h3>
-                          <div className="space-y-1">
-                            {category.items.map((item) => (
+                      {Object.values(SERVICES_DATA).map((category) => (
+                        <div key={category.id} className="bg-white rounded-[1.5rem] p-5 shadow-sm border border-slate-100 relative overflow-hidden">
+                          <div className={`absolute -right-10 -top-10 w-32 h-32 rounded-full blur-3xl opacity-20 ${category.bgColor}`} />
+                          
+                          <Link href={category.href} onClick={closeMenu} className="group flex items-center justify-between pb-4 mb-3 border-b border-slate-100 relative z-10">
+                            <h3 className={`text-lg font-black tracking-tight ${category.color} flex items-center gap-2.5`}>
+                              <div className={`p-2 rounded-lg ${category.bgColor}`}>
+                                <category.icon className="w-5 h-5" />
+                              </div>
+                              {category.name}
+                            </h3>
+                            <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center group-hover:bg-slate-100 transition-colors">
+                              <ChevronRight className={`w-4 h-4 ${category.color}`} />
+                            </div>
+                          </Link>
+                          
+                          <div className="space-y-1 relative z-10">
+                            {category.subServices.map((item) => (
                               <Link
                                 key={item.name}
                                 href={item.href}
                                 onClick={closeMenu}
-                                className="block py-3 px-3 -mx-3 text-[16px] font-bold text-slate-700 hover:bg-slate-50 hover:text-blue-600 rounded-lg transition-colors"
+                                className="block py-3 px-4 text-[15px] font-bold text-slate-700 bg-slate-50/50 hover:bg-slate-100 hover:text-blue-600 rounded-xl transition-colors"
                               >
                                 {item.name}
                               </Link>

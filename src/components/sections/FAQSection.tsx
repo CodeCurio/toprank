@@ -3,6 +3,8 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import { Plus, Minus, ThumbsUp, ThumbsDown, ArrowRight, TrendingUp, CheckCircle2, Star } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 
 const faqs = [
   {
@@ -172,7 +174,7 @@ export function FAQSection() {
               <div className="flex items-center gap-4 mb-10 pb-10 border-b border-slate-200 relative z-10">
                 <div className="flex -space-x-3">
                   {[1,2,3,4].map((i) => (
-                    <img key={i} src={`https://i.pravatar.cc/150?img=${i + 15}`} alt="Client" className="w-10 h-10 rounded-full border-2 border-white shadow-sm relative hover:z-10 transition-transform hover:scale-110 object-cover" />
+                    <Image key={i} src={`https://i.pravatar.cc/150?img=${i + 15}`} alt="Client" width={40} height={40} className="w-10 h-10 rounded-full border-2 border-white shadow-sm relative hover:z-10 transition-transform hover:scale-110 object-cover" />
                   ))}
                   <div className="w-10 h-10 rounded-full border-2 border-white shadow-sm bg-slate-100 flex items-center justify-center text-[11px] font-black text-slate-600 relative hover:z-10 transition-transform hover:scale-110">
                     +100
@@ -209,13 +211,13 @@ export function FAQSection() {
                   <span className="text-[11px] font-bold text-orange-400 uppercase tracking-widest">Only 2 audits left this week</span>
                 </div>
 
-                <a 
-                  href="#"
+                <Link 
+                  href="#contact"
                   className="w-full py-4 px-6 bg-white hover:bg-slate-50 text-slate-900 font-black text-center rounded-xl transition-all shadow-lg flex items-center justify-center gap-2 relative z-10 group/btn"
                 >
                   Claim Free Audit 
                   <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-                </a>
+                </Link>
               </motion.div>
             </motion.div>
           </div>

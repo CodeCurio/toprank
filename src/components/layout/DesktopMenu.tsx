@@ -15,153 +15,7 @@ import { ChevronDown, Code, Megaphone, Search, PenTool, MapPin,
 import LkoOfficeImg from "../images/TopRank LKO office 1.jpg";
 import ChdOfficeImg from "../images/Chandigarh Office TopRank.jpg";
 
-// Rich Service Data Structure with Sub-Services
-const SERVICES_DATA = {
-  "digital-marketing": {
-    name: "Digital Marketing",
-    icon: Megaphone,
-    bgColor: "bg-blue-50",
-    color: "text-blue-600",
-    description: "Multi-channel growth strategies to scale your brand.",
-    href: "/services/digital-marketing",
-    subServices: [
-      { name: "Social Media Marketing", desc: "Build brand awareness", icon: Share2, href: "/services/digital-marketing/social-media" },
-      { name: "Social Media Management", desc: "Professional profile handling", icon: Users, href: "/services/digital-marketing/management" },
-      { name: "Content Marketing", desc: "Value-driven content strategy", icon: FileText, href: "/services/digital-marketing/content" },
-      { name: "Influencer Marketing", desc: "Leverage industry authority", icon: Sparkles, href: "/services/digital-marketing/influencer" },
-      { name: "Online Reputation (ORM)", desc: "Maintain a positive image", icon: ShieldCheck, href: "/services/digital-marketing/orm" },
-      { name: "Lead Generation", desc: "High-intent lead capture", icon: Target, href: "/services/digital-marketing/leads" },
-    ]
-  },
-  "seo": {
-    name: "SEO Services",
-    icon: Search,
-    bgColor: "bg-indigo-50",
-    color: "text-indigo-600",
-    description: "Dominate search rankings and drive organic traffic.",
-    href: "/services/seo",
-    subServices: [
-      { name: "On-Page SEO", desc: "Content & Keyword tuning", icon: LayoutTemplate, href: "/services/seo/on-page" },
-      { name: "Off-Page SEO", desc: "Authority & Link building", icon: Globe, href: "/services/seo/off-page" },
-      { name: "Technical SEO", desc: "Site speed & architecture", icon: Database, href: "/services/seo/technical" },
-      { name: "Keyword Research", desc: "High-intent search terms", icon: Search, href: "/services/seo/keywords" },
-      { name: "Competitor Analysis", desc: "Outrank your rivals", icon: BarChart, href: "/services/seo/competitor" },
-      { name: "SEO Audit", desc: "Complete health check-up", icon: ClipboardCheck, href: "/services/seo/audit" },
-    ]
-  },
-  "local-seo": {
-    name: "Local SEO & GMB",
-    icon: MapPin,
-    bgColor: "bg-orange-50",
-    color: "text-orange-600",
-    description: "Dominate the local 'near me' search market.",
-    href: "/services/local-seo",
-    subServices: [
-      { name: "GMB Setup", desc: "Official business profile", icon: MapPin, href: "/services/local-seo/gmb-setup" },
-      { name: "GMB Optimization", desc: "Rank in the Local Pack", icon: Zap, href: "/services/local-seo/gmb-optimization" },
-      { name: "Map Ranking", desc: "Top visibility on Maps", icon: Navigation, href: "/services/local-seo/map-ranking" },
-      { name: "Review Management", desc: "Build customer trust", icon: MessageSquare, href: "/services/local-seo/reviews" },
-    ]
-  },
-  "web-dev": {
-    name: "Web Development",
-    icon: Code,
-    bgColor: "bg-pink-50",
-    color: "text-pink-600",
-    description: "High-performance websites built for conversion.",
-    href: "/services/web-development",
-    subServices: [
-      { name: "Business Website", desc: "Lead-focused corporate sites", icon: Monitor, href: "/services/web-development/business" },
-      { name: "E-commerce Development", desc: "Online stores that sell", icon: ShoppingCart, href: "/services/web-development/ecommerce" },
-      { name: "WordPress Development", desc: "Flexible & scalable sites", icon: Layout, href: "/services/web-development/wordpress" },
-      { name: "Website Speed", desc: "Lightning fast performance", icon: Zap, href: "/services/web-development/speed" },
-    ]
-  },
-  "google-ads": {
-    name: "Google Ads / PPC",
-    icon: Target,
-    bgColor: "bg-rose-50",
-    color: "text-rose-600",
-    description: "Instant traffic and ROI-focused search ads.",
-    href: "/services/google-ads",
-    subServices: [
-      { name: "Search Ads", desc: "Appear at the top of Google", icon: Search, href: "/services/google-ads/search" },
-      { name: "Display Ads", desc: "Visual ads across the web", icon: Monitor, href: "/services/google-ads/display" },
-      { name: "YouTube Ads", desc: "Video ads that engage", icon: Video, href: "/services/google-ads/youtube" },
-      { name: "Remarketing", desc: "Target previous visitors", icon: Workflow, href: "/services/google-ads/remarketing" },
-    ]
-  },
-  "meta-ads": {
-    name: "Meta Ads (FB & IG)",
-    icon: Share2,
-    bgColor: "bg-blue-50",
-    color: "text-blue-500",
-    description: "Powerful social advertising that converts.",
-    href: "/services/meta-ads",
-    subServices: [
-      { name: "Facebook Ads", desc: "Target specific demographics", icon: Users, href: "/services/meta-ads/facebook" },
-      { name: "Instagram Ads", desc: "Visual storytelling for ROI", icon: Smartphone, href: "/services/meta-ads/instagram" },
-      { name: "Lead Ads", desc: "Direct customer acquisition", icon: Target, href: "/services/meta-ads/leads" },
-      { name: "Ad Creative Strategy", desc: "Winning ad designs", icon: Palette, href: "/services/meta-ads/strategy" },
-    ]
-  },
-  "whatsapp": {
-    name: "WhatsApp & AI",
-    icon: MessageCircle,
-    bgColor: "bg-blue-50",
-    color: "text-blue-600",
-    description: "Automated customer handling and support.",
-    href: "/services/whatsapp-automation",
-    subServices: [
-      { name: "WhatsApp API", desc: "Official Business API setup", icon: MessageCircle, href: "/services/whatsapp-automation/api" },
-      { name: "Chatbot Automation", desc: "24/7 automated support", icon: Workflow, href: "/services/whatsapp-automation/chatbot" },
-      { name: "Auto Reply System", desc: "Instant response triggers", icon: MessageSquare, href: "/services/whatsapp-automation/reply" },
-      { name: "AI Customer Handling", desc: "Smarter automated chats", icon: Monitor, href: "/services/whatsapp-automation/ai" },
-    ]
-  },
-  "branding": {
-    name: "Branding & Design",
-    icon: Palette,
-    bgColor: "bg-purple-50",
-    color: "text-purple-600",
-    description: "Creative visuals that define your brand.",
-    href: "/services/branding",
-    subServices: [
-      { name: "Logo Design", desc: "Iconic brand identity", icon: Palette, href: "/services/branding/logo" },
-      { name: "Social Media Creatives", desc: "Engaging post designs", icon: LayoutTemplate, href: "/services/branding/social-posts" },
-      { name: "Ad Creatives", desc: "High-CTR static & motion ads", icon: TrendingUp, href: "/services/branding/ads" },
-      { name: "Banner & Poster", desc: "Marketing collateral design", icon: Layout, href: "/services/branding/marketing-docs" },
-    ]
-  },
-  "content": {
-    name: "Content Creation",
-    icon: Video,
-    bgColor: "bg-red-50",
-    color: "text-red-500",
-    description: "Engaging video and written content.",
-    href: "/services/content-creation",
-    subServices: [
-      { name: "Reel / Short Video", desc: "Viral vertical video content", icon: Video, href: "/services/content-creation/reels" },
-      { name: "Video Editing", desc: "Professional post-production", icon: Monitor, href: "/services/content-creation/editing" },
-      { name: "Blog Writing", desc: "SEO-optimized articles", icon: FileText, href: "/services/content-creation/blogs" },
-      { name: "Copywriting", desc: "Persuasive sales copy", icon: PenTool, href: "/services/content-creation/copywriting" },
-    ]
-  },
-  "hosting": {
-    name: "Hosting & Support",
-    icon: ShieldCheck,
-    bgColor: "bg-slate-50",
-    color: "text-slate-600",
-    description: "Reliable infrastructure for your site.",
-    href: "/services/hosting",
-    subServices: [
-      { name: "Website Hosting", desc: "Cloud-based fast hosting", icon: Globe, href: "/services/hosting/cloud" },
-      { name: "Domain Management", desc: "DNS & Domain registration", icon: Search, href: "/services/hosting/domains" },
-      { name: "Website Maintenance", desc: "Software & plugin updates", icon: Workflow, href: "/services/hosting/maintenance" },
-      { name: "Security & Backup", desc: "Peace of mind for your data", icon: ShieldCheck, href: "/services/hosting/security" },
-    ]
-  }
-};
+import { SERVICES_DATA } from "@/lib/services-data";
 
 const PLATFORMS_TOOLS = [
   { name: "Next.js", icon: "🌐" },
@@ -226,28 +80,29 @@ export function DesktopMenu() {
                     {(Object.entries(SERVICES_DATA) as [keyof typeof SERVICES_DATA, typeof SERVICES_DATA[keyof typeof SERVICES_DATA]][]).map(([key, service]) => {
                       const isActive = activeService === key;
                       return (
-                        <div
+                        <Link
                           key={key}
+                          href={service.href}
                           onMouseEnter={() => setActiveService(key)}
-                          className={`flex flex-row items-center p-3 rounded-xl cursor-pointer transition-all duration-200 ${
-                            isActive ? "bg-slate-50 ring-1 ring-slate-100 shadow-sm" : "hover:bg-slate-50/50"
+                          className={`flex flex-row items-center p-3 rounded-2xl cursor-pointer transition-all duration-300 ${
+                            isActive ? "bg-white shadow-[0_8px_30px_-4px_rgba(0,0,0,0.08)] ring-1 ring-slate-100 scale-[1.02] z-10 relative" : "hover:bg-slate-50/80 hover:scale-[1.01]"
                           }`}
                         >
-                          <div className={`flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-lg border border-slate-100/50 ${service.bgColor} ${service.color} transition-transform duration-300 ${isActive ? 'scale-110' : ''}`}>
-                            <service.icon className="h-4.5 w-4.5" />
+                          <div className={`flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-xl border ${isActive ? 'border-transparent shadow-md' : 'border-slate-100/50'} ${service.bgColor} ${service.color} transition-all duration-400 ${isActive ? 'scale-110' : ''}`}>
+                            <service.icon className="h-5 w-5" />
                           </div>
-                          <div className="ml-4">
-                            <p className={`text-[14px] font-bold transition-colors ${isActive ? "text-blue-600" : "text-slate-900"}`}>
+                          <div className="ml-4 flex-grow">
+                            <p className={`text-[14px] font-black tracking-tight transition-colors duration-300 ${isActive ? service.color : "text-slate-800"}`}>
                               {service.name}
                             </p>
-                            <p className="mt-0.5 text-[12px] text-slate-500 line-clamp-1">
+                            <p className="mt-0.5 text-[12px] font-medium text-slate-500 line-clamp-1">
                               {service.description}
                             </p>
                           </div>
                           {isActive && (
-                            <motion.div layoutId="active-indicator" className="ml-auto w-1 h-6 bg-blue-600 rounded-full" />
+                            <motion.div layoutId="active-indicator" className={`ml-auto w-2 h-2 rounded-full ${service.bgColor.replace('50', '500')} shadow-sm`} />
                           )}
-                        </div>
+                        </Link>
                       );
                     })}
                   </div>
@@ -283,24 +138,30 @@ export function DesktopMenu() {
                           </p>
                         </div>
                         
-                        <div className="grid grid-cols-2 gap-x-8 gap-y-8 flex-grow">
-                          {SERVICES_DATA[activeService].subServices.map((sub, idx) => (
-                            <Link
-                              key={sub.name}
-                              href={sub.href}
-                              className="group flex flex-col"
-                            >
-                              <div className="flex items-center text-slate-800 font-bold text-[15px] group-hover:text-blue-600 transition-colors">
-                                <span className="bg-white p-2.5 rounded-lg shadow-sm border border-slate-200 mr-3 group-hover:border-blue-200 group-hover:shadow-md transition-all">
-                                  <sub.icon className="h-5 w-5 text-blue-500" />
-                                </span>
-                                {sub.name}
-                              </div>
-                              <span className="ml-[54px] mt-1.5 text-[13px] leading-snug text-slate-500 group-hover:text-slate-600 transition-colors">
-                                {sub.desc}
-                              </span>
-                            </Link>
-                          ))}
+                        <div className="grid grid-cols-2 gap-x-4 gap-y-3 flex-grow pb-4">
+                          {SERVICES_DATA[activeService].subServices.map((sub, idx) => {
+                            const activeColor = SERVICES_DATA[activeService].color;
+                            const activeBg = SERVICES_DATA[activeService].bgColor;
+                            return (
+                              <Link
+                                key={sub.name}
+                                href={sub.href}
+                                className="group flex flex-row items-center p-3 rounded-2xl hover:bg-white hover:shadow-xl hover:shadow-slate-200/50 border border-transparent hover:border-slate-100 transition-all duration-300 active:scale-[0.98]"
+                              >
+                                <div className={`flex-shrink-0 bg-white p-2.5 rounded-xl shadow-sm border border-slate-100 mr-4 group-hover:scale-110 group-hover:shadow-md transition-all duration-300 ${activeColor} group-hover:bg-slate-50 group-hover:border-slate-200`}>
+                                  <sub.icon className="h-4 w-4" />
+                                </div>
+                                <div className="flex flex-col">
+                                  <span className={`text-slate-900 font-bold text-[13px] tracking-tight leading-tight transition-colors mb-0.5 group-hover:${activeColor}`}>
+                                    {sub.name}
+                                  </span>
+                                  <span className="text-[11px] font-medium leading-snug text-slate-500 group-hover:text-slate-600 transition-colors line-clamp-1">
+                                    {sub.desc}
+                                  </span>
+                                </div>
+                              </Link>
+                            );
+                          })}
                         </div>
                         
                         <div className="mt-8 pt-8 border-t border-slate-200/50">
@@ -454,8 +315,8 @@ export function DesktopMenu() {
         </Link>
       </li>
       <li>
-        <Link href="/case-studies" className="px-2 py-2 text-[14px] xl:text-[15px] font-bold text-slate-700 hover:text-blue-600 transition-colors whitespace-nowrap">
-          Case Studies
+        <Link href="/blog" className="px-2 py-2 text-[14px] xl:text-[15px] font-bold text-slate-700 hover:text-blue-600 transition-colors whitespace-nowrap">
+          Blog
         </Link>
       </li>
       <li>
