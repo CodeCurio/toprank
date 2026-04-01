@@ -14,6 +14,8 @@ import {
   MessageSquare
 } from "lucide-react";
 
+import SignOutButton from "@/components/admin/SignOutButton";
+
 export default async function AdminLayout({ children }: { children: ReactNode }) {
   const session = await getServerSession();
 
@@ -67,6 +69,13 @@ export default async function AdminLayout({ children }: { children: ReactNode })
                 <MessageSquare className="w-4 h-4 mr-3 opacity-60 group-hover:opacity-100" />
                 User Comments
               </Link>
+              <Link
+                href="/admin/settings"
+                className="flex items-center px-3 py-2.5 text-sm font-medium rounded-xl hover:bg-slate-800 hover:text-white transition-all group"
+              >
+                <Settings className="w-4 h-4 mr-3 opacity-60 group-hover:opacity-100" />
+                Admin Settings
+              </Link>
             </nav>
           </div>
 
@@ -95,13 +104,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
               <p className="text-[10px] text-slate-500 uppercase tracking-tight">System Admin</p>
             </div>
           </div>
-          <Link
-            href="/api/auth/signout"
-            className="flex items-center justify-center w-full px-3 py-2 text-sm font-bold text-slate-400 hover:text-red-400 hover:bg-red-400/10 rounded-xl transition-all"
-          >
-            <LogOut className="w-4 h-4 mr-2" />
-            Sign out
-          </Link>
+          <SignOutButton />
         </div>
       </aside>
 

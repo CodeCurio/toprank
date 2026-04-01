@@ -1,5 +1,7 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { prisma } from "@/lib/prisma";
+import bcryptjs from "bcryptjs";
 
 const handler = NextAuth({
   providers: [
@@ -10,17 +12,22 @@ const handler = NextAuth({
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        // Fallback or use env vars
-        const adminEmail = process.env.ADMIN_EMAIL || "admin@example.com";
-        const adminPassword = process.env.ADMIN_PASSWORD || "password";
+        if (!credentials?.email || !credentials?.password) return null;
 
-        if (
-          credentials?.email === adminEmail &&
-          credentials?.password === adminPassword
-        ) {
-          return { id: "1", name: "Administrator", email: adminEmail };
+        // 1. Attempt to find user in database
+        const user = await prisma.user.findUnique({
+          where: { email: credentials.email },
+        });
+
+        if (user) {
+          // Compare hashed password
+          const isValid = await bcryptjs.compare(credentials.password, user.password);
+          if (isValid) {
+            return { id: user.id, name: user.name, email: user.email };
+          }
         }
-        return null;
+
+        return null; // Auth failed
       },
     }),
   ],

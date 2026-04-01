@@ -79,10 +79,6 @@ export default function AdminLogin() {
               Sign in
             </button>
           </div>
-          
-          <div className="text-xs text-gray-400 text-center mt-4">
-            Default: admin@example.com / password
-          </div>
         </form>
       </div>
     </div>
