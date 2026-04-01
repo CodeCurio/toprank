@@ -11,11 +11,16 @@ import CommentsSection from "@/components/blog/CommentsSection";
 export const revalidate = 60; // ISR
 
 export async function generateStaticParams() {
-  const posts = await prisma.post.findMany({
-    where: { status: "Published" },
-    select: { slug: true },
-  });
-  return posts.map((post: any) => ({ slug: post.slug }));
+  try {
+    const posts = await prisma.post.findMany({
+      where: { status: "Published" },
+      select: { slug: true },
+    });
+    return posts.map((post: any) => ({ slug: post.slug }));
+  } catch (error) {
+    console.error("Build-time database error in generateStaticParams:", error);
+    return []; // Return empty to allow build to succeed
+  }
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
