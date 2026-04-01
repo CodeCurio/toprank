@@ -3,10 +3,17 @@ import { PostTable } from "@/components/admin/PostTable";
 import { FileText, Globe, PenTool, Hash } from "lucide-react";
 
 export default async function AdminDashboard() {
-  const posts = await prisma.post.findMany({
-    orderBy: { createdAt: "desc" },
-    include: { categories: true }
-  });
+  let posts: any[] = [];
+  
+  try {
+    posts = await prisma.post.findMany({
+      orderBy: { createdAt: "desc" },
+      include: { categories: true }
+    });
+  } catch (error) {
+    console.error("Runtime database error in AdminDashboard:", error);
+    posts = [];
+  }
 
   const totalWords = posts.reduce((acc: number, p: any) => acc + (p.content?.split(/\s+/).length || 0), 0);
   const publishedCount = posts.filter((p: any) => p.status === "Published").length;
