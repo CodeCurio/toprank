@@ -73,21 +73,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       prisma.tag.findMany({ select: { slug: true } })
     ]);
 
-    postRoutes = posts.map((post) => ({
+    postRoutes = posts.map((post: { slug: string, updatedAt: Date }) => ({
       url: `${baseUrl}/blog/${post.slug}`,
       lastModified: post.updatedAt,
       changeFrequency: 'weekly',
       priority: 0.8,
     }));
 
-    categoryRoutes = categories.map((cat) => ({
+    categoryRoutes = categories.map((cat: { slug: string }) => ({
       url: `${baseUrl}/category/${cat.slug}`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.6,
     }));
 
-    tagRoutes = tags.map((tag) => ({
+    tagRoutes = tags.map((tag: { slug: string }) => ({
       url: `${baseUrl}/tag/${tag.slug}`,
       lastModified: new Date(),
       changeFrequency: 'weekly',

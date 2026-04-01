@@ -36,10 +36,10 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
         status: "Draft",
         authorId: postToDuplicate.authorId,
         categories: {
-          connect: postToDuplicate.categories.map(c => ({ id: c.id }))
+          connect: postToDuplicate.categories.map((c: { id: string }) => ({ id: c.id }))
         },
         tags: {
-          connect: postToDuplicate.tags.map(t => ({ id: t.id }))
+          connect: postToDuplicate.tags.map((t: { id: string }) => ({ id: t.id }))
         }
       }
     });
