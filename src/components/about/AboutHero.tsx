@@ -112,13 +112,16 @@ export function AboutHero() {
                 Discover Our Story <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </a>
               <div className="flex gap-4">
-                <div className="flex -space-x-3">
                   {[1, 2, 3].map((i) => (
                     <div key={i} className="w-10 h-10 rounded-full border-2 border-slate-950 bg-slate-800 overflow-hidden relative">
-                      <Image src={`https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=150&auto=format&fit=crop&crop=face&auto=compress`} alt="Team member" fill className="object-cover" />
+                      <Image 
+                        src={`https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=150&auto=format&fit=crop&crop=face&auto=compress`} 
+                        alt="Team member" 
+                        fill 
+                        className="object-cover" 
+                      />
                     </div>
                   ))}
-                </div>
                 <div className="text-xs text-slate-400 font-bold uppercase tracking-widest flex flex-col justify-center">
                   <span>Trusted by</span>
                   <span className="text-white">250+ Brands</span>
