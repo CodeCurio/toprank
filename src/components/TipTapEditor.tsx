@@ -1,8 +1,8 @@
 "use client";
 
 import { useEditor, EditorContent, ReactRenderer } from "@tiptap/react";
-import { useState, useEffect, useMemo } from "react";
 import { BubbleMenu } from "@tiptap/react/menus";
+import { useState, useEffect, useMemo } from "react";
 import StarterKit from "@tiptap/starter-kit";
 import Link from "@tiptap/extension-link";
 import Image from "@tiptap/extension-image";
@@ -378,7 +378,7 @@ export default function TipTapEditor({ content, onChange, isFullscreen, toggleFu
       )}
       
       {editor && (
-        <BubbleMenu editor={editor} tippyOptions={{ duration: 150 }}>
+        <BubbleMenu editor={editor} options={{ placement: 'top' }}>
           <div className="flex items-center bg-white border border-slate-200 shadow-2xl overflow-hidden rounded-xl p-1 gap-0.5 animate-in fade-in zoom-in-95 duration-200">
             {/* Block Type Mini-Selector */}
             <div className="flex items-center border-r border-slate-100 pr-1 mr-1 gap-0.5">
