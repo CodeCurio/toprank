@@ -34,8 +34,6 @@ export function DesktopMenu() {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
-  if (!mounted) return null;
-
   return (
     <ul className="flex items-center space-x-1 lg:space-x-3 xl:space-x-5">
       <li>

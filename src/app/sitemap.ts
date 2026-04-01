@@ -4,7 +4,7 @@ import { locations } from '@/data/locationData';
 import { SERVICES_DATA } from '@/lib/services-data';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://toprankindia.com';
+  const baseUrl = 'https://www.toprankindia.com';
 
   // 1. Static Routes
   const staticRoutes: MetadataRoute.Sitemap = [

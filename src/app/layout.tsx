@@ -14,11 +14,15 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | TopRank Digital Service",
-    default: "TopRank Digital Service - Best SEO & Digital Marketing Agency",
+    template: "%s | TopRank Digital",
+    default: "TopRank Digital Service | Best SEO & Marketing Agency",
   },
   description: "TopRank Digital Service specializes in SEO, Web Development, Google Business Profile scaling, and performance marketing to dominate local and national search engines. Located in Lucknow & Chandigarh.",
-  metadataBase: new URL("https://toprankindia.com"), 
+  metadataBase: new URL("https://www.toprankindia.com"), 
+  keywords: ["SEO agency", "digital marketing Lucknow", "best SEO agency Chandigarh", "web development services", "Google Business Profile optimization", "local SEO experts", "performance marketing"],
+  alternates: {
+    canonical: "https://www.toprankindia.com",
+  },
   openGraph: {
     title: "TopRank Digital Service - Dominate Your Market",
     description: "Scale your revenue with high-velocity SEO, Google Ads, and Custom Website Development tailored for growth.",

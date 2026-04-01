@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/api/', '/admin/', '/private/'],
     },
-    sitemap: 'https://toprankindia.com/sitemap.xml',
+    sitemap: 'https://www.toprankindia.com/sitemap.xml',
   };
 }
