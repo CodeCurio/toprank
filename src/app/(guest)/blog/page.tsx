@@ -20,17 +20,29 @@ export default async function BlogPage({
   const limit = 6;
   const skip = (page - 1) * limit;
 
-  const [posts, totalPosts] = await Promise.all([
-    prisma.post.findMany({
-      where: { status: "Published" },
-      orderBy: { createdAt: "desc" },
-      // @ts-ignore
-      include: { categories: true },
-      skip,
-      take: limit,
-    }),
-    prisma.post.count({ where: { status: "Published" } }),
-  ]);
+  let posts: any[] = [];
+  let totalPosts = 0;
+
+  try {
+    const [fetchedPosts, fetchedCount] = await Promise.all([
+      prisma.post.findMany({
+        where: { status: "Published" },
+        orderBy: { createdAt: "desc" },
+        // @ts-ignore
+        include: { categories: true },
+        skip,
+        take: limit,
+      }),
+      prisma.post.count({ where: { status: "Published" } }),
+    ]);
+    posts = fetchedPosts;
+    totalPosts = fetchedCount;
+  } catch (error) {
+    console.error("Runtime database error in BlogPage:", error);
+    // Fallback to empty state
+    posts = [];
+    totalPosts = 0;
+  }
 
   const totalPages = Math.max(1, Math.ceil(totalPosts / limit));
 
