@@ -3,8 +3,10 @@
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { ChevronRight, ArrowLeft } from "lucide-react";
+import { ChevronRight, ChevronDown, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+
+import { SERVICES_DATA } from "@/lib/services-data";
 
 const MAIN_LINKS = [
   { name: "Home", href: "/" },
@@ -18,8 +20,6 @@ const SECONDARY_LINKS = [
   { name: "Contact Us", href: "/contact" },
 ];
 
-import { SERVICES_DATA } from "@/lib/services-data";
-
 const LOCATIONS = [
   { 
     name: "Lucknow (HQ)", 
@@ -30,6 +30,16 @@ const LOCATIONS = [
     name: "Chandigarh", 
     address: "Shop No. 8, Sector 34B", 
     href: "/chandigarh" 
+  },
+  { 
+    name: "Mohali", 
+    address: "Serving local businesses", 
+    href: "/mohali" 
+  },
+  { 
+    name: "Gonda", 
+    address: "Expert digital marketing", 
+    href: "/gonda" 
   }
 ];
 
@@ -38,35 +48,18 @@ interface MobileMenuProps {
   setIsOpen: (open: boolean) => void;
 }
 
-// Stack Navigation State Types
-type ViewState = "main" | "services" | "locations" | string;
-
 export function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
-  const [currentView, setCurrentView] = useState<ViewState>("main");
+  const [expandedSection, setExpandedSection] = useState<string | null>(null);
   
-  // Reset view when menu closes
+  // Reset expanded section when menu closes
   useEffect(() => {
     if (!isOpen) {
-      setTimeout(() => setCurrentView("main"), 300);
+      setTimeout(() => setExpandedSection(null), 300);
     }
   }, [isOpen]);
 
-  // Framer Motion constraints to force GPU usage and smooth 60fps
-  const variants = {
-    enter: (direction: number) => ({
-      x: direction > 0 ? "100%" : "-100%",
-      opacity: 0
-    }),
-    center: {
-      zIndex: 1,
-      x: 0,
-      opacity: 1
-    },
-    exit: (direction: number) => ({
-      zIndex: 0,
-      x: direction < 0 ? "100%" : "-100%",
-      opacity: 0
-    })
+  const toggleSection = (section: string) => {
+    setExpandedSection(expandedSection === section ? null : section);
   };
 
   const closeMenu = () => setIsOpen(false);
@@ -80,180 +73,161 @@ export function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-slate-900/40 backdrop-blur-md z-[60] xl:hidden transform-gpu"
+            className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[60] xl:hidden"
             onClick={closeMenu}
           />
 
-          {/* Stack Container */}
+          {/* Menu Drawer */}
           <motion.div
-            initial={{ y: "100%" }}
-            animate={{ y: 0 }}
-            exit={{ y: "100%" }}
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="fixed inset-x-0 bottom-0 h-[85vh] bg-white rounded-t-3xl shadow-2xl z-[70] xl:hidden overflow-hidden flex flex-col transform-gpu"
+            className="fixed inset-y-0 right-0 w-full max-w-sm bg-white shadow-2xl z-[70] xl:hidden flex flex-col"
           >
-            {/* Header / Draggable Area */}
-            <div className="flex-shrink-0 flex items-center justify-center pt-4 pb-2 border-b border-slate-100 relative">
-               <div className="w-12 h-1.5 bg-slate-200 rounded-full mb-2" />
-               {currentView !== "main" && (
-                 <button 
-                   onClick={() => setCurrentView("main")}
-                   className="absolute left-4 top-4 p-2 text-slate-500 hover:text-slate-900 transition-colors"
-                 >
-                   <ArrowLeft className="h-5 w-5" />
-                 </button>
-               )}
+            {/* Header */}
+            <div className="flex items-center justify-between p-6 border-b border-slate-100">
+               <span className="text-xl font-black text-slate-900">Menu</span>
+               <button 
+                 onClick={closeMenu}
+                 className="p-2 -mr-2 text-slate-400 hover:text-slate-900 bg-slate-50 hover:bg-slate-100 rounded-full transition-colors"
+               >
+                 <X className="h-5 w-5" />
+               </button>
             </div>
 
-            <div className="flex-1 relative overflow-hidden">
-              <AnimatePresence initial={false} custom={currentView !== "main" ? 1 : -1}>
-                
-                {currentView === "main" && (
-                  <motion.div
-                    key="main"
-                    custom={-1}
-                    variants={variants}
-                    initial="enter"
-                    animate="center"
-                    exit="exit"
-                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                    className="absolute inset-0 w-full h-full overflow-y-auto px-6 py-4 pb-48 transform-gpu"
+            {/* Scrollable Content */}
+            <div className="flex-1 overflow-y-auto px-6 py-6 pb-32">
+              <div className="flex flex-col space-y-2">
+                {MAIN_LINKS.map((link) => (
+                  <Link
+                    key={link.name}
+                    href={link.href}
+                    onClick={closeMenu}
+                    className="py-3 px-4 text-xl font-bold text-slate-700 hover:text-blue-600 hover:bg-slate-50 rounded-2xl transition-colors"
                   >
-                    <div className="space-y-1">
-                      {MAIN_LINKS.map((link) => (
-                        <Link
-                          key={link.name}
-                          href={link.href}
-                          onClick={closeMenu}
-                          className="block py-4 text-2xl font-black tracking-tight text-slate-900 border-b border-slate-100"
-                        >
-                          {link.name}
-                        </Link>
-                      ))}
+                    {link.name}
+                  </Link>
+                ))}
 
-                      {/* Services Stack Trigger */}
-                      <button
-                        onClick={() => setCurrentView("services")}
-                        className="w-full flex items-center justify-between py-4 text-left text-2xl font-black tracking-tight text-slate-900 border-b border-slate-100"
-                      >
-                        Services
-                        <ChevronRight className="h-6 w-6 text-slate-400" />
-                      </button>
-
-                      {/* Locations Stack Trigger */}
-                      <button
-                        onClick={() => setCurrentView("locations")}
-                        className="w-full flex items-center justify-between py-4 text-left text-h4 font-black tracking-tight text-slate-900 border-b border-slate-100"
-                      >
-                        <span className="text-2xl">Serving Locations</span>
-                        <ChevronRight className="h-6 w-6 text-slate-400" />
-                      </button>
-
-                      {SECONDARY_LINKS.map((link) => (
-                        <Link
-                          key={link.name}
-                          href={link.href}
-                          onClick={closeMenu}
-                          className="block py-4 text-2xl font-black tracking-tight text-slate-900 border-b border-slate-100"
-                        >
-                          {link.name}
-                        </Link>
-                      ))}
-                    </div>
-                  </motion.div>
-                )}
-
-                {/* Sub-View: Services */}
-                {currentView === "services" && (
-                  <motion.div
-                    key="services"
-                    custom={1}
-                    variants={variants}
-                    initial="enter"
-                    animate="center"
-                    exit="exit"
-                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                    className="absolute inset-0 w-full h-full overflow-y-auto px-6 py-4 pb-48 transform-gpu bg-slate-50/50"
+                {/* Services Accordion */}
+                <div className="rounded-2xl overflow-hidden">
+                  <button
+                    onClick={() => toggleSection("services")}
+                    className={`w-full flex items-center justify-between py-3 px-4 text-xl font-bold transition-colors ${
+                      expandedSection === "services" ? "text-blue-600 bg-blue-50/50" : "text-slate-700 hover:bg-slate-50"
+                    }`}
                   >
-                    <h2 className="text-3xl font-black tracking-tight text-slate-900 mb-6">Our Services</h2>
-                    
-                    <div className="space-y-6">
-                      {Object.values(SERVICES_DATA).map((category) => (
-                        <div key={category.id} className="bg-white rounded-[1.5rem] p-5 shadow-sm border border-slate-100 relative overflow-hidden">
-                          <div className={`absolute -right-10 -top-10 w-32 h-32 rounded-full blur-3xl opacity-20 ${category.bgColor}`} />
-                          
-                          <Link href={category.href} onClick={closeMenu} className="group flex items-center justify-between pb-4 mb-3 border-b border-slate-100 relative z-10">
-                            <h3 className={`text-lg font-black tracking-tight ${category.color} flex items-center gap-2.5`}>
-                              <div className={`p-2 rounded-lg ${category.bgColor}`}>
-                                <category.icon className="w-5 h-5" />
-                              </div>
-                              {category.name}
-                            </h3>
-                            <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center group-hover:bg-slate-100 transition-colors">
-                              <ChevronRight className={`w-4 h-4 ${category.color}`} />
-                            </div>
+                    Services
+                    <ChevronDown className={`h-5 w-5 transition-transform duration-300 ${expandedSection === "services" ? "rotate-180" : ""}`} />
+                  </button>
+                  <AnimatePresence>
+                    {expandedSection === "services" && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        className="overflow-hidden bg-slate-50/50"
+                      >
+                        <div className="p-4 space-y-4">
+                          <Link 
+                            href="/services" 
+                            onClick={closeMenu}
+                            className="block w-full py-3 px-4 bg-blue-600 text-white text-center font-bold rounded-xl shadow-md shadow-blue-500/20 active:scale-[0.98] transition-transform"
+                          >
+                            Explore All Services
                           </Link>
                           
-                          <div className="space-y-1 relative z-10">
-                            {category.subServices.map((item) => (
-                              <Link
-                                key={item.name}
-                                href={item.href}
-                                onClick={closeMenu}
-                                className="block py-3 px-4 text-[15px] font-bold text-slate-700 bg-slate-50/50 hover:bg-slate-100 hover:text-blue-600 rounded-xl transition-colors"
-                              >
-                                {item.name}
-                              </Link>
+                          <div className="space-y-4 pt-2">
+                            {Object.values(SERVICES_DATA).map((category) => (
+                              <div key={category.id} className="space-y-2">
+                                <Link 
+                                  href={category.href} 
+                                  onClick={closeMenu}
+                                  className={`flex items-center gap-2 font-bold ${category.color}`}
+                                >
+                                  <div className={`p-1.5 rounded-md ${category.bgColor}`}>
+                                    <category.icon className="w-4 h-4" />
+                                  </div>
+                                  {category.name}
+                                </Link>
+                                <div className="pl-6 space-y-1 border-l-2 border-slate-200 ml-3.5 mt-2">
+                                  {category.subServices.map((item) => (
+                                    <Link
+                                      key={item.name}
+                                      href={item.href}
+                                      onClick={closeMenu}
+                                      className="block py-1.5 text-[15px] font-medium text-slate-600 hover:text-blue-600 transition-colors"
+                                    >
+                                      {item.name}
+                                    </Link>
+                                  ))}
+                                </div>
+                              </div>
                             ))}
                           </div>
                         </div>
-                      ))}
-                    </div>
-                  </motion.div>
-                )}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
 
-                {/* Sub-View: Locations */}
-                {currentView === "locations" && (
-                  <motion.div
-                    key="locations"
-                    custom={1}
-                    variants={variants}
-                    initial="enter"
-                    animate="center"
-                    exit="exit"
-                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                    className="absolute inset-0 w-full h-full overflow-y-auto px-6 py-4 pb-48 transform-gpu bg-slate-50/50"
+                {/* Locations Accordion */}
+                <div className="rounded-2xl overflow-hidden">
+                  <button
+                    onClick={() => toggleSection("locations")}
+                    className={`w-full flex items-center justify-between py-3 px-4 text-xl font-bold transition-colors ${
+                      expandedSection === "locations" ? "text-blue-600 bg-blue-50/50" : "text-slate-700 hover:bg-slate-50"
+                    }`}
                   >
-                    <h2 className="text-3xl font-black tracking-tight text-slate-900 mb-6">Our Locations</h2>
-                    
-                    <div className="space-y-4">
-                      {LOCATIONS.map((loc) => (
-                        <Link key={loc.name} href={loc.href} onClick={closeMenu} className="block bg-white rounded-2xl p-5 shadow-sm border border-slate-100 hover:border-blue-200 transition-colors">
-                          <h3 className="text-xl font-black text-slate-900 mb-1">
-                            {loc.name}
-                          </h3>
-                          <p className="text-[15px] font-medium text-slate-500">
-                            {loc.address}
-                          </p>
-                        </Link>
-                      ))}
-                    </div>
+                    Serving Locations
+                    <ChevronDown className={`h-5 w-5 transition-transform duration-300 ${expandedSection === "locations" ? "rotate-180" : ""}`} />
+                  </button>
+                  <AnimatePresence>
+                    {expandedSection === "locations" && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        className="overflow-hidden bg-slate-50/50"
+                      >
+                        <div className="p-4 space-y-2">
+                          {LOCATIONS.map((loc) => (
+                            <Link 
+                              key={loc.name} 
+                              href={loc.href} 
+                              onClick={closeMenu} 
+                              className="block p-3 bg-white rounded-xl shadow-sm border border-slate-100 hover:border-blue-200 hover:shadow-md transition-all"
+                            >
+                              <div className="font-bold text-slate-900 flex items-center justify-between">
+                                {loc.name}
+                                <ChevronRight className="w-4 h-4 text-slate-300" />
+                              </div>
+                              <div className="text-sm font-medium text-slate-500 mt-0.5">{loc.address}</div>
+                            </Link>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
 
-                    <div className="mt-8 p-6 bg-white rounded-2xl shadow-sm border border-blue-100 text-center">
-                       <p className="text-[15px] font-bold text-slate-700 mb-3">Want to visit us?</p>
-                       <Link href="/contact" onClick={closeMenu} className="inline-block font-black text-blue-600 underline underline-offset-4">
-                         Get Directions
-                       </Link>
-                    </div>
-                  </motion.div>
-                )}
-
-              </AnimatePresence>
+                {SECONDARY_LINKS.map((link) => (
+                  <Link
+                    key={link.name}
+                    href={link.href}
+                    onClick={closeMenu}
+                    className="py-3 px-4 text-xl font-bold text-slate-700 hover:text-blue-600 hover:bg-slate-50 rounded-2xl transition-colors"
+                  >
+                    {link.name}
+                  </Link>
+                ))}
+              </div>
             </div>
 
             {/* Sticky Bottom CTA */}
-            <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-white via-white to-transparent pt-12 z-20 pointer-events-none">
-               <Button variant="gradient" className="w-full rounded-2xl shadow-xl font-black tracking-wide py-6 text-[17px] pointer-events-auto" onClick={closeMenu}>
+            <div className="absolute bottom-0 left-0 right-0 p-6 bg-white border-t border-slate-100 z-20">
+               <Button variant="gradient" className="w-full rounded-2xl shadow-xl shadow-blue-500/20 font-black tracking-wide py-6 text-[17px]" onClick={closeMenu}>
                 Book a Strategy Call
               </Button>
             </div>

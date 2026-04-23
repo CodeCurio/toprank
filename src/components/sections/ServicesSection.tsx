@@ -307,7 +307,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
   );
 }
 
-export function ServicesSection() {
+export function ServicesSection({ location }: { location?: string }) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.1 });
   const currentMonth = new Date().toLocaleString('en-US', { month: 'long' });
@@ -343,7 +343,7 @@ export function ServicesSection() {
             <h2 className="text-4xl md:text-5xl lg:text-7xl font-black text-slate-900 tracking-tighter leading-[1.05] mb-8">
               Solutions Built for <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-pink-500 to-blue-600">
-                Market Dominance.
+                Market Dominance{location ? ` in ${location}` : ""}.
               </span>
             </h2>
 

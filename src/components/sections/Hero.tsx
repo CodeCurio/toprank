@@ -72,7 +72,7 @@ const HERO_SLIDES = [
   }
 ];
 
-export function Hero() {
+export function Hero({ location }: { location?: string }) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [mounted, setMounted] = useState(false);
 
@@ -149,11 +149,22 @@ export function Hero() {
               transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] as const }}
               className="text-5xl lg:text-6xl font-black text-slate-900 leading-[1.1] tracking-tight mb-6"
             >
-              Get Found on Google. {' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-pink-500 to-blue-600">
-                Get Chosen
-              </span>{' '}
-              by Customers.
+              {location ? (
+                <>
+                  Best Digital Marketing Agency in {' '}
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-pink-500 to-blue-600">
+                    {location}
+                  </span>.
+                </>
+              ) : (
+                <>
+                  Get Found on Google. {' '}
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-pink-500 to-blue-600">
+                    Get Chosen
+                  </span>{' '}
+                  by Customers.
+                </>
+              )}
             </motion.h1>
 
             {/* Subheadline */}
@@ -163,7 +174,9 @@ export function Hero() {
               transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] as const }}
               className="text-lg text-slate-600 leading-relaxed mb-10 max-w-xl"
             >
-              TopRank Digital Service helps local businesses grow with high-converting websites, Google Business Profile (Local SEO), and performance-driven social media marketing — built to generate real enquiries, not just traffic.
+              {location 
+                ? `TopRank Digital Service is the #1 rated digital marketing agency in ${location}. We help local businesses dominate search results with expert SEO, Google Business Profile optimization, and high-converting websites.`
+                : "TopRank Digital Service helps local businesses grow with high-converting websites, Google Business Profile (Local SEO), and performance-driven social media marketing — built to generate real enquiries, not just traffic."}
             </motion.p>
 
             {/* CTAs */}

@@ -24,77 +24,84 @@ const TrustpilotLogo = () => (
   </svg>
 );
 
-const reviews = [
-  {
-    name: "Anil Singh",
-    role: "Founder, Maa Jagrani Infra",
-    image: "https://i.pravatar.cc/150?u=a042581f4e29026704d",
-    isInitial: false,
-    platform: "Google",
-    rating: 5,
-    title: "Pehle Google se koi kaam hi nahi aa raha tha…",
-    content: "Sach bolu to hume lagta tha SEO bas naam ka hota hai. Website bani hui thi but enquiries almost zero thi. TopRank ne kaam start kiya, thoda time laga but ab Google se genuine leads aane lage hain. Ab har week kuch na kuch enquiry aa hi jati hai.",
-    attachedImage: "/reviews/media__1774074432274.png",
-  },
-  {
-    name: "Neha Gupta",
-    role: "Marketing Head, Remac World",
-    image: "https://i.pravatar.cc/150?u=123",
-    isInitial: false,
-    platform: "Trustpilot",
-    rating: 5,
-    title: "Not crazy growth… but finally stable.",
-    content: "Earlier, sales were very up and down. Some days good, some days nothing. Now things are more consistent. Website + targeting improvements actually made a difference.",
-    attachedImage: "/reviews/media__1774074431890.png",
-  },
-  {
-    name: "Sachin Kumar",
-    role: "Director, Atulaya Healthcare",
-    image: "S",
-    isInitial: true,
-    initialBg: "bg-purple-600",
-    platform: "Google",
-    rating: 5,
-    title: "We just wanted more calls. That’s it.",
-    content: "Didn’t care about traffic or fancy reports. We just needed our phone to ring more. After working with TopRank, calls have definitely increased. Not overnight, but steadily — which is what matters.",
-    attachedImage: "/reviews/media__1774074432021.png",
-  },
-  {
-    name: "Sanjay Dubey",
-    role: "Co-founder, Agilus Diagnostics",
-    image: "https://i.pravatar.cc/150?u=8",
-    isInitial: false,
-    platform: "Google",
-    rating: 5,
-    title: "Ab daily kuch na kuch appointment aa hi jata hai.",
-    content: "Pehle kaafi slow tha, kabhi enquiry aayi kabhi nahi. TopRank ne landing page aur GMB pe kaam kiya. Ab daily calls aate hain for home collection. System set ho gaya basically.",
-    attachedImage: "/reviews/media__1774074432121.png",
-  },
-  {
-    name: "Vikram Singh",
-    role: "Owner, Bharat Fragrances",
-    image: "V",
-    isInitial: true,
-    initialBg: "bg-orange-500",
-    platform: "Google",
-    rating: 5,
-    title: "Website acchi lag rahi thi, par convert nahi kar rahi thi.",
-    content: "Design theek tha but log aake ja rahe the, enquiry nahi aa rahi thi. TopRank ne redesign + flow improve kiya. Ab log form fill karte hain, WhatsApp pe bhi ping aata hai. Clear difference hai.",
-    attachedImage: "/reviews/media__1774074432183.png",
-  },
-  {
-    name: "Ananya Patel",
-    role: "VP Sales, CloudServe",
-    image: "https://i.pravatar.cc/150?u=44",
-    isInitial: false,
-    platform: "Google",
-    rating: 5,
-    title: "Traffic pehle bhi tha, par kaam ka nahi tha.",
-    content: "TopRank changed the targeting and SEO strategy. Now fewer visitors maybe, but better ones. Conversions improved. That’s what we needed.",
-    attachedImage: "/reviews/analytics.png",
-  }
-];
+const getReviews = (location?: string) => {
+  const isLucknow = location?.toLowerCase() === "lucknow";
 
+  return [
+    {
+      name: "Anil Singh",
+      role: "Founder, Maa Jagrani Infra",
+      image: "https://i.pravatar.cc/150?u=a042581f4e29026704d",
+      isInitial: false,
+      platform: "Google",
+      rating: 5,
+      title: "Pehle Google se koi kaam hi nahi aa raha tha…",
+      content: isLucknow 
+        ? "Sach bolu to hume lagta tha SEO bas naam ka hota hai. Website bani hui thi but enquiries almost zero thi. TopRank is genuinely the best digital marketing agency in Lucknow. Ab har week Lucknow local area se kuch na kuch genuine enquiry aa hi jati hai."
+        : "Sach bolu to hume lagta tha SEO bas naam ka hota hai. Website bani hui thi but enquiries almost zero thi. TopRank ne kaam start kiya, thoda time laga but ab Google se genuine leads aane lage hain. Ab har week kuch na kuch enquiry aa hi jati hai.",
+      attachedImage: "/reviews/media__1774074432274.png",
+    },
+    {
+      name: "Neha Gupta",
+      role: "Marketing Head, Remac World",
+      image: "https://i.pravatar.cc/150?u=123",
+      isInitial: false,
+      platform: "Trustpilot",
+      rating: 5,
+      title: "Not crazy growth… but finally stable.",
+      content: isLucknow 
+        ? "Earlier, sales were very up and down in the Lucknow region. Some days good, some days nothing. TopRank's local SEO strategies stabilized our lead flow. They truly understand the UP market."
+        : "Earlier, sales were very up and down. Some days good, some days nothing. Now things are more consistent. Website + targeting improvements actually made a difference.",
+      attachedImage: "/reviews/media__1774074431890.png",
+    },
+    {
+      name: "Sachin Kumar",
+      role: "Director, Atulaya Healthcare",
+      image: "S",
+      isInitial: true,
+      initialBg: "bg-purple-600",
+      platform: "Google",
+      rating: 5,
+      title: "We just wanted more calls. That’s it.",
+      content: "Didn’t care about traffic or fancy reports. We just needed our phone to ring more. After working with TopRank, calls have definitely increased. Not overnight, but steadily — which is what matters.",
+      attachedImage: "/reviews/media__1774074432021.png",
+    },
+    {
+      name: "Sanjay Dubey",
+      role: "Co-founder, Agilus Diagnostics",
+      image: "https://i.pravatar.cc/150?u=8",
+      isInitial: false,
+      platform: "Google",
+      rating: 5,
+      title: "Ab daily kuch na kuch appointment aa hi jata hai.",
+      content: "Pehle kaafi slow tha, kabhi enquiry aayi kabhi nahi. TopRank ne landing page aur GMB pe kaam kiya. Ab daily calls aate hain for home collection. System set ho gaya basically.",
+      attachedImage: "/reviews/media__1774074432121.png",
+    },
+    {
+      name: "Vikram Singh",
+      role: "Owner, Bharat Fragrances",
+      image: "V",
+      isInitial: true,
+      initialBg: "bg-orange-500",
+      platform: "Google",
+      rating: 5,
+      title: "Website acchi lag rahi thi, par convert nahi kar rahi thi.",
+      content: "Design theek tha but log aake ja rahe the, enquiry nahi aa rahi thi. TopRank ne redesign + flow improve kiya. Ab log form fill karte hain, WhatsApp pe bhi ping aata hai. Clear difference hai.",
+      attachedImage: "/reviews/media__1774074432183.png",
+    },
+    {
+      name: "Ananya Patel",
+      role: "VP Sales, CloudServe",
+      image: "https://i.pravatar.cc/150?u=44",
+      isInitial: false,
+      platform: "Google",
+      rating: 5,
+      title: "Traffic pehle bhi tha, par kaam ka nahi tha.",
+      content: "TopRank changed the targeting and SEO strategy. Now fewer visitors maybe, but better ones. Conversions improved. That’s what we needed.",
+      attachedImage: "/reviews/analytics.png",
+    }
+  ];
+};
 
 const containerVariants = {
   hidden: {},
@@ -108,7 +115,8 @@ const cardVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as const } },
 };
 
-export function ReviewsSection() {
+export function ReviewsSection({ location }: { location?: string }) {
+  const reviews = getReviews(location);
   const sectionRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.1 });
   const [mounted, setMounted] = useState(false);
@@ -145,7 +153,7 @@ export function ReviewsSection() {
             </h2>
 
             <p className="text-slate-600 text-lg md:text-xl font-medium leading-relaxed max-w-2xl">
-              We've helped over 100+ businesses scale their revenue predictability. Here's what real founders and marketing heads have to say.
+              We've helped over 100+ businesses {location ? `in ${location} and beyond ` : ""}scale their revenue predictability. Here's what real founders and marketing heads have to say.
             </p>
           </motion.div>
 

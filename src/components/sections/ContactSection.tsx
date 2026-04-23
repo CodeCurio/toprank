@@ -2,10 +2,10 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useInView } from "framer-motion";
-import { 
-  MapPin, 
-  Phone, 
-  Mail, 
+import {
+  MapPin,
+  Phone,
+  Mail,
   MessageCircle,
   CheckCircle2,
   Send,
@@ -28,15 +28,23 @@ const locations = [
     type: "Headquarters",
     address: "A42/32, Sulabh Awas, Sector 01, Gomti Nagar, Lucknow, Uttar Pradesh 226010",
     embedParams: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d225.40266407933288!2d80.9997749234823!3d26.83717480352987!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399be3e41920850b%3A0x46d2900944856043!2sTopRank%20Digital%20Service%20%7C%20Website%20Designer%20%26%20SEO%20Company!5e1!3m2!1sen!2sin!4v1774077241204!5m2!1sen!2sin",
-    directionLink: "https://maps.google.com/?q=TopRank+Digital+Service+Lucknow"
+    directionLink: "https://share.google/585sAqmLbXxpCuos9"
   },
   {
     id: "chandigarh",
     city: "Chandigarh",
     type: "Branch Office",
     address: "SHOP NO 8, Sector 34B, Chandigarh, 160034",
-    embedParams: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4669.558857324111!2d76.76764949103416!3d30.721047037352985!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390fed78f284b3ff%3A0x6914cb2c221efc85!2sTopRank%20Digital%20Service%20-%20Website%20Designer%20%26%20SEO%20Company!5e1!3m2!1sen!2sin!4v1774077289489!5m2!1sen!2sin",
-    directionLink: "https://maps.google.com/?q=TopRank+Digital+Service+Chandigarh"
+    embedParams: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d214.36906273567996!2d76.77083449988736!3d30.72107089597058!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390fed78f284b3ff%3A0x6914cb2c221efc85!2sTopRank%20Digital%20Service%20-%20Website%20Designer%20%26%20SEO%20Company!5e0!3m2!1sen!2sin!4v1776942376382!5m2!1sen!2sin",
+    directionLink: "https://share.google/Ti1FOWyQxmiGoWbOE"
+  },
+  {
+    id: "gonda",
+    city: "Gonda, UP",
+    type: "Regional Hub",
+    address: "Shop No A6, Zila Panchayat Market, Ambedkar Chauraha, Housing Colony, Gonda, Uttar Pradesh 271001",
+    embedParams: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1775.4129477835843!2d81.9408255815506!3d27.13029324754563!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3999f3f944b9113f%3A0xdf48fbededaeab98!2sTopRank%20Digital%20Service!5e0!3m2!1sen!2sin!4v1776942238764!5m2!1sen!2sin",
+    directionLink: "https://share.google/REZPedp69CgytyOHR"
   }
 ];
 
@@ -74,7 +82,7 @@ export function ContactSection() {
 
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
         <div className="flex flex-col xl:flex-row gap-12 lg:gap-20">
-          
+
           {/* Left: Form */}
           <div className="xl:w-5/12">
             <motion.div
@@ -89,7 +97,7 @@ export function ContactSection() {
                   Your Growth Partner
                 </div>
                 <h2 className="text-4xl md:text-5xl lg:text-[3.5rem] font-black text-white leading-[1.1] tracking-tight mb-4">
-                  Let's scale <br/>your business.
+                  Let's scale <br />your business.
                 </h2>
                 <p className="text-slate-400 text-lg leading-relaxed max-w-md">
                   Skip the waiting lines. Fill the form below to instantly connect with our strategy team via WhatsApp for a priority review.
@@ -97,63 +105,63 @@ export function ContactSection() {
               </div>
 
               <form onSubmit={handleWhatsAppSubmit} className="bg-white/5 border border-white/10 rounded-[2rem] p-6 sm:p-8 backdrop-blur-xl shadow-2xl">
-                 <div className="space-y-5 mb-6">
-                    <div>
-                      <label className="block text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Your Name</label>
-                      <input 
-                        required
-                        type="text" 
-                        value={formData.name}
-                        onChange={(e) => setFormData({...formData, name: e.target.value})}
-                        placeholder="John Doe" 
-                        className="w-full bg-black/30 border border-white/10 rounded-xl px-5 py-3.5 text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">What do you need help with?</label>
-                      <select 
-                        value={formData.service}
-                        onChange={(e) => setFormData({...formData, service: e.target.value})}
-                        className="w-full bg-black/30 border border-white/10 rounded-xl px-5 py-3.5 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all appearance-none cursor-pointer"
-                      >
-                        <option value="Search Engine Optimization (SEO)" className="bg-slate-900">SEO & Local Ranking</option>
-                        <option value="Website Development" className="bg-slate-900">Premium Website Development</option>
-                        <option value="Google Business Profile Optimization" className="bg-slate-900">Google Business Profile (GMB)</option>
-                        <option value="Social Media Marketing" className="bg-slate-900">Social Media Marketing</option>
-                        <option value="Comprehensive Digital Growth" className="bg-slate-900">Comprehensive Digital Growth</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label className="block text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Message (Optional)</label>
-                      <textarea 
-                        value={formData.message}
-                        onChange={(e) => setFormData({...formData, message: e.target.value})}
-                        placeholder="Tell us a little about your goals..." 
-                        rows={3}
-                        className="w-full bg-black/30 border border-white/10 rounded-xl px-5 py-3.5 text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all resize-none"
-                      />
-                    </div>
-                 </div>
-                 <button 
-                   type="submit" 
-                   disabled={isSubmitting}
-                   className="w-full flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20bd5a] text-white font-black py-4 rounded-xl transition-all shadow-lg disabled:opacity-70 group/btn"
-                 >
-                   {isSubmitting ? (
-                     <span className="animate-pulse">Connecting...</span>
-                   ) : (
-                     <>
-                       <MessageCircle className="w-5 h-5" /> Send to WhatsApp <Send className="w-4 h-4 ml-1 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform" />
-                     </>
-                   )}
-                 </button>
+                <div className="space-y-5 mb-6">
+                  <div>
+                    <label className="block text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Your Name</label>
+                    <input
+                      required
+                      type="text"
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      placeholder="John Doe"
+                      className="w-full bg-black/30 border border-white/10 rounded-xl px-5 py-3.5 text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">What do you need help with?</label>
+                    <select
+                      value={formData.service}
+                      onChange={(e) => setFormData({ ...formData, service: e.target.value })}
+                      className="w-full bg-black/30 border border-white/10 rounded-xl px-5 py-3.5 text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all appearance-none cursor-pointer"
+                    >
+                      <option value="Search Engine Optimization (SEO)" className="bg-slate-900">SEO & Local Ranking</option>
+                      <option value="Website Development" className="bg-slate-900">Premium Website Development</option>
+                      <option value="Google Business Profile Optimization" className="bg-slate-900">Google Business Profile (GMB)</option>
+                      <option value="Social Media Marketing" className="bg-slate-900">Social Media Marketing</option>
+                      <option value="Comprehensive Digital Growth" className="bg-slate-900">Comprehensive Digital Growth</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Message (Optional)</label>
+                    <textarea
+                      value={formData.message}
+                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      placeholder="Tell us a little about your goals..."
+                      rows={3}
+                      className="w-full bg-black/30 border border-white/10 rounded-xl px-5 py-3.5 text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all resize-none"
+                    />
+                  </div>
+                </div>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20bd5a] text-white font-black py-4 rounded-xl transition-all shadow-lg disabled:opacity-70 group/btn"
+                >
+                  {isSubmitting ? (
+                    <span className="animate-pulse">Connecting...</span>
+                  ) : (
+                    <>
+                      <MessageCircle className="w-5 h-5" /> Send to WhatsApp <Send className="w-4 h-4 ml-1 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform" />
+                    </>
+                  )}
+                </button>
               </form>
             </motion.div>
           </div>
 
           {/* Right: Maps & Contact Card */}
           <div className="xl:w-7/12">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 h-full">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 h-full">
               {locations.map((loc, index) => (
                 <motion.div
                   key={loc.id}
@@ -163,7 +171,7 @@ export function ContactSection() {
                   className="bg-[#0f172a] border border-[#1e293b] rounded-[2rem] overflow-hidden hover:border-slate-700 transition-all flex flex-col group"
                 >
                   <div className="h-48 sm:h-56 relative w-full overflow-hidden bg-slate-900 border-b border-slate-800">
-                    <iframe 
+                    <iframe
                       src={loc.embedParams}
                       title={`Map of TopRank ${loc.city}`}
                       className="w-full h-full opacity-90 group-hover:opacity-100 transition-opacity"
@@ -178,13 +186,13 @@ export function ContactSection() {
                         {loc.address}
                       </p>
                     </div>
-                    <a 
-                      href={loc.directionLink} 
-                      target="_blank" 
+                    <a
+                      href={loc.directionLink}
+                      target="_blank"
                       rel="noreferrer"
                       className="flex items-center justify-between w-full py-3.5 px-5 bg-white/5 hover:bg-white/10 rounded-xl text-sm font-bold text-white transition-all group/btn"
                     >
-                      Open in Maps 
+                      Open in Maps
                       <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-all" />
                     </a>
                   </div>
@@ -196,10 +204,10 @@ export function ContactSection() {
                 initial={false}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.4 }}
-                className="md:col-span-2 bg-[#0f172a] border border-[#1e293b] rounded-[2rem] p-6 sm:p-8 md:p-10 flex flex-col xl:flex-row justify-between items-start xl:items-center gap-10 shadow-2xl relative overflow-hidden group"
+                className="md:col-span-2 lg:col-span-3 bg-[#0f172a] border border-[#1e293b] rounded-[2rem] p-6 sm:p-8 md:p-10 flex flex-col xl:flex-row justify-between items-start xl:items-center gap-10 shadow-2xl relative overflow-hidden group"
               >
                 <div className="absolute -right-20 -bottom-20 w-64 h-64 bg-blue-600/5 rounded-full blur-[80px] group-hover:bg-blue-600/10 transition-all duration-1000" />
-                
+
                 <div className="relative z-10 space-y-8 flex-grow">
                   <div>
                     <p className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-500 mb-6">Direct Avenues</p>
@@ -224,7 +232,7 @@ export function ContactSection() {
                   <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500 mb-6">Connect on Social</p>
                   <div className="flex flex-wrap gap-3 sm:gap-4">
                     {socials.filter(s => s.name !== "WhatsApp").map((social) => (
-                      <a 
+                      <a
                         key={social.name}
                         href={social.href}
                         target="_blank"

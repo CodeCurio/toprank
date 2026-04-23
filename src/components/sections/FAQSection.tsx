@@ -6,80 +6,85 @@ import { Plus, Minus, ThumbsUp, ThumbsDown, ArrowRight, TrendingUp, CheckCircle2
 import Image from "next/image";
 import Link from "next/link";
 
-const faqs = [
-  {
-    id: 1,
-    q: "What digital marketing services does TopRank Digital Service offer?",
-    a: "We provide complete digital growth solutions including website development, SEO, Google Business Profile (local SEO), and social media marketing. Each service is designed to work together — so your business not only gets visibility but also consistent leads.",
-    microProof: "Companies using our integrated approach see up to 3x more qualified leads.",
-    related: 9,
-  },
-  {
-    id: 2,
-    q: "How does SEO help my local business grow?",
-    a: "SEO helps your business appear when customers search for your services on Google. With the right strategy, you can rank higher in your area, attract high-intent visitors, and convert them into enquiries or calls.",
-    microProof: "Example: A local business improved from page 3 to top 3 results in 60 days.",
-    related: 4,
-  },
-  {
-    id: 3,
-    q: "What is Google Business Profile (GMB) optimization and why is it important?",
-    a: "Google Business Profile optimization improves your visibility in local search results and Google Maps. It helps your business show up for “near me” searches, increases calls, and builds trust with reviews and accurate information.",
-    microProof: "GMB optimization is directly responsible for 80% of local 'Near Me' map conversions.",
-    related: 7,
-  },
-  {
-    id: 4,
-    q: "How long does it take to see results from SEO?",
-    a: "SEO is a long-term strategy. Most businesses start seeing noticeable improvements in 6–12 weeks, with stronger and more stable results over time as rankings improve and competition is outranked.",
-    microProof: "Our clients often see a 40% drop in cost-per-acquisition by Month 6.",
-    related: 2,
-  },
-  {
-    id: 5,
-    q: "Do I need a website if I already have social media pages?",
-    a: "Yes. Social media builds awareness, but a website gives you full control, credibility, and a conversion-focused platform where visitors can learn, trust, and take action.",
-    microProof: "84% of consumers believe a business with a website is more credible.",
-    related: 1,
-  },
-  {
-    id: 6,
-    q: "How is TopRank different from other digital marketing agencies?",
-    a: "We focus on outcomes, not just activity. Instead of chasing likes or traffic, we build systems that generate real enquiries, calls, and business growth using SEO, GMB, and conversion-focused design.",
-    microProof: "We track 'Revenue' and 'Leads', not just 'Impressions'.",
-    related: 10,
-  },
-  {
-    id: 7,
-    q: "Can you help my business rank in a specific city like Lucknow or Chandigarh?",
-    a: "Yes. We specialize in local SEO strategies that target specific cities and areas, helping your business rank for location-based searches and attract nearby customers.",
-    microProof: "We’ve successfully dominated competitive local keywords across Lucknow & Chandigarh.",
-    related: 3,
-  },
-  {
-    id: 8,
-    q: "Is social media marketing really effective for lead generation?",
-    a: "Yes, when done strategically. We create content and campaigns that not only engage users but also drive enquiries, build trust, and support your overall digital growth system.",
-    microProof: "Strategic social targeting can reduce lead cost by up to 30%.",
-    related: 1,
-  },
-  {
-    id: 9,
-    q: "Do you offer customized digital marketing plans?",
-    a: "Absolutely. Every business is different, so we create custom strategies based on your goals, competition, and market — not one-size-fits-all packages.",
-    microProof: "Tailored strategies historically deliver 50% better ROI than generic packages.",
-    related: 6,
-  },
-  {
-    id: 10,
-    q: "How do I get started with TopRank Digital Service?",
-    a: "You can start with a free growth audit, where we analyze your current online presence and show you exactly what needs to be improved to generate more leads.",
-    microProof: "Our free audits have uncovered thousands in missed revenue for prospects.",
-    related: 9,
-  }
-];
+const getFaqs = (location?: string) => {
+  const isLucknow = location?.toLowerCase() === "lucknow";
+  
+  return [
+    {
+      id: 1,
+      q: isLucknow ? "Why is TopRank the best digital marketing agency in Lucknow?" : "What digital marketing services does TopRank Digital Service offer?",
+      a: isLucknow ? "As the leading digital marketing agency in Lucknow, we provide complete growth solutions including website development, local SEO, Google Business Profile optimization, and social media marketing. We help Lucknow businesses dominate their local market." : "We provide complete digital growth solutions including website development, SEO, Google Business Profile (local SEO), and social media marketing. Each service is designed to work together — so your business not only gets visibility but also consistent leads.",
+      microProof: "Companies using our integrated approach see up to 3x more qualified leads.",
+      related: 9,
+    },
+    {
+      id: 2,
+      q: isLucknow ? "How does local SEO help my business in Lucknow grow?" : "How does SEO help my local business grow?",
+      a: isLucknow ? "Local SEO ensures your business appears at the top when customers in Lucknow search for your services. We optimize your website and Google Maps presence so you capture high-intent local traffic and convert them into actual sales." : "SEO helps your business appear when customers search for your services on Google. With the right strategy, you can rank higher in your area, attract high-intent visitors, and convert them into enquiries or calls.",
+      microProof: "Example: A local business improved from page 3 to top 3 results in 60 days.",
+      related: 4,
+    },
+    {
+      id: 3,
+      q: "What is Google Business Profile (GMB) optimization and why is it important?",
+      a: "Google Business Profile optimization improves your visibility in local search results and Google Maps. It helps your business show up for “near me” searches, increases calls, and builds trust with reviews and accurate information.",
+      microProof: "GMB optimization is directly responsible for 80% of local 'Near Me' map conversions.",
+      related: 7,
+    },
+    {
+      id: 4,
+      q: "How long does it take to see results from SEO?",
+      a: "SEO is a long-term strategy. Most businesses start seeing noticeable improvements in 6–12 weeks, with stronger and more stable results over time as rankings improve and competition is outranked.",
+      microProof: "Our clients often see a 40% drop in cost-per-acquisition by Month 6.",
+      related: 2,
+    },
+    {
+      id: 5,
+      q: "Do I need a website if I already have social media pages?",
+      a: "Yes. Social media builds awareness, but a website gives you full control, credibility, and a conversion-focused platform where visitors can learn, trust, and take action.",
+      microProof: "84% of consumers believe a business with a website is more credible.",
+      related: 1,
+    },
+    {
+      id: 6,
+      q: "How is TopRank different from other digital marketing agencies?",
+      a: "We focus on outcomes, not just activity. Instead of chasing likes or traffic, we build systems that generate real enquiries, calls, and business growth using SEO, GMB, and conversion-focused design.",
+      microProof: "We track 'Revenue' and 'Leads', not just 'Impressions'.",
+      related: 10,
+    },
+    {
+      id: 7,
+      q: "Can you help my business rank in a specific city like Lucknow or Chandigarh?",
+      a: "Yes. We specialize in local SEO strategies that target specific cities and areas, helping your business rank for location-based searches and attract nearby customers.",
+      microProof: "We’ve successfully dominated competitive local keywords across Lucknow & Chandigarh.",
+      related: 3,
+    },
+    {
+      id: 8,
+      q: "Is social media marketing really effective for lead generation?",
+      a: "Yes, when done strategically. We create content and campaigns that not only engage users but also drive enquiries, build trust, and support your overall digital growth system.",
+      microProof: "Strategic social targeting can reduce lead cost by up to 30%.",
+      related: 1,
+    },
+    {
+      id: 9,
+      q: "Do you offer customized digital marketing plans?",
+      a: "Absolutely. Every business is different, so we create custom strategies based on your goals, competition, and market — not one-size-fits-all packages.",
+      microProof: "Tailored strategies historically deliver 50% better ROI than generic packages.",
+      related: 6,
+    },
+    {
+      id: 10,
+      q: "How do I get started with TopRank Digital Service?",
+      a: "You can start with a free growth audit, where we analyze your current online presence and show you exactly what needs to be improved to generate more leads.",
+      microProof: "Our free audits have uncovered thousands in missed revenue for prospects.",
+      related: 9,
+    }
+  ];
+};
 
-export function FAQSection() {
+export function FAQSection({ location }: { location?: string }) {
+  const faqs = getFaqs(location);
   const [expandedId, setExpandedId] = useState<number | null>(null);
   const [feedbackState, setFeedbackState] = useState<Record<number, 'up' | 'down'>>({});
   const sectionRef = useRef<HTMLDivElement>(null);

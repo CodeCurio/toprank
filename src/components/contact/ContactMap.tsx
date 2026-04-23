@@ -13,7 +13,7 @@ const locations = [
     email: "connect@toprankindia.com",
     hours: "Monday - Sunday, 24x7",
     embedParams: "https://maps.google.com/maps?q=TopRank%20Digital%20Service,%20Lucknow&t=&z=15&ie=UTF8&iwloc=&output=embed",
-    directionLink: "https://maps.google.com/?q=TopRank+Digital+Service+Lucknow"
+    directionLink: "https://share.google/585sAqmLbXxpCuos9"
   },
   {
     id: "chandigarh",
@@ -23,8 +23,19 @@ const locations = [
     phone: "+91 93050 30523",
     email: "connect@toprankindia.com",
     hours: "Monday - Sunday, 24x7",
-    embedParams: "https://maps.google.com/maps?q=Sector%2034B,%20Chandigarh&t=&z=15&ie=UTF8&iwloc=&output=embed",
-    directionLink: "https://maps.google.com/?q=TopRank+Digital+Service+Chandigarh"
+    embedParams: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d214.36906273567996!2d76.77083449988736!3d30.72107089597058!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390fed78f284b3ff%3A0x6914cb2c221efc85!2sTopRank%20Digital%20Service%20-%20Website%20Designer%20%26%20SEO%20Company!5e0!3m2!1sen!2sin!4v1776942376382!5m2!1sen!2sin",
+    directionLink: "https://share.google/Ti1FOWyQxmiGoWbOE"
+  },
+  {
+    id: "gonda",
+    city: "Gonda, UP",
+    type: "Regional Hub",
+    address: "Shop No A6, Zila Panchayat Market, Ambedkar Chauraha, Housing Colony, Gonda, Uttar Pradesh 271001",
+    phone: "+91 93050 30523",
+    email: "connect@toprankindia.com",
+    hours: "Monday - Sunday, 24x7",
+    embedParams: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1775.4129477835843!2d81.9408255815506!3d27.13029324754563!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3999f3f944b9113f%3A0xdf48fbededaeab98!2sTopRank%20Digital%20Service!5e0!3m2!1sen!2sin!4v1776942238764!5m2!1sen!2sin",
+    directionLink: "https://share.google/REZPedp69CgytyOHR"
   }
 ];
 
@@ -53,7 +64,7 @@ export function ContactMap() {
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
           {locations.map((loc, index) => (
             <motion.div
               key={loc.id}

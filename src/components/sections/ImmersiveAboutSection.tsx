@@ -50,10 +50,11 @@ const CardItem = React.memo(({ card, i }: { card: any, i: number }) => (
 ));
 CardItem.displayName = "CardItem";
 
-export function ImmersiveAboutSection() {
+export function ImmersiveAboutSection({ location }: { location?: string }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -218,7 +219,7 @@ export function ImmersiveAboutSection() {
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">True Growth.</span>
                 </h2>
                 <p className="mt-4 md:mt-6 text-slate-600 text-base md:text-xl font-medium leading-relaxed relative z-20 mb-8">
-                  We bridge the gap between aesthetics and actual revenue generation for ambitious brands.
+                  We bridge the gap between aesthetics and actual revenue generation for ambitious brands{location ? ` in ${location}` : ""}.
                 </p>
 
                 <div className="flex items-center justify-center md:justify-start gap-4">
@@ -260,30 +261,42 @@ export function ImmersiveAboutSection() {
                     clipPath: mounted ? clipPathBase : "none",
                     WebkitClipPath: mounted ? clipPathBase : "none" 
                   }}
-                  className="w-[92vw] md:w-[85vw] h-[45vh] md:h-[65vh] relative group border border-slate-200/50 will-change-[clip-path] transform-gpu backface-hidden"
+                  className="w-[92vw] md:w-[85vw] h-[45vh] md:h-[65vh] relative group border border-slate-200/50 will-change-[clip-path] transform-gpu backface-hidden overflow-hidden bg-slate-900"
                 >
-                  <motion.div style={{ scale: imageScale }} className="absolute inset-0 w-full h-full origin-center transform-gpu">
-                    <Image
-                      src={aboutThumbnail}
-                      alt="TopRank Digital Service – Strategy Showreel"
-                      fill
-                      className="object-cover object-center"
-                      priority
+                  {isPlaying ? (
+                    <video 
+                      src="/videos/showreel.mp4" 
+                      controls 
+                      autoPlay 
+                      className="w-full h-full object-cover"
                     />
-                  </motion.div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent z-10 transition-opacity duration-700" />
-                  <div className="absolute inset-0 flex flex-col items-center justify-center z-20">
-                     <motion.div 
-                       whileHover={{ scale: 1.1 }}
-                       whileTap={{ scale: 0.95 }}
-                       className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white/90 backdrop-blur-md text-slate-950 flex items-center justify-center shadow-[0_10px_40px_rgba(0,0,0,0.3)] cursor-pointer"
-                     >
-                        <Play className="w-6 h-6 md:w-8 md:h-8 fill-current ml-1.5" />
-                     </motion.div>
-                     <div className="mt-8 text-center px-6">
-                        <span className="text-white text-[10px] md:text-[12px] font-black tracking-[0.6em] uppercase opacity-60 group-hover:opacity-100 transition-opacity whitespace-nowrap">Launch Strategy Showreel</span>
-                     </div>
-                  </div>
+                  ) : (
+                    <>
+                      <motion.div style={{ scale: imageScale }} className="absolute inset-0 w-full h-full origin-center transform-gpu">
+                        <Image
+                          src={aboutThumbnail}
+                          alt="TopRank Digital Service – Strategy Showreel"
+                          fill
+                          className="object-cover object-center"
+                          priority
+                        />
+                      </motion.div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent z-10 transition-opacity duration-700" />
+                      <div className="absolute inset-0 flex flex-col items-center justify-center z-20">
+                         <motion.div 
+                           onClick={() => setIsPlaying(true)}
+                           whileHover={{ scale: 1.1 }}
+                           whileTap={{ scale: 0.95 }}
+                           className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white/90 backdrop-blur-md text-slate-950 flex items-center justify-center shadow-[0_10px_40px_rgba(0,0,0,0.3)] cursor-pointer"
+                         >
+                            <Play className="w-6 h-6 md:w-8 md:h-8 fill-current ml-1.5" />
+                         </motion.div>
+                         <div className="mt-8 text-center px-6">
+                            <span className="text-white text-[10px] md:text-[12px] font-black tracking-[0.6em] uppercase opacity-60 group-hover:opacity-100 transition-opacity whitespace-nowrap">Launch Strategy Showreel</span>
+                         </div>
+                      </div>
+                    </>
+                  )}
                 </motion.div>
 
                 {/* Animated CTA Slot */}
