@@ -50,7 +50,29 @@ const CardItem = React.memo(({ card, i }: { card: any, i: number }) => (
 ));
 CardItem.displayName = "CardItem";
 
-export function ImmersiveAboutSection({ location }: { location?: string }) {
+export interface AboutCardContent {
+  title: string;
+  content: string;
+  icon?: React.ReactNode;
+  bgZ?: string;
+  badge?: string;
+  trust?: string;
+  hasCTA?: boolean;
+}
+
+export interface AboutContent {
+  smallTitle?: string;
+  headline?: React.ReactNode;
+  paragraph?: React.ReactNode;
+  cards?: AboutCardContent[];
+}
+
+interface ImmersiveAboutSectionProps {
+  location?: string;
+  content?: AboutContent;
+}
+
+export function ImmersiveAboutSection({ location, content }: ImmersiveAboutSectionProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -80,7 +102,7 @@ export function ImmersiveAboutSection({ location }: { location?: string }) {
   const headerY = useTransform(smoothProgress, [0, 0.1], [0, -40]);
 
   // --- 2. Narrative Logic - Deep Dive Selling Content ---
-  const cards = [
+  const defaultCards = [
     {
       title: "The Reality of SEO in 2024",
       content: "Most marketing agencies sell vanity metrics—likes, generic traffic, or beautiful designs that never actually convert. TopRank was built to solve the real problem: engineering predictable lead generation that moves the needle.",
@@ -114,6 +136,8 @@ export function ImmersiveAboutSection({ location }: { location?: string }) {
       hasCTA: true
     }
   ];
+
+  const cardsToUse = content?.cards || defaultCards;
 
   const leftColOpacity = useTransform(smoothProgress, 
     isMobile ? [0, 0.20, 0.25] : [0, 0.08, 0.65, 0.75], 
@@ -174,13 +198,13 @@ export function ImmersiveAboutSection({ location }: { location?: string }) {
   return (
     <section 
       ref={containerRef} 
-      className="relative h-[480vh] bg-white z-0"
+      className="relative md:h-[480vh] bg-white z-0 overflow-hidden"
       id="about-immersive"
     >
-      <div className="sticky top-20 h-[calc(100vh-80px)] w-full overflow-hidden z-20 px-4 md:px-0 flex flex-col items-center justify-center">
+      <div className="md:sticky md:top-20 md:h-[calc(100vh-80px)] w-full md:overflow-hidden z-20 px-4 md:px-0 flex flex-col md:flex-col items-center justify-center py-16 md:py-0">
         
-        {/* --- GLOBAL CONTINUOUS WAVY LINE (Lusion Style Loop) --- */}
-        <div className="absolute inset-0 w-full h-full pointer-events-none -z-10">
+        {/* --- GLOBAL CONTINUOUS WAVY LINE (Lusion Style Loop) - Desktop Only --- */}
+        <div className="hidden md:block absolute inset-0 w-full h-full pointer-events-none -z-10">
            <svg className="w-full h-full drop-shadow-2xl opacity-90" viewBox="0 0 1000 1000" preserveAspectRatio="none" fill="none">
              <motion.path 
                 d={isMobile 
@@ -201,26 +225,34 @@ export function ImmersiveAboutSection({ location }: { location?: string }) {
            </svg>
         </div>
 
-        <div className="relative w-full h-full max-w-7xl mx-auto px-6 flex flex-col items-center justify-center">
+        <div className="relative w-full h-full max-w-7xl mx-auto px-0 md:px-6 flex flex-col items-center justify-center">
             
             {/* Narrative 2-Column Deep Dive */}
-            <div className="absolute inset-0 max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center md:items-start pt-[8vh] md:pt-[20vh] pointer-events-none z-20">
+            <div className="relative md:absolute md:inset-0 max-w-7xl mx-auto px-2 md:px-6 flex flex-col md:flex-row items-center md:items-start pt-0 md:pt-[20vh] z-20 w-full">
               
               {/* Left Column: Sticky-like Headline */}
               <motion.div 
-                style={{ opacity: leftColOpacity, y: leftColY }} 
-                className="w-full md:w-[40%] flex flex-col mb-12 md:mb-0 md:pr-10 text-center md:text-left pointer-events-auto will-change-[transform,opacity]"
+                style={isMobile ? undefined : { opacity: leftColOpacity, y: leftColY }} 
+                className="w-full md:w-[40%] flex flex-col mb-12 md:mb-0 md:pr-10 text-center md:text-left will-change-[transform,opacity]"
               >
                 <div className="inline-flex mx-auto md:mx-0 items-center justify-center md:justify-start gap-2 px-4 py-2 bg-blue-50 border border-blue-100/50 rounded-full w-max text-blue-600 font-bold text-xs uppercase tracking-widest mb-6">
-                  Who we are
+                  {content?.smallTitle || "Who we are"}
                 </div>
-                <h2 className="text-3xl lg:text-5xl xl:text-6xl font-black text-slate-900 leading-[1.1] tracking-tighter shadow-sm relative z-20">
-                  Beyond Traffic. <br className="hidden md:block" />
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">True Growth.</span>
-                </h2>
-                <p className="mt-4 md:mt-6 text-slate-600 text-base md:text-xl font-medium leading-relaxed relative z-20 mb-8">
-                  We bridge the gap between aesthetics and actual revenue generation for ambitious brands{location ? ` in ${location}` : ""}.
-                </p>
+                {content?.headline ? (
+                  content.headline
+                ) : (
+                  <h2 className="text-3xl lg:text-5xl xl:text-6xl font-black text-slate-900 leading-[1.1] tracking-tighter shadow-sm relative z-20">
+                    Beyond Traffic. <br className="hidden md:block" />
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">True Growth.</span>
+                  </h2>
+                )}
+                {content?.paragraph ? (
+                  content.paragraph
+                ) : (
+                  <p className="mt-4 md:mt-6 text-slate-600 text-base md:text-xl font-medium leading-relaxed relative z-20 mb-8">
+                    We bridge the gap between aesthetics and actual revenue generation for ambitious brands{location ? ` in ${location}` : ""}.
+                  </p>
+                )}
 
                 <div className="flex items-center justify-center md:justify-start gap-4">
                   <Link href="/about" className="px-8 py-4 bg-slate-900 hover:bg-black text-white rounded-2xl text-[11px] font-black uppercase tracking-widest transition-all shadow-xl shadow-slate-900/10 active:scale-95 flex items-center gap-2">
@@ -231,11 +263,11 @@ export function ImmersiveAboutSection({ location }: { location?: string }) {
 
               {/* Right Column: Scrolling Cards */}
               <motion.div 
-                style={{ opacity: rightColOpacity, y: rightColY }} 
+                style={isMobile ? undefined : { opacity: rightColOpacity, y: rightColY }} 
                 className="w-full md:w-[60%] flex flex-col gap-6 md:gap-10 md:pl-10 relative will-change-transform transform-gpu"
               >
 
-                  {cards.map((card, i) => (
+                  {cardsToUse.map((card, i) => (
                     <CardItem key={i} card={card} i={i} />
                   ))}
               </motion.div>
@@ -243,12 +275,12 @@ export function ImmersiveAboutSection({ location }: { location?: string }) {
 
             {/* Video Visual Slot */}
             <motion.div 
-              style={{ 
+              style={isMobile ? undefined : { 
                 opacity: videoOpacity, 
                 y: videoY,
                 position: "absolute",
               }}
-              className="w-full flex flex-col items-center justify-center z-10 pointer-events-auto will-change-[transform,opacity]"
+              className="w-full flex flex-col items-center justify-center z-10 mt-16 md:mt-0 will-change-[transform,opacity]"
             >
                 {/* Cinematic Core Glow */}
                 <motion.div 
@@ -257,11 +289,11 @@ export function ImmersiveAboutSection({ location }: { location?: string }) {
                 />
 
                 <motion.div
-                  style={{ 
+                  style={isMobile ? undefined : { 
                     clipPath: mounted ? clipPathBase : "none",
                     WebkitClipPath: mounted ? clipPathBase : "none" 
                   }}
-                  className="w-[92vw] md:w-[85vw] h-[45vh] md:h-[65vh] relative group border border-slate-200/50 will-change-[clip-path] transform-gpu backface-hidden overflow-hidden bg-slate-900"
+                  className="w-full md:w-[85vw] h-[35vh] md:h-[65vh] relative group md:border border-slate-200/50 will-change-[clip-path] transform-gpu backface-hidden overflow-hidden bg-slate-900 rounded-2xl md:rounded-none mx-auto"
                 >
                   {isPlaying ? (
                     <video 
@@ -272,7 +304,7 @@ export function ImmersiveAboutSection({ location }: { location?: string }) {
                     />
                   ) : (
                     <>
-                      <motion.div style={{ scale: imageScale }} className="absolute inset-0 w-full h-full origin-center transform-gpu">
+                      <motion.div style={isMobile ? undefined : { scale: imageScale }} className="absolute inset-0 w-full h-full origin-center transform-gpu">
                         <Image
                           src={aboutThumbnail}
                           alt="TopRank Digital Service – Strategy Showreel"
@@ -301,8 +333,8 @@ export function ImmersiveAboutSection({ location }: { location?: string }) {
 
                 {/* Animated CTA Slot */}
                 <motion.div 
-                  style={{ opacity: ctaOpacity, y: ctaY }}
-                  className="mt-12 flex flex-col items-center gap-6"
+                  style={isMobile ? undefined : { opacity: ctaOpacity, y: ctaY }}
+                  className="mt-8 md:mt-12 flex flex-col items-center gap-6"
                 >
                   <AnimatedCTA 
                     text="Read More About Us" 

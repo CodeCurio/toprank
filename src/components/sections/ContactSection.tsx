@@ -148,7 +148,7 @@ export function ContactSection() {
                   className="w-full flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20bd5a] text-white font-black py-4 rounded-xl transition-all shadow-lg disabled:opacity-70 group/btn"
                 >
                   {isSubmitting ? (
-                    <span className="animate-pulse">Connecting...</span>
+                    <span className="animate-pulse">Connecting....</span>
                   ) : (
                     <>
                       <MessageCircle className="w-5 h-5" /> Send to WhatsApp <Send className="w-4 h-4 ml-1 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform" />

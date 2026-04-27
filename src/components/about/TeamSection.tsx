@@ -45,7 +45,7 @@ export function TeamSection() {
                   <h3 className="text-xl font-black text-slate-900">Sandeep Dwivedi</h3>
                   <p className="text-xs font-bold text-blue-600 uppercase tracking-widest mt-0.5">Founder & Lead Strategist</p>
                 </div>
-                <a href="#" className="w-12 h-12 rounded-full bg-[#0A66C2] text-white flex items-center justify-center shrink-0 hover:scale-110 transition-transform shadow-lg shadow-[#0A66C2]/30">
+                <a href="https://in.linkedin.com/in/founder-toprank-india" className="w-12 h-12 rounded-full bg-[#0A66C2] text-white flex items-center justify-center shrink-0 hover:scale-110 transition-transform shadow-lg shadow-[#0A66C2]/30">
                   <Linkedin className="w-5 h-5 fill-current" />
                 </a>
               </div>

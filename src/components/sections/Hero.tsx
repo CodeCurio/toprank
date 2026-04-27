@@ -72,7 +72,19 @@ const HERO_SLIDES = [
   }
 ];
 
-export function Hero({ location }: { location?: string }) {
+export interface HeroContent {
+  headline?: React.ReactNode;
+  subheadline?: React.ReactNode;
+  ctaText?: string;
+  tags?: string[];
+}
+
+interface HeroProps {
+  location?: string;
+  content?: HeroContent;
+}
+
+export function Hero({ location, content }: HeroProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [mounted, setMounted] = useState(false);
 
@@ -85,6 +97,12 @@ export function Hero({ location }: { location?: string }) {
   }, []);
 
   const Slide = HERO_SLIDES[currentSlide];
+
+  // Fallback defaults if content is not provided
+  const defaultTags = ['Website Development', 'Google My Business / Local SEO', 'National SEO', 'Ecommerce Development', 'Social Media Marketing'];
+  
+  const tagsToUse = content?.tags || defaultTags;
+  const ctaTextToUse = content?.ctaText || "Get Your Free Growth Audit";
 
   return (
     <section className="relative min-h-[92vh] pt-24 pb-12 lg:pt-32 lg:pb-20 overflow-hidden bg-slate-50 flex items-center">
@@ -147,9 +165,11 @@ export function Hero({ location }: { location?: string }) {
               initial={false}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] as const }}
-              className="text-5xl lg:text-6xl font-black text-slate-900 leading-[1.1] tracking-tight mb-6"
+              className="text-4xl lg:text-[3.2rem] font-black text-slate-900 leading-[1.15] tracking-tight mb-6"
             >
-              {location ? (
+              {content?.headline ? (
+                content.headline
+              ) : location ? (
                 <>
                   Best Digital Marketing Agency in {' '}
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-pink-500 to-blue-600">
@@ -168,25 +188,29 @@ export function Hero({ location }: { location?: string }) {
             </motion.h1>
 
             {/* Subheadline */}
-            <motion.p
+            <motion.div
               initial={false}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] as const }}
-              className="text-lg text-slate-600 leading-relaxed mb-10 max-w-xl"
+              className="text-base sm:text-lg text-slate-600 leading-relaxed mb-10 max-w-xl"
             >
-              {location 
-                ? `TopRank Digital Service is the #1 rated digital marketing agency in ${location}. We help local businesses dominate search results with expert SEO, Google Business Profile optimization, and high-converting websites.`
-                : "TopRank Digital Service helps local businesses grow with high-converting websites, Google Business Profile (Local SEO), and performance-driven social media marketing — built to generate real enquiries, not just traffic."}
-            </motion.p>
+              {content?.subheadline ? (
+                content.subheadline
+              ) : location ? (
+                <p>TopRank Digital Service is the #1 rated digital marketing agency in {location}. We help local businesses dominate search results with expert SEO, Google Business Profile optimization, and high-converting websites.</p>
+              ) : (
+                <p>TopRank Digital Service helps local businesses grow with high-converting websites, Google Business Profile (Local SEO), and performance-driven social media marketing — built to generate real enquiries, not just traffic.</p>
+              )}
+            </motion.div>
 
             {/* CTAs */}
             <motion.div
-           initial={false}
-           animate={{ opacity: 1, y: 0 }}
-           transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] as const }}
-           className="flex flex-col sm:flex-row gap-4 mb-12 relative z-20"
-        >
-              <AnimatedCTA text="Get Your Free Growth Audit" className="w-full sm:w-auto shadow-[0_8px_30px_rgb(249,115,22,0.3)]" />
+              initial={false}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] as const }}
+              className="flex flex-col sm:flex-row gap-4 mb-12 relative z-20"
+            >
+              <AnimatedCTA text={ctaTextToUse} className="w-full sm:w-auto shadow-[0_8px_30px_rgb(249,115,22,0.3)]" />
               <Button variant="outline" size="lg" className="h-14 px-8 text-lg font-bold bg-white/95 md:bg-white/50 md:backdrop-blur-sm border-slate-200 text-slate-700 hover:bg-white hover:text-blue-600">
                 View Our Case Studies
               </Button>
@@ -194,14 +218,14 @@ export function Hero({ location }: { location?: string }) {
 
             {/* Expertise Tags (Replaces Old Reviews Position) */}
             <motion.div
-            initial={false}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="pt-8 mt-4 border-t border-slate-200/60"
-          >
+              initial={false}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="pt-8 mt-4 border-t border-slate-200/60"
+            >
               <p className="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-4">Our Core Expertise</p>
               <div className="flex flex-wrap gap-2.5 max-w-xl">
-                {['Website Development', 'Google My Business / Local SEO', 'National SEO', 'Ecommerce Development', 'Social Media Marketing'].map((tag, i) => (
+                {tagsToUse.map((tag, i) => (
                   <span key={i} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-white shadow-sm border border-slate-200 text-xs font-semibold text-slate-700 hover:text-blue-600 hover:border-blue-300 transition-colors cursor-default">
                     <CheckCircle className="w-3.5 h-3.5 text-blue-500" />
                     {tag}
