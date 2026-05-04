@@ -28,7 +28,7 @@ export default async function PortfolioPage() {
   });
 
   // We map nulls to empty strings so it can be passed to the client component
-  const serializedProjects = projects.map(p => ({
+  const serializedProjects = projects.map((p: any) => ({
     ...p,
     excerpt: p.excerpt || "",
     featuredImage: p.featuredImage || "",

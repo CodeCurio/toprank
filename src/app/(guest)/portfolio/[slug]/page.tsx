@@ -34,7 +34,7 @@ export default async function PortfolioCaseStudyPage({ params }: { params: Promi
     notFound();
   }
 
-  const technologies = project.technologies ? project.technologies.split(",").map(t => t.trim()) : [];
+  const technologies = project.technologies ? project.technologies.split(",").map((t: string) => t.trim()) : [];
 
   return (
     <div className="flex flex-col min-h-screen bg-white">
@@ -118,7 +118,7 @@ export default async function PortfolioCaseStudyPage({ params }: { params: Promi
                       <Tag className="w-4 h-4 mr-2" /> Technologies
                     </span>
                     <div className="flex flex-wrap gap-2">
-                      {technologies.map(tech => (
+                      {technologies.map((tech: string) => (
                         <span key={tech} className="px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs font-bold text-slate-700 shadow-sm">
                           {tech}
                         </span>
