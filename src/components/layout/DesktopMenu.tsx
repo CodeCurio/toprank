@@ -8,12 +8,13 @@ import { ChevronDown, MapPin, Navigation, Map, Phone, ArrowRight, Sparkles } fro
 
 import LkoOfficeImg from "../images/TopRank LKO office 1.jpg";
 import ChdOfficeImg from "../images/Chandigarh Office TopRank.jpg";
-
 import { SERVICES_DATA } from "@/lib/services-data";
+import { usePhone } from "@/hooks/usePhone";
 
 export function DesktopMenu() {
   const [hoveredMenu, setHoveredMenu] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
+  const phone = usePhone();
 
   useEffect(() => setMounted(true), []);
 
@@ -213,7 +214,7 @@ export function DesktopMenu() {
               
               <div className="bg-white border-t border-slate-100 p-4 text-center">
                  <Link href="/contact" className="inline-flex items-center justify-center text-[13px] font-bold text-slate-600 hover:text-blue-600 transition-colors">
-                   <Phone className="w-4 h-4 mr-2" /> Prefer to talk? Call <span className="text-blue-600 mx-1">93050 30523</span> to speak with our regional experts.
+                   <Phone className="w-4 h-4 mr-2" /> Prefer to talk? Call <span className="text-blue-600 mx-1">{phone.raw}</span> to speak with our regional experts.
                  </Link>
               </div>
             </motion.div>

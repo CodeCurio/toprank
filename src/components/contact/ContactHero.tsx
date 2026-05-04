@@ -2,8 +2,10 @@
 
 import { motion } from "framer-motion";
 import { Phone, Mail, MapPin, Clock, ArrowRight } from "lucide-react";
+import { usePhone } from "@/hooks/usePhone";
 
 export function ContactHero() {
+  const phone = usePhone();
   return (
     <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-32 overflow-hidden bg-slate-950 text-white flex items-center">
       {/* Absolute Background Orbs for Premium Vibe */}
@@ -54,10 +56,10 @@ export function ContactHero() {
                transition={{ duration: 0.8, delay: 0.2 }}
                className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 mb-12 relative z-20"
             >
-              <a href="tel:+919305030523" className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-sm font-black uppercase tracking-widest transition-all shadow-lg shadow-blue-600/30 active:scale-95">
+              <a href={`tel:+91${phone.raw}`} className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-sm font-black uppercase tracking-widest transition-all shadow-lg shadow-blue-600/30 active:scale-95">
                 <Phone className="w-5 h-5" /> Call Now
               </a>
-              <a href="https://wa.me/919305030523" target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#25D366] hover:bg-[#20BE5A] text-white rounded-xl text-sm font-black uppercase tracking-widest transition-all shadow-lg shadow-[#25D366]/30 active:scale-95">
+              <a href={`https://wa.me/91${phone.raw}`} target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#25D366] hover:bg-[#20BE5A] text-white rounded-xl text-sm font-black uppercase tracking-widest transition-all shadow-lg shadow-[#25D366]/30 active:scale-95">
                 WhatsApp Us
               </a>
             </motion.div>
@@ -77,13 +79,13 @@ export function ContactHero() {
              </h3>
 
              <div className="space-y-6">
-                <a href="tel:+919305030523" className="flex items-center gap-4 group p-3 rounded-xl hover:bg-white/5 transition-colors">
+                <a href={`tel:+91${phone.raw}`} className="flex items-center gap-4 group p-3 rounded-xl hover:bg-white/5 transition-colors">
                   <div className="w-12 h-12 bg-blue-500/20 text-blue-400 rounded-full flex items-center justify-center group-hover:bg-blue-500 group-hover:text-white transition-colors shrink-0">
                     <Phone className="w-5 h-5" />
                   </div>
                   <div>
                     <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Call Directly</p>
-                    <p className="text-lg font-black text-white tracking-tight">+91 93050 30523</p>
+                    <p className="text-lg font-black text-white tracking-tight">{phone.display}</p>
                   </div>
                 </a>
 

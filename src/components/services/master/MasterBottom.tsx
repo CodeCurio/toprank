@@ -4,8 +4,8 @@ import { motion } from "framer-motion";
 import { Star, ChevronRight, FileText, ArrowRight, Phone } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
-
 import Image from "next/image";
+import { usePhone } from "@/hooks/usePhone";
 
 const faqs = [
   {
@@ -29,6 +29,7 @@ interface MasterBottomProps {
 
 export function MasterBottom({ locationName = "Lucknow & Chandigarh", regions = ["Gomti Nagar", "Hazratganj", "Sector 17", "Mohali"] }: MasterBottomProps) {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const phone = usePhone(locationName);
 
   return (
     <section className="py-24 bg-slate-50 relative overflow-hidden text-slate-900 border-t border-slate-200">
@@ -140,7 +141,7 @@ export function MasterBottom({ locationName = "Lucknow & Chandigarh", regions = 
               <Link href="/contact" className="w-full sm:w-auto px-10 py-5 bg-white hover:bg-slate-100 text-blue-600 font-black text-lg rounded-xl flex items-center justify-center transition-transform hover:scale-105 shadow-xl shadow-black/10">
                 Book Free Audit
               </Link>
-              <Link href="tel:+919305030523" className="w-full sm:w-auto px-10 py-5 bg-blue-700/50 hover:bg-blue-700 text-white border border-blue-500/50 font-black text-lg rounded-xl flex items-center justify-center transition-colors">
+              <Link href={`tel:+91${phone.raw}`} className="w-full sm:w-auto px-10 py-5 bg-blue-700/50 hover:bg-blue-700 text-white border border-blue-500/50 font-black text-lg rounded-xl flex items-center justify-center transition-colors">
                 <Phone className="w-5 h-5 mr-2" /> Call Direct
               </Link>
             </div>

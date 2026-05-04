@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence, useMotionTemplate, useMotionValue, useSpring } from "framer-motion";
 import { PhoneCall, MessageSquare, Calendar, X, Sparkles, Send, Bot } from "lucide-react";
 import Image from "next/image";
+import { usePhone } from "@/hooks/usePhone";
 
 // Custom WhatsApp SVG
 const WhatsAppIcon = () => (
@@ -82,6 +83,7 @@ export function FloatingContact() {
   const [greetingText, setGreetingText] = useState("");
   const [isMobile, setIsMobile] = useState(false);
   const fullGreeting = "👋 Need help growing your business?";
+  const phone = usePhone();
 
   useEffect(() => {
     setMounted(true);
@@ -217,7 +219,7 @@ export function FloatingContact() {
                   icon={WhatsAppIcon}
                   title="Chat on WhatsApp"
                   subtitle="Instantly connect"
-                  href="https://wa.me/919305030523"
+                  href={`https://wa.me/91${phone.raw}`}
                   colorClass="bg-gradient-to-br from-blue-400 to-indigo-600 shadow-[0_4px_15px_rgba(37,99,235,0.4)]"
                   delay={0.3}
                   isMobile={isMobile}
@@ -225,8 +227,8 @@ export function FloatingContact() {
                 <ActionItem 
                   icon={PhoneCall}
                   title="Call an Expert"
-                  subtitle="+91 93050 30523"
-                  href="tel:+919305030523"
+                  subtitle={phone.display}
+                  href={`tel:+91${phone.raw}`}
                   colorClass="bg-gradient-to-br from-blue-500 to-indigo-600"
                   delay={0.4}
                   isMobile={isMobile}

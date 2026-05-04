@@ -5,6 +5,7 @@ import { ArrowRight, Star, MousePointerClick, MessageSquareText, TrendingUp } fr
 import Image from "next/image";
 import Link from "next/link";
 import { useState, MouseEvent } from "react";
+import { usePhone } from "@/hooks/usePhone";
 
 interface MasterHeroProps {
   locationName?: string;
@@ -13,6 +14,7 @@ interface MasterHeroProps {
 
 export function MasterHero({ locationName = "Lucknow & Chandigarh", locationSlug }: MasterHeroProps) {
   const [activeTab, setActiveTab] = useState<"leads" | "website" | "ranking" | "brand">("leads");
+  const phone = usePhone(locationName);
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -86,7 +88,7 @@ export function MasterHero({ locationName = "Lucknow & Chandigarh", locationSlug
               <Link href="/contact" className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold rounded-xl flex items-center justify-center gap-2 transition-transform hover:scale-105 shadow-[0_0_20px_rgba(37,99,235,0.4)] group/btn">
                 FREE SEO AUDIT NOW <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" />
               </Link>
-              <Link href="https://wa.me/919305030523" className="w-full sm:w-auto px-8 py-4 bg-orange-600/10 hover:bg-orange-600/20 text-orange-400 border border-orange-500/30 font-bold rounded-xl flex items-center justify-center gap-2 transition-colors">
+              <Link href={`https://wa.me/91${phone.raw}`} className="w-full sm:w-auto px-8 py-4 bg-orange-600/10 hover:bg-orange-600/20 text-orange-400 border border-orange-500/30 font-bold rounded-xl flex items-center justify-center gap-2 transition-colors">
                 <MessageSquareText className="w-5 h-5" /> WhatsApp Expert
               </Link>
             </div>

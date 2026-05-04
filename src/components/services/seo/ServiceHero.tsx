@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, Star, TrendingDown, Target, Search, MessageSquareText } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePhone } from "@/hooks/usePhone";
 
 interface ServiceHeroProps {
   locationName?: string;
@@ -11,6 +12,7 @@ interface ServiceHeroProps {
 }
 
 export function ServiceHero({ locationName = "Lucknow", serviceTitle = "#1 SEO Company in Lucknow" }: ServiceHeroProps) {
+  const phone = usePhone(locationName);
   return (
     <div className="relative pt-32 pb-20 overflow-hidden bg-slate-950">
       {/* Background patterns */}
@@ -45,7 +47,7 @@ export function ServiceHero({ locationName = "Lucknow", serviceTitle = "#1 SEO C
               <Link href="/contact" className="w-full sm:w-auto px-8 py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl flex items-center justify-center gap-2 transition-transform hover:scale-105 shadow-[0_0_20px_rgba(37,99,235,0.4)]">
                 Get a Free SEO Audit <ArrowRight className="w-5 h-5" />
               </Link>
-              <Link href="https://wa.me/919305030523" className="w-full sm:w-auto px-8 py-4 bg-orange-600/10 hover:bg-orange-600/20 text-orange-400 border border-orange-500/30 font-bold rounded-xl flex items-center justify-center gap-2 transition-colors">
+              <Link href={`https://wa.me/91${phone.raw}`} className="w-full sm:w-auto px-8 py-4 bg-orange-600/10 hover:bg-orange-600/20 text-orange-400 border border-orange-500/30 font-bold rounded-xl flex items-center justify-center gap-2 transition-colors">
                 <MessageSquareText className="w-5 h-5" /> WhatsApp Us
               </Link>
             </div>

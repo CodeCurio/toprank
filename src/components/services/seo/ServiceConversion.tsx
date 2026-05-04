@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Check, Star, ChevronRight, FileText, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import { usePhone } from "@/hooks/usePhone";
 
 interface ServiceConversionProps {
   locationName?: string;
@@ -15,6 +16,7 @@ interface ServiceProofProps {
 
 export function ServiceConversion({ locationName = "Lucknow" }: ServiceConversionProps) {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const phone = usePhone(locationName);
 
   const dynamicFaqs = [
     {
@@ -189,7 +191,7 @@ export function ServiceConversion({ locationName = "Lucknow" }: ServiceConversio
               <Link href="/contact" className="w-full sm:w-auto px-8 py-4 bg-white hover:bg-slate-100 text-blue-600 font-black rounded-xl flex items-center justify-center transition-transform hover:scale-105 shadow-lg shadow-black/10">
                 Book Free Audit
               </Link>
-              <Link href="tel:+919305030523" className="w-full sm:w-auto px-8 py-4 bg-blue-700/50 hover:bg-blue-700 text-white border border-blue-500/50 font-black rounded-xl flex items-center justify-center transition-colors">
+              <Link href={`tel:+91${phone.raw}`} className="w-full sm:w-auto px-8 py-4 bg-blue-700/50 hover:bg-blue-700 text-white border border-blue-500/50 font-black rounded-xl flex items-center justify-center transition-colors">
                 Call Direct
               </Link>
             </div>

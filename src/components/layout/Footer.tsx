@@ -15,6 +15,7 @@ import {
   Send
 } from "lucide-react";
 import LogoImg from "../images/TopRank logo.webp";
+import { usePhone } from "@/hooks/usePhone";
 
 // Animation Variants
 const fadeInUp = {
@@ -40,6 +41,7 @@ const staggerContainer = {
 };
 
 export function Footer() {
+  const phone = usePhone();
   return (
     <footer className="relative bg-slate-950 text-slate-300 pt-20 pb-10 overflow-hidden">
       {/* Background Decorative Elements */}
@@ -185,7 +187,7 @@ export function Footer() {
                 <div className="w-9 h-9 rounded-xl bg-orange-500/10 flex items-center justify-center mr-3 shrink-0 border border-orange-500/20 group-hover:bg-orange-500/20 transition-colors">
                   <Phone size={16} className="text-orange-500" />
                 </div>
-                <a href="tel:+919305030523" className="hover:text-white transition-colors text-sm font-black tracking-tight">+91 93050 30523</a>
+                <a href={`tel:+91${phone.raw}`} className="hover:text-white transition-colors text-sm font-black tracking-tight">{phone.display}</a>
               </li>
               <li className="flex items-center text-slate-400 group">
                 <div className="w-9 h-9 rounded-xl bg-pink-500/10 flex items-center justify-center mr-3 shrink-0 border border-pink-500/20 group-hover:bg-pink-500/20 transition-colors">

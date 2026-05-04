@@ -12,14 +12,7 @@ import {
   ArrowRight
 } from "lucide-react";
 import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
-
-const socials = [
-  { name: "Facebook", icon: Facebook, href: "https://www.facebook.com/p/TopRank-Digital-Service-61578286186245/", color: "hover:bg-[#1877F2] hover:text-white" },
-  { name: "Instagram", icon: Instagram, href: "https://www.instagram.com/p/DOQuwGsEn0P/", color: "hover:bg-gradient-to-tr hover:from-yellow-400 hover:via-pink-500 hover:to-purple-500 hover:text-white border-transparent" },
-  { name: "LinkedIn", icon: Linkedin, href: "https://in.linkedin.com/company/toprank-digital-service", color: "hover:bg-[#0A66C2] hover:text-white" },
-  { name: "Twitter", icon: Twitter, href: "https://twitter.com/TopRank_Digital", color: "hover:bg-black hover:text-white" },
-  { name: "WhatsApp", icon: MessageCircle, href: "https://wa.me/+919305030523", color: "hover:bg-[#25D366] hover:text-white" },
-];
+import { usePhone } from "@/hooks/usePhone";
 
 const locations = [
   {
@@ -51,6 +44,16 @@ const locations = [
 
 
 export function ContactSection() {
+  const phone = usePhone();
+
+  const socials = [
+    { name: "Facebook", icon: Facebook, href: "https://www.facebook.com/p/TopRank-Digital-Service-61578286186245/", color: "hover:bg-[#1877F2] hover:text-white" },
+    { name: "Instagram", icon: Instagram, href: "https://www.instagram.com/p/DOQuwGsEn0P/", color: "hover:bg-gradient-to-tr hover:from-yellow-400 hover:via-pink-500 hover:to-purple-500 hover:text-white border-transparent" },
+    { name: "LinkedIn", icon: Linkedin, href: "https://in.linkedin.com/company/toprank-digital-service", color: "hover:bg-[#0A66C2] hover:text-white" },
+    { name: "Twitter", icon: Twitter, href: "https://twitter.com/TopRank_Digital", color: "hover:bg-black hover:text-white" },
+    { name: "WhatsApp", icon: MessageCircle, href: `https://wa.me/91${phone.raw}`, color: "hover:bg-[#25D366] hover:text-white" },
+  ];
+
   const [copied, setCopied] = useState(false);
   const [formData, setFormData] = useState({ name: "", service: "Search Engine Optimization (SEO)", message: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -69,7 +72,7 @@ export function ContactSection() {
     const text = `Hi TopRank Team, I'm ${formData.name}.\n\n🔹 *Interested in:* ${formData.service}\n\n📝 *Message:* ${formData.message}\n\nPlease let me know how we can proceed!`;
     const encodedText = encodeURIComponent(text);
     setTimeout(() => {
-      window.open(`https://wa.me/919305030523?text=${encodedText}`, "_blank");
+      window.open(`https://wa.me/91${phone.raw}?text=${encodedText}`, "_blank");
       setIsSubmitting(false);
     }, 500);
   };
@@ -212,11 +215,11 @@ export function ContactSection() {
                   <div>
                     <p className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-500 mb-6">Direct Avenues</p>
                     <div className="flex flex-col md:flex-row flex-wrap gap-6 sm:gap-8 lg:gap-10">
-                      <a href="tel:+919305030523" className="flex items-center gap-4 text-white hover:text-blue-400 truncate transition-all group/link">
+                      <a href={`tel:+91${phone.raw}`} className="flex items-center gap-4 text-white hover:text-blue-400 truncate transition-all group/link">
                         <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-blue-500/10 flex items-center justify-center group-hover/link:bg-blue-500 group-hover/link:text-white transition-all shrink-0">
                           <Phone className="w-5 h-5 sm:w-6 sm:h-6" />
                         </div>
-                        <span className="text-lg sm:text-xl font-black tracking-tight whitespace-nowrap">+91 93050 30523</span>
+                        <span className="text-lg sm:text-xl font-black tracking-tight whitespace-nowrap">{phone.display}</span>
                       </a>
                       <button onClick={handleCopyEmail} className="flex items-center gap-4 text-white hover:text-pink-400 truncate transition-all group/link text-left">
                         <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center transition-all shrink-0 ${copied ? 'bg-blue-600 text-white shadow-[0_0_15px_rgba(37,99,235,0.4)]' : 'bg-pink-500/10 group-hover/link:bg-pink-500 group-hover/link:text-white'}`}>

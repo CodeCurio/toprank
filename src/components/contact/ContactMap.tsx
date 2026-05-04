@@ -31,7 +31,7 @@ const locations = [
     city: "Gonda, UP",
     type: "Regional Hub",
     address: "Shop No A6, Zila Panchayat Market, Ambedkar Chauraha, Housing Colony, Gonda, Uttar Pradesh 271001",
-    phone: "+91 93050 30523",
+    phone: "+91 91154 39115",
     email: "connect@toprankindia.com",
     hours: "Monday - Sunday, 24x7",
     embedParams: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1775.4129477835843!2d81.9408255815506!3d27.13029324754563!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3999f3f944b9113f%3A0xdf48fbededaeab98!2sTopRank%20Digital%20Service!5e0!3m2!1sen!2sin!4v1776942238764!5m2!1sen!2sin",
