@@ -34,7 +34,7 @@ export default async function PortfolioCaseStudyPage({ params }: { params: Promi
     notFound();
   }
 
-  const technologies = project.technologies ? project.technologies.split(",").map(t => t.trim()) : [];
+  const technologies = project.technologies ? project.technologies.split(",").map((t: string) => t.trim()) : [];
 
   return (
     <div className="flex flex-col min-h-screen bg-white">

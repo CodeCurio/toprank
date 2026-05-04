@@ -43,7 +43,7 @@ export default async function AdminPortfolioPage() {
                 </td>
               </tr>
             )}
-            {projects.map((project) => (
+            {projects.map((project: any) => (
               <tr key={project.id} className="hover:bg-slate-50/50 transition-colors group">
                 <td className="px-6 py-4">
                   <div className="flex items-center gap-3">

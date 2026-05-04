@@ -173,6 +173,12 @@ export default function PostForm({ initialData }: { initialData?: PostData }) {
     return () => clearTimeout(autoSaveTimer);
   }, [formData, selectedCats, selectedTags, hasUnsavedChanges, initialData, loading, isSaving]);
 
+  const toggleCategory = (catName: string) => {
+    setSelectedCats(prev => 
+      prev.includes(catName) ? prev.filter(c => c !== catName) : [...prev, catName]
+    );
+  };
+
   const addNewCategory = (e: React.MouseEvent | React.KeyboardEvent) => {
     e.preventDefault();
     if (!newCatInput.trim()) return;
