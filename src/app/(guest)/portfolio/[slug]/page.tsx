@@ -34,13 +34,13 @@ export default async function PortfolioCaseStudyPage({ params }: { params: Promi
     notFound();
   }
 
-  const technologies = project.technologies ? project.technologies.split(",").map((t: string) => t.trim()) : [];
+  const technologies = project.technologies ? project.technologies.split(",").map(t => t.trim()) : [];
 
   return (
     <div className="flex flex-col min-h-screen bg-white">
       <main className="flex-grow pt-28 pb-20">
         <div className="container px-4 mx-auto max-w-5xl">
-          
+
           {/* Back Button */}
           <Link href="/portfolio" className="inline-flex items-center text-sm font-bold text-slate-500 hover:text-blue-600 transition-colors mb-8">
             <ArrowLeft className="w-4 h-4 mr-2" /> Back to Portfolio
@@ -75,12 +75,12 @@ export default async function PortfolioCaseStudyPage({ params }: { params: Promi
 
           {/* Project Details Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
-            
+
             {/* Sidebar Meta */}
             <div className="col-span-1 space-y-8">
               <div className="p-8 bg-slate-50 rounded-3xl border border-slate-100">
                 <h3 className="text-lg font-black text-slate-900 mb-6">Project Details</h3>
-                
+
                 <ul className="space-y-6">
                   {project.results && (
                     <li>
@@ -90,7 +90,7 @@ export default async function PortfolioCaseStudyPage({ params }: { params: Promi
                       <p className="text-base font-bold text-slate-900">{project.results}</p>
                     </li>
                   )}
-                  
+
                   {project.liveUrl && (
                     <li>
                       <span className="flex items-center text-sm font-bold text-blue-600 mb-1">
@@ -131,8 +131,8 @@ export default async function PortfolioCaseStudyPage({ params }: { params: Promi
 
             {/* Main Content (Rich Text) */}
             <div className="col-span-1 md:col-span-2">
-               <div className="prose prose-lg prose-slate max-w-none prose-headings:font-black prose-headings:tracking-tight prose-a:text-blue-600 hover:prose-a:text-blue-700 prose-img:rounded-2xl prose-img:shadow-lg" 
-                    dangerouslySetInnerHTML={{ __html: project.content }} />
+              <div className="prose prose-lg prose-slate max-w-none prose-headings:font-black prose-headings:tracking-tight prose-a:text-blue-600 hover:prose-a:text-blue-700 prose-img:rounded-2xl prose-img:shadow-lg"
+                dangerouslySetInnerHTML={{ __html: project.content }} />
             </div>
 
           </div>
