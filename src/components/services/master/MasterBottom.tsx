@@ -29,7 +29,7 @@ interface MasterBottomProps {
 
 export function MasterBottom({ locationName = "Lucknow & Chandigarh", regions = ["Gomti Nagar", "Hazratganj", "Sector 17", "Mohali"] }: MasterBottomProps) {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
-  const phone = usePhone(locationName);
+  const phone = usePhone();
 
   return (
     <section className="py-24 bg-slate-50 relative overflow-hidden text-slate-900 border-t border-slate-200">

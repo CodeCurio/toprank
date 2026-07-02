@@ -25,7 +25,8 @@ export function GrowthEngine() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    const t = setTimeout(() => setMounted(true), 0);
+    return () => clearTimeout(t);
   }, []);
 
   useEffect(() => {
@@ -48,7 +49,7 @@ export function GrowthEngine() {
       
       {/* 1. CENTRAL TOPRANK CORE */}
       <div className="relative z-20 w-32 h-32 md:w-40 md:h-40 rounded-full bg-slate-950 flex items-center justify-center p-1 shadow-2xl shadow-blue-500/20">
-         <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-blue-600 via-purple-600 to-rose-500 animate-spin-slow opacity-80" />
+         <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-blue-600 via-purple-600 to-rose-500 opacity-80" />
          <div className="relative w-full h-full rounded-full bg-slate-950 flex items-center justify-center overflow-hidden">
             <motion.div 
                animate={{ scale: [1, 1.1, 1], opacity: [0.5, 1, 0.5] }}
@@ -62,7 +63,7 @@ export function GrowthEngine() {
             {/* Interior Scanning Lines */}
             <motion.div 
                animate={{ y: ["-100%", "100%"] }}
-               transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+               transition={{ duration: 1.5, ease: "linear" }}
                className="absolute inset-0 w-full h-1/2 bg-white/5 skew-y-12"
             />
          </div>

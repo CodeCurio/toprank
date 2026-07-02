@@ -183,11 +183,14 @@ export function Footer() {
                 </div>
                 <span className="font-medium pt-1 text-sm">Lucknow & Chandigarh, India</span>
               </li>
-              <li className="flex items-center text-slate-400 group">
+              <li className="flex items-start text-slate-400 group">
                 <div className="w-9 h-9 rounded-xl bg-orange-500/10 flex items-center justify-center mr-3 shrink-0 border border-orange-500/20 group-hover:bg-orange-500/20 transition-colors">
                   <Phone size={16} className="text-orange-500" />
                 </div>
-                <a href={`tel:+91${phone.raw}`} className="hover:text-white transition-colors text-sm font-black tracking-tight">{phone.display}</a>
+                <div className="flex flex-col gap-1">
+                  <a href={`tel:+91${phone.raw}`} className="hover:text-white transition-colors text-sm font-black tracking-tight">{phone.display}</a>
+                  <a href={`tel:+91${phone.secondaryRaw}`} className="hover:text-white transition-colors text-sm font-black tracking-tight">{phone.secondaryDisplay}</a>
+                </div>
               </li>
               <li className="flex items-center text-slate-400 group">
                 <div className="w-9 h-9 rounded-xl bg-pink-500/10 flex items-center justify-center mr-3 shrink-0 border border-pink-500/20 group-hover:bg-pink-500/20 transition-colors">

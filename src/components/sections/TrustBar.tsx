@@ -115,14 +115,17 @@ export function TrustBar() {
   const [duration, setDuration] = useState(22);
 
   useEffect(() => { 
-    setMounted(true);
+    const t = setTimeout(() => setMounted(true), 0);
     const handleResize = () => {
       // Faster on mobile, slightly faster on PC
       setDuration(window.innerWidth < 768 ? 8 : 18);
     };
     handleResize();
     window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    return () => {
+      clearTimeout(t);
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   // 2x duplication for perfect infinite loop

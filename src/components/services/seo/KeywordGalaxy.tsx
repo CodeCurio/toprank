@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring, MotionValue } from "framer-motion";
 import { useRef } from "react";
 import { Target, Search, Share2, MessageCircle, BarChart3, Rocket } from "lucide-react";
 
@@ -15,6 +15,22 @@ const KEYWORDS = [
   { text: "Content Strategy", size: "text-sm", x: -100, y: 250 },
 ];
 
+function KeywordItem({ kw, smoothProgress }: { kw: typeof KEYWORDS[0], smoothProgress: MotionValue<number> }) {
+  const x = useTransform(smoothProgress, [0, 0.6], [kw.x, 0]);
+  const y = useTransform(smoothProgress, [0, 0.6], [kw.y, 0]);
+  const opacity = useTransform(smoothProgress, [0, 0.5, 0.7], [0.4, 1, 0]);
+  const scale = useTransform(smoothProgress, [0, 0.5], [0.5, 1]);
+
+  return (
+    <motion.div
+      style={{ x, y, opacity, scale }}
+      className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap px-4 py-2 bg-slate-800/80 border border-slate-700 rounded-full font-black text-white ${kw.size} shadow-xl backdrop-blur-sm`}
+    >
+      {kw.text}
+    </motion.div>
+  );
+}
+
 export function KeywordGalaxy() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -24,6 +40,8 @@ export function KeywordGalaxy() {
 
   // Spring for smoother gravitation
   const smoothProgress = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
+  const coreScale = useTransform(smoothProgress, [0.3, 0.5, 0.7], [0.8, 1.2, 1]);
+  const coreOpacity = useTransform(smoothProgress, [0.2, 0.4], [0, 1]);
 
   return (
     <section ref={containerRef} className="py-32 bg-slate-900 relative overflow-hidden">
@@ -54,9 +72,8 @@ export function KeywordGalaxy() {
            {/* Central Core (The Result) */}
            <motion.div
              style={{
-               scale: useTransform(smoothProgress, [0.3, 0.5, 0.7], [0.8, 1.2, 1]),
-               opacity: useTransform(smoothProgress, [0.2, 0.4], [0, 1]),
-               rotate: useTransform(smoothProgress, [0, 1], [0, 360])
+               scale: coreScale,
+               opacity: coreOpacity
              }}
              className="w-48 h-48 rounded-full bg-blue-600/20 border-2 border-blue-500/50 flex flex-col items-center justify-center shadow-[0_0_100px_rgba(59,130,246,0.3)] z-20"
            >
@@ -68,18 +85,7 @@ export function KeywordGalaxy() {
            {/* Orbiting Keywords */}
            <div className="absolute inset-0 pointer-events-none">
               {KEYWORDS.map((kw, i) => (
-                <motion.div
-                  key={i}
-                  style={{
-                    x: useTransform(smoothProgress, [0, 0.6], [kw.x, 0]),
-                    y: useTransform(smoothProgress, [0, 0.6], [kw.y, 0]),
-                    opacity: useTransform(smoothProgress, [0, 0.5, 0.7], [0.4, 1, 0]),
-                    scale: useTransform(smoothProgress, [0, 0.5], [0.5, 1]),
-                  }}
-                  className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap px-4 py-2 bg-slate-800/80 border border-slate-700 rounded-full font-black text-white ${kw.size} shadow-xl backdrop-blur-sm`}
-                >
-                   {kw.text}
-                </motion.div>
+                <KeywordItem key={i} kw={kw} smoothProgress={smoothProgress} />
               ))}
            </div>
 
@@ -97,6 +103,7 @@ export function KeywordGalaxy() {
                   initial={{ pathLength: 0 }}
                   whileInView={{ pathLength: 1 }}
                   transition={{ duration: 2, delay: i * 0.2 }}
+                  viewport={{ once: true }}
                 />
               ))}
            </svg>

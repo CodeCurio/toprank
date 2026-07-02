@@ -215,12 +215,20 @@ export function ContactSection() {
                   <div>
                     <p className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-500 mb-6">Direct Avenues</p>
                     <div className="flex flex-col md:flex-row flex-wrap gap-6 sm:gap-8 lg:gap-10">
-                      <a href={`tel:+91${phone.raw}`} className="flex items-center gap-4 text-white hover:text-blue-400 truncate transition-all group/link">
-                        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-blue-500/10 flex items-center justify-center group-hover/link:bg-blue-500 group-hover/link:text-white transition-all shrink-0">
-                          <Phone className="w-5 h-5 sm:w-6 sm:h-6" />
-                        </div>
-                        <span className="text-lg sm:text-xl font-black tracking-tight whitespace-nowrap">{phone.display}</span>
-                      </a>
+                      <div className="flex flex-col gap-4">
+                        <a href={`tel:+91${phone.raw}`} className="flex items-center gap-4 text-white hover:text-blue-400 truncate transition-all group/link">
+                          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-blue-500/10 flex items-center justify-center group-hover/link:bg-blue-500 group-hover/link:text-white transition-all shrink-0">
+                            <Phone className="w-5 h-5 sm:w-6 sm:h-6" />
+                          </div>
+                          <span className="text-lg sm:text-xl font-black tracking-tight whitespace-nowrap">{phone.display}</span>
+                        </a>
+                        <a href={`tel:+91${phone.secondaryRaw}`} className="flex items-center gap-4 text-white hover:text-blue-400 truncate transition-all group/link">
+                          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-blue-500/10 flex items-center justify-center group-hover/link:bg-blue-500 group-hover/link:text-white transition-all shrink-0">
+                            <Phone className="w-5 h-5 sm:w-6 sm:h-6" />
+                          </div>
+                          <span className="text-lg sm:text-xl font-black tracking-tight whitespace-nowrap">{phone.secondaryDisplay}</span>
+                        </a>
+                      </div>
                       <button onClick={handleCopyEmail} className="flex items-center gap-4 text-white hover:text-pink-400 truncate transition-all group/link text-left">
                         <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center transition-all shrink-0 ${copied ? 'bg-blue-600 text-white shadow-[0_0_15px_rgba(37,99,235,0.4)]' : 'bg-pink-500/10 group-hover/link:bg-pink-500 group-hover/link:text-white'}`}>
                           {copied ? <CheckCircle2 className="w-5 h-5 sm:w-6 sm:h-6" /> : <Mail className="w-5 h-5 sm:w-6 sm:h-6" />}

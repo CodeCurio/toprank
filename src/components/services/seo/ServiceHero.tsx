@@ -12,7 +12,7 @@ interface ServiceHeroProps {
 }
 
 export function ServiceHero({ locationName = "Lucknow", serviceTitle = "#1 SEO Company in Lucknow" }: ServiceHeroProps) {
-  const phone = usePhone(locationName);
+  const phone = usePhone();
   return (
     <div className="relative pt-32 pb-20 overflow-hidden bg-slate-950">
       {/* Background patterns */}

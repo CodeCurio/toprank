@@ -85,20 +85,8 @@ export function AnimatedCTA({
         {...props}
       >
         <div className="flex items-center justify-center relative z-10 w-full transition-all duration-300">
-          <div className="flex whitespace-pre z-20 items-center justify-center">
-            {letters.map((char, i) => (
-              <motion.span
-                key={i}
-                animate={isHovered ? { x: -2 } : { x: 0 }}
-                transition={{ 
-                  duration: 0.4, 
-                  delay: isHovered ? i * 0.015 : 0, 
-                  type: "spring", stiffness: 300, damping: 25 
-                }}
-              >
-                {char}
-              </motion.span>
-            ))}
+          <div className="flex z-20 items-center justify-center">
+            <span>{text}</span>
           </div>
 
           <AnimatePresence>

@@ -31,7 +31,7 @@ export default function RelatedPosts({ posts }: { posts: RelatedPost[] }) {
             <article className="flex gap-4 items-start">
               {post.featuredImage && (
                  <div className="w-20 h-20 shrink-0 rounded-xl overflow-hidden border border-slate-100 relative shadow-sm">
-                   {/* eslint-disable-next-line @next/next/no-img-element */}
+                   { }
                    <Image 
                       src={post.featuredImage} 
                       alt={post.title}

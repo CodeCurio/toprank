@@ -84,8 +84,18 @@ export function ContactHero() {
                     <Phone className="w-5 h-5" />
                   </div>
                   <div>
-                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Call Directly</p>
+                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Call Primary</p>
                     <p className="text-lg font-black text-white tracking-tight">{phone.display}</p>
+                  </div>
+                </a>
+                
+                <a href={`tel:+91${phone.secondaryRaw}`} className="flex items-center gap-4 group p-3 rounded-xl hover:bg-white/5 transition-colors">
+                  <div className="w-12 h-12 bg-blue-500/20 text-blue-400 rounded-full flex items-center justify-center group-hover:bg-blue-500 group-hover:text-white transition-colors shrink-0">
+                    <Phone className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Call Secondary</p>
+                    <p className="text-lg font-black text-white tracking-tight">{phone.secondaryDisplay}</p>
                   </div>
                 </a>
 

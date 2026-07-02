@@ -110,18 +110,18 @@ export function Hero({ location, content }: HeroProps) {
       {/* Absolute Background Orbs for Premium Vibe */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
         <motion.div 
-          animate={{ x: [0, 50, 0], y: [0, 30, 0] }}
-          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+          animate={{ x: [50, 0], y: [30, 0] }}
+          transition={{ duration: 1.5, ease: "easeOut" }}
           className="absolute -top-[10%] -right-[10%] w-[600px] h-[600px] rounded-full bg-[radial-gradient(circle,rgba(251,146,60,0.12)_0%,transparent_70%)] will-change-transform" 
         />
         <motion.div 
-          animate={{ x: [0, -40, 0], y: [0, 50, 0] }}
-          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          animate={{ x: [-40, 0], y: [50, 0] }}
+          transition={{ duration: 1.8, ease: "easeOut", delay: 0.2 }}
           className="absolute top-[20%] -left-[10%] w-[500px] h-[500px] rounded-full bg-[radial-gradient(circle,rgba(59,130,246,0.12)_0%,transparent_70%)] will-change-transform" 
         />
         <motion.div 
-          animate={{ x: [0, 30, 0], y: [0, -40, 0] }}
-          transition={{ duration: 20, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+          animate={{ x: [30, 0], y: [-40, 0] }}
+          transition={{ duration: 2, ease: "easeOut", delay: 0.4 }}
           className="absolute bottom-[-10%] left-[20%] w-[700px] h-[700px] rounded-full bg-[radial-gradient(circle,rgba(236,72,153,0.12)_0%,transparent_70%)] will-change-transform" 
         />
       </div>

@@ -14,7 +14,7 @@ interface MasterHeroProps {
 
 export function MasterHero({ locationName = "Lucknow & Chandigarh", locationSlug }: MasterHeroProps) {
   const [activeTab, setActiveTab] = useState<"leads" | "website" | "ranking" | "brand">("leads");
-  const phone = usePhone(locationName);
+  const phone = usePhone();
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);

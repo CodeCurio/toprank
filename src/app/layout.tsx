@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "TopRank Digital Service - Dominate Your Market",
     description: "Scale your revenue with high-velocity SEO, Google Ads, and Custom Website Development tailored for growth.",
-    url: "https://toprankindia.com",
+    url: "https://www.toprankindia.com",
     siteName: "TopRank Digital Service",
     images: [
       {
@@ -81,6 +81,24 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col font-sans" suppressHydrationWarning>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "LocalBusiness",
+              "name": "TopRank Digital Service",
+              "url": "https://www.toprankindia.com",
+              "telephone": ["+91 93050 30523", "+91 91154 39115"],
+              "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Lucknow",
+                "addressRegion": "UP",
+                "addressCountry": "IN"
+              }
+            })
+          }}
+        />
         {children}
       </body>
     </html>

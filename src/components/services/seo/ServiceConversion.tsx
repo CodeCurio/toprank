@@ -16,7 +16,7 @@ interface ServiceProofProps {
 
 export function ServiceConversion({ locationName = "Lucknow" }: ServiceConversionProps) {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
-  const phone = usePhone(locationName);
+  const phone = usePhone();
 
   const dynamicFaqs = [
     {

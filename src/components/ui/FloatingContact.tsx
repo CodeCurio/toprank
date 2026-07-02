@@ -226,11 +226,20 @@ export function FloatingContact() {
                 />
                 <ActionItem 
                   icon={PhoneCall}
-                  title="Call an Expert"
+                  title="Call Primary"
                   subtitle={phone.display}
                   href={`tel:+91${phone.raw}`}
                   colorClass="bg-gradient-to-br from-blue-500 to-indigo-600"
                   delay={0.4}
+                  isMobile={isMobile}
+                />
+                <ActionItem 
+                  icon={PhoneCall}
+                  title="Call Secondary"
+                  subtitle={phone.secondaryDisplay}
+                  href={`tel:+91${phone.secondaryRaw}`}
+                  colorClass="bg-gradient-to-br from-blue-400 to-indigo-500"
+                  delay={0.45}
                   isMobile={isMobile}
                 />
                 <ActionItem 

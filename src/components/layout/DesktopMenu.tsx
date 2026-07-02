@@ -214,7 +214,7 @@ export function DesktopMenu() {
               
               <div className="bg-white border-t border-slate-100 p-4 text-center">
                  <Link href="/contact" className="inline-flex items-center justify-center text-[13px] font-bold text-slate-600 hover:text-blue-600 transition-colors">
-                   <Phone className="w-4 h-4 mr-2" /> Prefer to talk? Call <span className="text-blue-600 mx-1">{phone.raw}</span> to speak with our regional experts.
+                   <Phone className="w-4 h-4 mr-2" /> Prefer to talk? Call <span className="text-blue-600 mx-1">{phone.raw}</span> or <span className="text-blue-600 mx-1">{phone.secondaryRaw}</span> to speak with our regional experts.
                  </Link>
               </div>
             </motion.div>
