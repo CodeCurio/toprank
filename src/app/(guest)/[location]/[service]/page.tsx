@@ -3,6 +3,7 @@ import { ServiceHero } from "@/components/services/seo/ServiceHero";
 import { ServiceDetails } from "@/components/services/seo/ServiceDetails";
 import { ServiceProof } from "@/components/services/seo/ServiceProof";
 import { ServiceConversion } from "@/components/services/seo/ServiceConversion";
+import { WebDesignerChandigarh } from "@/components/services/custom/WebDesignerChandigarh";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
@@ -22,8 +23,12 @@ export async function generateMetadata({ params }: ServicePageProps): Promise<Me
     return {};
   }
 
+  const title = service.title.toLowerCase().includes(location.name.toLowerCase())
+    ? service.title
+    : `${service.title} in ${location.name}`;
+
   return {
-    title: `${service.title} in ${location.name}`,
+    title,
     description: service.description,
     alternates: {
       canonical: `https://www.toprankindia.com/${location.slug}/${serviceParam}`
@@ -38,6 +43,10 @@ export default async function LocationServicePage({ params }: ServicePageProps) 
 
   if (!service) {
     notFound();
+  }
+
+  if (locationParam === "chandigarh" && serviceParam === "web-designer-in-chandigarh") {
+    return <WebDesignerChandigarh />;
   }
 
   // Note: For now we use the SEO components for all services as a template, 

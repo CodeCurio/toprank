@@ -1,4 +1,17 @@
-export const locations = {
+export interface ServiceInfo {
+  title: string;
+  description: string;
+  icon: string;
+}
+
+export interface LocationInfo {
+  name: string;
+  slug: string;
+  regions: string[];
+  services: Record<string, ServiceInfo>;
+}
+
+export const locations: Record<string, LocationInfo> = {
   lucknow: {
     name: "Lucknow",
     slug: "lucknow",
@@ -60,6 +73,11 @@ export const locations = {
         title: "Social Media Marketing in Chandigarh",
         description: "Social media management for Chandigarh startups and businesses. Engineered brand growth on Meta & Instagram.",
         icon: "Megaphone"
+      },
+      "web-designer-in-chandigarh": {
+        title: "Web Designer in Chandigarh",
+        description: "Looking for a professional web designer in Chandigarh? We build premium, custom Next.js websites that load instantly, rank on Google, and convert visitors into customers.",
+        icon: "Monitor"
       }
     }
   },
@@ -97,5 +115,5 @@ export const locations = {
   }
 };
 
-export type LocationSlug = keyof typeof locations;
-export type ServiceSlug = keyof typeof locations['lucknow']['services'];
+export type LocationSlug = string;
+export type ServiceSlug = string;
