@@ -7,6 +7,9 @@ import { ContactSection } from "@/components/sections/ContactSection";
 export const metadata: Metadata = {
   title: "Our Portfolio | TopRank Digital",
   description: "Explore our portfolio of high-converting websites, successful SEO campaigns, and digital marketing case studies.",
+  alternates: {
+    canonical: "https://www.toprankindia.com/portfolio",
+  },
 };
 
 export const dynamic = "force-dynamic";

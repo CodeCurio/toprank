@@ -4,6 +4,9 @@ import { ServiceTemplate } from "@/components/services/shared/ServiceTemplate";
 export const metadata: Metadata = {
   title: "Local SEO & GMB Optimization Services | Dominate Local Search | TopRank Digital",
   description: "Hyper-local Google My Business (GMB) optimization ensuring your business dominates local search results, map packs, and drives massive foot traffic.",
+  alternates: {
+    canonical: "https://www.toprankindia.com/services/local-seo",
+  },
 };
 
 export default function LocalSeoPage() {

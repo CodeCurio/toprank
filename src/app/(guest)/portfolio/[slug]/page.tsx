@@ -20,6 +20,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     description: project.excerpt || `Case study for ${project.title}`,
     openGraph: {
       images: project.featuredImage ? [project.featuredImage] : [],
+    },
+    alternates: {
+      canonical: `https://www.toprankindia.com/portfolio/${slug}`,
     }
   };
 }
@@ -66,10 +69,9 @@ export default async function PortfolioCaseStudyPage({ params }: { params: Promi
             </p>
           </header>
 
-          {/* Hero Image */}
           {project.featuredImage && (
             <div className="w-full aspect-video rounded-3xl overflow-hidden mb-16 shadow-2xl shadow-slate-200/50 border border-slate-100">
-              <img src={project.featuredImage} alt={project.title} className="w-full h-full object-cover" />
+              <img src={project.featuredImage} alt={project.title} className="w-full h-full object-cover" width={1200} height={630} />
             </div>
           )}
 

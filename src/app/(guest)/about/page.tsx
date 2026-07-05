@@ -12,6 +12,9 @@ import { ReviewsSection } from "@/components/sections/ReviewsSection";
 export const metadata = {
   title: "About TopRank Digital Service – Digital Marketing Agency in Lucknow",
   description: "Learn about TopRank Digital Service, a hyper-focused digital marketing agency in Lucknow specializing in SEO, Web Development, and Local ROI.",
+  alternates: {
+    canonical: "https://www.toprankindia.com/about",
+  },
 };
 
 export default function AboutPage() {

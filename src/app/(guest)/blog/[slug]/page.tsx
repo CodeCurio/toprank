@@ -39,6 +39,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       description: post.excerpt || "Read this article to master your digital growth.",
       images: post.featuredImage ? [{ url: post.featuredImage }] : [],
     },
+    alternates: {
+      canonical: `https://www.toprankindia.com/blog/${slug}`,
+    },
   };
 }
 
@@ -166,6 +169,8 @@ export default async function BlogPostPage({
               src={post.featuredImage}
               alt={post.title}
               className="w-full h-full object-cover transform scale-100 transition-transform duration-[20s] ease-linear hover:scale-105"
+              width={1200}
+              height={675}
             />
           </div>
         )}

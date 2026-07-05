@@ -11,6 +11,9 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
   return {
     title: `${tag.name} Archives | TopRank Digital Service`,
     description: `Browse all articles tagged with ${tag.name}.`,
+    alternates: {
+      canonical: `https://www.toprankindia.com/tag/${slug}`,
+    },
   };
 }
 
@@ -92,6 +95,8 @@ export default async function TagArchivePage(props: {
                         src={post.featuredImage}
                         alt={post.title}
                         className="w-full h-full object-cover transform group-hover:scale-105 transition duration-500 ease-out"
+                        width={600}
+                        height={400}
                       />
                     </div>
                   )}

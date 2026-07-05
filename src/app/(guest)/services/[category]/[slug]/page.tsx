@@ -6,10 +6,10 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next";
 
 interface SubServicePageProps {
-  params: {
+  params: Promise<{
     category: string;
     slug: string;
-  };
+  }>;
 }
 
 // Generate valid paths for static exporting/caching
@@ -30,8 +30,8 @@ export function generateStaticParams() {
 }
 
 // Dynamic Metadata
-export function generateMetadata({ params }: SubServicePageProps): Metadata {
-  const { category, slug } = params;
+export async function generateMetadata({ params }: SubServicePageProps): Promise<Metadata> {
+  const { category, slug } = await params;
   const service = Object.values(SERVICES_DATA).find(s => s.href.includes(`/${category}`));
   const subService = service?.subServices.find(s => s.href.includes(`/${slug}`));
 
@@ -42,11 +42,14 @@ export function generateMetadata({ params }: SubServicePageProps): Metadata {
   return {
     title: `${subService.name} Services | ${service.name} | TopRank Digital`,
     description: `Professional ${subService.name.toLowerCase()} tailored for market dominance. ${subService.desc}.`,
+    alternates: {
+      canonical: `https://www.toprankindia.com/services/${category}/${slug}`,
+    },
   };
 }
 
-export default function SubServicePage({ params }: SubServicePageProps) {
-  const { category, slug } = params;
+export default async function SubServicePage({ params }: SubServicePageProps) {
+  const { category, slug } = await params;
   
   const service = Object.values(SERVICES_DATA).find(s => s.href.includes(`/${category}`));
   const subService = service?.subServices.find(s => s.href.includes(`/${slug}`));

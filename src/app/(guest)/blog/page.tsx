@@ -6,6 +6,9 @@ import { ArrowRight, Calendar, User } from "lucide-react";
 export const metadata: Metadata = {
   title: "Blog | TopRank Digital Service",
   description: "Read our latest insights, strategies, and success stories in the digital marketing world.",
+  alternates: {
+    canonical: "https://www.toprankindia.com/blog",
+  },
 };
 
 export const revalidate = 60; 
@@ -91,6 +94,8 @@ export default async function BlogPage({
                         src={post.featuredImage}
                         alt={post.title}
                         className="w-full h-full object-cover transform group-hover:scale-105 transition duration-500 ease-out"
+                        width={600}
+                        height={400}
                       />
                     </div>
                   )}
