@@ -55,6 +55,25 @@ const nextConfig = {
       },
     ];
   },
+  async redirects() {
+    return [
+      {
+        source: '/services/ppc',
+        destination: '/services/google-ads',
+        permanent: true,
+      },
+      {
+        source: '/services/social-media',
+        destination: '/services/digital-marketing/social-media',
+        permanent: true,
+      },
+      {
+        source: '/services/cro',
+        destination: '/services/digital-marketing/leads',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
