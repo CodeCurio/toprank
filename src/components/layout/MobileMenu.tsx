@@ -38,7 +38,7 @@ const LOCATIONS = [
   },
   { 
     name: "Gonda", 
-    address: "Expert digital marketing", 
+    address: "Ambedkar Chauraha, Housing Colony", 
     href: "/gonda" 
   }
 ];

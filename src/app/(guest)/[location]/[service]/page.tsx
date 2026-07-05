@@ -7,15 +7,16 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 interface ServicePageProps {
-  params: {
+  params: Promise<{
     location: string;
     service: string;
-  };
+  }>;
 }
 
 export async function generateMetadata({ params }: ServicePageProps): Promise<Metadata> {
-  const location = locations[params.location as LocationSlug];
-  const service = location?.services[params.service as ServiceSlug];
+  const { location: locationParam, service: serviceParam } = await params;
+  const location = locations[locationParam as LocationSlug];
+  const service = location?.services[serviceParam as ServiceSlug];
   
   if (!service) {
     return {};
@@ -25,14 +26,15 @@ export async function generateMetadata({ params }: ServicePageProps): Promise<Me
     title: `${service.title} | TopRank Digital ${location.name}`,
     description: service.description,
     alternates: {
-      canonical: `https://www.toprankindia.com/${location.slug}/${params.service}`
+      canonical: `https://www.toprankindia.com/${location.slug}/${serviceParam}`
     }
   };
 }
 
-export default function LocationServicePage({ params }: ServicePageProps) {
-  const location = locations[params.location as LocationSlug];
-  const service = location?.services[params.service as ServiceSlug];
+export default async function LocationServicePage({ params }: ServicePageProps) {
+  const { location: locationParam, service: serviceParam } = await params;
+  const location = locations[locationParam as LocationSlug];
+  const service = location?.services[serviceParam as ServiceSlug];
 
   if (!service) {
     notFound();

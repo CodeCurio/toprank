@@ -8,13 +8,14 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 interface LocationPageProps {
-  params: {
+  params: Promise<{
     location: string;
-  };
+  }>;
 }
 
 export async function generateMetadata({ params }: LocationPageProps): Promise<Metadata> {
-  const location = locations[params.location as LocationSlug];
+  const { location: locationParam } = await params;
+  const location = locations[locationParam as LocationSlug];
   
   if (!location) {
     return {};
@@ -29,8 +30,9 @@ export async function generateMetadata({ params }: LocationPageProps): Promise<M
   };
 }
 
-export default function LocationLandingPage({ params }: LocationPageProps) {
-  const location = locations[params.location as LocationSlug];
+export default async function LocationLandingPage({ params }: LocationPageProps) {
+  const { location: locationParam } = await params;
+  const location = locations[locationParam as LocationSlug];
 
   if (!location) {
     notFound();

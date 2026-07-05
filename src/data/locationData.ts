@@ -62,6 +62,38 @@ export const locations = {
         icon: "Megaphone"
       }
     }
+  },
+  gonda: {
+    name: "Gonda",
+    slug: "gonda",
+    regions: ["Gayatri Puram", "Awas Vikas Colony", "Vishnupuri Colony", "Ambedkar Chauraha", "Housing Colony", "Civil Lines", "Mankapur", "Tarabganj"],
+    services: {
+      "seo-services": {
+        title: "SEO Services in Gonda",
+        description: "Rank #1 on Google for local keywords in Gonda. Our local SEO agency helps you dominate Google Maps (GMB) and get qualified leads.",
+        icon: "Search"
+      },
+      "gmb-services": {
+        title: "GMB Optimization in Gonda",
+        description: "Dominate Google Maps in Gonda. We optimize your GMB profile to appear in the top 3 maps pack for local search queries.",
+        icon: "MapPin"
+      },
+      "ppc-services": {
+        title: "PPC & Google Ads in Gonda",
+        description: "Get instant leads with ROI-driven PPC and Facebook Ads in Gonda. We manage paid marketing to scale your local revenue.",
+        icon: "TrendingUp"
+      },
+      "website-development": {
+        title: "Website Development in Gonda",
+        description: "Custom Next.js websites built for conversion in Gonda. We create fast, premium, and SEO-optimized web designs.",
+        icon: "Monitor"
+      },
+      "social-media-marketing": {
+        title: "Social Media Marketing in Gonda",
+        description: "Scale your brand on Meta, Instagram & WhatsApp in Gonda. We build dominant social media strategies for your local business.",
+        icon: "Megaphone"
+      }
+    }
   }
 };
 

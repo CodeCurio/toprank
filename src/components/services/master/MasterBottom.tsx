@@ -7,21 +7,6 @@ import { useState } from "react";
 import Image from "next/image";
 import { usePhone } from "@/hooks/usePhone";
 
-const faqs = [
-  {
-    q: "What are the best SEO services in India for local business growth?",
-    a: "The best SEO services combined technical audits with semantic local intent. At TopRank, we focus on ranking you for high-converting 'commercial' keywords in Lucknow & Chandigarh that actually drive phone calls and revenue, not just vanity traffic."
-  },
-  {
-    q: "How much does digital marketing cost in Lucknow?",
-    a: "Marketing costs depend on your niche competition. Our local growth packages in Lucknow start from ₹15,000/mo. For aggressive scaling across UP and Punjab, strategies range from ₹45k to ₹95k+. We provide transparent ROI reporting to justify every rupee spent."
-  },
-  {
-    q: "Can you rank my business on Google Maps in Chandigarh & Lucknow?",
-    a: "Absolutely. We specialize in GMB (Google My Business) optimization. We ensure your business appears in the Map Pack for high-intent 'near me' queries in hubs like Gomti Nagar (Lucknow) and Sector 17 (Chandigarh)."
-  }
-];
-
 interface MasterBottomProps {
   locationName?: string;
   regions?: string[];
@@ -30,6 +15,25 @@ interface MasterBottomProps {
 export function MasterBottom({ locationName = "Lucknow & Chandigarh", regions = ["Gomti Nagar", "Hazratganj", "Sector 17", "Mohali"] }: MasterBottomProps) {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const phone = usePhone();
+
+  // Generate dynamic FAQs based on location name and regions
+  const isLkoChd = locationName === "Lucknow & Chandigarh" || locationName === "India";
+  const displayLocation = locationName;
+  
+  const faqs = [
+    {
+      q: `What are the best SEO services in ${isLkoChd ? "India" : displayLocation} for local business growth?`,
+      a: `The best SEO services combine technical audits with semantic local intent. At TopRank, we focus on ranking you for high-converting 'commercial' keywords in ${displayLocation} that actually drive phone calls and revenue, not just vanity traffic.`
+    },
+    {
+      q: `How much does digital marketing cost in ${displayLocation}?`,
+      a: `Marketing costs depend on your niche competition. Our local growth packages in ${displayLocation} start from ₹15,000/mo. For aggressive scaling, strategies range from ₹45k to ₹95k+. We provide transparent ROI reporting to justify every rupee spent.`
+    },
+    {
+      q: `Can you rank my business on Google Maps in ${displayLocation}?`,
+      a: `Absolutely. We specialize in GMB (Google My Business) optimization. We ensure your business appears in the Map Pack for high-intent 'near me' queries in hubs like ${regions.slice(0, 2).join(" and ")}.`
+    }
+  ];
 
   return (
     <section className="py-24 bg-slate-50 relative overflow-hidden text-slate-900 border-t border-slate-200">

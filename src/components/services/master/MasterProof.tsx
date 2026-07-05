@@ -25,7 +25,7 @@ export function MasterProof({ locationName = "Lucknow & Chandigarh" }: MasterPro
            
            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                 {[
-                  { step: "01", title: "Market & Keyword Research", desc: "We map your current traffic leaks, high-intent keyword gaps, and local competitor vulnerabilities in Lucknow/Chandigarh." },
+                  { step: "01", title: "Market & Keyword Research", desc: `We map your current traffic leaks, high-intent keyword gaps, and local competitor vulnerabilities in ${locationName}.` },
                   { step: "02", title: "SEO & Website Optimization", desc: "A custom KPI-driven roadmap to fix technical LCP bottlenecks and build absolute topical search authority." },
                   { step: "03", title: "Lead Generation Setup", desc: "Our specialists deploy high-velocity Google & Meta ad campaigns to capture immediate sales intent and inquiries." },
                   { step: "04", title: "Tracking & ROI Scaling", desc: "Continuous A/B testing, scaling profitable search buckets, and transparent revenue reporting every 30 days." },

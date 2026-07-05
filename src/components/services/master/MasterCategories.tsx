@@ -231,22 +231,40 @@ export function MasterCategories({ locationName = "India", locationSlug }: Maste
           <div>
             <h2 className="text-3xl font-black text-slate-900 mb-8 tracking-tight capitalize leading-tight">Complete Digital Marketing <br/>Solutions We Offer in <span className="text-blue-600">{locationName}</span></h2>
             <div className="prose prose-slate max-w-none text-slate-600 font-medium space-y-6 text-sm leading-relaxed">
-              <p>
-                In competitive markets like <strong>Lucknow (UP)</strong> and <strong>Chandigarh (Punjab/Haryana)</strong>, generic digital marketing is no longer enough. Your business needs an <strong>SEO agency</strong> that understands local search intent and <strong>Google Maps visibility</strong>. Whether it's ranking your medical clinic in Gomti Nagar or hazratganj, or scaling your startup in Chandigarh's IT park, our data-first <strong>digital marketing services</strong> ensure you dominate the search results.
-              </p>
-              <p>
-                Our <strong>SEO strategies</strong> are built on three pillars: Technical Excellence, Semantic Content, and Authority Backlinks. We focus on <strong>local SEO optimization</strong> to ensure your business appears in the "Map Pack" for local queries. By optimizing your <strong>GMB profile</strong> and building local citations, we help you capture customers who are looking for services "near me" in Lucknow and Chandigarh.
-              </p>
-              <p>
-                Beyond organic search, our <strong>performance marketing</strong> engines deliver instant ROAS. We manage <strong>Google Ads (PPC)</strong> and <strong>Meta Ads</strong> with a ruthless focus on cost-per-lead. We don't just chase clicks; we chase conversions that turn into revenue for your business.
-              </p>
+              {locationSlug === "gonda" ? (
+                <>
+                  <p>
+                    In local markets like <strong>Gonda (UP)</strong>, generic digital marketing is no longer enough. Your business needs a dedicated <strong>digital marketing agency in Gonda</strong> that understands local search intent and <strong>Google Maps visibility</strong>. Whether it's ranking your local business or clinic in Gayatri Puram, Awas Vikas Colony, or Ambedkar Chauraha, or capturing leads in nearby Mankapur and Tarabganj, our data-first marketing services ensure you dominate the local search results.
+                  </p>
+                  <p>
+                    Our <strong>SEO strategies</strong> are built on three pillars: Technical Excellence, Semantic Content, and Authority Backlinks. We focus on <strong>local SEO optimization</strong> to ensure your business appears in the "Map Pack" for local queries. By optimizing your <strong>GMB profile</strong> and building local citations, we help you capture customers who are looking for services "near me" in Gonda.
+                  </p>
+                  <p>
+                    Beyond organic search, our <strong>performance marketing</strong> engines deliver instant lead velocity. We manage <strong>Google Ads (PPC)</strong> and <strong>Meta Ads</strong> with a focus on conversion rate optimization (CRO) to scale your sales funnel and grow your local customer base.
+                  </p>
+                </>
+              ) : (
+                <>
+                  <p>
+                    In competitive markets like <strong>Lucknow (UP)</strong> and <strong>Chandigarh (Punjab/Haryana)</strong>, generic digital marketing is no longer enough. Your business needs an <strong>SEO agency</strong> that understands local search intent and <strong>Google Maps visibility</strong>. Whether it's ranking your medical clinic in Gomti Nagar or hazratganj, or scaling your startup in Chandigarh's IT park, our data-first <strong>digital marketing services</strong> ensure you dominate the search results.
+                  </p>
+                  <p>
+                    Our <strong>SEO strategies</strong> are built on three pillars: Technical Excellence, Semantic Content, and Authority Backlinks. We focus on <strong>local SEO optimization</strong> to ensure your business appears in the "Map Pack" for local queries. By optimizing your <strong>GMB profile</strong> and building local citations, we help you capture customers who are looking for services "near me" in Lucknow and Chandigarh.
+                  </p>
+                  <p>
+                    Beyond organic search, our <strong>performance marketing</strong> engines deliver instant ROAS. We manage <strong>Google Ads (PPC)</strong> and <strong>Meta Ads</strong> with a ruthless focus on cost-per-lead. We don't just chase clicks; we chase conversions that turn into revenue for your business.
+                  </p>
+                </>
+              )}
             </div>
           </div>
           <div className="bg-slate-50 rounded-3xl p-8 border border-slate-100">
              <h3 className="text-xl font-black text-slate-900 mb-6">Why Our Strategies Dominate:</h3>
              <ul className="space-y-4">
                 {[
-                  "Hyper-Local Targeting for Lucknow & Chandigarh commercial hubs.",
+                  locationSlug === "gonda"
+                    ? "Hyper-Local Targeting for Gonda and nearby regional business hubs."
+                    : `Hyper-Local Targeting for ${locationName} commercial hubs.`,
                   "Zero-latency Web architecture built on Next.js for high LCP scores.",
                   "AI-assisted keyword research to find underserved search volume.",
                   "Advanced Remarketing funnels to capture BOF (Bottom of Funnel) leads.",

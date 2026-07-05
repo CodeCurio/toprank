@@ -77,7 +77,22 @@ export function MasterHero({ locationName = "Lucknow & Chandigarh", locationSlug
             </div>
 
             <h1 className="text-4xl md:text-5xl lg:text-[3.8rem] font-black text-white leading-[1.1] tracking-tight mb-6 relative z-10">
-              SEO, GMB & Digital Marketing Services That <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-pink-500 to-blue-600 animate-gradient-x underline decoration-blue-500/30 font-extrabold italic">Generate Real Leads & Customers.</span>
+              {locationSlug ? (
+                <>
+                  Best Digital Marketing Agency in{" "}
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-pink-500 to-blue-600 animate-gradient-x underline decoration-blue-500/30 font-extrabold italic">
+                    {locationName}
+                  </span>{" "}
+                  That Generates Real Leads.
+                </>
+              ) : (
+                <>
+                  SEO, GMB & Digital Marketing Services That{" "}
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-pink-500 to-blue-600 animate-gradient-x underline decoration-blue-500/30 font-extrabold italic">
+                    Generate Real Leads & Customers.
+                  </span>
+                </>
+              )}
             </h1>
 
             <p className="text-lg md:text-xl text-slate-400 font-medium leading-relaxed mb-10 max-w-2xl">
