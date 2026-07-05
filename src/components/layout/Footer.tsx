@@ -81,6 +81,7 @@ export function Footer() {
                   key={index}
                   href={social.href} 
                   target="_blank"
+                  rel="noopener noreferrer"
                   className={`h-10 w-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 ${social.color} hover:text-white transition-all duration-500 transform hover:-translate-y-1`}
                 >
                   <social.icon size={18} />

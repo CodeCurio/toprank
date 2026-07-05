@@ -192,7 +192,7 @@ export function ContactSection() {
                     <a
                       href={loc.directionLink}
                       target="_blank"
-                      rel="noreferrer"
+                      rel="noopener noreferrer"
                       className="flex items-center justify-between w-full py-3.5 px-5 bg-white/5 hover:bg-white/10 rounded-xl text-sm font-bold text-white transition-all group/btn"
                     >
                       Open in Maps

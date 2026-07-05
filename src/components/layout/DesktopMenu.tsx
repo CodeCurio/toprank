@@ -136,7 +136,7 @@ export function DesktopMenu() {
                       <Link href="/lucknow" className="flex-1 inline-flex items-center justify-center text-[12px] font-bold text-orange-600 bg-orange-50 hover:bg-orange-100 py-2 px-2 rounded-lg transition-colors">
                         View Local Hub <ArrowRight className="w-3.5 h-3.5 ml-1" />
                       </Link>
-                      <a href="https://share.google/585sAqmLbXxpCuos9" target="_blank" rel="noreferrer" className="bg-slate-900 hover:bg-slate-800 text-white p-2 px-3 rounded-lg flex items-center justify-center transition-colors">
+                      <a href="https://share.google/585sAqmLbXxpCuos9" target="_blank" rel="noopener noreferrer" className="bg-slate-900 hover:bg-slate-800 text-white p-2 px-3 rounded-lg flex items-center justify-center transition-colors">
                         <Navigation className="w-3.5 h-3.5" />
                       </a>
                   </div>
@@ -159,7 +159,7 @@ export function DesktopMenu() {
                       <Link href="/chandigarh" className="flex-1 inline-flex items-center justify-center text-[12px] font-bold text-blue-600 bg-blue-50 hover:bg-blue-100 py-2 px-2 rounded-lg transition-colors">
                         View Local Hub <ArrowRight className="w-3.5 h-3.5 ml-1" />
                       </Link>
-                      <a href="https://share.google/Ti1FOWyQxmiGoWbOE" target="_blank" rel="noreferrer" className="bg-slate-900 hover:bg-slate-800 text-white p-2 px-3 rounded-lg flex items-center justify-center transition-colors">
+                      <a href="https://share.google/Ti1FOWyQxmiGoWbOE" target="_blank" rel="noopener noreferrer" className="bg-slate-900 hover:bg-slate-800 text-white p-2 px-3 rounded-lg flex items-center justify-center transition-colors">
                         <Navigation className="w-3.5 h-3.5" />
                       </a>
                   </div>
@@ -179,10 +179,10 @@ export function DesktopMenu() {
                     Serving top local businesses across the Mohali region.
                   </p>
                   <div className="mt-auto flex gap-2">
-                      <Link href="/mohali" className="flex-1 inline-flex items-center justify-center text-[12px] font-bold text-purple-600 bg-purple-50 hover:bg-purple-100 py-2 px-2 rounded-lg transition-colors">
+                      <Link href="/chandigarh" className="flex-1 inline-flex items-center justify-center text-[12px] font-bold text-purple-600 bg-purple-50 hover:bg-purple-100 py-2 px-2 rounded-lg transition-colors">
                         View Local Hub <ArrowRight className="w-3.5 h-3.5 ml-1" />
                       </Link>
-                      <a href="https://share.google/kStpC4aIbQmusT6Bd" target="_blank" rel="noreferrer" className="bg-slate-900 hover:bg-slate-800 text-white p-2 px-3 rounded-lg flex items-center justify-center transition-colors">
+                      <a href="https://share.google/kStpC4aIbQmusT6Bd" target="_blank" rel="noopener noreferrer" className="bg-slate-900 hover:bg-slate-800 text-white p-2 px-3 rounded-lg flex items-center justify-center transition-colors">
                         <Navigation className="w-3.5 h-3.5" />
                       </a>
                   </div>
@@ -205,7 +205,7 @@ export function DesktopMenu() {
                       <Link href="/gonda" className="flex-1 inline-flex items-center justify-center text-[12px] font-bold text-green-600 bg-green-50 hover:bg-green-100 py-2 px-2 rounded-lg transition-colors">
                         View Local Hub <ArrowRight className="w-3.5 h-3.5 ml-1" />
                       </Link>
-                      <a href="https://share.google/REZPedp69CgytyOHR" target="_blank" rel="noreferrer" className="bg-slate-900 hover:bg-slate-800 text-white p-2 px-3 rounded-lg flex items-center justify-center transition-colors">
+                      <a href="https://share.google/REZPedp69CgytyOHR" target="_blank" rel="noopener noreferrer" className="bg-slate-900 hover:bg-slate-800 text-white p-2 px-3 rounded-lg flex items-center justify-center transition-colors">
                         <Navigation className="w-3.5 h-3.5" />
                       </a>
                   </div>

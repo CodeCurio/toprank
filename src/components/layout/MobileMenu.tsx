@@ -16,7 +16,7 @@ const MAIN_LINKS = [
 const SECONDARY_LINKS = [
   { name: "Portfolio", href: "/portfolio" },
   { name: "Blog", href: "/blog" },
-  { name: "Reviews", href: "/reviews" },
+  { name: "Reviews", href: "https://maps.app.goo.gl/TopRank" },
   { name: "Contact Us", href: "/contact" },
 ];
 
@@ -34,7 +34,7 @@ const LOCATIONS = [
   { 
     name: "Mohali", 
     address: "Serving local businesses", 
-    href: "/mohali" 
+    href: "/chandigarh" 
   },
   { 
     name: "Gonda", 
@@ -212,16 +212,23 @@ export function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
                   </AnimatePresence>
                 </div>
 
-                {SECONDARY_LINKS.map((link) => (
-                  <Link
-                    key={link.name}
-                    href={link.href}
-                    onClick={closeMenu}
-                    className="py-3 px-4 text-xl font-bold text-slate-700 hover:text-blue-600 hover:bg-slate-50 rounded-2xl transition-colors"
-                  >
-                    {link.name}
-                  </Link>
-                ))}
+                {SECONDARY_LINKS.map((link) => {
+                  const isExternal = link.href.startsWith("http");
+                  const LinkComponent = isExternal ? "a" : Link;
+                  const extraProps = isExternal 
+                    ? { target: "_blank", rel: "noopener noreferrer" } 
+                    : { onClick: closeMenu };
+                  return (
+                    <LinkComponent
+                      key={link.name}
+                      href={link.href}
+                      className="py-3 px-4 text-xl font-bold text-slate-700 hover:text-blue-600 hover:bg-slate-50 rounded-2xl transition-colors"
+                      {...extraProps}
+                    >
+                      {link.name}
+                    </LinkComponent>
+                  );
+                })}
               </div>
             </div>
 

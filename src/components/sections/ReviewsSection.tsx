@@ -283,9 +283,9 @@ export function ReviewsSection({ location }: { location?: string }) {
           viewport={{ once: true }}
           className="text-center mt-20 md:mt-24 mb-16"
         >
-          <Link href="/reviews" className="inline-flex items-center gap-3 px-10 py-5 bg-white border-2 border-slate-200 hover:border-blue-600 hover:text-blue-600 text-slate-900 rounded-2xl text-[11px] font-black uppercase tracking-widest transition-all shadow-xl shadow-slate-200/10 active:scale-95 group">
+          <a href="https://maps.app.goo.gl/TopRank" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 px-10 py-5 bg-white border-2 border-slate-200 hover:border-blue-600 hover:text-blue-600 text-slate-900 rounded-2xl text-[11px] font-black uppercase tracking-widest transition-all shadow-xl shadow-slate-200/10 active:scale-95 group">
              Read All Reviews (100+) <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </Link>
+          </a>
         </motion.div>
 
         <motion.div
