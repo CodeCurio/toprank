@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   }
 
   return {
-    title: `${post.title} | TopRank Digital Service`,
+    title: post.title,
     description: post.excerpt || "Read this article to master your digital growth.",
     openGraph: {
       title: post.title,

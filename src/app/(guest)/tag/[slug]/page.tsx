@@ -9,7 +9,7 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
   const tag = await prisma.tag.findUnique({ where: { slug } });
   if (!tag) return { title: "Tag Not Found" };
   return {
-    title: `${tag.name} Archives | TopRank Digital Service`,
+    title: `${tag.name} Archives`,
     description: `Browse all articles tagged with ${tag.name}.`,
     alternates: {
       canonical: `https://www.toprankindia.com/tag/${slug}`,

@@ -40,7 +40,7 @@ export async function generateMetadata({ params }: SubServicePageProps): Promise
   }
 
   return {
-    title: `${subService.name} Services | ${service.name} | TopRank Digital`,
+    title: `${subService.name} | ${service.name}`,
     description: `Professional ${subService.name.toLowerCase()} tailored for market dominance. ${subService.desc}.`,
     alternates: {
       canonical: `https://www.toprankindia.com/services/${category}/${slug}`,

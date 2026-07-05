@@ -6,7 +6,7 @@ import { MasterBottom } from "@/components/services/master/MasterBottom";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Digital Marketing Services | Rank Higher & Get Leads | TopRank",
+  title: "Digital Marketing Services",
   description: "Comprehensive digital growth solutions including SEO, Web Design, Performance Marketing, and Conversion Rate Optimization. Book a free audit today.",
   alternates: {
     canonical: "https://www.toprankindia.com/services"

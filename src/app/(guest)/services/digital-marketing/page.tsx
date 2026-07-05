@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { ServiceTemplate } from "@/components/services/shared/ServiceTemplate";
 
 export const metadata: Metadata = {
-  title: "Digital Marketing Services | Scale Your Brand | TopRank Digital",
+  title: "Digital Marketing Services",
   description: "Comprehensive multi-channel digital marketing strategies to build brand authority and capture massive market share.",
   alternates: {
     canonical: "https://www.toprankindia.com/services/digital-marketing",

@@ -9,7 +9,7 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
   const category = await prisma.category.findUnique({ where: { slug } });
   if (!category) return { title: "Category Not Found" };
   return {
-    title: `${category.name} Archives | TopRank Digital Service`,
+    title: `${category.name} Archives`,
     description: `Browse all articles related to ${category.name}.`,
     alternates: {
       canonical: `https://www.toprankindia.com/category/${slug}`,

@@ -8,7 +8,7 @@ import { RelatedServices } from "@/components/services/shared/RelatedServices";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Best SEO Services in Lucknow | TopRank Digital",
+  title: "Best SEO Services in Lucknow",
   description: "Rank higher on Google and get high-quality leads with the #1 SEO Company in Lucknow. We specialize in local, technical, and organic SEO to dominate your market.",
   alternates: {
     canonical: "https://www.toprankindia.com/services/seo"

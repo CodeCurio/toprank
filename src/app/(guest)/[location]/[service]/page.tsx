@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: ServicePageProps): Promise<Me
   }
 
   return {
-    title: `${service.title} | TopRank Digital ${location.name}`,
+    title: `${service.title} in ${location.name}`,
     description: service.description,
     alternates: {
       canonical: `https://www.toprankindia.com/${location.slug}/${serviceParam}`

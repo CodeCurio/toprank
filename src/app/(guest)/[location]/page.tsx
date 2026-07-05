@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: LocationPageProps): Promise<M
   }
 
   return {
-    title: `Best Digital Marketing Agency in ${location.name} | TopRank`,
+    title: `Best Digital Marketing Agency in ${location.name}`,
     description: `Dominate your local market in ${location.name}. #1 rated agency for SEO, Google Maps (GMB), and high-performance lead generation in ${location.regions.join(", ")}.`,
     alternates: {
       canonical: `https://www.toprankindia.com/${location.slug}`

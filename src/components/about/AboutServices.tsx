@@ -37,7 +37,7 @@ const SERVICES = [
     icon: <MousePointerClick className="w-6 h-6" />,
     title: "Performance Marketing (PPC)",
     desc: "Precision ad campaigns across Google and Meta designed for maximum ROAS.",
-    href: "/services/ppc",
+    href: "/services/google-ads",
     color: "text-amber-500",
     bg: "bg-amber-50",
     border: "group-hover:border-amber-200"
@@ -46,7 +46,7 @@ const SERVICES = [
     icon: <Smartphone className="w-6 h-6" />,
     title: "Social Media Identity",
     desc: "Engaging brand narratives and content that builds loyal community followings.",
-    href: "/services/social-media",
+    href: "/services/digital-marketing/social-media",
     color: "text-purple-600",
     bg: "bg-purple-50",
     border: "group-hover:border-purple-200"
@@ -55,7 +55,7 @@ const SERVICES = [
     icon: <BarChart className="w-6 h-6" />,
     title: "Conversion Rate Optimization",
     desc: "Scientific testing and UX improvements to get more leads from the same traffic.",
-    href: "/services/cro",
+    href: "/services/digital-marketing/leads",
     color: "text-blue-600",
     bg: "bg-blue-50",
     border: "group-hover:border-blue-200"

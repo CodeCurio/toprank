@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!project) return { title: "Project Not Found" };
 
   return {
-    title: `${project.title} | TopRank Portfolio`,
+    title: project.title,
     description: project.excerpt || `Case study for ${project.title}`,
     openGraph: {
       images: project.featuredImage ? [project.featuredImage] : [],

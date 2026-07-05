@@ -5,7 +5,7 @@ import { ContactFAQs } from "@/components/contact/ContactFAQs";
 import { ContactCTA } from "@/components/about/ContactCTA";
 
 export const metadata = {
-  title: "Contact TopRank Digital Service – Digital Marketing Agency in Lucknow",
+  title: "Contact Our Team",
   description: "Get in touch with TopRank Digital Service today. Schedule a free consultation for SEO, Web Design, and Local Growth strategies.",
   alternates: {
     canonical: "https://www.toprankindia.com/contact",
