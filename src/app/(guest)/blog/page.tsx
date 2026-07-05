@@ -172,6 +172,31 @@ export default async function BlogPage({
             )}
           </div>
         )}
+        {/* Editorial & Learning Hub Section */}
+        <section className="mt-24 border-t border-slate-200 pt-16">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+            <div className="lg:col-span-1 space-y-4">
+              <h3 className="text-xl font-black text-slate-900 tracking-tight">Our Editorial Standard</h3>
+              <p className="text-slate-600 text-sm font-medium leading-relaxed">
+                The TopRank Growth Blog is curated by active digital marketing practitioners, search engineers, and UX architects. We do not publish superficial tips or speculative strategies. Every article, guide, and breakdown is verified through real-world deployment on active enterprise accounts.
+              </p>
+            </div>
+            <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-8">
+              <div className="space-y-3">
+                <h4 className="font-bold text-slate-900">Search Engine Engineering</h4>
+                <p className="text-slate-500 text-xs font-medium leading-relaxed">
+                  Deep-dives into Google core updates, crawlers behavior, search ranking factors, programmatic schema generation, and semantic structure adjustments designed to dominate the organic map pack.
+                </p>
+              </div>
+              <div className="space-y-3">
+                <h4 className="font-bold text-slate-900">Performance Ads & Attribution</h4>
+                <p className="text-slate-500 text-xs font-medium leading-relaxed">
+                  Tactical guides on structuring paid campaigns on Google Ads and Meta platforms, configuring multi-touch attribution pipelines, reducing cost-per-lead, and maximizing Return on Ad Spend (ROAS).
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
     </>

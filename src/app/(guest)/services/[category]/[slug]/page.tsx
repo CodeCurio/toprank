@@ -146,7 +146,85 @@ export default async function SubServicePage({ params }: SubServicePageProps) {
           </div>
         </div>
       </section>
-
+ 
+      {/* Dynamic Sub-Service Process Section */}
+      <section className="py-24 bg-white border-t border-slate-100 relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <h2 className="text-3xl md:text-5xl font-black text-slate-900 tracking-tight mb-4">
+              Our {subService.name} <span className={service.color}>Process</span>
+            </h2>
+            <p className="text-slate-500 font-medium">
+              A streamlined, three-stage optimization framework engineered to deploy, scale, and secure high-intent conversions for your brand.
+            </p>
+          </div>
+ 
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              {
+                step: "Stage 01",
+                title: "Tactical Configuration",
+                desc: `We establish baseline tracking systems, install necessary API integrations, and examine your existing customer data to structure the optimal campaign architecture.`
+              },
+              {
+                step: "Stage 02",
+                title: "High-Impact Launch",
+                desc: `We execute the customized ${subService.name.toLowerCase()} plan. This includes crafting persuasive copy, designing targeted assets, and deploying high-retention frameworks.`
+              },
+              {
+                step: "Stage 03",
+                title: "Analytics & Scaling",
+                desc: "We perform rigorous A/B testing on creatives and triggers. Low-converting layers are systematically pruned while high-impact channels receive increased budgets to scale."
+              }
+            ].map((node, i) => (
+              <div key={i} className="bg-slate-50 p-8 rounded-3xl border border-slate-100 hover:border-blue-200 transition-all relative group shadow-sm hover:shadow-md">
+                <div className={`text-[12px] font-black uppercase tracking-wider mb-4 ${service.color}`}>
+                  {node.step}
+                </div>
+                <h3 className="text-xl font-black text-slate-900 mb-3">{node.title}</h3>
+                <p className="text-slate-600 font-medium text-sm leading-relaxed">{node.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+ 
+      {/* Dynamic Sub-Service FAQs */}
+      <section className="py-24 bg-slate-50 border-t border-slate-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-black text-slate-900 tracking-tight mb-4">
+              {subService.name} <span className={service.color}>FAQs</span>
+            </h2>
+            <p className="text-slate-500 font-bold">
+              Got questions about {subService.name.toLowerCase()}? Here are the facts about pricing, timelines, and deliverables.
+            </p>
+          </div>
+ 
+          <div className="space-y-6">
+            {[
+              {
+                q: `What is the typical timeline to deploy ${subService.name}?`,
+                a: `Setting up and deploying ${subService.name.toLowerCase()} takes between 5 to 10 business days. This includes auditing your current assets, configuring tracking endpoints, and engineering initial creative and copy assets before officially going live.`
+              },
+              {
+                q: `How does ${subService.name} integrate with other marketing channels?`,
+                a: `No marketing channel works in a silo. We design ${subService.name.toLowerCase()} to interface directly with your core web development framework, CRM pipelines, and general digital marketing strategy. Leads captured here are automatically segmented and routed for instant sales qualification.`
+              },
+              {
+                q: `How do you measure success and ROI for ${subService.name}?`,
+                a: `We track business outcomes, not vanity metrics. We measure cost-per-acquisition (CPA), conversion rates, pipeline velocity, and return on ad spend (ROAS). Everything is mapped using precision tracking scripts so you can trace every rupee spent directly to revenue.`
+              }
+            ].map((faq, i) => (
+              <div key={i} className="p-6 bg-white rounded-2xl border border-slate-150 shadow-sm">
+                <h3 className="font-bold text-lg text-slate-900 mb-3 leading-snug">{faq.q}</h3>
+                <p className="text-slate-600 font-medium text-sm leading-relaxed">{faq.a}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+ 
       <RelatedServices currentServiceId={service.id} />
     </main>
   );

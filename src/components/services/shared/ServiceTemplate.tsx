@@ -153,6 +153,132 @@ export function ServiceTemplate({ serviceId }: ServiceTemplateProps) {
         </div>
       </section>
 
+      {/* Execution Blueprint */}
+      <section className="py-24 bg-white border-t border-slate-100 relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <h2 className="text-3xl md:text-5xl font-black text-slate-900 tracking-tight mb-4">
+              Our Deployment <span className={service.color}>Blueprint</span>
+            </h2>
+            <p className="text-slate-500 font-medium">
+              We follow a scientific, results-oriented execution model to ensure your {service.name.toLowerCase()} campaign is deployed seamlessly and engineered to outcompete rivals.
+            </p>
+          </div>
+ 
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              {
+                step: "01",
+                title: "Discovery & Audit",
+                desc: "We analyze your historic metrics, audit competitors, and map out missed opportunities in your niche market."
+              },
+              {
+                step: "02",
+                title: "Custom Engineering",
+                desc: "Our team drafts conversion layouts, writes targeted ad scripts, and sets up advanced analytical pipelines."
+              },
+              {
+                step: "03",
+                title: "Aggressive Launch",
+                desc: "We deploy the strategy across selected channels with precision attribution tracking and immediate feed velocity."
+              },
+              {
+                step: "04",
+                title: "Scale & Optimize",
+                desc: "We run ongoing multivariate tests, prune low-performing segments, and scale budgets to maximize client ROI."
+              }
+            ].map((node, i) => (
+              <div key={i} className="bg-slate-50 p-8 rounded-3xl border border-slate-100 hover:border-blue-200 transition-all relative group shadow-sm hover:shadow-md">
+                <div className={`text-4xl font-black mb-6 ${service.color} opacity-40 group-hover:opacity-100 transition-opacity`}>
+                  {node.step}
+                </div>
+                <h3 className="text-lg font-black text-slate-900 mb-3">{node.title}</h3>
+                <p className="text-slate-600 font-medium text-sm leading-relaxed">{node.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+ 
+      {/* Value & Tech Focus */}
+      <section className="py-24 bg-slate-50 border-t border-slate-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-white rounded-[3rem] border border-slate-200 p-8 md:p-12 shadow-xl shadow-slate-200/40 relative overflow-hidden">
+            <div className={`absolute top-0 right-0 w-64 h-64 opacity-5 rounded-full blur-3xl ${service.bgColor}`} />
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-center">
+              <div className="lg:col-span-2 space-y-6">
+                <h3 className="text-3xl font-black text-slate-900 tracking-tight leading-tight">
+                  High-Performance Tech Stack & Implementation Standards
+                </h3>
+                <p className="text-slate-600 font-medium leading-relaxed">
+                  We don't rely on cookie-cutter tools. Our team utilizes advanced tracking setups, modern development frameworks, and real-time CRM connectors. This guarantees that every lead, visitor, or transaction generated through our {service.name.toLowerCase()} campaigns is attributed correctly.
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
+                  {[
+                    "Precision UTM parameter setups",
+                    "Custom analytics dashboard reporting",
+                    "Weekly conversion review cycles",
+                    "Dedicated account manager communication"
+                  ].map((val, i) => (
+                    <div key={i} className="flex items-center gap-3">
+                      <CheckCircle2 className={`w-5 h-5 shrink-0 ${service.color}`} />
+                      <span className="text-sm font-bold text-slate-700">{val}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className={`lg:col-span-1 p-8 rounded-3xl ${service.bgColor} border border-slate-100 flex flex-col justify-center`}>
+                <div className={`text-5xl font-black tracking-tight mb-2 ${service.color}`}>
+                  100%
+                </div>
+                <div className="text-slate-800 font-black text-sm uppercase tracking-wider mb-4">
+                  Fully Managed Service
+                </div>
+                <p className="text-slate-500 text-xs font-semibold leading-relaxed">
+                  From coding landing pages and creating design creatives, to managing budgets and reporting success metrics—we do it all. You focus on running your business.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+ 
+      {/* Frequently Asked Questions */}
+      <section className="py-24 bg-white border-t border-slate-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-black text-slate-900 tracking-tight mb-4">
+              FAQs Regarding <span className={service.color}>{service.name}</span>
+            </h2>
+            <p className="text-slate-500 font-bold">
+              Frequently asked questions mapping exactly to timelines, budgets, and expectations.
+            </p>
+          </div>
+ 
+          <div className="space-y-6">
+            {[
+              {
+                q: `How long does it take to see tangible results with ${service.name}?`,
+                a: `While initial configurations, technical optimization, and campaign setup take 1-2 weeks, seeing measurable revenue growth typically takes 30 to 90 days. For paid channels like Google and Meta Ads, lead velocity increases almost instantly, whereas organic channels like Local SEO and content building mature over 3 to 6 months of continuous optimization.`
+              },
+              {
+                q: `What is the standard onboarding process for ${service.name} services?`,
+                a: `Our onboarding begins with a comprehensive audit of your current assets and competition. Next, we align on target KPI benchmarks, design custom funnels or campaigns, configure real-time attribution tracking, and launch the strategy. You receive a dedicated account lead and weekly reports mapping directly to business conversions.`
+              },
+              {
+                q: `Do we need to provide internal technical or creative resources?`,
+                a: `No, we operate as a fully managed growth team. We handle all technical scripting, design layouts, copywriting, landing page development, and A/B testing internally. We work closely with your leadership team for brand alignment, approvals, and product knowledge, but the execution is entirely handled by us.`
+              }
+            ].map((faq, i) => (
+              <div key={i} className="p-6 bg-slate-50 rounded-2xl border border-slate-100">
+                <h3 className="font-bold text-lg text-slate-900 mb-3 leading-snug">{faq.q}</h3>
+                <p className="text-slate-600 font-medium text-sm leading-relaxed">{faq.a}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Global CTA */}
       <section className="py-24 bg-slate-950 relative overflow-hidden">
         <div className={`absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_center,theme(colors.blue.500)_0%,transparent_100%)]`} />
