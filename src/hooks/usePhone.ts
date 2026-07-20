@@ -2,9 +2,10 @@ import { usePathname } from 'next/navigation';
 
 export function usePhone() {
   const pathname = usePathname();
-  const isGonda = pathname?.split('/').includes('gonda');
+  const segments = pathname?.split('/') || [];
+  const isGondaOrMohali = segments.includes('gonda') || segments.includes('mohali');
 
-  if (isGonda) {
+  if (isGondaOrMohali) {
     return {
       raw: "9115439115",
       display: "+91 91154 39115",

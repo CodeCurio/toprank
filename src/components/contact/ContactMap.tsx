@@ -27,6 +27,17 @@ const locations = [
     directionLink: "https://share.google/Ti1FOWyQxmiGoWbOE"
   },
   {
+    id: "mohali",
+    city: "Mohali, PB",
+    type: "Branch Office",
+    address: "Shop no 12, Sector 69, Mohali, Punjab 160069",
+    phone: "+91 91154 39115",
+    email: "connect@toprankindia.com",
+    hours: "Monday - Sunday, 24x7",
+    embedParams: "https://maps.google.com/maps?q=Shop%20no%2012%2C%20sector%2069%2C%20mohali%2C%20160069&t=&z=15&ie=UTF8&iwloc=&output=embed",
+    directionLink: "https://www.google.com/maps/search/?api=1&query=Shop+no+12,+sector+69,+mohali,+160069"
+  },
+  {
     id: "gonda",
     city: "Gonda, UP",
     type: "Regional Hub",
@@ -64,7 +75,7 @@ export function ContactMap() {
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
           {locations.map((loc, index) => (
             <motion.div
               key={loc.id}

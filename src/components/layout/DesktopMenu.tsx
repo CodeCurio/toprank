@@ -176,13 +176,13 @@ export function DesktopMenu() {
                     </div>
                   </div>
                   <p className="text-[12px] text-slate-500 font-medium leading-relaxed mb-5 flex-grow">
-                    Serving top local businesses across the Mohali region.
+                    Shop no 12, Sector 69, Mohali, 160069
                   </p>
                   <div className="mt-auto flex gap-2">
-                      <Link href="/chandigarh" className="flex-1 inline-flex items-center justify-center text-[12px] font-bold text-purple-600 bg-purple-50 hover:bg-purple-100 py-2 px-2 rounded-lg transition-colors">
+                      <Link href="/mohali" className="flex-1 inline-flex items-center justify-center text-[12px] font-bold text-purple-600 bg-purple-50 hover:bg-purple-100 py-2 px-2 rounded-lg transition-colors">
                         View Local Hub <ArrowRight className="w-3.5 h-3.5 ml-1" />
                       </Link>
-                      <a href="https://share.google/kStpC4aIbQmusT6Bd" target="_blank" rel="noopener noreferrer" className="bg-slate-900 hover:bg-slate-800 text-white p-2 px-3 rounded-lg flex items-center justify-center transition-colors">
+                      <a href="https://www.google.com/maps/search/?api=1&query=Shop+no+12,+sector+69,+mohali,+160069" target="_blank" rel="noopener noreferrer" className="bg-slate-900 hover:bg-slate-800 text-white p-2 px-3 rounded-lg flex items-center justify-center transition-colors">
                         <Navigation className="w-3.5 h-3.5" />
                       </a>
                   </div>

@@ -127,7 +127,7 @@ export function Footer() {
               {[
                 { name: 'Lucknow (HQ)', href: '/lucknow' },
                 { name: 'Chandigarh', href: '/chandigarh' },
-                { name: 'Mohali', href: '/chandigarh' },
+                { name: 'Mohali', href: '/mohali' },
                 { name: 'Panchkula', href: '/chandigarh' }
               ].map((loc) => (
                 <li key={loc.name}>

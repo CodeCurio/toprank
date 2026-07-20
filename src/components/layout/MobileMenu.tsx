@@ -33,8 +33,8 @@ const LOCATIONS = [
   },
   { 
     name: "Mohali", 
-    address: "Serving local businesses", 
-    href: "/chandigarh" 
+    address: "Shop no 12, Sector 69", 
+    href: "/mohali" 
   },
   { 
     name: "Gonda", 

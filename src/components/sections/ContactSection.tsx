@@ -32,6 +32,14 @@ const locations = [
     directionLink: "https://share.google/Ti1FOWyQxmiGoWbOE"
   },
   {
+    id: "mohali",
+    city: "Mohali, PB",
+    type: "Branch Office",
+    address: "Shop no 12, Sector 69, Mohali, Punjab 160069",
+    embedParams: "https://maps.google.com/maps?q=Shop%20no%2012%2C%20sector%2069%2C%20mohali%2C%20160069&t=&z=15&ie=UTF8&iwloc=&output=embed",
+    directionLink: "https://www.google.com/maps/search/?api=1&query=Shop+no+12,+sector+69,+mohali,+160069"
+  },
+  {
     id: "gonda",
     city: "Gonda, UP",
     type: "Regional Hub",

@@ -112,6 +112,43 @@ export const locations: Record<string, LocationInfo> = {
         icon: "Megaphone"
       }
     }
+  },
+  mohali: {
+    name: "Mohali",
+    slug: "mohali",
+    regions: ["Sector 69", "Sector 70", "Phase 7", "Phase 3B2", "Phase 8", "Aerocity", "JLPL Industrial Area", "Sector 82"],
+    services: {
+      "seo-services": {
+        title: "SEO Services in Mohali",
+        description: "Rank #1 on Google for local keywords in Mohali. Our SEO experts help you dominate search results and capture high-intent local leads.",
+        icon: "Search"
+      },
+      "gmb-services": {
+        title: "GMB Optimization in Mohali",
+        description: "Dominate Google Maps in Mohali (Sector 69, Aerocity & Phase 7). We optimize your Google Business profile for maximum local visibility.",
+        icon: "MapPin"
+      },
+      "ppc-services": {
+        title: "PPC & Google Ads in Mohali",
+        description: "High-ROAS paid advertising for businesses in Mohali. We manage targeted Google & Meta ad campaigns engineered for local conversion.",
+        icon: "TrendingUp"
+      },
+      "website-development": {
+        title: "Website Development in Mohali",
+        description: "Custom Next.js websites built for fast loading and high conversion in Mohali. Premium web design engineered for business growth.",
+        icon: "Monitor"
+      },
+      "social-media-marketing": {
+        title: "Social Media Marketing in Mohali",
+        description: "Scale your Mohali brand on Instagram & Meta. Engineered social media strategy and content design for high-impact engagement.",
+        icon: "Megaphone"
+      },
+      "web-designer-in-mohali": {
+        title: "Web Designer in Mohali",
+        description: "Looking for a professional web designer in Mohali? We build custom, high-speed Next.js websites tailored for Mohali startups and local enterprises.",
+        icon: "Monitor"
+      }
+    }
   }
 };
 
