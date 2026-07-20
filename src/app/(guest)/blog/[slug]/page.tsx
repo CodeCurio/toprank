@@ -25,7 +25,12 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const post = await prisma.post.findUnique({ where: { slug } });
+  let post: any = null;
+  try {
+    post = await prisma.post.findUnique({ where: { slug } });
+  } catch (error) {
+    console.error("Runtime database error in generateMetadata:", error);
+  }
   
   if (!post) {
     return { title: "Post Not Found" };
@@ -56,30 +61,42 @@ export default async function BlogPostPage({
   const { preview } = await searchParams;
   const isPreview = preview === "true";
 
-  const post = await prisma.post.findUnique({
-    where: { slug },
-    // @ts-ignore
-    include: { categories: true, tags: true, comments: { where: { isApproved: true }, orderBy: { createdAt: 'desc' } } },
-  });
+  let post: any = null;
+  let relatedPosts: any[] = [];
+
+  try {
+    post = await prisma.post.findUnique({
+      where: { slug },
+      // @ts-ignore
+      include: { categories: true, tags: true, comments: { where: { isApproved: true }, orderBy: { createdAt: 'desc' } } },
+    });
+  } catch (error) {
+    console.error("Runtime database error in BlogPostPage:", error);
+  }
 
   if (!post || (!isPreview && post.status !== "Published")) {
     notFound();
   }
 
   // Fetch Related Posts
-  // @ts-ignore
-  const relatedPosts = await prisma.post.findMany({
-    where: { 
-      status: "Published", 
-      id: { not: post.id },
-      // @ts-ignore
-      ...(post.categories.length > 0 ? { categories: { some: { id: post.categories[0].id } } } : {})
-    },
-    take: 3,
-    orderBy: { createdAt: "desc" },
+  try {
     // @ts-ignore
-    include: { categories: true }
-  });
+    relatedPosts = await prisma.post.findMany({
+      where: { 
+        status: "Published", 
+        id: { not: post.id },
+        // @ts-ignore
+        ...(post.categories?.length > 0 ? { categories: { some: { id: post.categories[0].id } } } : {})
+      },
+      take: 3,
+      orderBy: { createdAt: "desc" },
+      // @ts-ignore
+      include: { categories: true }
+    });
+  } catch (error) {
+    console.error("Failed to fetch related posts:", error);
+    relatedPosts = [];
+  }
 
   // Generate Table of Contents
   const headings: HeadingItem[] = [];

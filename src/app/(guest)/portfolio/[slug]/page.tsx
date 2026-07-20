@@ -9,9 +9,14 @@ export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const project = await prisma.portfolioProject.findUnique({
-    where: { slug, status: "Published" }
-  });
+  let project: any = null;
+  try {
+    project = await prisma.portfolioProject.findUnique({
+      where: { slug, status: "Published" }
+    });
+  } catch (error) {
+    console.error("Runtime database error in generateMetadata:", error);
+  }
 
   if (!project) return { title: "Project Not Found" };
 
@@ -29,9 +34,14 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function PortfolioCaseStudyPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const project = await prisma.portfolioProject.findUnique({
-    where: { slug, status: "Published" }
-  });
+  let project: any = null;
+  try {
+    project = await prisma.portfolioProject.findUnique({
+      where: { slug, status: "Published" }
+    });
+  } catch (error) {
+    console.error("Runtime database error in PortfolioCaseStudyPage:", error);
+  }
 
   if (!project) {
     notFound();

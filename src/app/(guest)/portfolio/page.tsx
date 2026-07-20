@@ -15,20 +15,26 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 
 export default async function PortfolioPage() {
-  const projects = await prisma.portfolioProject.findMany({
-    where: { status: "Published" },
-    orderBy: { createdAt: "desc" },
-    select: {
-      id: true,
-      title: true,
-      slug: true,
-      excerpt: true,
-      featuredImage: true,
-      category: true,
-      clientName: true,
-      results: true,
-    }
-  });
+  let projects: any[] = [];
+  try {
+    projects = await prisma.portfolioProject.findMany({
+      where: { status: "Published" },
+      orderBy: { createdAt: "desc" },
+      select: {
+        id: true,
+        title: true,
+        slug: true,
+        excerpt: true,
+        featuredImage: true,
+        category: true,
+        clientName: true,
+        results: true,
+      }
+    });
+  } catch (error) {
+    console.error("Runtime database error in PortfolioPage:", error);
+    projects = [];
+  }
 
   // We map nulls to empty strings so it can be passed to the client component
   const serializedProjects = projects.map((p: any) => ({
