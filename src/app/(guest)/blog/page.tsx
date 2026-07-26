@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma";
+import { SAMPLE_BLOG_POSTS } from "@/data/blogData";
 import Link from "next/link";
 import { Metadata } from "next";
 import { ArrowRight, Calendar, User } from "lucide-react";
@@ -11,8 +11,6 @@ export const metadata: Metadata = {
   },
 };
 
-export const revalidate = 60; 
-
 export default async function BlogPage({
   searchParams,
 }: {
@@ -23,29 +21,8 @@ export default async function BlogPage({
   const limit = 6;
   const skip = (page - 1) * limit;
 
-  let posts: any[] = [];
-  let totalPosts = 0;
-
-  try {
-    const [fetchedPosts, fetchedCount] = await Promise.all([
-      prisma.post.findMany({
-        where: { status: "Published" },
-        orderBy: { createdAt: "desc" },
-        // @ts-ignore
-        include: { categories: true },
-        skip,
-        take: limit,
-      }),
-      prisma.post.count({ where: { status: "Published" } }),
-    ]);
-    posts = fetchedPosts;
-    totalPosts = fetchedCount;
-  } catch (error) {
-    console.error("Runtime database error in BlogPage:", error);
-    // Fallback to empty state
-    posts = [];
-    totalPosts = 0;
-  }
+  const posts = SAMPLE_BLOG_POSTS.slice(skip, skip + limit);
+  const totalPosts = SAMPLE_BLOG_POSTS.length;
 
   const totalPages = Math.max(1, Math.ceil(totalPosts / limit));
 
@@ -102,7 +79,7 @@ export default async function BlogPage({
 
                   <div className="p-6 sm:p-8 flex-1 flex flex-col relative">
                     <div className="flex items-center gap-4 text-xs font-bold uppercase tracking-widest mb-4">
-                       <time className="text-slate-400 flex items-center gap-1.5" dateTime={post.createdAt.toISOString()}>
+                       <time className="text-slate-400 flex items-center gap-1.5" dateTime={new Date(post.createdAt).toISOString()}>
                          <Calendar className="w-3.5 h-3.5" />
                          {new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric" }).format(new Date(post.createdAt))}
                        </time>

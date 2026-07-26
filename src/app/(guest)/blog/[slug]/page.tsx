@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma";
+import { SAMPLE_BLOG_POSTS } from "@/data/blogData";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import Link from "next/link";
@@ -6,31 +6,14 @@ import { ArrowLeft, Calendar, User, Share2, ArrowRight } from "lucide-react";
 import slugify from "slugify";
 import TableOfContents, { HeadingItem } from "@/components/blog/TableOfContents";
 import RelatedPosts from "@/components/blog/RelatedPosts";
-import CommentsSection from "@/components/blog/CommentsSection";
-
-export const revalidate = 60; // ISR
 
 export async function generateStaticParams() {
-  try {
-    const posts = await prisma.post.findMany({
-      where: { status: "Published" },
-      select: { slug: true },
-    });
-    return posts.map((post: any) => ({ slug: post.slug }));
-  } catch (error) {
-    console.error("Build-time database error in generateStaticParams:", error);
-    return []; // Return empty to allow build to succeed
-  }
+  return SAMPLE_BLOG_POSTS.map((post) => ({ slug: post.slug }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  let post: any = null;
-  try {
-    post = await prisma.post.findUnique({ where: { slug } });
-  } catch (error) {
-    console.error("Runtime database error in generateMetadata:", error);
-  }
+  const post = SAMPLE_BLOG_POSTS.find((p) => p.slug === slug);
   
   if (!post) {
     return { title: "Post Not Found" };
@@ -52,51 +35,19 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function BlogPostPage({ 
   params,
-  searchParams 
 }: { 
-  params: Promise<{ slug: string }>,
-  searchParams: Promise<{ preview?: string }>
+  params: Promise<{ slug: string }>
 }) {
   const { slug } = await params;
-  const { preview } = await searchParams;
-  const isPreview = preview === "true";
+  const post = SAMPLE_BLOG_POSTS.find((p) => p.slug === slug);
 
-  let post: any = null;
-  let relatedPosts: any[] = [];
-
-  try {
-    post = await prisma.post.findUnique({
-      where: { slug },
-      // @ts-ignore
-      include: { categories: true, tags: true, comments: { where: { isApproved: true }, orderBy: { createdAt: 'desc' } } },
-    });
-  } catch (error) {
-    console.error("Runtime database error in BlogPostPage:", error);
-  }
-
-  if (!post || (!isPreview && post.status !== "Published")) {
+  if (!post) {
     notFound();
   }
 
-  // Fetch Related Posts
-  try {
-    // @ts-ignore
-    relatedPosts = await prisma.post.findMany({
-      where: { 
-        status: "Published", 
-        id: { not: post.id },
-        // @ts-ignore
-        ...(post.categories?.length > 0 ? { categories: { some: { id: post.categories[0].id } } } : {})
-      },
-      take: 3,
-      orderBy: { createdAt: "desc" },
-      // @ts-ignore
-      include: { categories: true }
-    });
-  } catch (error) {
-    console.error("Failed to fetch related posts:", error);
-    relatedPosts = [];
-  }
+  const relatedPosts = SAMPLE_BLOG_POSTS.filter(
+    (p) => p.id !== post.id && p.categories.some((c) => post.categories.some((pc) => pc.id === c.id))
+  ).slice(0, 3);
 
   // Generate Table of Contents
   const headings: HeadingItem[] = [];
@@ -122,19 +73,6 @@ export default async function BlogPostPage({
   return (
     <>
     <article className="min-h-screen bg-slate-50 pt-24 pb-20 lg:pt-32 lg:pb-32 relative font-sans">
-      {isPreview && (
-        <div className="fixed top-20 inset-x-0 z-[100] px-4 animate-in fade-in slide-in-from-top-4 duration-500">
-           <div className="max-w-xl mx-auto bg-blue-600/90 backdrop-blur-md text-white px-6 py-3 rounded-2xl shadow-2xl border border-white/20 flex items-center justify-between">
-              <div className="flex items-center gap-3 font-black text-[10px] uppercase tracking-widest">
-                 <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
-                 Draft Preview Mode
-              </div>
-              <Link href="/admin" className="text-[10px] font-black uppercase tracking-widest bg-white/20 hover:bg-white/30 px-3 py-1.5 rounded-lg transition-all">
-                Close
-              </Link>
-           </div>
-        </div>
-      )}
       
       {/* Editorial Header */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 mb-16 lg:mb-24">
@@ -171,7 +109,7 @@ export default async function BlogPostPage({
              
              <div className="h-6 w-px bg-slate-200"></div>
              
-             <time dateTime={post.createdAt.toISOString()} className="flex items-center gap-2 text-slate-600 text-[13px] uppercase tracking-widest">
+             <time dateTime={new Date(post.createdAt).toISOString()} className="flex items-center gap-2 text-slate-600 text-[13px] uppercase tracking-widest">
               <Calendar className="w-4 h-4 text-blue-500" />
               {new Intl.DateTimeFormat("en-US", { month: "long", day: "numeric", year: "numeric" }).format(new Date(post.createdAt))}
              </time>
@@ -217,10 +155,6 @@ export default async function BlogPostPage({
                    </div>
                 )}
              </div>
-
-             {/* Dynamic Comments Module */}
-             {/* @ts-ignore */}
-             <CommentsSection postId={post.id} initialComments={post.comments} />
           </div>
 
           {/* Dynamic Sidebar */}

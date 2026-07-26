@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next';
-import { prisma } from '@/lib/prisma';
+import { SAMPLE_BLOG_POSTS, SAMPLE_CATEGORIES, SAMPLE_TAGS } from '@/data/blogData';
+import { SAMPLE_PORTFOLIO_PROJECTS } from '@/data/portfolioData';
 import { locations } from '@/data/locationData';
 import { SERVICES_DATA } from '@/lib/services-data';
 
@@ -12,7 +13,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/about',
     '/contact',
     '/services',
-    '/blog'
+    '/blog',
+    '/portfolio',
   ].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
@@ -42,7 +44,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // 3. Service & Sub-Service Routes
   const serviceRoutes: MetadataRoute.Sitemap = Object.values(SERVICES_DATA).flatMap((service) => {
     const srvBase = {
-      url: `${baseUrl}${service.href}`, // service.href comes mapped
+      url: `${baseUrl}${service.href}`,
       lastModified: new Date(),
       changeFrequency: 'monthly' as const,
       priority: 0.9,
@@ -58,50 +60,41 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     return [srvBase, ...srvSub];
   });
 
-  // 4. Dynamic Blog & Taxonomies from Prisma
-  let postRoutes: MetadataRoute.Sitemap = [];
-  let categoryRoutes: MetadataRoute.Sitemap = [];
-  let tagRoutes: MetadataRoute.Sitemap = [];
+  // 4. Dynamic Blog & Portfolio Routes from static data
+  const postRoutes: MetadataRoute.Sitemap = SAMPLE_BLOG_POSTS.map((post) => ({
+    url: `${baseUrl}/blog/${post.slug}`,
+    lastModified: new Date(post.createdAt),
+    changeFrequency: 'weekly',
+    priority: 0.8,
+  }));
 
-  try {
-    const [posts, categories, tags] = await Promise.all([
-      prisma.post.findMany({ 
-        where: { status: 'Published' }, 
-        select: { slug: true, updatedAt: true } 
-      }),
-      prisma.category.findMany({ select: { slug: true } }),
-      prisma.tag.findMany({ select: { slug: true } })
-    ]);
+  const portfolioRoutes: MetadataRoute.Sitemap = SAMPLE_PORTFOLIO_PROJECTS.map((proj) => ({
+    url: `${baseUrl}/portfolio/${proj.slug}`,
+    lastModified: new Date(proj.createdAt),
+    changeFrequency: 'monthly',
+    priority: 0.8,
+  }));
 
-    postRoutes = posts.map((post: { slug: string, updatedAt: Date }) => ({
-      url: `${baseUrl}/blog/${post.slug}`,
-      lastModified: post.updatedAt,
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    }));
+  const categoryRoutes: MetadataRoute.Sitemap = SAMPLE_CATEGORIES.map((cat) => ({
+    url: `${baseUrl}/category/${cat.slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly',
+    priority: 0.6,
+  }));
 
-    categoryRoutes = categories.map((cat: { slug: string }) => ({
-      url: `${baseUrl}/category/${cat.slug}`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.6,
-    }));
-
-    tagRoutes = tags.map((tag: { slug: string }) => ({
-      url: `${baseUrl}/tag/${tag.slug}`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.5,
-    }));
-  } catch (error) {
-    console.warn("Failed to generate dynamic Prisma sitemap nodes:", error);
-  }
+  const tagRoutes: MetadataRoute.Sitemap = SAMPLE_TAGS.map((tag) => ({
+    url: `${baseUrl}/tag/${tag.slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly',
+    priority: 0.5,
+  }));
 
   return [
     ...staticRoutes,
     ...locationRoutes,
     ...serviceRoutes,
     ...postRoutes,
+    ...portfolioRoutes,
     ...categoryRoutes,
     ...tagRoutes,
   ];

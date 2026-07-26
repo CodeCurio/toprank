@@ -1,22 +1,17 @@
 import { Metadata } from "next";
-import { prisma } from "@/lib/prisma";
+import { SAMPLE_PORTFOLIO_PROJECTS } from "@/data/portfolioData";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, ExternalLink, Calendar, User, Tag, Trophy } from "lucide-react";
 import { ContactSection } from "@/components/sections/ContactSection";
 
-export const dynamic = "force-dynamic";
+export async function generateStaticParams() {
+  return SAMPLE_PORTFOLIO_PROJECTS.map((proj) => ({ slug: proj.slug }));
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  let project: any = null;
-  try {
-    project = await prisma.portfolioProject.findUnique({
-      where: { slug, status: "Published" }
-    });
-  } catch (error) {
-    console.error("Runtime database error in generateMetadata:", error);
-  }
+  const project = SAMPLE_PORTFOLIO_PROJECTS.find((p) => p.slug === slug);
 
   if (!project) return { title: "Project Not Found" };
 
@@ -34,14 +29,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function PortfolioCaseStudyPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  let project: any = null;
-  try {
-    project = await prisma.portfolioProject.findUnique({
-      where: { slug, status: "Published" }
-    });
-  } catch (error) {
-    console.error("Runtime database error in PortfolioCaseStudyPage:", error);
-  }
+  const project = SAMPLE_PORTFOLIO_PROJECTS.find((p) => p.slug === slug);
 
   if (!project) {
     notFound();

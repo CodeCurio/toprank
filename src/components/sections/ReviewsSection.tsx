@@ -2,8 +2,7 @@
 
 import { useRef, useState, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
-import { Star, Quote, CheckCircle2, ArrowRight } from "lucide-react";
-import Link from "next/link";
+import { Star, Quote, CheckCircle2, ArrowRight, Sparkles, MessageSquareQuote } from "lucide-react";
 import Image from "next/image";
 
 // Authentic Google G Logo SVG
@@ -29,12 +28,25 @@ const getReviews = (location?: string) => {
 
   return [
     {
+      name: "Sanjay Dubey",
+      role: "Franchise Owner, Agilus Diagnostics",
+      image: "https://i.pravatar.cc/150?u=8",
+      isInitial: false,
+      platform: "Google",
+      rating: 5,
+      badge: "DIAGNOSTICS HERO",
+      title: "Ab daily kuch na kuch appointment aa hi jata hai.",
+      content: "Pehle kaafi slow tha, kabhi enquiry aayi kabhi nahi. TopRank ne landing page aur GMB pe kaam kiya. Ab daily calls aate hain for home collection. System set ho gaya basically.",
+      attachedImage: "/reviews/media__1774074432121.png",
+    },
+    {
       name: "Anil Singh",
       role: "Founder, Maa Jagrani Infra",
       image: "https://i.pravatar.cc/150?u=a042581f4e29026704d",
       isInitial: false,
       platform: "Google",
       rating: 5,
+      badge: "REAL ESTATE",
       title: "Pehle Google se koi kaam hi nahi aa raha tha…",
       content: isLucknow 
         ? "Sach bolu to hume lagta tha SEO bas naam ka hota hai. Website bani hui thi but enquiries almost zero thi. TopRank is genuinely the best digital marketing agency in Lucknow. Ab har week Lucknow local area se kuch na kuch genuine enquiry aa hi jati hai."
@@ -48,6 +60,7 @@ const getReviews = (location?: string) => {
       isInitial: false,
       platform: "Trustpilot",
       rating: 5,
+      badge: "E-COMMERCE",
       title: "Not crazy growth… but finally stable.",
       content: isLucknow 
         ? "Earlier, sales were very up and down in the Lucknow region. Some days good, some days nothing. TopRank's local SEO strategies stabilized our lead flow. They truly understand the UP market."
@@ -56,26 +69,16 @@ const getReviews = (location?: string) => {
     },
     {
       name: "Sachin Kumar",
-      role: "Director, Atulaya Healthcare",
+      role: "Franchise Owner, Atulaya Healthcare",
       image: "S",
       isInitial: true,
       initialBg: "bg-purple-600",
       platform: "Google",
       rating: 5,
+      badge: "HEALTHCARE",
       title: "We just wanted more calls. That’s it.",
       content: "Didn’t care about traffic or fancy reports. We just needed our phone to ring more. After working with TopRank, calls have definitely increased. Not overnight, but steadily — which is what matters.",
       attachedImage: "/reviews/media__1774074432021.png",
-    },
-    {
-      name: "Sanjay Dubey",
-      role: "Co-founder, Agilus Diagnostics",
-      image: "https://i.pravatar.cc/150?u=8",
-      isInitial: false,
-      platform: "Google",
-      rating: 5,
-      title: "Ab daily kuch na kuch appointment aa hi jata hai.",
-      content: "Pehle kaafi slow tha, kabhi enquiry aayi kabhi nahi. TopRank ne landing page aur GMB pe kaam kiya. Ab daily calls aate hain for home collection. System set ho gaya basically.",
-      attachedImage: "/reviews/media__1774074432121.png",
     },
     {
       name: "Vikram Singh",
@@ -85,6 +88,7 @@ const getReviews = (location?: string) => {
       initialBg: "bg-orange-500",
       platform: "Google",
       rating: 5,
+      badge: "D2C BRAND",
       title: "Website acchi lag rahi thi, par convert nahi kar rahi thi.",
       content: "Design theek tha but log aake ja rahe the, enquiry nahi aa rahi thi. TopRank ne redesign + flow improve kiya. Ab log form fill karte hain, WhatsApp pe bhi ping aata hai. Clear difference hai.",
       attachedImage: "/reviews/media__1774074432183.png",
@@ -96,6 +100,7 @@ const getReviews = (location?: string) => {
       isInitial: false,
       platform: "Google",
       rating: 5,
+      badge: "SAAS / TECH",
       title: "Traffic pehle bhi tha, par kaam ka nahi tha.",
       content: "TopRank changed the targeting and SEO strategy. Now fewer visitors maybe, but better ones. Conversions improved. That’s what we needed.",
       attachedImage: "/reviews/analytics.png",
@@ -103,160 +108,150 @@ const getReviews = (location?: string) => {
   ];
 };
 
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.1 },
-  },
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as const } },
-};
-
 export function ReviewsSection({ location }: { location?: string }) {
   const reviews = getReviews(location);
   const sectionRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.1 });
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => { setMounted(true); }, []);
 
   return (
     <section
       ref={sectionRef}
-      className="relative bg-slate-50 py-24 md:py-36 overflow-hidden"
+      className="relative bg-slate-50 py-16 md:py-24 overflow-hidden"
+      id="reviews"
     >
-      {/* Background Soft Texture (Dots) */}
-      <div className="absolute inset-0 bg-[radial-gradient(#94a3b8_1px,transparent_1px)] [background-size:24px_24px] opacity-20" />
+      {/* Background Soft Texture */}
+      <div className="absolute inset-0 bg-[radial-gradient(#0f172a08_1px,transparent_1px)] [background-size:32px_32px] pointer-events-none" />
 
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
 
         {/* Section Header */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-10 mb-16 lg:mb-24">
-          {/* Header Text */}
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-12 lg:mb-16">
           <motion.div
-            initial={false}
-            animate={mounted && isInView ? { opacity: 1, x: 0 } : { opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
+            initial={{ opacity: 0, y: 15 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5 }}
             className="max-w-3xl"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white border border-slate-200 rounded-full text-blue-600 text-[11px] font-bold uppercase tracking-[0.2em] mb-6 shadow-sm">
-              <Star className="w-3.5 h-3.5 fill-blue-600" /> Rated 4.9/5
+            <div className="inline-flex items-center gap-2 px-5 py-2 bg-white border border-slate-200 rounded-full text-slate-800 text-[11px] font-black uppercase tracking-[0.3em] mb-4 shadow-sm">
+              <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
+              Rated 4.9/5 By Business Owners
             </div>
 
-            <h2 className="text-4xl md:text-5xl lg:text-[4rem] font-black text-slate-900 tracking-tight leading-[1.1] mb-6">
-              Don’t Just Take Our <br className="hidden md:block" />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-pink-500">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 tracking-tight leading-[1.1] mb-4">
+              Don’t Just Take Our{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-pink-500 to-blue-600">
                 Word For It.
               </span>
             </h2>
 
-            <p className="text-slate-600 text-lg md:text-xl font-medium leading-relaxed max-w-2xl">
-              We've helped over 100+ businesses {location ? `in ${location} and beyond ` : ""}scale their revenue predictability. Here's what real founders and marketing heads have to say.
+            <p className="text-base sm:text-lg text-slate-600 font-medium leading-relaxed max-w-2xl">
+              We've helped over 100+ businesses {location ? `in ${location} and beyond ` : ""}scale their leads and revenue predictability. Here is what verified founders have to say.
             </p>
           </motion.div>
 
-          {/* Global Trust Badges */}
+          {/* Global Trust Cards */}
           <motion.div
-            initial={false}
-            animate={mounted && isInView ? { opacity: 1, x: 0 } : { opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
-            className="flex flex-col sm:flex-row gap-6 shrink-0"
+            initial={{ opacity: 0, y: 15 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="flex flex-wrap items-center gap-4 shrink-0"
           >
-            {/* Google Trust Card */}
-            <div className="flex items-center gap-4 bg-white border border-slate-200 rounded-2xl p-5 shadow-[0_8px_30px_rgb(0,0,0,0.06)]">
+            <div className="flex items-center gap-4 bg-white border border-slate-200/90 rounded-2xl p-4 sm:p-5 shadow-sm">
               <GoogleLogo />
               <div>
                 <div className="flex items-center gap-1.5 mb-1">
-                  <span className="text-slate-900 font-bold text-xl leading-none">4.9</span>
+                  <span className="text-slate-900 font-black text-lg leading-none">4.9</span>
                   <div className="flex gap-0.5">
-                    {[1, 2, 3, 4, 5].map(i => <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />)}
+                    {[1, 2, 3, 4, 5].map(i => <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />)}
                   </div>
                 </div>
-                <div className="text-slate-500 text-xs font-semibold">Over 100+ Verified Reviews</div>
+                <div className="text-slate-500 text-[11px] font-bold">100+ Google Reviews</div>
               </div>
             </div>
 
-            {/* Trustpilot Trust Card */}
-            <div className="flex items-center gap-4 bg-white border border-slate-200 rounded-2xl p-5 shadow-[0_8px_30px_rgb(0,0,0,0.06)]">
+            <div className="flex items-center gap-4 bg-white border border-slate-200/90 rounded-2xl p-4 sm:p-5 shadow-sm">
               <TrustpilotLogo />
               <div>
                 <div className="flex items-center gap-1.5 mb-1">
-                  <span className="text-slate-900 font-bold text-xl leading-none">5.0</span>
+                  <span className="text-slate-900 font-black text-lg leading-none">5.0</span>
                   <div className="flex gap-0.5">
-                    {[1, 2, 3, 4, 5].map(i => <Star key={i} className="w-4 h-4 fill-[#00B67A] text-[#00B67A]" />)}
+                    {[1, 2, 3, 4, 5].map(i => <Star key={i} className="w-3.5 h-3.5 fill-[#00B67A] text-[#00B67A]" />)}
                   </div>
                 </div>
-                <div className="text-slate-500 text-xs font-semibold">Excellent Rating</div>
+                <div className="text-slate-500 text-[11px] font-bold">Trustpilot Excellent</div>
               </div>
             </div>
           </motion.div>
         </div>
 
-        {/* Reviews Masonry / Columns Layout */}
-        <motion.div
-          variants={containerVariants}
-          initial={false}
-          animate={mounted && isInView ? "visible" : "visible"}
-          className="columns-1 md:columns-2 lg:columns-3 gap-6 lg:gap-8 space-y-6 lg:space-y-8"
-        >
+        {/* Reviews Cards Masonry */}
+        <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
           {reviews.map((review, i) => (
             <motion.div
               key={i}
-              variants={cardVariants}
-              className="break-inside-avoid bg-white border border-slate-200 rounded-[2rem] p-6 md:p-8 flex flex-col shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.12)] hover:border-blue-200 hover:-translate-y-1 transition-all duration-300 relative group"
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: i * 0.08 }}
+              className="break-inside-avoid bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-7 flex flex-col shadow-sm hover:shadow-xl hover:border-blue-300 transition-all duration-300 hover:-translate-y-1 relative group overflow-hidden"
             >
-              {/* Visual Quote mark */}
-              <Quote className="absolute top-6 right-6 w-10 h-10 text-slate-100 group-hover:text-blue-50 transition-colors duration-500 -z-0" />
+              {/* Top Accent Gradient Bar */}
+              <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-orange-500 via-pink-500 to-blue-600 opacity-90 group-hover:h-2 transition-all" />
+
+              <Quote className="absolute top-6 right-6 w-10 h-10 text-slate-100 group-hover:text-blue-50 transition-colors pointer-events-none z-0" />
 
               <div className="relative z-10">
-                {/* Rating Line */}
-                <div className="flex items-center gap-1 mb-4">
-                  {[...Array(review.rating)].map((_, index) => (
-                    <Star key={index} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-                  ))}
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-1">
+                    {[...Array(review.rating)].map((_, index) => (
+                      <Star key={index} className="w-4 h-4 fill-amber-400 text-amber-400" />
+                    ))}
+                  </div>
+                  {review.badge && (
+                    <span className="px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-wider bg-slate-100 text-slate-700 border border-slate-200">
+                      {review.badge}
+                    </span>
+                  )}
                 </div>
 
-                {/* Review Text */}
-                <h4 className="text-slate-900 font-bold text-lg lg:text-xl mb-3 leading-snug tracking-tight">"{review.title}"</h4>
-                <p className="text-slate-600 leading-relaxed font-medium text-[14px] lg:text-[15px]">
+                <h4 className="text-slate-900 font-black text-lg sm:text-xl mb-3 leading-snug tracking-tight group-hover:text-blue-600 transition-colors">
+                  "{review.title}"
+                </h4>
+                
+                <p className="text-slate-600 leading-relaxed font-medium text-sm">
                   {review.content}
                 </p>
 
-                {/* Attached Image Evidence (User Uploaded Look) */}
                 {review.attachedImage && (
-                  <div className="mt-6 mb-2 rounded-2xl overflow-hidden border-4 border-slate-50 shadow-md relative group/attachment cursor-pointer bg-slate-100 transition-transform duration-500 hover:scale-105">
+                  <div className="mt-5 mb-2 rounded-2xl overflow-hidden border-2 border-slate-100 shadow-sm relative group/attachment bg-slate-100 transition-transform duration-300 hover:scale-[1.02]">
                     <Image
                       src={review.attachedImage}
-                      alt={`Evidence attachment for ${review.title}`}
+                      alt={`Verification proof for ${review.title}`}
                       width={400} height={200}
-                      className="w-full h-auto object-cover max-h-[160px] md:max-h-[220px]"
+                      className="w-full h-auto object-cover max-h-[180px]"
                     />
                   </div>
                 )}
               </div>
 
-              {/* Author Info */}
-              <div className="flex items-center justify-between border-t border-slate-100 pt-7 mt-8 relative z-10">
-                <div className="flex items-center gap-4">
-                  {/* Avatar */}
+              {/* Author Footer */}
+              <div className="flex items-center justify-between border-t border-slate-100 pt-5 mt-6 relative z-10">
+                <div className="flex items-center gap-3">
                   {review.isInitial ? (
-                    <div className={`w-14 h-14 rounded-full ${review.initialBg} flex items-center justify-center text-white font-black text-xl shadow-sm border-[3px] border-white relative`}>
+                    <div className={`w-12 h-12 rounded-full ${review.initialBg} flex items-center justify-center text-white font-black text-lg shadow-sm border-2 border-white relative`}>
                       {review.image}
-                      <div className="absolute -bottom-1 -right-1 bg-white rounded-full p-1 shadow-sm">
-                        {review.platform === "Google" ? <span className="w-4 h-4 rounded-full flex items-center justify-center bg-white"><GoogleLogo /></span> : <span className="w-4 h-4 rounded-full flex items-center justify-center bg-[#00B67A]"><TrustpilotLogo /></span>}
+                      <div className="absolute -bottom-1 -right-1 bg-white rounded-full p-0.5 shadow-sm">
+                        {review.platform === "Google" ? <GoogleLogo /> : <TrustpilotLogo />}
                       </div>
                     </div>
                   ) : (
-                    <div className="w-14 h-14 rounded-full relative shadow-sm border-[3px] border-white">
+                    <div className="w-12 h-12 rounded-full relative shadow-sm border-2 border-white shrink-0">
                       <Image
                         src={review.image}
                         alt={review.name}
-                        width={56} height={56}
+                        width={48} height={48}
                         className="w-full h-full rounded-full object-cover"
                       />
-                      <div className="absolute -bottom-1 -right-1 bg-white rounded-full p-1 shadow-sm flex items-center justify-center">
+                      <div className="absolute -bottom-1 -right-1 bg-white rounded-full p-0.5 shadow-sm">
                         {review.platform === "Google" ? <GoogleLogo /> : <TrustpilotLogo />}
                       </div>
                     </div>
@@ -264,40 +259,30 @@ export function ReviewsSection({ location }: { location?: string }) {
 
                   <div>
                     <div className="flex items-center gap-1.5">
-                      <h5 className="font-bold text-slate-900 text-base">{review.name}</h5>
-                      <CheckCircle2 className="w-4 h-4 text-blue-500 fill-blue-50" />
+                      <h5 className="font-black text-slate-900 text-sm sm:text-base">{review.name}</h5>
+                      <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0" />
                     </div>
-                    <div className="text-slate-500 font-semibold text-[11px] uppercase tracking-wider">{review.role}</div>
+                    <div className="text-slate-500 font-bold text-[11px] uppercase tracking-wider">{review.role}</div>
                   </div>
                 </div>
               </div>
 
             </motion.div>
           ))}
-        </motion.div>
+        </div>
 
-        {/* Section Footer / Verification Link */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          className="text-center mt-20 md:mt-24 mb-16"
-        >
-          <a href="https://maps.app.goo.gl/TopRank" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 px-10 py-5 bg-white border-2 border-slate-200 hover:border-blue-600 hover:text-blue-600 text-slate-900 rounded-2xl text-[11px] font-black uppercase tracking-widest transition-all shadow-xl shadow-slate-200/10 active:scale-95 group">
-             Read All Reviews (100+) <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+        {/* Verification Link */}
+        <div className="text-center mt-12 md:mt-16">
+          <a
+            href="https://www.google.com/search?q=toprank+digital+service&rlz=1C5GCEM_enIN1196IN1196&oq=toprank+digital+service&gs_lcrp=EgZjaHJvbWUyBggAEEUYOTIKCAEQABgKGBYYHjIKCAIQABgKGBYYHjIKCAMQABgKGBYYHjINCAQQABiGAxiABBiKBTINCAUQABiGAxiABBiKBTIHCAYQABjvBTIGCAcQRRg90gEINTUxN2owajeoAgCwAgA&sourceid=chrome&source=chrome.ob&ie=UTF-8#"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-white border border-slate-200 hover:border-blue-600 hover:text-blue-600 text-slate-900 rounded-xl text-xs font-black uppercase tracking-widest transition-all shadow-md active:scale-95 group"
+          >
+            <span>Read 100+ Verified Google Reviews</span>
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </a>
-        </motion.div>
-
-        <motion.div
-          initial={false}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-8"
-        >
-          <p className="text-slate-500 font-semibold text-lg">
-            100% verified customer reviews tracking tangible results. Read more on our <a href="https://maps.app.goo.gl/TopRank" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-700 font-black underline underline-offset-4 decoration-blue-200">Google Business Profile</a>.
-          </p>
-        </motion.div>
+        </div>
 
       </div>
     </section>

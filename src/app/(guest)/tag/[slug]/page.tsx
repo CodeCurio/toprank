@@ -1,12 +1,16 @@
-import { prisma } from "@/lib/prisma";
+import { SAMPLE_BLOG_POSTS, SAMPLE_TAGS } from "@/data/blogData";
 import Link from "next/link";
 import { Metadata } from "next";
 import { ArrowRight, Calendar, Hash } from "lucide-react";
 import { notFound } from "next/navigation";
 
+export async function generateStaticParams() {
+  return SAMPLE_TAGS.map((tag) => ({ slug: tag.slug }));
+}
+
 export async function generateMetadata(props: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await props.params;
-  const tag = await prisma.tag.findUnique({ where: { slug } });
+  const tag = SAMPLE_TAGS.find((t) => t.slug === slug);
   if (!tag) return { title: "Tag Not Found" };
   return {
     title: `${tag.name} Archives`,
@@ -16,8 +20,6 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
     },
   };
 }
-
-export const revalidate = 60;
 
 export default async function TagArchivePage(props: {
   params: Promise<{ slug: string }>;
@@ -29,27 +31,14 @@ export default async function TagArchivePage(props: {
   const limit = 9;
   const skip = (page - 1) * limit;
 
-  const tag = await prisma.tag.findUnique({ where: { slug } });
+  const tag = SAMPLE_TAGS.find((t) => t.slug === slug);
   if (!tag) notFound();
 
-  const [posts, totalPosts] = await Promise.all([
-    prisma.post.findMany({
-      where: { 
-        status: "Published",
-        tags: { some: { id: tag.id } }
-      },
-      orderBy: { createdAt: "desc" },
-      include: { categories: true },
-      skip,
-      take: limit,
-    }),
-    prisma.post.count({ 
-      where: { 
-        status: "Published",
-        tags: { some: { id: tag.id } }
-      } 
-    }),
-  ]);
+  const matchingPosts = SAMPLE_BLOG_POSTS.filter((post) =>
+    post.tags.some((t) => t.id === tag.id)
+  );
+  const posts = matchingPosts.slice(skip, skip + limit);
+  const totalPosts = matchingPosts.length;
 
   const totalPages = Math.max(1, Math.ceil(totalPosts / limit));
 
@@ -103,7 +92,7 @@ export default async function TagArchivePage(props: {
 
                   <div className="p-6 sm:p-8 flex-1 flex flex-col relative">
                     <div className="flex items-center gap-4 text-xs font-bold uppercase tracking-widest mb-4">
-                       <time className="text-slate-400 flex items-center gap-1.5" dateTime={post.createdAt.toISOString()}>
+                       <time className="text-slate-400 flex items-center gap-1.5" dateTime={new Date(post.createdAt).toISOString()}>
                          <Calendar className="w-3.5 h-3.5" />
                          {new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric" }).format(new Date(post.createdAt))}
                        </time>

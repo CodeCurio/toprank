@@ -3,9 +3,8 @@
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { ChevronRight, ChevronDown, X } from "lucide-react";
+import { ChevronDown, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
 import { SERVICES_DATA } from "@/lib/services-data";
 
 const MAIN_LINKS = [
@@ -16,31 +15,7 @@ const MAIN_LINKS = [
 const SECONDARY_LINKS = [
   { name: "Portfolio", href: "/portfolio" },
   { name: "Blog", href: "/blog" },
-  { name: "Reviews", href: "https://maps.app.goo.gl/TopRank" },
   { name: "Contact Us", href: "/contact" },
-];
-
-const LOCATIONS = [
-  { 
-    name: "Lucknow (HQ)", 
-    address: "A47/32, Sector 01, Gomti Nagar", 
-    href: "/lucknow" 
-  },
-  { 
-    name: "Chandigarh", 
-    address: "Shop No. 8, Sector 34B", 
-    href: "/chandigarh" 
-  },
-  { 
-    name: "Mohali", 
-    address: "Shop no 12, Sector 69", 
-    href: "/mohali" 
-  },
-  { 
-    name: "Gonda", 
-    address: "Ambedkar Chauraha, Housing Colony", 
-    href: "/gonda" 
-  }
 ];
 
 interface MobileMenuProps {
@@ -172,63 +147,16 @@ export function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
                   </AnimatePresence>
                 </div>
 
-                {/* Locations Accordion */}
-                <div className="rounded-2xl overflow-hidden">
-                  <button
-                    onClick={() => toggleSection("locations")}
-                    className={`w-full flex items-center justify-between py-3 px-4 text-xl font-bold transition-colors ${
-                      expandedSection === "locations" ? "text-blue-600 bg-blue-50/50" : "text-slate-700 hover:bg-slate-50"
-                    }`}
+                {SECONDARY_LINKS.map((link) => (
+                  <Link
+                    key={link.name}
+                    href={link.href}
+                    onClick={closeMenu}
+                    className="py-3 px-4 text-xl font-bold text-slate-700 hover:text-blue-600 hover:bg-slate-50 rounded-2xl transition-colors"
                   >
-                    Serving Locations
-                    <ChevronDown className={`h-5 w-5 transition-transform duration-300 ${expandedSection === "locations" ? "rotate-180" : ""}`} />
-                  </button>
-                  <AnimatePresence>
-                    {expandedSection === "locations" && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        className="overflow-hidden bg-slate-50/50"
-                      >
-                        <div className="p-4 space-y-2">
-                          {LOCATIONS.map((loc) => (
-                            <Link 
-                              key={loc.name} 
-                              href={loc.href} 
-                              onClick={closeMenu} 
-                              className="block p-3 bg-white rounded-xl shadow-sm border border-slate-100 hover:border-blue-200 hover:shadow-md transition-all"
-                            >
-                              <div className="font-bold text-slate-900 flex items-center justify-between">
-                                {loc.name}
-                                <ChevronRight className="w-4 h-4 text-slate-300" />
-                              </div>
-                              <div className="text-sm font-medium text-slate-500 mt-0.5">{loc.address}</div>
-                            </Link>
-                          ))}
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-
-                {SECONDARY_LINKS.map((link) => {
-                  const isExternal = link.href.startsWith("http");
-                  const LinkComponent = isExternal ? "a" : Link;
-                  const extraProps = isExternal 
-                    ? { target: "_blank", rel: "noopener noreferrer" } 
-                    : { onClick: closeMenu };
-                  return (
-                    <LinkComponent
-                      key={link.name}
-                      href={link.href}
-                      className="py-3 px-4 text-xl font-bold text-slate-700 hover:text-blue-600 hover:bg-slate-50 rounded-2xl transition-colors"
-                      {...extraProps}
-                    >
-                      {link.name}
-                    </LinkComponent>
-                  );
-                })}
+                    {link.name}
+                  </Link>
+                ))}
               </div>
             </div>
 

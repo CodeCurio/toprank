@@ -1,12 +1,16 @@
-import { prisma } from "@/lib/prisma";
+import { SAMPLE_BLOG_POSTS, SAMPLE_CATEGORIES } from "@/data/blogData";
 import Link from "next/link";
 import { Metadata } from "next";
 import { ArrowRight, Calendar, Tag } from "lucide-react";
 import { notFound } from "next/navigation";
 
+export async function generateStaticParams() {
+  return SAMPLE_CATEGORIES.map((cat) => ({ slug: cat.slug }));
+}
+
 export async function generateMetadata(props: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await props.params;
-  const category = await prisma.category.findUnique({ where: { slug } });
+  const category = SAMPLE_CATEGORIES.find((c) => c.slug === slug);
   if (!category) return { title: "Category Not Found" };
   return {
     title: `${category.name} Archives`,
@@ -16,8 +20,6 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
     },
   };
 }
-
-export const revalidate = 60;
 
 export default async function CategoryArchivePage(props: {
   params: Promise<{ slug: string }>;
@@ -29,27 +31,14 @@ export default async function CategoryArchivePage(props: {
   const limit = 9;
   const skip = (page - 1) * limit;
 
-  const category = await prisma.category.findUnique({ where: { slug } });
+  const category = SAMPLE_CATEGORIES.find((c) => c.slug === slug);
   if (!category) notFound();
 
-  const [posts, totalPosts] = await Promise.all([
-    prisma.post.findMany({
-      where: { 
-        status: "Published",
-        categories: { some: { id: category.id } }
-      },
-      orderBy: { createdAt: "desc" },
-      include: { categories: true },
-      skip,
-      take: limit,
-    }),
-    prisma.post.count({ 
-      where: { 
-        status: "Published",
-        categories: { some: { id: category.id } }
-      } 
-    }),
-  ]);
+  const matchingPosts = SAMPLE_BLOG_POSTS.filter((post) =>
+    post.categories.some((c) => c.id === category.id)
+  );
+  const posts = matchingPosts.slice(skip, skip + limit);
+  const totalPosts = matchingPosts.length;
 
   const totalPages = Math.max(1, Math.ceil(totalPosts / limit));
 
@@ -103,7 +92,7 @@ export default async function CategoryArchivePage(props: {
 
                   <div className="p-6 sm:p-8 flex-1 flex flex-col relative">
                     <div className="flex items-center gap-4 text-xs font-bold uppercase tracking-widest mb-4">
-                       <time className="text-slate-400 flex items-center gap-1.5" dateTime={post.createdAt.toISOString()}>
+                       <time className="text-slate-400 flex items-center gap-1.5" dateTime={new Date(post.createdAt).toISOString()}>
                          <Calendar className="w-3.5 h-3.5" />
                          {new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric" }).format(new Date(post.createdAt))}
                        </time>

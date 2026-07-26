@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import { motion, AnimatePresence, useInView } from "framer-motion";
-import { Plus, Minus, ThumbsUp, ThumbsDown, ArrowRight, TrendingUp, CheckCircle2, Star } from "lucide-react";
+import { Plus, Minus, ThumbsUp, ThumbsDown, ArrowRight, TrendingUp, CheckCircle2, Star, HelpCircle, ShieldCheck, Clock, PhoneCall, Building2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -12,85 +12,67 @@ const getFaqs = (location?: string) => {
   return [
     {
       id: 1,
-      q: isLucknow ? "Why is TopRank the best digital marketing agency in Lucknow?" : "What digital marketing services does TopRank Digital Service offer?",
-      a: isLucknow ? "As the leading digital marketing agency in Lucknow, we provide complete growth solutions including website development, local SEO, Google Business Profile optimization, and social media marketing. We help Lucknow businesses dominate their local market." : "We provide complete digital growth solutions including website development, SEO, Google Business Profile (local SEO), and social media marketing. Each service is designed to work together — so your business not only gets visibility but also consistent leads.",
-      microProof: "Companies using our integrated approach see up to 3x more qualified leads.",
-      related: 9,
-    },
-    {
-      id: 2,
-      q: isLucknow ? "How does local SEO help my business in Lucknow grow?" : "How does SEO help my local business grow?",
-      a: isLucknow ? "Local SEO ensures your business appears at the top when customers in Lucknow search for your services. We optimize your website and Google Maps presence so you capture high-intent local traffic and convert them into actual sales." : "SEO helps your business appear when customers search for your services on Google. With the right strategy, you can rank higher in your area, attract high-intent visitors, and convert them into enquiries or calls.",
-      microProof: "Example: A local business improved from page 3 to top 3 results in 60 days.",
-      related: 4,
-    },
-    {
-      id: 3,
-      q: "What is Google Business Profile (GMB) optimization and why is it important?",
-      a: "Google Business Profile optimization improves your visibility in local search results and Google Maps. It helps your business show up for “near me” searches, increases calls, and builds trust with reviews and accurate information.",
-      microProof: "GMB optimization is directly responsible for 80% of local 'Near Me' map conversions.",
-      related: 7,
-    },
-    {
-      id: 4,
-      q: "How long does it take to see results from SEO?",
-      a: "SEO is a long-term strategy. Most businesses start seeing noticeable improvements in 6–12 weeks, with stronger and more stable results over time as rankings improve and competition is outranked.",
-      microProof: "Our clients often see a 40% drop in cost-per-acquisition by Month 6.",
+      q: "Kitne din me mere paas actual phone calls aur enquiries aana shuru hongi?",
+      a: "Instant leads ke liye hum Day 1 se high-intent Google Search & Paid Ads setup karte hain jisse pehle 48-72 ghante me phone calls aana shuru ho jati hain. Meanwhile, Local SEO aur Google Maps (GMB 3-Pack) ranking 30 se 60 din me permanent organic lead flow build kar deti hai.",
+      microProof: "Paid Ads = Instant leads in 48 hrs | Local SEO = Long-term #1 Google Maps ranking.",
+      badge: "TIMELINE & SPEED",
+      icon: Clock,
       related: 2,
     },
     {
-      id: 5,
-      q: "Do I need a website if I already have social media pages?",
-      a: "Yes. Social media builds awareness, but a website gives you full control, credibility, and a conversion-focused platform where visitors can learn, trust, and take action.",
-      microProof: "84% of consumers believe a business with a website is more credible.",
-      related: 1,
-    },
-    {
-      id: 6,
-      q: "How is TopRank different from other digital marketing agencies?",
-      a: "We focus on outcomes, not just activity. Instead of chasing likes or traffic, we build systems that generate real enquiries, calls, and business growth using SEO, GMB, and conversion-focused design.",
-      microProof: "We track 'Revenue' and 'Leads', not just 'Impressions'.",
-      related: 10,
-    },
-    {
-      id: 7,
-      q: "Can you help my business rank in a specific city like Lucknow or Chandigarh?",
-      a: "Yes. We specialize in local SEO strategies that target specific cities and areas, helping your business rank for location-based searches and attract nearby customers.",
-      microProof: "We’ve successfully dominated competitive local keywords across Lucknow & Chandigarh.",
+      id: 2,
+      q: "Mera business pehle se online hai (website/GMB) par leads zero hain — aap kya change karoge?",
+      a: "90% local websites design me achhi hoti hain par conversion architecture zero hota hai. Hum sabse pehle aapka lead funnel audit karte hain: page load speed (sub-second Next.js), WhatsApp 1-click booking bot, local GMB keyword citations, aur high-intent call buttons lagate hain jisse aane wala har visitor client bane.",
+      microProof: "Conversion audit ke baad humare active clients ka lead conversion rate 3x badha hai.",
+      badge: "AUDIT & FIX",
+      icon: ShieldCheck,
       related: 3,
     },
     {
-      id: 8,
-      q: "Is social media marketing really effective for lead generation?",
-      a: "Yes, when done strategically. We create content and campaigns that not only engage users but also drive enquiries, build trust, and support your overall digital growth system.",
-      microProof: "Strategic social targeting can reduce lead cost by up to 30%.",
-      related: 1,
+      id: 3,
+      q: "Kya TopRank Diagnostics Centers, Pathology Labs & Medical Clinics ke liye special strategy chalta hai?",
+      a: "Haan! Diagnostics & Healthcare humari primary core domain hai. Hum Pathlabs aur Diagnostic Centers ke liye specialized 'Home Collection Booking Funnels', Local Pathology GMB SEO, aur Doctor/Patient Trust Systems engineer karte hain jisse daily lab test inquiries milti hain.",
+      microProof: "Agilus & Atulaya Healthcare franchises ke liye 180+ monthly lab test leads generated.",
+      badge: "HEALTHCARE SPECIALTY",
+      icon: TrendingUp,
+      related: 4,
     },
     {
-      id: 9,
-      q: "Do you offer customized digital marketing plans?",
-      a: "Absolutely. Every business is different, so we create custom strategies based on your goals, competition, and market — not one-size-fits-all packages.",
-      microProof: "Tailored strategies historically deliver 50% better ROI than generic packages.",
+      id: 4,
+      q: "Kya hum TopRank ki team se Lucknow, Chandigarh ya Mohali office me face-to-face mil sakte hain?",
+      a: "Bilkul! Humara Main Headquarter Lucknow (Hazratganj/Gomti Nagar) me hai, aur Regional Offices Chandigarh & Mohali me hain. Aap directly office aakar humare SEO engineers aur performance marketers se milkar apni business growth strategy discuss kar sakte hain.",
+      microProof: "Physical offices in Lucknow (HQ), Chandigarh & Mohali for direct face-to-face meetings.",
+      badge: "OFFICE MEETINGS",
+      icon: Building2,
+      related: 5,
+    },
+    {
+      id: 5,
+      q: "Hum non-technical hain — hume kaise pata chalega ki mera marketing budget sahi jagah lag raha hai?",
+      a: "Hum aapko complex reports ke bajaye aasan Live WhatsApp & Dashboard updates dete hain. Aapko daily dikhta hai ki kitne logon ne call kiya, kitne WhatsApp messages aaye, aur kitna budget spend hua. Sab kuch 100% transparent hota hai.",
+      microProof: "Zero technical jargon. Pure daily calls, WhatsApp inquiries & ROAS tracking.",
+      badge: "TRANSPARENCY",
+      icon: PhoneCall,
       related: 6,
     },
     {
-      id: 10,
-      q: "How do I get started with TopRank Digital Service?",
-      a: "You can start with a free growth audit, where we analyze your current online presence and show you exactly what needs to be improved to generate more leads.",
-      microProof: "Our free audits have uncovered thousands in missed revenue for prospects.",
-      related: 9,
-    }
+      id: 6,
+      q: "Kya koi long-term lock-in contract hota hai ya hum month-to-month chal sakte hain?",
+      a: "Hum kisi business owner ko kisi rigid yearly contract me force nahi karte. Hum month-to-month performance basis par kaam karte hain. Humara focus hota hai ki pehle 30 din me hi aapko itna ROI dikhe ki aap khud long-term partner bano.",
+      microProof: "No forced lock-in. Flexible performance-driven monthly retainers.",
+      badge: "FLEXIBLE CONTRACT",
+      icon: CheckCircle2,
+      related: 1,
+    },
   ];
 };
 
 export function FAQSection({ location }: { location?: string }) {
   const faqs = getFaqs(location);
-  const [expandedId, setExpandedId] = useState<number | null>(null);
+  const [expandedId, setExpandedId] = useState<number | null>(1);
   const [feedbackState, setFeedbackState] = useState<Record<number, 'up' | 'down'>>({});
   const sectionRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.1 });
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => { setMounted(true); }, []);
 
   // Generate JSON-LD Schema
   const faqSchema = {
@@ -119,141 +101,119 @@ export function FAQSection({ location }: { location?: string }) {
   const relatedFaq = activeFaq ? faqs.find((f) => f.id === activeFaq.related) : null;
 
   return (
-    <section className="relative py-24 md:py-32 bg-slate-50 overflow-hidden" id="faq">
+    <section ref={sectionRef} className="relative py-16 md:py-24 bg-slate-50 overflow-hidden" id="faq">
       {/* Inject JSON-LD Schema */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
-      {/* Decorative Background Elements */}
-      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-blue-100/40 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3 pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-pink-100/40 rounded-full blur-[100px] translate-y-1/3 -translate-x-1/3 pointer-events-none" />
+      {/* Decorative Background Orbs */}
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-400/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-orange-400/10 rounded-full blur-[120px] pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="flex flex-col lg:flex-row gap-16 lg:gap-24">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+        <div className="flex flex-col lg:flex-row gap-12 lg:gap-16">
           
-          {/* Left Column - Sticky Header */}
-          <div className="lg:w-1/3 lg:sticky lg:top-32 h-fit">
+          {/* Left Column - Sticky Header & Direct Audit Call */}
+          <div className="lg:w-1/3 lg:sticky lg:top-28 h-fit">
             <motion.div
-                initial={false}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-               className="relative"
+              initial={{ opacity: 0, y: 15 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5 }}
             >
-              {/* Floating Trust Element */}
-              <motion.div
-                animate={{ y: [0, -15, 0] }}
-                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute -top-48 -left-4 lg:-left-12 bg-white p-5 rounded-[2.5rem] shadow-[0_30px_60px_rgba(0,0,0,0.12)] border border-slate-100 hidden md:flex items-center gap-5 z-20 hover:scale-105 transition-transform cursor-pointer group"
-              >
-                <div className="bg-blue-500 p-3 rounded-2xl text-white shadow-lg shadow-blue-500/30 group-hover:rotate-12 transition-transform">
-                  <ThumbsUp className="w-7 h-7" />
-                </div>
-                <div>
-                  <p className="text-[11px] font-black text-slate-400 uppercase tracking-[0.3em] mb-1">Client Success</p>
-                  <p className="text-lg font-black text-slate-900 leading-none">98% Satisfaction</p>
-                </div>
-              </motion.div>
-
-              <div className="flex flex-col mb-12">
-                <motion.div 
-                  initial={{ opacity: 0, x: -10 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  className="text-blue-600 font-black text-[11px] uppercase tracking-[0.4em] mb-5 flex items-center gap-4"
-                >
-                   <div className="w-12 h-px bg-blue-600/30" /> STRATEGIC ANSWERS
-                </motion.div>
-                <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-slate-900 leading-[1.05] tracking-tighter mb-10 relative z-10">
-                  Got Questions? <br />
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-rose-500">
-                    We Have Strategy.
-                  </span>
-                </h2>
-                <p className="text-slate-600 text-lg md:text-xl font-medium leading-relaxed relative z-10 max-w-sm border-l-4 border-slate-100 pl-6 py-2">
-                  Everything you need to know about how TopRank accelerates your business growth and dominates local search results.
-                </p>
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white border border-slate-200 rounded-full text-slate-800 text-[10px] font-black uppercase tracking-[0.3em] mb-4 shadow-sm">
+                <HelpCircle className="w-3.5 h-3.5 text-blue-600 fill-blue-600" />
+                Real Business Answers
               </div>
 
-              {/* Trust Indicators - Customer Avatars */}
-              <div className="flex items-center gap-4 mb-10 pb-10 border-b border-slate-200 relative z-10">
-                <div className="flex -space-x-3">
-                  {[1,2,3,4].map((i) => (
-                    <Image key={i} src={`https://i.pravatar.cc/150?img=${i + 15}`} alt="Client" width={40} height={40} className="w-10 h-10 rounded-full border-2 border-white shadow-sm relative hover:z-10 transition-transform hover:scale-110 object-cover" />
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 tracking-tight leading-[1.1] mb-4">
+                Clear Answers For <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-pink-500 to-blue-600">
+                  Business Owners.
+                </span>
+              </h2>
+
+              <p className="text-slate-600 text-sm sm:text-base font-medium leading-relaxed mb-6 border-l-4 border-blue-500 pl-4 py-1">
+                No textbook marketing jargon. Here are exact answers to what business owners ask before hiring TopRank.
+              </p>
+
+              {/* Trust Indicators */}
+              <div className="flex items-center gap-3 mb-8 pb-6 border-b border-slate-200">
+                <div className="flex -space-x-2">
+                  {[1, 2, 3, 4].map((i) => (
+                    <Image key={i} src={`https://i.pravatar.cc/150?img=${i + 15}`} alt="Client" width={36} height={36} className="w-9 h-9 rounded-full border-2 border-white shadow-sm object-cover" />
                   ))}
-                  <div className="w-10 h-10 rounded-full border-2 border-white shadow-sm bg-slate-100 flex items-center justify-center text-[11px] font-black text-slate-600 relative hover:z-10 transition-transform hover:scale-110">
+                  <div className="w-9 h-9 rounded-full border-2 border-white bg-slate-100 flex items-center justify-center text-[10px] font-black text-slate-600">
                     +100
                   </div>
                 </div>
-                <div className="text-sm">
-                  <span className="flex items-center text-amber-500 font-black gap-1"><Star className="w-3.5 h-3.5 fill-amber-500"/> 4.9/5</span>
-                  <span className="text-slate-500 font-semibold text-xs uppercase tracking-wider">Trusted by founders</span>
+                <div>
+                  <div className="flex items-center text-amber-500 font-black text-xs gap-1">
+                    <Star className="w-3.5 h-3.5 fill-amber-500"/> 4.9 / 5 Google Rating
+                  </div>
+                  <span className="text-slate-500 font-semibold text-[11px]">Direct Client Transparency</span>
                 </div>
               </div>
               
-              {/* Premium Scarcity CTA Card */}
-              <motion.div 
-                whileHover={{ y: -5, scale: 1.02 }}
-                transition={{ duration: 0.3 }}
-                className="relative p-8 bg-slate-950 rounded-3xl border border-slate-800 shadow-[0_20px_50px_-10px_rgba(0,0,0,0.3)] overflow-hidden group"
-              >
-                {/* Abstract Glowing Orbs in Card */}
-                <div className="absolute top-0 right-0 w-32 h-32 bg-blue-600/20 rounded-full blur-[40px] group-hover:bg-blue-500/30 transition-colors duration-500" />
-                <div className="absolute bottom-0 left-0 w-32 h-32 bg-pink-600/20 rounded-full blur-[40px] group-hover:bg-pink-500/30 transition-colors duration-500" />
+              {/* Audit Card */}
+              <div className="p-6 bg-slate-900 text-white rounded-3xl border border-slate-800 shadow-xl relative overflow-hidden group">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/20 rounded-full blur-2xl pointer-events-none" />
                 
-                {/* Content */}
-                <h4 className="font-bold text-white text-xl mb-3 relative z-10">Still have questions?</h4>
-                <p className="text-slate-400 text-sm mb-6 leading-relaxed relative z-10">
-                  Stop guessing. Let's build a personalized, highly-actionable growth roadmap perfectly mapped out for your specific market.
+                <h4 className="font-black text-white text-lg mb-2">Have A Specific Question?</h4>
+                <p className="text-slate-300 text-xs leading-relaxed font-medium mb-5">
+                  Talk directly with our growth strategists. Get a free digital audit for your business within 24 hours.
                 </p>
-                
-                {/* Urgency Indicator */}
-                <div className="flex items-center gap-2 mb-6 relative z-10 bg-white/5 py-2 px-3 rounded-lg border border-white/5 inline-flex w-max">
-                  <span className="relative flex h-2.5 w-2.5">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-orange-500"></span>
-                  </span>
-                  <span className="text-[11px] font-bold text-orange-400 uppercase tracking-widest">Only 2 audits left this week</span>
-                </div>
 
                 <Link 
                   href="#contact"
-                  className="w-full py-4 px-6 bg-white hover:bg-slate-50 text-slate-900 font-black text-center rounded-xl transition-all shadow-lg flex items-center justify-center gap-2 relative z-10 group/btn"
+                  className="w-full py-3.5 px-5 bg-white hover:bg-slate-100 text-slate-900 font-black text-xs uppercase tracking-widest text-center rounded-xl transition-all shadow-md flex items-center justify-center gap-2 group/btn active:scale-95"
                 >
-                  Claim Free Audit 
+                  <span>Get Free Audit & Strategy Call</span> 
                   <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
                 </Link>
-              </motion.div>
+              </div>
             </motion.div>
           </div>
 
-          {/* Right Column - FAQ Accordion */}
+          {/* Right Column - High-Intent Business Accordion */}
           <div className="lg:w-2/3">
             <div className="space-y-4">
               {faqs.map((faq, index) => {
                 const isExpanded = expandedId === faq.id;
+                const IconComp = faq.icon;
                 
                 return (
                   <motion.div
                     key={faq.id}
-                    initial={false}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, delay: index * 0.05 }}
-                    className={`bg-white border rounded-2xl overflow-hidden transition-all duration-300 ${
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={isInView ? { opacity: 1, y: 0 } : {}}
+                    transition={{ duration: 0.4, delay: index * 0.04 }}
+                    className={`bg-white border rounded-2xl overflow-hidden transition-all duration-300 relative ${
                       isExpanded 
-                        ? "border-blue-200 shadow-xl shadow-blue-900/5" 
-                        : "border-slate-200 shadow-sm hover:border-slate-300 hover:shadow-md"
+                        ? "border-blue-300 shadow-lg" 
+                        : "border-slate-200/90 shadow-sm hover:border-slate-300 hover:shadow-md"
                     }`}
                   >
+                    {/* Top Gradient Bar when expanded */}
+                    {isExpanded && (
+                      <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-orange-500 via-pink-500 to-blue-600" />
+                    )}
+
                     {/* Question Header */}
                     <button
                       onClick={() => handleToggle(faq.id)}
-                      className="w-full text-left px-6 py-6 md:px-8 flex items-center justify-between gap-6 focus:outline-none"
+                      className="w-full text-left px-6 py-5 sm:px-7 flex items-center justify-between gap-4 focus:outline-none"
                     >
-                      <h3 className={`text-lg md:text-xl font-bold transition-colors duration-300 ${isExpanded ? "text-blue-600" : "text-slate-900"}`}>
-                        {faq.q}
-                      </h3>
-                      <div className={`shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-colors duration-300 ${isExpanded ? "bg-blue-100 text-blue-600" : "bg-slate-100 text-slate-500"}`}>
+                      <div className="flex items-center gap-3">
+                        <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${isExpanded ? "bg-blue-600 text-white" : "bg-slate-100 text-slate-600"}`}>
+                          <IconComp className="w-4 h-4" />
+                        </div>
+                        <h3 className={`text-base sm:text-lg font-black transition-colors duration-300 ${isExpanded ? "text-blue-600" : "text-slate-900"}`}>
+                          {faq.q}
+                        </h3>
+                      </div>
+                      <div className={`shrink-0 w-8 h-8 rounded-xl flex items-center justify-center transition-colors duration-300 ${isExpanded ? "bg-blue-600 text-white" : "bg-slate-100 text-slate-500"}`}>
                         <motion.div
                           animate={{ rotate: isExpanded ? 180 : 0 }}
                           transition={{ duration: 0.3 }}
@@ -267,95 +227,79 @@ export function FAQSection({ location }: { location?: string }) {
                     <AnimatePresence initial={false}>
                       {isExpanded && (
                         <motion.div
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          exit={{ opacity: 0 }}
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
                           transition={{ duration: 0.3 }}
                         >
-                          <div className="px-6 pb-8 md:px-8 pt-2">
-                             {/* Brand Divider */}
-                             <div className="h-px w-full bg-gradient-to-r from-transparent via-slate-200 to-transparent mb-8" />
+                          <div className="px-6 pb-6 sm:px-7 pt-1">
+                            <div className="h-px w-full bg-slate-100 mb-4" />
                             
-                            {/* Main Answer Text */}
-                            <p className="text-slate-600 text-lg leading-relaxed mb-6">
+                            <p className="text-slate-600 text-sm sm:text-base leading-relaxed font-medium mb-4">
                               {faq.a}
                             </p>
 
-                            {/* Micro Proof (Trust Signal) */}
-                            <div className="flex items-start gap-3 bg-gradient-to-r from-blue-50 to-transparent p-4 rounded-xl border-l-4 border-blue-500 mb-8">
-                              <TrendingUp className="w-5 h-5 text-blue-500 shrink-0 mt-0.5" />
-                              <p className="text-sm font-semibold text-slate-800">
-                                <span className="text-blue-700 mr-1">Proof:</span> 
+                            {/* Micro Proof Box */}
+                            <div className="flex items-start gap-3 bg-blue-50/80 p-3.5 rounded-xl border-l-4 border-blue-600 mb-5">
+                              <TrendingUp className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
+                              <p className="text-xs font-bold text-slate-800">
+                                <span className="text-blue-700 mr-1">Key Takeaway:</span> 
                                 {faq.microProof}
                               </p>
                             </div>
 
                             {/* Bottom Interactive Area */}
-                            <div className="pt-8 relative">
-                               <div className="absolute top-0 left-0 w-full h-px bg-slate-100" />
-                               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 mt-2">
-                              
-                              {/* Engagement Feedback UX */}
-                              <div className="flex items-center gap-3">
-                                <span className="text-sm font-medium text-slate-500">Was this helpful?</span>
-                                <div className="flex items-center gap-2">
+                            <div className="pt-4 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                              <div className="flex items-center gap-2">
+                                <span className="text-xs font-semibold text-slate-500">Was this helpful?</span>
+                                <div className="flex items-center gap-1.5">
                                   <button 
                                     onClick={(e) => handleFeedback(faq.id, 'up', e)}
-                                    className={`p-2 rounded-full transition-all ${
+                                    className={`p-1.5 rounded-lg transition-all ${
                                       feedbackState[faq.id] === 'up' 
                                         ? 'bg-blue-100 text-blue-600' 
-                                        : 'bg-slate-100 text-slate-400 hover:bg-slate-200 hover:text-blue-500'
+                                        : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
                                     }`}
                                   >
-                                    <ThumbsUp className="w-4 h-4" />
+                                    <ThumbsUp className="w-3.5 h-3.5" />
                                   </button>
                                   <button 
                                     onClick={(e) => handleFeedback(faq.id, 'down', e)}
-                                    className={`p-2 rounded-full transition-all ${
+                                    className={`p-1.5 rounded-lg transition-all ${
                                       feedbackState[faq.id] === 'down' 
                                         ? 'bg-red-100 text-red-600' 
-                                        : 'bg-slate-100 text-slate-400 hover:bg-slate-200 hover:text-red-500'
+                                        : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
                                     }`}
                                   >
-                                    <ThumbsDown className="w-4 h-4" />
+                                    <ThumbsDown className="w-3.5 h-3.5" />
                                   </button>
                                 </div>
                                 {feedbackState[faq.id] && (
-                                  <motion.span 
-                                    initial={{ opacity: 0, x: -10 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    className="text-xs font-bold text-slate-700 flex items-center gap-1"
-                                  >
-                                    <CheckCircle2 className="w-3 h-3 text-blue-500" /> Feedback sent
-                                  </motion.span>
+                                  <span className="text-xs font-bold text-emerald-600 flex items-center gap-1 ml-2">
+                                    <CheckCircle2 className="w-3.5 h-3.5" /> Feedback saved
+                                  </span>
                                 )}
                               </div>
 
-                              {/* Auto Related Suggestion */}
                               {relatedFaq && (
                                 <button 
                                   onClick={(e) => {
                                     e.stopPropagation();
                                     handleToggle(relatedFaq.id);
-                                    // Optional: Scroll to that element logic can go here.
                                   }}
-                                  className="group flex items-center gap-2 text-sm text-left bg-slate-50 hover:bg-blue-50 border border-slate-200 hover:border-blue-200 pl-3 pr-4 py-2 rounded-full transition-all max-w-[280px]"
+                                  className="group flex items-center gap-2 text-xs text-left bg-slate-50 hover:bg-blue-50 border border-slate-200 px-3 py-1.5 rounded-full transition-all"
                                 >
-                                  <span className="shrink-0 w-5 h-5 rounded-full bg-slate-200 group-hover:bg-blue-200 flex items-center justify-center text-slate-500 group-hover:text-blue-600">
-                                    <span className="text-[10px] font-black">?</span>
-                                  </span>
-                                  <span className="truncate text-slate-600 group-hover:text-blue-700 font-medium">
+                                  <span className="font-bold text-slate-500 group-hover:text-blue-600">Next question:</span>
+                                  <span className="truncate text-slate-700 font-bold group-hover:text-blue-600 max-w-[200px]">
                                     {relatedFaq.q}
                                   </span>
                                 </button>
                               )}
-
-                             </div>
-                           </div>
-                          </div> {/* Added missing closing div for the "px-6 pb-8 md:px-8 pt-2" div */}
-                         </motion.div>
-                       )}
-                     </AnimatePresence>
+                            </div>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </motion.div>
                 );
               })}

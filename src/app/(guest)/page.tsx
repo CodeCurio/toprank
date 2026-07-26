@@ -1,9 +1,10 @@
 import { Hero } from "@/components/sections/Hero";
 import { TrustBar } from "@/components/sections/TrustBar";
-import { ImmersiveAboutSection } from "@/components/sections/ImmersiveAboutSection";
+import { WhoWeAreSection } from "@/components/sections/WhoWeAreSection";
 import { WhatMakesUsDifferent } from "@/components/sections/WhatMakesUsDifferent";
-import { ServingAreas } from "@/components/sections/ServingAreas";
 import { ServicesSection } from "@/components/sections/ServicesSection";
+import { ServingAreasSection } from "@/components/sections/ServingAreasSection";
+import { IndustriesWeServeSection } from "@/components/sections/IndustriesWeServeSection";
 import { HowWeGrow } from "@/components/sections/HowWeGrow";
 import { ReviewsSection } from "@/components/sections/ReviewsSection";
 import { FAQSection } from "@/components/sections/FAQSection";
@@ -15,9 +16,10 @@ export default function Home() {
       <main className="flex-grow">
         <Hero />
         <TrustBar />
-        <ImmersiveAboutSection />
+        <WhoWeAreSection />
         <ServicesSection />
-        <ServingAreas />
+        <ServingAreasSection />
+        <IndustriesWeServeSection />
         <WhatMakesUsDifferent />
         <HowWeGrow />
         <ReviewsSection />

@@ -1,260 +1,240 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import Image from "next/image";
-import { CheckCircle2, TrendingUp, MapPin, MessageSquare, Globe, ArrowRight } from "lucide-react";
+import { CheckCircle2, TrendingUp, MapPin, MessageSquare, Globe, ArrowRight, Zap, ShieldCheck, Sparkles, Target } from "lucide-react";
 import { AnimatedCTA } from "@/components/ui/animated-cta";
 
 const differentiators = [
   {
     icon: TrendingUp,
     color: "text-orange-500",
-    bg: "bg-orange-50",
-    border: "border-orange-100",
-    title: "SEO That Puts You on Top",
-    desc: "Rank on Page 1 of Google for high-intent keywords your customers are already searching for.",
+    bg: "bg-orange-50 border-orange-200",
+    title: "SEO That Puts You On Top",
+    desc: "We rank your business on Page 1 of Google for high-intent searches that turn directly into leads.",
+    highlight: "Page 1 Google Rankings",
   },
   {
     icon: Globe,
-    color: "text-blue-500",
-    bg: "bg-blue-50",
-    border: "border-blue-100",
-    title: "Websites Built to Convert",
-    desc: "Not just beautiful — every element is engineered to turn a visitor into a paying customer.",
+    color: "text-blue-600",
+    bg: "bg-blue-50 border-blue-200",
+    title: "Websites Built To Convert",
+    desc: "Not just pretty designs — sub-second Next.js web architecture engineered to convert visitors into paying clients.",
+    highlight: "Sub-Second Conversion UX",
   },
   {
     icon: MapPin,
     color: "text-pink-500",
-    bg: "bg-pink-50",
-    border: "border-pink-100",
-    title: "Google My Business Domination",
-    desc: "Appear in the local map pack, own your area, and capture customers the moment they search.",
+    bg: "bg-pink-50 border-pink-200",
+    title: "Google Map Pack Domination",
+    desc: "Capture local searchers instantly by claiming and optimizing your Google Business Profile in the top 3-pack.",
+    highlight: "Local 3-Pack Dominance",
   },
   {
     icon: MessageSquare,
-    color: "text-blue-500",
-    bg: "bg-blue-50",
-    border: "border-blue-100",
-    title: "WhatsApp & Funnel Automation",
-    desc: "Systems that capture every enquiry automatically — day or night — so no lead slips through.",
+    color: "text-indigo-600",
+    bg: "bg-indigo-50 border-indigo-200",
+    title: "WhatsApp & Lead Automation",
+    desc: "Automated chatbots and inquiry pipelines that capture and respond to leads 24/7 without manual effort.",
+    highlight: "24/7 Automated Response",
   },
 ];
 
-const audiences = [
-  { icon: "👉", text: "Bring you more qualified leads" },
-  { icon: "👉", text: "Increase your visibility in your area" },
-  { icon: "👉", text: "Turn your online presence into a revenue-generating asset" },
+const commitments = [
+  "Attract ready-to-buy clients searching in your local city or region",
+  "Build high-speed digital assets optimized for maximum lead conversion",
+  "Provide 100% transparent live lead dashboards and ROI tracking",
 ];
-
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.12 },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 28 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] as const } },
-};
 
 export function WhatMakesUsDifferent() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.1 });
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => { 
-    const t = setTimeout(() => setMounted(true), 0);
-    return () => clearTimeout(t);
-  }, []);
 
   return (
     <section
       ref={sectionRef}
-      className="relative bg-slate-50 overflow-hidden pt-24 pb-12 md:pt-36 md:pb-20"
+      className="relative bg-white overflow-hidden py-16 md:py-24"
       id="what-makes-us-different"
     >
-      {/* Ambient orbs — same style as Hero */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-        <motion.div
-          animate={{ x: [0, 50, 0], y: [0, 30, 0] }}
-          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute -top-[10%] -right-[10%] w-[600px] h-[600px] rounded-full bg-orange-400/10 blur-[100px]"
-        />
-        <motion.div
-          animate={{ x: [0, -40, 0], y: [0, 50, 0] }}
-          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          className="absolute top-[20%] -left-[10%] w-[500px] h-[500px] rounded-full bg-blue-500/10 blur-[120px]"
-        />
-        <motion.div
-          animate={{ x: [0, 30, 0], y: [0, -40, 0] }}
-          transition={{ duration: 20, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-          className="absolute bottom-[-10%] left-[20%] w-[700px] h-[700px] rounded-full bg-pink-500/10 blur-[130px]"
-        />
+      {/* Decorative Ambient Background */}
+      <div className="absolute inset-0 w-full h-full pointer-events-none -z-10 overflow-hidden">
+        <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-gradient-to-br from-orange-400/10 to-pink-500/10 rounded-full blur-[120px]" />
+        <div className="absolute bottom-0 left-1/4 w-[500px] h-[500px] bg-gradient-to-tr from-blue-600/10 to-indigo-500/10 rounded-full blur-[130px]" />
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        {/* Section Header */}
-        <motion.div
-          initial={false}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] as const }}
-          className="text-center mb-16 md:mb-24"
-        >
-          <div className="inline-flex items-center gap-2 px-5 py-2 bg-white/60 backdrop-blur-md border border-slate-200/60 rounded-full text-slate-500 text-[11px] font-black uppercase tracking-[0.4em] mb-6 shadow-sm">
-            <span className="w-1.5 h-1.5 rounded-full bg-orange-400 animate-pulse" />
-            Our Edge
-          </div>
-          <h2 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter leading-tight mb-4">
-            What Makes Us{" "}
-            <span className="bg-gradient-to-r from-orange-500 via-pink-500 to-blue-600 bg-clip-text text-transparent">
-              Different?
-            </span>
-          </h2>
-          <p className="text-slate-600 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mt-4">
-            Most agencies stop at rankings.{" "}
-            <span className="text-slate-900 font-semibold">We go further.</span>
-          </p>
-          <p className="text-slate-500 text-base max-w-xl mx-auto mt-2 leading-relaxed">
-            We build your complete digital presence — so your business doesn't just grow, it becomes{" "}
-            <span className="text-slate-700 font-medium">predictable and scalable.</span>
-          </p>
-        </motion.div>
-
-        {/* Main Grid: Feature Cards + Image */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center mb-20 md:mb-28">
-
-          {/* Left: Feature Cards */}
+        {/* Section Header (Compact Spacing) */}
+        <div className="max-w-3xl mx-auto text-center mb-12 md:mb-16">
           <motion.div
-            variants={containerVariants}
-            initial={false}
-            animate={mounted ? { opacity: 1 } : { opacity: 1 }}
-            className="grid grid-cols-1 sm:grid-cols-2 gap-4"
+            initial={{ opacity: 0, y: 15 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5 }}
+            className="inline-flex items-center gap-2 px-5 py-2 bg-slate-50 border border-slate-200 rounded-full text-slate-800 text-[11px] font-black uppercase tracking-[0.3em] mb-4 shadow-sm"
           >
-            {differentiators.map((item, i) => (
-              <motion.div
-                key={i}
-                variants={itemVariants}
-                className={`group p-5 rounded-2xl border ${item.border} bg-white hover:bg-white shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1`}
-              >
-                <div className={`w-11 h-11 rounded-xl ${item.bg} flex items-center justify-center mb-4`}>
-                  <item.icon className={`w-5 h-5 ${item.color}`} />
-                </div>
-                <h3 className="text-slate-900 font-bold text-[15px] leading-snug mb-2">{item.title}</h3>
-                <p className="text-slate-500 text-sm leading-relaxed">{item.desc}</p>
-              </motion.div>
-            ))}
+            <Sparkles className="w-3.5 h-3.5 text-orange-500 fill-orange-500" />
+            Our Competitive Advantage
           </motion.div>
 
-          {/* Right: Image */}
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 tracking-tight leading-[1.1] mb-4"
+          >
+            What Makes TopRank{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-pink-500 to-blue-600">
+              Different?
+            </span>
+          </motion.h2>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-base sm:text-lg text-slate-600 font-medium leading-relaxed"
+          >
+            Most agencies stop at ranking. We engineer your entire digital presence so customer acquisition becomes predictable, scalable, and profitable.
+          </motion.p>
+        </div>
+
+        {/* Main Grid: Feature Cards + Image Showcase */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center mb-16 md:mb-20">
+
+          {/* Left Column: 4 Feature Cards */}
+          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-5">
+            {differentiators.map((item, index) => {
+              const IconComp = item.icon;
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="group relative bg-white border border-slate-200/90 rounded-3xl p-6 shadow-sm hover:shadow-xl hover:border-blue-200 transition-all duration-300 hover:-translate-y-1 overflow-hidden flex flex-col justify-between"
+                >
+                  {/* Accent Top Bar */}
+                  <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-orange-500 via-pink-500 to-blue-600 opacity-80 group-hover:h-1.5 transition-all" />
+
+                  <div>
+                    <div className="flex items-center justify-between mb-4">
+                      <div className={`w-11 h-11 rounded-2xl ${item.bg} border flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform`}>
+                        <IconComp className={`w-5 h-5 ${item.color}`} />
+                      </div>
+                      <span className="text-[9px] font-black uppercase tracking-widest bg-slate-50 text-slate-500 px-2.5 py-1 rounded-full border border-slate-200">
+                        {item.highlight}
+                      </span>
+                    </div>
+
+                    <h3 className="text-lg font-black text-slate-900 tracking-tight leading-snug mb-2 group-hover:text-blue-600 transition-colors">
+                      {item.title}
+                    </h3>
+                    <p className="text-slate-600 text-xs sm:text-sm leading-relaxed font-medium">
+                      {item.desc}
+                    </p>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+
+          {/* Right Column: Visual Image Block */}
           <motion.div
-            initial={false}
-            animate={mounted && isInView ? { opacity: 1, x: 0 } : { opacity: 1, x: 0 }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] as const, delay: 0.2 }}
-            className="relative rounded-3xl overflow-hidden aspect-[4/3] lg:aspect-[3/2] shadow-[0_30px_80px_-20px_rgba(0,0,0,0.18)] border-[5px] border-white"
+            initial={{ opacity: 0, x: 25 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="lg:col-span-5 relative rounded-3xl overflow-hidden aspect-[4/3] lg:aspect-[4/4] shadow-2xl border-4 border-white group"
           >
             <Image
               src="/images/how_to_rank_higher_in_google.jpg"
-              alt="How to rank higher in Google — TopRank Digital Service"
+              alt="Rank Higher on Google with TopRank Digital"
               fill
-              className="object-cover object-center"
+              className="object-cover object-center group-hover:scale-105 transition-transform duration-700"
               priority
             />
-            {/* Subtle overlay so floating cards always readable */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20 pointer-events-none z-10" />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent pointer-events-none z-10" />
 
-            {/* Floating stat card — bottom left */}
-            <motion.div
-              initial={false}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6, duration: 0.5 }}
-              className="absolute bottom-5 left-5 z-20 bg-white/95 backdrop-blur-md border border-white shadow-[0_8px_24px_rgba(0,0,0,0.18)] rounded-2xl px-4 py-3 flex items-center gap-3"
-            >
-              <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
-                <TrendingUp className="w-4 h-4 text-blue-600" />
+            {/* Floating Stat Badges */}
+            <div className="absolute bottom-5 left-5 right-5 z-20 flex flex-col sm:flex-row items-center justify-between gap-3">
+              <div className="bg-white/95 backdrop-blur-md border border-white shadow-xl rounded-2xl px-4 py-2.5 flex items-center gap-3 w-full sm:w-auto">
+                <div className="w-8 h-8 rounded-xl bg-blue-100 flex items-center justify-center shrink-0">
+                  <TrendingUp className="w-4 h-4 text-blue-600" />
+                </div>
+                <div>
+                  <p className="text-slate-900 text-xs font-black leading-tight">+82% Avg. Traffic Growth</p>
+                  <p className="text-slate-500 text-[10px] font-medium">Across active clients</p>
+                </div>
               </div>
-              <div>
-                <p className="text-slate-900 text-sm font-black leading-tight">+82% Avg. Traffic Growth</p>
-                <p className="text-slate-500 text-[11px] mt-0.5">Across active clients · 2024</p>
-              </div>
-            </motion.div>
 
-            {/* Floating stat card — top right */}
-            <motion.div
-              initial={false}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.75, duration: 0.5 }}
-              className="absolute top-5 right-5 z-20 bg-white/95 backdrop-blur-md border border-white shadow-[0_8px_24px_rgba(0,0,0,0.18)] rounded-2xl px-4 py-3 flex items-center gap-3"
-            >
-              <div className="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center flex-shrink-0">
-                <CheckCircle2 className="w-4 h-4 text-orange-500" />
+              <div className="bg-white/95 backdrop-blur-md border border-white shadow-xl rounded-2xl px-4 py-2.5 flex items-center gap-3 w-full sm:w-auto">
+                <div className="w-8 h-8 rounded-xl bg-orange-100 flex items-center justify-center shrink-0">
+                  <CheckCircle2 className="w-4 h-4 text-orange-500" />
+                </div>
+                <div>
+                  <p className="text-slate-900 text-xs font-black leading-tight">100+ Brands Served</p>
+                  <p className="text-slate-500 text-[10px] font-medium">Pan India Network</p>
+                </div>
               </div>
-              <div>
-                <p className="text-slate-900 text-sm font-black leading-tight">100+ Clients Served</p>
-                <p className="text-slate-500 text-[11px] mt-0.5">Across Lucknow &amp; Chandigarh</p>
-              </div>
-            </motion.div>
+            </div>
           </motion.div>
+
         </div>
 
-        {/* Built For Section */}
-            <motion.div
-              initial={false}
-              animate={isInView ? { opacity: 1, y: 0 } : { y: 32 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-            className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-center mb-20 md:mb-28 border-t border-slate-200/60 pt-16 md:pt-24"
-          >
-          <div>
-            <h3 className="text-2xl md:text-4xl font-black text-slate-900 tracking-tight mb-4 leading-tight">
-              Built for Local Businesses{" "}
-              <span className="text-slate-500">That Want Real Growth</span>
-            </h3>
-            <p className="text-slate-600 text-base md:text-lg leading-relaxed mb-8 max-w-lg">
-              Whether you're a clinic, service provider, or local brand — our focus is simple.
-            </p>
-            <div className="space-y-4">
-              {audiences.map((a, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, x: -16 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, amount: 0.1 }}
-                  transition={{ delay: 0.5 + i * 0.1, duration: 0.5 }}
-                  className="flex items-center gap-4 group"
-                >
-                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-br from-orange-100 to-pink-100 border border-orange-200 flex items-center justify-center text-lg">
-                    {a.icon}
-                  </div>
-                  <p className="text-slate-700 font-semibold text-base group-hover:text-slate-900 transition-colors">{a.text}</p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
+        {/* ----------------------------------------------------
+            REDESIGNED COMMITMENT & ACTION BLOCK (COMPACT SPACING)
+           ---------------------------------------------------- */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="bg-slate-900 text-white rounded-3xl p-8 sm:p-10 lg:p-12 relative overflow-hidden shadow-2xl border border-slate-800"
+        >
+          {/* Inner Glows */}
+          <div className="absolute top-0 right-0 w-80 h-80 bg-orange-500/15 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-80 h-80 bg-blue-500/15 rounded-full blur-3xl pointer-events-none" />
 
-          {/* Final Conversion Block */}
-          <motion.div
-            initial={false}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.4, duration: 0.6 }}
-            className="rounded-3xl border border-orange-200 bg-gradient-to-br from-orange-50 via-pink-50/50 to-blue-50/50 p-8 md:p-10 relative overflow-hidden shadow-sm"
-          >
-            {/* Glow */}
-            <div className="absolute -top-10 -right-10 w-40 h-40 bg-orange-300/20 rounded-full blur-3xl pointer-events-none" />
-            <p className="text-[13px] font-black text-orange-500 uppercase tracking-[0.4em] mb-5">Remember This</p>
-            <h4 className="text-xl md:text-2xl font-black text-slate-900 leading-snug mb-5">
-              If your business isn't showing up on Google, you're losing customers{" "}
-              <span className="italic text-orange-500">every single day.</span>
-            </h4>
-            <p className="text-slate-600 text-base leading-relaxed mb-8">
-              We make sure that never happens. With TopRank, your digital presence works as hard as you do — 24/7.
-            </p>
-            <AnimatedCTA
-              text="Get Free Audit"
-              tooltipText="Zero cost, total clarity."
-              className="w-full sm:w-auto shadow-[0_8px_30px_rgb(249,115,22,0.25)]"
-            />
-          </motion.div>
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            
+            <div className="lg:col-span-7">
+              <span className="text-xs font-black uppercase tracking-[0.3em] text-orange-400 block mb-3">
+                Our Guarantee & Focus
+              </span>
+              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight leading-tight mb-4">
+                Engineered For Businesses Ready For Predictable Revenue
+              </h3>
+              <p className="text-slate-300 text-sm sm:text-base leading-relaxed font-medium mb-6">
+                We make sure your business isn't losing valuable search traffic and local inquiries to competitors.
+              </p>
+
+              <div className="space-y-3 mb-2">
+                {commitments.map((text, idx) => (
+                  <div key={idx} className="flex items-center gap-3 text-xs sm:text-sm font-semibold text-slate-200">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>{text}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="lg:col-span-5 bg-white/10 backdrop-blur-xl border border-white/15 rounded-2xl p-6 sm:p-8 text-center flex flex-col items-center justify-center">
+              <span className="text-[11px] font-black text-orange-400 uppercase tracking-[0.3em] mb-2 block">
+                Take Action Today
+              </span>
+              <h4 className="text-lg sm:text-xl font-black text-white leading-snug mb-4">
+                Don't Let Competitors Steal Your Google Traffic
+              </h4>
+              <p className="text-xs text-slate-300 mb-6 font-medium">
+                Get a comprehensive 100% free digital audit & strategy roadmap within 24 hours.
+              </p>
+              <AnimatedCTA
+                text="Get Free Strategy Audit"
+                tooltipText="Zero cost, total clarity."
+                className="w-full sm:w-auto shadow-[0_8px_30px_rgb(249,115,22,0.3)]"
+              />
+            </div>
+
+          </div>
         </motion.div>
 
       </div>
