@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 import { usePhone } from "@/hooks/usePhone";
+import { supabase } from "@/lib/supabase/client";
 
 const locations = [
   {
@@ -65,7 +66,7 @@ export function ContactSection() {
   const phone = usePhone();
   const [activeLocationId, setActiveLocationId] = useState("lucknow");
   const [copied, setCopied] = useState(false);
-  const [formData, setFormData] = useState({ name: "", service: "Search Engine Optimization (SEO)", message: "" });
+  const [formData, setFormData] = useState({ name: "", phone: "", service: "Search Engine Optimization (SEO)", message: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.1 });
@@ -85,10 +86,26 @@ export function ContactSection() {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handleWhatsAppSubmit = (e: React.FormEvent) => {
+  const handleWhatsAppSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    const text = `Hi TopRank Team, I'm ${formData.name}.\n\n🔹 *Interested in:* ${formData.service}\n\n📝 *Message:* ${formData.message}\n\nPlease let me know how we can proceed!`;
+
+    try {
+      await supabase.from("leads").insert([
+        {
+          name: formData.name,
+          phone: formData.phone || phone.raw,
+          service_requested: formData.service,
+          message: formData.message,
+          city: activeLoc.city,
+          status: "New",
+        },
+      ]);
+    } catch (err) {
+      console.error("Supabase lead insertion error:", err);
+    }
+
+    const text = `Hi TopRank Team, I'm ${formData.name}.\n\nPhone: ${formData.phone}\n🔹 *Interested in:* ${formData.service}\n\n📝 *Message:* ${formData.message}\n\nPlease let me know how we can proceed!`;
     const encodedText = encodeURIComponent(text);
     setTimeout(() => {
       window.open(`https://wa.me/91${phone.raw}?text=${encodedText}`, "_blank");
