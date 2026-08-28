@@ -717,7 +717,7 @@ export default async function PortfolioCaseStudyPage({
 
                   <div className="space-y-2.5 pt-2">
                     <a
-                      href="https://wa.me/919999999999?text=Hi%20TopRank,%20I%20saw%20your%20case%20study%20and%20want%20to%20scale%20my%20business."
+                      href="https://wa.me/919115439115?text=Hi%20TopRank,%20I%20saw%20your%20case%20study%20and%20want%20to%20scale%20my%20business."
                       target="_blank"
                       rel="noopener noreferrer"
                       className="w-full py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/20 transition-all hover:scale-[1.02]"

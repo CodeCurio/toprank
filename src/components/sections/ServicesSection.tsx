@@ -197,8 +197,44 @@ export function ServicesSection({ location }: { location?: string }) {
     { goal: "I want high-quality leads today", service: "Google & Meta Paid Ads", link: "/services/google-ads" },
   ];
 
+  // JSON-LD structured data for services — helps Google understand offerings (E-E-A-T Authority signal)
+  const servicesJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": `Digital Marketing Services${location ? ` in ${location}` : ""}`,
+    "description": `Professional digital marketing, SEO, web development, and paid advertising services${location ? ` in ${location}` : ""} by TopRank Digital Service.`,
+    "numberOfItems": mainServices.length + secondaryServices.length,
+    "itemListElement": [...mainServices, ...secondaryServices].map((service, idx) => ({
+      "@type": "ListItem",
+      "position": idx + 1,
+      "item": {
+        "@type": "Service",
+        "name": service.title,
+        "description": service.description,
+        "url": `https://www.toprankindia.com${service.link}`,
+        "provider": {
+          "@type": "Organization",
+          "name": "TopRank Digital Service",
+          "url": "https://www.toprankindia.com",
+          "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "5.0",
+            "reviewCount": "482",
+            "bestRating": "5",
+          },
+        },
+      },
+    })),
+  };
+
   return (
-    <section ref={sectionRef} className="relative py-20 md:py-28 bg-slate-50 overflow-hidden" id="services">
+    <section ref={sectionRef} className="relative py-20 md:py-28 bg-slate-50 overflow-hidden" id="services" itemScope itemType="https://schema.org/Service">
+      {/* JSON-LD Structured Data for Google Rich Results */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(servicesJsonLd) }}
+      />
+
       {/* Ambient background glows */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[700px] bg-[radial-gradient(circle_at_50%_0%,#cbd5e1,transparent)] opacity-30 pointer-events-none" />
       <div className="absolute inset-0 bg-[radial-gradient(#0f172a08_1px,transparent_1px)] [background-size:32px_32px] pointer-events-none" />
