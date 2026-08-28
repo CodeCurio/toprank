@@ -137,10 +137,10 @@ export function Footer() {
             </h3>
             <ul className="space-y-3.5">
               {[
-                { name: 'Lucknow (HQ)', href: '/lucknow' },
+                { name: 'Lucknow', href: '/lucknow' },
                 { name: 'Chandigarh', href: '/chandigarh' },
                 { name: 'Mohali', href: '/mohali' },
-                { name: 'Panchkula', href: '/chandigarh' }
+                { name: 'Gonda', href: '/gonda' }
               ].map((loc) => (
                 <li key={loc.name}>
                   <Link 

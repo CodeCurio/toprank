@@ -40,6 +40,7 @@ import {
 import Link from "next/link";
 import { usePhone } from "@/hooks/usePhone";
 import { supabase } from "@/lib/supabase/client";
+import { SeoTopicClusterSection } from "./SeoTopicClusterSection";
 
 export function SeoServicesInMohaliClient() {
   const phone = usePhone();
@@ -1404,6 +1405,11 @@ export function SeoServicesInMohaliClient() {
           </div>
         </div>
       </section>
+
+      {/* ─────────────────────────────────────────────────────────────
+          TOPICAL CLUSTER & RESEARCH GUIDES (Internal & External Linking)
+      ───────────────────────────────────────────────────────────── */}
+      <SeoTopicClusterSection currentCity="Mohali" />
 
       {/* ─────────────────────────────────────────────────────────────
           10. H2: Frequently Asked Questions
