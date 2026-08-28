@@ -23,26 +23,34 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { name, email, phone, service, message, location } = body;
+    const name = body.name || "Website Enquiry";
+    const email = body.email || "";
+    const phone = body.phone || "9115439115";
+    const service = body.service || body.service_requested || "Website Development";
+    const rawMessage = body.message || "Consultation Request";
+    const location = body.location || body.city || "Lucknow";
+
+    const formattedMessage = email 
+      ? `Email: ${email} | ${rawMessage}`
+      : rawMessage;
+
+    const insertObj = {
+      name,
+      phone,
+      service_requested: service,
+      city: location,
+      message: formattedMessage,
+      status: "New"
+    };
 
     const { data, error } = await supabaseAdmin
       .from("leads")
-      .insert([
-        {
-          name: name || "",
-          email: email || "",
-          phone: phone || "",
-          service: service || "",
-          message: message || "",
-          location: location || "",
-          status: "New",
-        },
-      ])
+      .insert([insertObj])
       .select()
-      .single();
+      .maybeSingle();
 
     if (error) {
-      console.error("API POST /api/leads error:", error);
+      console.error("API POST /api/leads error:", error.message);
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
@@ -50,7 +58,7 @@ export async function POST(request: Request) {
   } catch (err: any) {
     console.error("Unexpected error in /api/leads POST:", err);
     return NextResponse.json(
-      { error: err.message || "Failed to submit lead" },
+      { success: false, error: err.message || "Failed to submit lead" },
       { status: 500 }
     );
   }

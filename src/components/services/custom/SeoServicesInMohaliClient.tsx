@@ -60,18 +60,19 @@ export function SeoServicesInMohaliClient() {
     setIsSubmitting(true);
 
     try {
-      await supabase.from("leads").insert([
-        {
+      await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
           name: formData.name,
-          phone: formData.phone || "9115439115",
-          service_requested: `SEO Services in Mohali - ${formData.package}`,
-          message: `Website: ${formData.website} | Selected Plan: ${formData.package} | Notes: ${formData.message}`,
-          city: "Mohali",
-          status: "New",
-        },
-      ]);
+          phone: formData.phone || "",
+          service: `SEO Services in Mohali - ${formData.package}`,
+          message: `Website: ${formData.website || "Not provided"} | Plan: ${formData.package} | Notes: ${formData.message}`,
+          location: "Mohali"
+        }),
+      });
     } catch (err) {
-      console.error("Supabase lead insertion error:", err);
+      console.error("Lead submission error:", err);
     }
 
     const text = `Hi TopRank Team, I want to inquire about SEO Services in Mohali.\n\n👤 *Name:* ${formData.name}\n📞 *Phone:* ${formData.phone}\n🌐 *Website/Business:* ${formData.website || "Not provided"}\n📦 *Selected Package:* ${formData.package}\n📝 *Requirements:* ${formData.message || "Please provide free SEO audit and consultation for Mohali."}`;

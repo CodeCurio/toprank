@@ -91,18 +91,19 @@ export function ContactSection() {
     setIsSubmitting(true);
 
     try {
-      await supabase.from("leads").insert([
-        {
+      await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
           name: formData.name,
           phone: formData.phone || phone.raw,
-          service_requested: formData.service,
-          message: formData.message,
-          city: activeLoc.city,
-          status: "New",
-        },
-      ]);
+          service: formData.service || "Digital Marketing",
+          message: formData.message || "Consultation request",
+          location: activeLoc.city || "Lucknow"
+        }),
+      });
     } catch (err) {
-      console.error("Supabase lead insertion error:", err);
+      console.error("Lead submission error:", err);
     }
 
     const text = `Hi TopRank Team, I'm ${formData.name}.\n\n📞 *Phone:* ${formData.phone || "Not specified"}\n🔹 *Interested in:* ${formData.service}\n\n📝 *Message:* ${formData.message || "I'd like to get a quote/consultation."}\n\nPlease let me know how we can proceed!`;

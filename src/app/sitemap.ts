@@ -29,6 +29,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/seo-services-in-mohali',
     '/seo-services-in-gonda',
     '/services/website-development-lucknow',
+    '/services/website-development-chandigarh',
+    '/services/website-development-mohali',
+    '/services/website-development-gonda',
   ].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),

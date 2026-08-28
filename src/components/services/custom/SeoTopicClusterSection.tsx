@@ -40,7 +40,10 @@ export function SeoTopicClusterSection({ currentCity }: SeoTopicClusterSectionPr
     { name: "SEO Services in Chandigarh", href: "/seo-services-in-chandigarh", city: "Chandigarh" },
     { name: "SEO Services in Mohali", href: "/seo-services-in-mohali", city: "Mohali" },
     { name: "SEO Services in Gonda", href: "/seo-services-in-gonda", city: "Gonda" },
-    { name: "Website Development in Lucknow", href: "/services/website-development-lucknow", city: "Lucknow" }
+    { name: "Website Development in Lucknow", href: "/services/website-development-lucknow", city: "Lucknow" },
+    { name: "Website Development in Chandigarh", href: "/services/website-development-chandigarh", city: "Chandigarh" },
+    { name: "Website Development in Mohali", href: "/services/website-development-mohali", city: "Mohali" },
+    { name: "Website Development in Gonda", href: "/services/website-development-gonda", city: "Gonda" }
   ];
 
   const externalAuthorities = [

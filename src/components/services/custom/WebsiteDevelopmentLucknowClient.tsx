@@ -13,11 +13,11 @@ import {
 import Link from "next/link";
 import { usePhone } from "@/hooks/usePhone";
 import { supabase } from "@/lib/supabase/client";
+import { SeoTopicClusterSection } from "./SeoTopicClusterSection";
 
 export function WebsiteDevelopmentLucknowClient() {
   const phone = usePhone();
   const [openFaq, setOpenFaq] = useState<number | null>(0);
-  const [activeSpot, setActiveSpot] = useState<string | null>("gomti-nagar");
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -34,18 +34,20 @@ export function WebsiteDevelopmentLucknowClient() {
     setIsSubmitting(true);
 
     try {
-      await supabase.from("leads").insert([
-        {
+      await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
           name: formData.name,
-          phone: formData.phone || "9115439115",
-          service_requested: `Web Dev Lucknow - ${formData.serviceType}`,
-          message: `Email: ${formData.email} | Budget: ${formData.budget} | Notes: ${formData.message}`,
-          city: "Lucknow",
-          status: "New",
-        },
-      ]);
+          phone: formData.phone || "",
+          email: formData.email || "",
+          service: `Website Development Lucknow - ${formData.serviceType}`,
+          message: `Budget: ${formData.budget} | Notes: ${formData.message}`,
+          location: "Lucknow"
+        }),
+      });
     } catch (err) {
-      console.error("Supabase lead insertion error:", err);
+      console.error("Lead submission error:", err);
     }
 
     const text = `Hi TopRank Team, I need website development in Lucknow.\n\n👤 *Name:* ${formData.name}\n📞 *Phone:* ${formData.phone}\n📧 *Email:* ${formData.email}\n🌐 *Service Type:* ${formData.serviceType}\n💰 *Budget:* ${formData.budget}\n📝 *Requirements:* ${formData.message || "Please provide consultation and quote."}`;
@@ -418,10 +420,10 @@ export function WebsiteDevelopmentLucknowClient() {
                   <Code className="w-5 h-5 sm:w-6 sm:h-6" />
                 </div>
                 <h3 className="text-lg sm:text-xl font-black text-slate-900 mb-2 sm:mb-3 group-hover:text-indigo-600 transition-colors">
-                  Custom Web Development (Next.js / React)
+                  Custom Web Development (<a href="https://nextjs.org" target="_blank" rel="noopener noreferrer" className="hover:underline text-indigo-600">Next.js</a> / <a href="https://react.dev" target="_blank" rel="noopener noreferrer" className="hover:underline text-indigo-600">React</a>)
                 </h3>
                 <p className="text-slate-600 text-xs sm:text-sm leading-relaxed font-medium mb-4 sm:mb-6">
-                  Custom full-stack web applications, SaaS dashboards, and portal engines built with Next.js, React, Node.js, and Supabase PostgreSQL databases.
+                  Custom full-stack web applications, SaaS dashboards, and portal engines built with Next.js 16, React 19, Node.js, and Supabase PostgreSQL databases adhering to <a href="https://www.w3.org/standards/" target="_blank" rel="noopener noreferrer" className="text-indigo-600 font-semibold underline">W3C Web Standards</a>.
                 </p>
               </div>
               <ul className="space-y-1.5 sm:space-y-2 border-t border-slate-100 pt-3 sm:pt-4 text-xs font-bold text-slate-700">
@@ -620,7 +622,7 @@ export function WebsiteDevelopmentLucknowClient() {
               { step: "02", title: "Planning & Sitemap", desc: "We map out the complete URL architecture, conversion funnels, and content hierarchy for frictionless UX." },
               { step: "03", title: "UI/UX Design (Figma)", desc: "Our visual designers create custom, pixel-perfect mockups reflecting your brand identity for your review." },
               { step: "04", title: "Full-Stack Development", desc: "We code your website using modern Next.js / React or custom WordPress with semantic clean code." },
-              { step: "05", title: "SEO & Speed Tuning", desc: "We implement JSON-LD schema, on-page tags, image compression, and achieve sub-second load times." },
+              { step: "05", title: "SEO & Speed Tuning", desc: "We implement Schema.org JSON-LD markup and optimize Core Web Vitals to achieve sub-second load times." },
               { step: "06", title: "Testing & QA", desc: "Cross-browser validation, mobile viewport checks, form submission testing, and SSL security audits." },
               { step: "07", title: "Deployment & Launch", desc: "We point your domain DNS, setup Cloudflare CDN, and hand over admin dashboard access with training." }
             ].map((node, idx) => (
@@ -1002,486 +1004,188 @@ export function WebsiteDevelopmentLucknowClient() {
       {/* ─────────────────────────────────────────────────────────────
           11. AREAS WE SERVE IN LUCKNOW (Realistic Geographic Map & Dual Marquee)
       ───────────────────────────────────────────────────────────── */}
-      <section className="py-14 sm:py-20 lg:py-24 bg-slate-950 text-white relative overflow-hidden border-t border-slate-800" id="areas">
+      {/* ─────────────────────────────────────────────────────────────
+          11. NEXT-GEN WEB ARCHITECTURE & LUCKNOW LOCAL COVERAGE
+      ───────────────────────────────────────────────────────────── */}
+      <section className="py-16 sm:py-24 bg-slate-950 text-white relative overflow-hidden border-t border-slate-800" id="tech-architecture">
         
-        {/* Background Gradients */}
-        <div className="absolute top-0 right-1/4 w-[350px] sm:w-[700px] h-[350px] sm:h-[700px] bg-blue-600/10 rounded-full blur-[100px] sm:blur-[150px] pointer-events-none" />
-        <div className="absolute bottom-0 left-1/4 w-[300px] sm:w-[600px] h-[300px] sm:h-[600px] bg-emerald-600/10 rounded-full blur-[100px] sm:blur-[150px] pointer-events-none" />
-        <div className="absolute inset-0 bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:24px_24px] sm:[background-size:32px_32px] opacity-40 pointer-events-none" />
+        {/* Background Ambient Glows */}
+        <div className="absolute top-0 right-1/4 w-[350px] sm:w-[600px] h-[350px] sm:h-[600px] bg-blue-600/15 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-0 left-1/4 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-emerald-600/15 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(#334155_1px,transparent_1px)] [background-size:28px_28px] opacity-25 pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           
           {/* Section Header */}
-          <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
-            <span className="text-[10px] sm:text-[11px] font-black uppercase tracking-[0.2em] sm:tracking-[0.25em] text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full mb-3 sm:mb-4 inline-flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-              Live City Geographic Network
+          <div className="text-center max-w-3xl mx-auto mb-14 sm:mb-20">
+            <span className="text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3.5 py-1.5 rounded-full mb-4 inline-flex items-center gap-2">
+              <Sparkles className="w-3.5 h-3.5" />
+              Next-Gen Web Architecture
             </span>
-            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight mb-3 sm:mb-4">
-              Real-Time Service Map of{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-blue-400 to-pink-400">
-                Lucknow
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight mb-4">
+              Engineered For Maximum Speed, Security &{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-sky-400 to-indigo-400">
+                Inbound Leads
               </span>
             </h2>
-            <p className="text-slate-400 font-medium text-xs sm:text-base lg:text-lg px-2">
-              Authentic geographic deployment grid covering all tech parks, highway expressways, commercial centres, and major townships across Lucknow.
+            <p className="text-slate-300 font-medium text-sm sm:text-base lg:text-lg">
+              We build custom Next.js websites that outperform legacy WordPress templates, loading in under 800ms to convert your local Lucknow traffic into paying clients.
             </p>
           </div>
 
-          {/* 1. REALISTIC LUCKNOW INTERACTIVE CARTOGRAPHIC MAP */}
-          <div className="mb-10 sm:mb-16 bg-slate-900/90 border border-slate-800 rounded-2xl sm:rounded-[2.5rem] p-3 sm:p-8 shadow-2xl backdrop-blur-xl relative overflow-hidden">
+          {/* 1. Core Engineering Pillars Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-16">
             
-            {/* Top Telemetry & Zone Filter Bar */}
-            <div className="flex flex-wrap items-center justify-between gap-2.5 sm:gap-4 pb-4 sm:pb-6 border-b border-slate-800/80 text-[11px] sm:text-xs">
-              <div className="flex items-center gap-2 sm:gap-3">
-                <span className="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-lg sm:rounded-xl bg-slate-800 border border-slate-700 text-emerald-400 font-mono font-bold shadow-inner text-[10px] sm:text-xs">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                  LUCKNOW MAP GRID
-                </span>
-                <span className="hidden md:inline font-mono text-slate-500 text-[11px]">
-                  CENTER: 26.8467° N, 80.9462° E
-                </span>
+            <div className="p-7 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-emerald-500/50 transition-all hover:bg-slate-900">
+              <div className="w-12 h-12 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center mb-5">
+                <Zap className="w-6 h-6" />
               </div>
-              
-              <div className="flex flex-wrap items-center gap-1.5 sm:gap-3 text-[9px] sm:text-[11px] font-bold">
-                <span className="flex items-center gap-1 bg-orange-500/10 border border-orange-500/20 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md sm:rounded-lg text-orange-400">
-                  <span className="w-1.5 h-1.5 rounded-full bg-orange-400" /> Gomti Nagar HQ
-                </span>
-                <span className="flex items-center gap-1 bg-blue-500/10 border border-blue-500/20 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md sm:rounded-lg text-blue-400">
-                  <span className="w-1.5 h-1.5 rounded-full bg-blue-400" /> IT Corridors
-                </span>
-                <span className="flex items-center gap-1 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md sm:rounded-lg text-emerald-400">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" /> Commercial
-                </span>
+              <h3 className="text-xl font-bold text-white mb-2">Sub-800ms Load Speeds</h3>
+              <p className="text-sm text-slate-400 leading-relaxed mb-4">
+                Server-rendered static generation (SSG) with zero bloated plugins ensures 99/100 Google PageSpeed scores, reducing bounce rates by up to 60%.
+              </p>
+              <div className="flex items-center gap-2 text-xs font-semibold text-emerald-400">
+                <CheckCircle2 className="w-4 h-4" /> Core Web Vitals Optimized
               </div>
             </div>
 
-            {/* Main Interactive Map Canvas */}
-            <div className="relative w-full h-[440px] sm:h-[540px] lg:h-[620px] mt-4 sm:mt-6 rounded-2xl sm:rounded-3xl bg-slate-950 border border-slate-800/80 overflow-hidden flex items-center justify-center shadow-inner select-none">
-              
-              {/* Realistic Geographic Vector Elements */}
-              <svg 
-                className="absolute inset-0 w-full h-full pointer-events-none" 
-                preserveAspectRatio="none" 
-                viewBox="0 0 1000 650"
-              >
-                <defs>
-                  <linearGradient id="gomtiGradientMobile" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#0284c7" stopOpacity="0.8" />
-                    <stop offset="50%" stopColor="#06b6d4" stopOpacity="0.7" />
-                    <stop offset="100%" stopColor="#0ea5e9" stopOpacity="0.6" />
-                  </linearGradient>
-                  
-                  <filter id="highwayGlowMobile" x="-20%" y="-20%" width="140%" height="140%">
-                    <feGaussianBlur stdDeviation="3" result="blur" />
-                    <feComposite in="SourceGraphic" in2="blur" operator="over" />
-                  </filter>
-
-                  <linearGradient id="techCorridorFillMobile" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.08" />
-                    <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0.02" />
-                  </linearGradient>
-                </defs>
-
-                {/* Regional Zones */}
-                <polygon 
-                  points="600,180 880,180 880,480 620,480 580,320" 
-                  fill="url(#techCorridorFillMobile)" 
-                  stroke="#3b82f6" 
-                  strokeWidth="1" 
-                  strokeDasharray="4,4" 
-                  opacity="0.6"
-                />
-                <text x="640" y="210" fill="#60a5fa" fontSize="12" fontWeight="900" letterSpacing="2" opacity="0.5">
-                  GOMTI TECH CORRIDOR
-                </text>
-
-                <polygon 
-                  points="580,420 860,420 920,600 640,600" 
-                  fill="#f59e0b" 
-                  fillOpacity="0.04" 
-                  stroke="#f59e0b" 
-                  strokeWidth="0.8" 
-                  strokeDasharray="3,3" 
-                  opacity="0.5"
-                />
-
-                {/* Highway Network */}
-                <path 
-                  d="M 230,550 C 420,530 650,560 760,460 C 830,390 870,300 870,180" 
-                  fill="none" 
-                  stroke="#f59e0b" 
-                  strokeWidth="4.5" 
-                  filter="url(#highwayGlowMobile)"
-                  opacity="0.8" 
-                />
-                <path 
-                  d="M 230,550 C 420,530 650,560 760,460 C 830,390 870,300 870,180" 
-                  fill="none" 
-                  stroke="#fff" 
-                  strokeWidth="1" 
-                  strokeDasharray="8,6" 
-                  opacity="0.7" 
-                />
-
-                <line x1="460" y1="310" x2="940" y2="190" stroke="#10b981" strokeWidth="3.5" opacity="0.7" />
-                <line x1="380" y1="380" x2="160" y2="600" stroke="#3b82f6" strokeWidth="3.5" opacity="0.7" />
-                <line x1="430" y1="220" x2="330" y2="50" stroke="#8b5cf6" strokeWidth="3" opacity="0.6" />
-                <line x1="460" y1="320" x2="710" y2="300" stroke="#ec4899" strokeWidth="3" opacity="0.7" />
-
-                {/* Gomti River */}
-                <path 
-                  d="M 120,80 C 220,130 260,260 320,270 C 390,280 430,220 490,260 C 540,290 560,370 630,360 C 700,350 750,420 830,490 L 960,610" 
-                  fill="none" 
-                  stroke="url(#gomtiGradientMobile)" 
-                  strokeWidth="12" 
-                  strokeLinecap="round"
-                  opacity="0.85" 
-                />
-                <text x="540" y="335" fill="#38bdf8" fontSize="11" fontWeight="900" letterSpacing="1">
-                  ~ Gomti River ~
-                </text>
-
-                {/* Real Landmark Anchors */}
-                <circle cx="735" cy="465" r="12" fill="#1e293b" stroke="#f59e0b" strokeWidth="1.5" />
-                <text x="735" y="470" fill="#fbbf24" fontSize="9" fontWeight="bold" textAnchor="middle">🏟️</text>
-                <text x="755" y="470" fill="#fcd34d" fontSize="9" fontWeight="bold">Ekana</text>
-
-                <circle cx="790" cy="545" r="12" fill="#1e293b" stroke="#10b981" strokeWidth="1.5" />
-                <text x="790" y="550" fill="#34d399" fontSize="9" fontWeight="bold" textAnchor="middle">🛍️</text>
-                <text x="810" y="550" fill="#6ee7b7" fontSize="9" fontWeight="bold">Lulu Mall</text>
-
-                <circle cx="455" cy="325" r="12" fill="#1e293b" stroke="#ec4899" strokeWidth="1.5" />
-                <text x="455" y="330" fill="#f472b6" fontSize="9" fontWeight="bold" textAnchor="middle">🏛️</text>
-
-                <circle cx="360" cy="380" r="12" fill="#1e293b" stroke="#38bdf8" strokeWidth="1.5" />
-                <text x="360" y="385" fill="#7dd3fc" fontSize="9" fontWeight="bold" textAnchor="middle">🚉</text>
-              </svg>
-
-              {/* Realistic Interactive Hotspot Beacons */}
-              {[
-                { 
-                  id: "gomti-nagar", 
-                  name: "Gomti Nagar", 
-                  sector: "Sector 01 / Manoj Pandey / Patrakar",
-                  pincode: "226010",
-                  x: 70, y: 44, 
-                  color: "bg-orange-500", 
-                  pulseColor: "border-orange-400", 
-                  textColor: "text-orange-400", 
-                  isHQ: true,
-                  clients: "80+ Active Sites",
-                  turnaround: "Same-Day Meeting",
-                  specialty: "Next.js 15, SEO Schema"
-                },
-                { 
-                  id: "vibhuti-khand", 
-                  name: "Vibhuti Khand", 
-                  sector: "Cyber Heights & IT Park",
-                  pincode: "226010",
-                  x: 75, y: 39, 
-                  color: "bg-blue-500", 
-                  pulseColor: "border-blue-400", 
-                  textColor: "text-blue-400",
-                  clients: "45+ Tech Startups",
-                  turnaround: "24-48h Sprints",
-                  specialty: "SaaS Dashboards, React"
-                },
-                { 
-                  id: "hazratganj", 
-                  name: "Hazratganj", 
-                  sector: "Central Business District & GPO",
-                  pincode: "226001",
-                  x: 47, y: 49, 
-                  color: "bg-pink-500", 
-                  pulseColor: "border-pink-400", 
-                  textColor: "text-pink-400",
-                  clients: "50+ Retail Stores",
-                  turnaround: "Fast Launch",
-                  specialty: "Luxury E-Commerce"
-                },
-                { 
-                  id: "aliganj", 
-                  name: "Aliganj", 
-                  sector: "Education & Coaching Cluster",
-                  pincode: "226024",
-                  x: 42, y: 27, 
-                  color: "bg-emerald-500", 
-                  pulseColor: "border-emerald-400", 
-                  textColor: "text-emerald-400",
-                  clients: "35+ Institutes",
-                  turnaround: "3-5 Days Delivery",
-                  specialty: "Lead Funnels"
-                },
-                { 
-                  id: "indira-nagar", 
-                  name: "Indira Nagar", 
-                  sector: "Munshi Pulia Hub",
-                  pincode: "226016",
-                  x: 63, y: 29, 
-                  color: "bg-indigo-500", 
-                  pulseColor: "border-indigo-400", 
-                  textColor: "text-indigo-400",
-                  clients: "28+ Businesses",
-                  turnaround: "Quick Setup",
-                  specialty: "WordPress & Local SEO"
-                },
-                { 
-                  id: "shaheed-path", 
-                  name: "Shaheed Path", 
-                  sector: "Stadium & Expressway",
-                  pincode: "226002",
-                  x: 74, y: 72, 
-                  color: "bg-amber-500", 
-                  pulseColor: "border-amber-400", 
-                  textColor: "text-amber-400",
-                  clients: "25+ Builders",
-                  turnaround: "Real Estate Funnels",
-                  specialty: "3D Virtual Tours"
-                },
-                { 
-                  id: "sushant-golf-city", 
-                  name: "Golf City", 
-                  sector: "Lulu Mall & Medanta Zone",
-                  pincode: "226030",
-                  x: 82, y: 84, 
-                  color: "bg-emerald-500", 
-                  pulseColor: "border-emerald-400", 
-                  textColor: "text-emerald-400",
-                  clients: "20+ Enterprise Sites",
-                  turnaround: "Full Architecture",
-                  specialty: "Payment & Portals"
-                },
-                { 
-                  id: "faizabad-road", 
-                  name: "Chinhat", 
-                  sector: "BBD & Automobile Zone",
-                  pincode: "226028",
-                  x: 84, y: 24, 
-                  color: "bg-blue-500", 
-                  pulseColor: "border-blue-400", 
-                  textColor: "text-blue-400",
-                  clients: "30+ Exporters",
-                  turnaround: "B2B Catalogs",
-                  specialty: "Product Inventories"
-                },
-                { 
-                  id: "mahanagar", 
-                  name: "Mahanagar", 
-                  sector: "Specialty Clinics Enclave",
-                  pincode: "226006",
-                  x: 50, y: 36, 
-                  color: "bg-purple-500", 
-                  pulseColor: "border-purple-400", 
-                  textColor: "text-purple-400",
-                  clients: "22+ Clinics",
-                  turnaround: "Rapid Setup",
-                  specialty: "Patient Booking"
-                },
-                { 
-                  id: "ashiyana", 
-                  name: "Ashiyana", 
-                  sector: "LDA Colony Zone",
-                  pincode: "226012",
-                  x: 31, y: 77, 
-                  color: "bg-rose-500", 
-                  pulseColor: "border-rose-400", 
-                  textColor: "text-rose-400",
-                  clients: "24+ Local Shops",
-                  turnaround: "Local Fast Track",
-                  specialty: "Google Maps 3-Pack"
-                },
-                { 
-                  id: "chowk", 
-                  name: "Chowk", 
-                  sector: "Chikan & Heritage Market",
-                  pincode: "226003",
-                  x: 23, y: 38, 
-                  color: "bg-yellow-500", 
-                  pulseColor: "border-yellow-400", 
-                  textColor: "text-yellow-400",
-                  clients: "32+ Exporters",
-                  turnaround: "Global Ready",
-                  specialty: "International Stores"
-                },
-                { 
-                  id: "jankipuram", 
-                  name: "Jankipuram", 
-                  sector: "AKTU University Zone",
-                  pincode: "226021",
-                  x: 35, y: 14, 
-                  color: "bg-teal-500", 
-                  pulseColor: "border-teal-400", 
-                  textColor: "text-teal-400",
-                  clients: "18+ Startups",
-                  turnaround: "Agile Cycles",
-                  specialty: "React Apps"
-                }
-              ].map((spot) => {
-                const isSelected = activeSpot === spot.id;
-                return (
-                  <div
-                    key={spot.id}
-                    onClick={() => setActiveSpot(isSelected ? null : spot.id)}
-                    style={{ left: `${spot.x}%`, top: `${spot.y}%` }}
-                    className="absolute -translate-x-1/2 -translate-y-1/2 group cursor-pointer z-30 touch-manipulation"
-                  >
-                    {/* Blinking Pulse Rings */}
-                    <div className={`absolute -inset-2.5 sm:-inset-3.5 rounded-full ${spot.pulseColor} border animate-ping opacity-80`} />
-                    <div className={`absolute -inset-1 sm:-inset-1.5 rounded-full ${spot.color} opacity-50 animate-pulse`} />
-                    
-                    {/* Center Dot Beacon */}
-                    <div className={`relative w-3.5 h-3.5 sm:w-5 sm:h-5 rounded-full ${spot.color} border-2 border-white shadow-xl flex items-center justify-center ${isSelected ? "scale-125 ring-2 ring-emerald-400" : ""}`}>
-                      {spot.isHQ && <div className="w-1 h-1 sm:w-1.5 sm:h-1.5 bg-white rounded-full animate-ping" />}
-                    </div>
-
-                    {/* Location Tag */}
-                    <div className="absolute top-4 sm:top-5 left-1/2 -translate-x-1/2 whitespace-nowrap px-1.5 sm:px-2.5 py-0.5 rounded bg-slate-950/90 border border-slate-700/80 text-[8px] sm:text-[11px] font-black text-slate-100 shadow-xl backdrop-blur-md pointer-events-none">
-                      {spot.name} {spot.isHQ && <span className="text-orange-400 font-black ml-0.5">★ HQ</span>}
-                    </div>
-
-                    {/* Interactive Mobile & Desktop Hover Tooltip */}
-                    <div className={`transition-all duration-200 absolute bottom-6 sm:bottom-7 left-1/2 -translate-x-1/2 w-64 sm:w-80 bg-slate-900/95 border-2 border-slate-700 p-3 sm:p-4 rounded-xl sm:rounded-2xl shadow-2xl z-50 text-left backdrop-blur-xl ${isSelected ? "opacity-100 pointer-events-auto" : "opacity-0 group-hover:opacity-100 pointer-events-none sm:group-hover:pointer-events-auto"}`}>
-                      <div className="flex items-center justify-between pb-1.5 border-b border-slate-800 mb-2">
-                        <span className={`text-[9px] sm:text-[10px] font-black uppercase tracking-wider ${spot.textColor} flex items-center gap-1`}>
-                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                          PIN: {spot.pincode}
-                        </span>
-                        <span className="text-[9px] font-mono text-slate-400">STATUS: LIVE</span>
-                      </div>
-
-                      <h4 className="font-black text-sm sm:text-base text-white tracking-tight">{spot.name}</h4>
-                      <p className="text-[10px] sm:text-[11px] text-slate-400 font-medium mb-2">{spot.sector}</p>
-
-                      <div className="space-y-1 text-[11px] sm:text-xs bg-slate-950/60 p-2 sm:p-2.5 rounded-lg sm:rounded-xl border border-slate-800/80 font-medium mb-2.5">
-                        <div className="flex justify-between text-slate-300">
-                          <span className="text-slate-500">Live Sites:</span>
-                          <span className="font-bold text-white">{spot.clients}</span>
-                        </div>
-                        <div className="flex justify-between text-slate-300">
-                          <span className="text-slate-500">Delivery:</span>
-                          <span className="font-bold text-emerald-400">{spot.turnaround}</span>
-                        </div>
-                        <div className="flex justify-between text-slate-300">
-                          <span className="text-slate-500">Tech:</span>
-                          <span className="font-bold text-blue-400">{spot.specialty}</span>
-                        </div>
-                      </div>
-
-                      <a 
-                        href={`https://wa.me/919115439115?text=Hi%20TopRank%2C%20I%20need%20website%20development%20for%20my%20business%20in%20${encodeURIComponent(spot.name)}%20Lucknow.`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="block w-full py-1.5 sm:py-2 text-center bg-gradient-to-r from-orange-500 to-pink-500 hover:opacity-95 text-white font-black text-[9px] sm:text-[10px] uppercase tracking-widest rounded-lg sm:rounded-xl transition-all shadow-md"
-                      >
-                        Connect for {spot.name} Project →
-                      </a>
-                    </div>
-                  </div>
-                );
-              })}
-
-              {/* Map Bottom Helper Note */}
-              <div className="absolute bottom-2 left-2 sm:bottom-4 sm:left-4 bg-slate-950/90 border border-slate-800/80 px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-lg sm:rounded-xl text-[9px] sm:text-[10px] font-mono text-slate-400 flex items-center gap-2 backdrop-blur-md">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping shrink-0" />
-                <span>Tap any pin for instant details</span>
+            <div className="p-7 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-blue-500/50 transition-all hover:bg-slate-900">
+              <div className="w-12 h-12 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center mb-5">
+                <Search className="w-6 h-6" />
               </div>
+              <h3 className="text-xl font-bold text-white mb-2">Built-in Technical SEO</h3>
+              <p className="text-sm text-slate-400 leading-relaxed mb-4">
+                Automated XML sitemaps, OpenGraph cards, and rich Schema.org JSON-LD structured data engineered to dominate Google Search and Google Maps.
+              </p>
+              <div className="flex items-center gap-2 text-xs font-semibold text-blue-400">
+                <CheckCircle2 className="w-4 h-4" /> LocalBusiness Schema Included
+              </div>
+            </div>
 
+            <div className="p-7 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-purple-500/50 transition-all hover:bg-slate-900">
+              <div className="w-12 h-12 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center mb-5">
+                <MessageSquare className="w-6 h-6" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-2">WhatsApp & Call Triggers</h3>
+              <p className="text-sm text-slate-400 leading-relaxed mb-4">
+                Frictionless 1-tap WhatsApp consultation buttons, dynamic click-to-call bars, and lightweight lead capture forms synced to your dashboard.
+              </p>
+              <div className="flex items-center gap-2 text-xs font-semibold text-purple-400">
+                <CheckCircle2 className="w-4 h-4" /> Instant Customer Dispatch
+              </div>
+            </div>
+
+            <div className="p-7 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-amber-500/50 transition-all hover:bg-slate-900">
+              <div className="w-12 h-12 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center mb-5">
+                <Monitor className="w-6 h-6" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-2">100% Fluid Responsive UI</h3>
+              <p className="text-sm text-slate-400 leading-relaxed mb-4">
+                Pixel-perfect UI designed in Figma tailored for mobile devices, tablets, and 4K desktop screens with smooth micro-interactions.
+              </p>
+              <div className="flex items-center gap-2 text-xs font-semibold text-amber-400">
+                <CheckCircle2 className="w-4 h-4" /> Adaptive Touch Ergonomics
+              </div>
+            </div>
+
+            <div className="p-7 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-sky-500/50 transition-all hover:bg-slate-900">
+              <div className="w-12 h-12 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center mb-5">
+                <ShieldCheck className="w-6 h-6" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-2">Enterprise Security & SSL</h3>
+              <p className="text-sm text-slate-400 leading-relaxed mb-4">
+                Zero PHP database vulnerabilities. Built with enterprise-grade SSL, automatic DDoS mitigation, and robust Content Security Policies (CSP).
+              </p>
+              <div className="flex items-center gap-2 text-xs font-semibold text-sky-400">
+                <CheckCircle2 className="w-4 h-4" /> 100% Hack-Resistant Stack
+              </div>
+            </div>
+
+            <div className="p-7 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-pink-500/50 transition-all hover:bg-slate-900">
+              <div className="w-12 h-12 rounded-xl bg-pink-500/20 text-pink-400 flex items-center justify-center mb-5">
+                <Layers className="w-6 h-6" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-2">Full-Stack Tech Stack</h3>
+              <p className="text-sm text-slate-400 leading-relaxed mb-4">
+                Powered by Next.js 16, React 19, TypeScript, Tailwind CSS, Supabase, and PostgreSQL for unmatched scalability as your business grows.
+              </p>
+              <div className="flex items-center gap-2 text-xs font-semibold text-pink-400">
+                <CheckCircle2 className="w-4 h-4" /> Modern Cloud Architecture
+              </div>
             </div>
 
           </div>
 
-          {/* 2. DUAL-ROW INFINITE MARQUEE SCROLLING TICKER */}
-          <div className="space-y-4 sm:space-y-6">
-            
-            <div className="text-center mb-4 sm:mb-6">
-              <p className="text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] text-slate-400">
-                ⚡ Rapid 24-48h Project Delivery Across All Lucknow Neighborhoods
+          {/* 2. Lucknow Local Service & Neighborhood Coverage */}
+          <div className="p-8 sm:p-12 rounded-3xl bg-slate-900/60 border border-slate-800">
+            <div className="text-center max-w-2xl mx-auto mb-10">
+              <span className="text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] text-blue-400 bg-blue-500/10 border border-blue-500/20 px-3 py-1 rounded-full mb-3 inline-block">
+                In-Person & Remote Support
+              </span>
+              <h3 className="text-2xl sm:text-3xl font-black text-white mb-3">
+                Serving Businesses Across All Lucknow Hubs
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-400">
+                We offer on-site project discovery meetings and rapid 24-48h turnaround sprints across major commercial belts in Lucknow:
               </p>
             </div>
 
-            {/* Marquee Row 1 (Left Scrolling) */}
-            <div className="relative w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_10%,white_90%,transparent)]">
-              <div className="flex gap-3 sm:gap-4 w-max animate-marquee hover:[animation-play-state:paused] py-1 sm:py-2">
-                {[
-                  { name: "Gomti Nagar", badge: "Headquarters (HQ)", desc: "Next.js 15 Web Dev & Local SEO Architecture", icon: "🏢" },
-                  { name: "Hazratganj", badge: "Commercial Hub", desc: "Luxury E-Commerce & High-Converting Stores", icon: "🛍️" },
-                  { name: "Vibhuti Khand", badge: "IT & Tech Park", desc: "SaaS Dashboards & Enterprise React Portals", icon: "💻" },
-                  { name: "Aliganj", badge: "Education Zone", desc: "Coaching Portals & Student Admission Funnels", icon: "🎓" },
-                  { name: "Indira Nagar", badge: "Business Hub", desc: "Fast-Loading Business Web Platforms", icon: "⚡" },
-                  { name: "Shaheed Path", badge: "Real Estate", desc: "3D Virtual Property Showcase & Lead Capture", icon: "🏗️" },
-                  { name: "Sushant Golf City", badge: "Townships", desc: "Enterprise Web Architecture & Portals", icon: "⛳" },
-                  { name: "Faizabad Road", badge: "Automobile", desc: "Showroom Inventory & Customer CRM Sync", icon: "🚗" },
-                  // Duplication for seamless continuous loop
-                  { name: "Gomti Nagar", badge: "Headquarters (HQ)", desc: "Next.js 15 Web Dev & Local SEO Architecture", icon: "🏢" },
-                  { name: "Hazratganj", badge: "Commercial Hub", desc: "Luxury E-Commerce & High-Converting Stores", icon: "🛍️" },
-                  { name: "Vibhuti Khand", badge: "IT & Tech Park", desc: "SaaS Dashboards & Enterprise React Portals", icon: "💻" },
-                  { name: "Aliganj", badge: "Education Zone", desc: "Coaching Portals & Student Admission Funnels", icon: "🎓" },
-                  { name: "Indira Nagar", badge: "Business Hub", desc: "Fast-Loading Business Web Platforms", icon: "⚡" },
-                  { name: "Shaheed Path", badge: "Real Estate", desc: "3D Virtual Property Showcase & Lead Capture", icon: "🏗️" },
-                  { name: "Sushant Golf City", badge: "Townships", desc: "Enterprise Web Architecture & Portals", icon: "⛳" },
-                  { name: "Faizabad Road", badge: "Automobile", desc: "Showroom Inventory & Customer CRM Sync", icon: "🚗" }
-                ].map((item, idx) => (
-                  <div 
-                    key={idx} 
-                    className="flex-shrink-0 w-60 sm:w-72 bg-slate-900/90 border border-slate-800 hover:border-blue-500/50 p-3.5 sm:p-4 rounded-xl sm:rounded-2xl shadow-lg hover:shadow-blue-500/10 transition-all group"
-                  >
-                    <div className="flex items-center justify-between mb-1.5 sm:mb-2">
-                      <span className="text-lg sm:text-xl">{item.icon}</span>
-                      <span className="text-[8px] sm:text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20">
-                        {item.badge}
-                      </span>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {[
+                { name: "Gomti Nagar (HQ)", desc: "Corporate offices, IT startups, Patrakar Puram & Manoj Pandey Chowk", badge: "Same-Day Meeting" },
+                { name: "Hazratganj", desc: "Retail fashion brands, heritage shops, luxury dining & legal firms", badge: "Commercial Hub" },
+                { name: "Vibhuti Khand", desc: "Cyber Heights tech startups, SaaS companies & co-working spaces", badge: "IT Park" },
+                { name: "Aliganj & Kapoorthala", desc: "Coaching institutes, colleges, medical clinics & local retail", badge: "Education Zone" },
+                { name: "Indira Nagar", desc: "Munshi Pulia commercial belt, healthcare clinics & logistics", badge: "Business Sector" },
+                { name: "Shaheed Path & Ekana", desc: "Real estate developers, hotel banquets & stadium complexes", badge: "Real Estate Hub" },
+                { name: "Sushant Golf City", desc: "Lulu Mall commercial district, Medanta hospitals & luxury housing", badge: "Townships" },
+                { name: "Chowk & Old City", desc: "Chikan garment exporters, wholesale jewelry & traditional trade", badge: "Export & Trade" }
+              ].map((area, idx) => (
+                <div key={idx} className="p-5 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-blue-500/50 transition-all flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-1.5 font-bold text-white text-sm">
+                        <MapPin className="w-4 h-4 text-blue-400 shrink-0" />
+                        {area.name}
+                      </div>
                     </div>
-                    <h4 className="font-black text-xs sm:text-sm text-white group-hover:text-blue-400 transition-colors">{item.name}</h4>
-                    <p className="text-[10px] sm:text-[11px] text-slate-400 font-medium mt-1 line-clamp-1">{item.desc}</p>
+                    <p className="text-xs text-slate-400 leading-relaxed mb-4">{area.desc}</p>
                   </div>
-                ))}
-              </div>
+                  <div className="flex items-center justify-between pt-3 border-t border-slate-800/80">
+                    <span className="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+                      {area.badge}
+                    </span>
+                    <a
+                      href={`https://wa.me/919115439115?text=${encodeURIComponent(`Hi TopRank, I need website development for my business in ${area.name}, Lucknow.`)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs font-bold text-blue-400 hover:text-blue-300 flex items-center gap-1"
+                    >
+                      Inquire →
+                    </a>
+                  </div>
+                </div>
+              ))}
             </div>
 
-            {/* Marquee Row 2 (Right Scrolling) */}
-            <div className="relative w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_10%,white_90%,transparent)]">
-              <div className="flex gap-3 sm:gap-4 w-max animate-marquee-reverse hover:[animation-play-state:paused] py-1 sm:py-2">
-                {[
-                  { name: "Mahanagar", badge: "Healthcare", desc: "Doctor Appointment & Multi-Specialty Portals", icon: "🏥" },
-                  { name: "Ashiyana & LDA", badge: "Retail & Trade", desc: "Google Map 3-Pack Dominance & Citations", icon: "📍" },
-                  { name: "Chowk & Old City", badge: "Zari & Chikan", desc: "International Multi-Currency Online Stores", icon: "🧵" },
-                  { name: "Kapoorthala", badge: "Institutes", desc: "Student Registration & Course LMS Funnels", icon: "📚" },
-                  { name: "Chinhat Industrial", badge: "Manufacturing", desc: "B2B Product Catalogs & Wholesale Engines", icon: "🏭" },
-                  { name: "Janki Puram", badge: "EdTech & Labs", desc: "SaaS Dashboards & Custom Web Applications", icon: "🚀" },
-                  { name: "Transport Nagar", badge: "Logistics", desc: "Fleet Management & Booking Platforms", icon: "🚚" },
-                  { name: "Rajajipuram", badge: "Local Business", desc: "Zero-Latency Mobile Lead Conversion Sites", icon: "🎯" },
-                  // Duplication for seamless loop
-                  { name: "Mahanagar", badge: "Healthcare", desc: "Doctor Appointment & Multi-Specialty Portals", icon: "🏥" },
-                  { name: "Ashiyana & LDA", badge: "Retail & Trade", desc: "Google Map 3-Pack Dominance & Citations", icon: "📍" },
-                  { name: "Chowk & Old City", badge: "Zari & Chikan", desc: "International Multi-Currency Online Stores", icon: "🧵" },
-                  { name: "Kapoorthala", badge: "Institutes", desc: "Student Registration & Course LMS Funnels", icon: "📚" },
-                  { name: "Chinhat Industrial", badge: "Manufacturing", desc: "B2B Product Catalogs & Wholesale Engines", icon: "🏭" },
-                  { name: "Janki Puram", badge: "EdTech & Labs", desc: "SaaS Dashboards & Custom Web Applications", icon: "🚀" },
-                  { name: "Transport Nagar", badge: "Logistics", desc: "Fleet Management & Booking Platforms", icon: "🚚" },
-                  { name: "Rajajipuram", badge: "Local Business", desc: "Zero-Latency Mobile Lead Conversion Sites", icon: "🎯" }
-                ].map((item, idx) => (
-                  <div 
-                    key={idx} 
-                    className="flex-shrink-0 w-60 sm:w-72 bg-slate-900/90 border border-slate-800 hover:border-emerald-500/50 p-3.5 sm:p-4 rounded-xl sm:rounded-2xl shadow-lg hover:shadow-emerald-500/10 transition-all group"
-                  >
-                    <div className="flex items-center justify-between mb-1.5 sm:mb-2">
-                      <span className="text-lg sm:text-xl">{item.icon}</span>
-                      <span className="text-[8px] sm:text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                        {item.badge}
-                      </span>
-                    </div>
-                    <h4 className="font-black text-xs sm:text-sm text-white group-hover:text-emerald-400 transition-colors">{item.name}</h4>
-                    <p className="text-[10px] sm:text-[11px] text-slate-400 font-medium mt-1 line-clamp-1">{item.desc}</p>
-                  </div>
-                ))}
-              </div>
+            <div className="mt-8 text-center pt-6 border-t border-slate-800/80">
+              <a
+                href="#quote-form"
+                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm transition-all shadow-lg shadow-blue-600/30 hover:scale-[1.02]"
+              >
+                <Sparkles className="w-4 h-4" />
+                Schedule In-Person Consultation in Lucknow
+              </a>
             </div>
-
           </div>
 
         </div>
       </section>
+
+      {/* ─────────────────────────────────────────────────────────────
+          TOPICAL CLUSTER & RESEARCH GUIDES (Internal & External Linking)
+      ───────────────────────────────────────────────────────────── */}
+      <SeoTopicClusterSection currentCity="Lucknow" />
 
       {/* ─────────────────────────────────────────────────────────────
           12. FAQS

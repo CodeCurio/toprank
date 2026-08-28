@@ -22,17 +22,20 @@ export function ContactFormBlock() {
     setLoading(true);
 
     try {
-      await supabase.from("leads").insert([
-        {
+      await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
           name: formData.name,
           phone: formData.phone,
-          service_requested: formData.service || "General Inquiry",
-          message: `Email: ${formData.email} | Notes: ${formData.message}`,
-          status: "New",
-        },
-      ]);
+          email: formData.email,
+          service: formData.service || "General Strategy",
+          message: formData.message || "Consultation request",
+          location: "Lucknow"
+        }),
+      });
     } catch (err) {
-      console.error("Supabase lead insertion error:", err);
+      console.error("Lead submission error:", err);
     }
 
     const text = `Hi TopRank Team, I would like to request a strategy consultation.\n\n👤 *Name:* ${formData.name}\n📞 *Phone:* ${formData.phone}\n📧 *Email:* ${formData.email}\n🎯 *Service:* ${formData.service || "General Strategy"}\n\n📝 *Project Details:*\n${formData.message}\n\nPlease let me know the next steps!`;
