@@ -4,6 +4,7 @@ import { MasterCategories } from "@/components/services/master/MasterCategories"
 import { MasterPsychology } from "@/components/services/master/MasterPsychology";
 import { MasterProof } from "@/components/services/master/MasterProof";
 import { MasterBottom } from "@/components/services/master/MasterBottom";
+import { SeoServicesInLucknowClient } from "@/components/services/custom/SeoServicesInLucknowClient";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
@@ -15,6 +16,19 @@ interface LocationPageProps {
 
 export async function generateMetadata({ params }: LocationPageProps): Promise<Metadata> {
   const { location: locationParam } = await params;
+
+  if (locationParam === "seo-services-in-lucknow") {
+    return {
+      title: {
+        absolute: "Best SEO Services in Lucknow | Rank #1 on Google - TopRank"
+      },
+      description: "Looking for top-rated SEO services in Lucknow? TopRank helps businesses rank #1 on Google, drive targeted organic traffic, dominate local map pack & get 5X leads.",
+      alternates: {
+        canonical: "https://www.toprankindia.com/seo-services-in-lucknow"
+      }
+    };
+  }
+
   const location = locations[locationParam as LocationSlug];
   
   if (!location) {
@@ -32,6 +46,11 @@ export async function generateMetadata({ params }: LocationPageProps): Promise<M
 
 export default async function LocationLandingPage({ params }: LocationPageProps) {
   const { location: locationParam } = await params;
+
+  if (locationParam === "seo-services-in-lucknow") {
+    return <SeoServicesInLucknowClient />;
+  }
+
   const location = locations[locationParam as LocationSlug];
 
   if (!location) {
