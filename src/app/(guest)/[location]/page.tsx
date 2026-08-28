@@ -5,6 +5,9 @@ import { MasterPsychology } from "@/components/services/master/MasterPsychology"
 import { MasterProof } from "@/components/services/master/MasterProof";
 import { MasterBottom } from "@/components/services/master/MasterBottom";
 import { SeoServicesInLucknowClient } from "@/components/services/custom/SeoServicesInLucknowClient";
+import { SeoServicesInChandigarhClient } from "@/components/services/custom/SeoServicesInChandigarhClient";
+import { SeoServicesInMohaliClient } from "@/components/services/custom/SeoServicesInMohaliClient";
+import { SeoServicesInGondaClient } from "@/components/services/custom/SeoServicesInGondaClient";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
@@ -29,6 +32,42 @@ export async function generateMetadata({ params }: LocationPageProps): Promise<M
     };
   }
 
+  if (locationParam === "seo-services-in-chandigarh") {
+    return {
+      title: {
+        absolute: "Best SEO Services in Chandigarh | Rank #1 on Google - TopRank"
+      },
+      description: "Looking for top-rated SEO services in Chandigarh, Mohali & Panchkula? TopRank helps businesses rank #1 on Google, dominate Tricity local search & get 5X leads.",
+      alternates: {
+        canonical: "https://www.toprankindia.com/seo-services-in-chandigarh"
+      }
+    };
+  }
+
+  if (locationParam === "seo-services-in-mohali") {
+    return {
+      title: {
+        absolute: "Best SEO Services in Mohali | Rank #1 on Google - TopRank"
+      },
+      description: "Looking for top-rated SEO services in Mohali? TopRank helps businesses rank #1 on Google, dominate local map pack & capture high-intent leads in Phase 7, 8 & Aerocity.",
+      alternates: {
+        canonical: "https://www.toprankindia.com/seo-services-in-mohali"
+      }
+    };
+  }
+
+  if (locationParam === "seo-services-in-gonda") {
+    return {
+      title: {
+        absolute: "Best SEO Services in Gonda | Rank #1 on Google - TopRank"
+      },
+      description: "Looking for top-rated SEO services in Gonda? TopRank helps businesses rank #1 on Google, dominate local map pack & capture high-intent leads across Gonda & Eastern UP.",
+      alternates: {
+        canonical: "https://www.toprankindia.com/seo-services-in-gonda"
+      }
+    };
+  }
+
   const location = locations[locationParam as LocationSlug];
   
   if (!location) {
@@ -49,6 +88,18 @@ export default async function LocationLandingPage({ params }: LocationPageProps)
 
   if (locationParam === "seo-services-in-lucknow") {
     return <SeoServicesInLucknowClient />;
+  }
+
+  if (locationParam === "seo-services-in-chandigarh") {
+    return <SeoServicesInChandigarhClient />;
+  }
+
+  if (locationParam === "seo-services-in-mohali") {
+    return <SeoServicesInMohaliClient />;
+  }
+
+  if (locationParam === "seo-services-in-gonda") {
+    return <SeoServicesInGondaClient />;
   }
 
   const location = locations[locationParam as LocationSlug];
