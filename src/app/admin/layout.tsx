@@ -32,63 +32,71 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       return;
     }
 
+    let isMounted = true;
+
     const checkAuth = async () => {
       try {
         const { data: { session } } = await supabase.auth.getSession();
-        if (session?.user) {
+        if (session?.user && isMounted) {
           setUser(session.user);
           setLoading(false);
           return;
         }
 
         const { data: { user: currentUser } } = await supabase.auth.getUser();
-        if (currentUser) {
+        if (currentUser && isMounted) {
           setUser(currentUser);
           setLoading(false);
           return;
         }
 
-        // Fast fallback: check localStorage stored session token
+        // Check local storage marker
         if (typeof window !== "undefined") {
-          const storedToken = localStorage.getItem("sb-wxdbburfdxkqmxmmexbi-auth-token");
-          if (storedToken) {
-            try {
-              const parsed = JSON.parse(storedToken);
-              if (parsed?.user) {
-                setUser(parsed.user);
-                setLoading(false);
-                return;
-              }
-            } catch (e) {}
+          const loggedInMark = localStorage.getItem("toprank_admin_logged_in");
+          if (loggedInMark === "true" && isMounted) {
+            setUser({ email: "admin@toprankindia.com" });
+            setLoading(false);
+            return;
           }
         }
 
         // If no active session or user found, redirect to login
-        router.push("/admin/login");
+        if (isMounted) {
+          router.push("/admin/login");
+        }
       } catch (err) {
         console.error("Auth check error:", err);
-        router.push("/admin/login");
+        if (isMounted) {
+          router.push("/admin/login");
+        }
       }
     };
 
     checkAuth();
 
     const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
-      if (event === "SIGNED_OUT" && pathname !== "/admin/login") {
-        router.push("/admin/login");
-      } else if (session?.user) {
+      if (!isMounted) return;
+      if (session?.user) {
         setUser(session.user);
         setLoading(false);
+      } else if (event === "SIGNED_OUT" && pathname !== "/admin/login") {
+        if (typeof window !== "undefined") {
+          localStorage.removeItem("toprank_admin_logged_in");
+        }
+        router.push("/admin/login");
       }
     });
 
-    return () => authListener.subscription.unsubscribe();
+    return () => {
+      isMounted = false;
+      authListener.subscription.unsubscribe();
+    };
   }, [pathname, router]);
 
   const handleLogout = async () => {
     try {
       if (typeof window !== "undefined") {
-        localStorage.removeItem("sb-wxdbburfdxkqmxmmexbi-auth-token");
+        localStorage.removeItem("toprank_admin_logged_in");
       }
       await supabase.auth.signOut();
     } catch (e) {}
@@ -103,83 +111,71 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     return (
       <div className="min-h-screen bg-slate-950 text-white flex flex-col items-center justify-center gap-3">
         <div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
-        <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Verifying Admin Permissions...</p>
+        <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Opening Control Center...</p>
       </div>
     );
   }
 
   const navItems = [
     { name: "Overview", href: "/admin", icon: LayoutDashboard },
-    { name: "Blog Posts", href: "/admin/blogs", icon: FileText },
     { name: "Portfolios", href: "/admin/portfolios", icon: Briefcase },
+    { name: "Blog Posts", href: "/admin/blogs", icon: FileText },
     { name: "Contact Leads", href: "/admin/leads", icon: Inbox },
   ];
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white flex flex-col md:flex-row">
+    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col md:flex-row font-sans selection:bg-purple-600 selection:text-white">
       
-      {/* Mobile Top Bar */}
+      {/* Mobile Top Navbar */}
       <div className="md:hidden flex items-center justify-between p-4 bg-slate-900 border-b border-slate-800">
         <div className="flex items-center gap-2">
-          <div className="bg-white p-1.5 rounded-lg">
-            <Image src={LogoImg} alt="Logo" className="h-6 w-auto object-contain" />
-          </div>
-          <span className="text-sm font-black tracking-tight text-white">Admin Panel</span>
+          <Image src={LogoImg} alt="TopRank Logo" className="h-7 w-auto object-contain brightness-0 invert" />
+          <span className="text-xs font-black uppercase tracking-widest text-purple-400">Admin</span>
         </div>
         <button
           onClick={() => setSidebarOpen(!sidebarOpen)}
-          className="p-2 rounded-lg bg-slate-800 text-slate-300 hover:text-white"
+          className="p-2 rounded-xl bg-slate-800 text-slate-300"
         >
           {sidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
         </button>
       </div>
 
       {/* Sidebar Navigation */}
-      <aside className={`fixed md:sticky top-0 bottom-0 left-0 z-50 w-64 bg-slate-900/95 backdrop-blur-xl border-r border-slate-800 flex flex-col justify-between transition-transform duration-300 ${
-        sidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
-      }`}>
-        <div>
-          {/* Brand Logo */}
-          <div className="p-6 border-b border-slate-800/80">
-            <Link href="/admin" className="flex items-center gap-3">
-              <div className="bg-white p-2 rounded-xl shadow-sm shrink-0">
-                <Image src={LogoImg} alt="TopRank Logo" className="h-7 w-auto object-contain" />
+      <aside
+        className={`fixed md:sticky top-0 left-0 z-50 h-screen w-64 bg-slate-900/95 backdrop-blur-xl border-r border-slate-800 flex flex-col justify-between p-6 transition-transform duration-300 ${
+          sidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
+        }`}
+      >
+        <div className="space-y-8">
+          {/* Logo & Portal Badge */}
+          <div>
+            <Link href="/admin" className="flex items-center gap-2 mb-2">
+              <div className="bg-white p-1.5 rounded-xl">
+                <Image src={LogoImg} alt="TopRank Logo" className="h-6 w-auto object-contain" />
               </div>
-              <div>
-                <span className="text-sm font-black text-white block leading-tight">Admin Portal</span>
-                <span className="text-[10px] font-bold text-orange-400 uppercase tracking-widest">TopRank CMS</span>
-              </div>
+              <span className="text-sm font-black text-white tracking-tight">TopRank Admin</span>
             </Link>
+            <span className="inline-block text-[9px] font-black uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400">
+              Control Center
+            </span>
           </div>
 
-          {/* Admin User Info Card */}
-          <div className="p-4 mx-3 my-4 bg-slate-950/80 rounded-2xl border border-slate-800/80 flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400 flex items-center justify-center shrink-0">
-              <UserCheck className="w-4 h-4" />
-            </div>
-            <div className="overflow-hidden">
-              <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest block">Super Admin</span>
-              <span className="text-xs font-bold text-white truncate block">{user?.email || "Admin User"}</span>
-            </div>
-          </div>
-
-          {/* Nav Links */}
-          <nav className="px-3 space-y-1.5">
+          {/* Navigation Links */}
+          <nav className="space-y-1.5">
             {navItems.map((item) => {
-              const IconComp = item.icon;
-              const isActive = pathname === item.href || (item.href !== "/admin" && pathname.startsWith(item.href));
+              const isActive = pathname === item.href || (item.href !== "/admin" && pathname?.startsWith(item.href));
               return (
                 <Link
-                  key={item.href}
+                  key={item.name}
                   href={item.href}
                   onClick={() => setSidebarOpen(false)}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-black transition-all ${
+                  className={`flex items-center gap-3 px-4 py-3 rounded-2xl text-xs font-bold transition-all ${
                     isActive
-                      ? "bg-gradient-to-r from-orange-500 to-pink-500 text-white shadow-md shadow-orange-500/20"
-                      : "text-slate-400 hover:text-white hover:bg-slate-800/70"
+                      ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-600/20"
+                      : "text-slate-400 hover:text-white hover:bg-slate-800/60"
                   }`}
                 >
-                  <IconComp className="w-4 h-4" />
+                  <item.icon className={`w-4 h-4 ${isActive ? "text-white" : "text-slate-400"}`} />
                   <span>{item.name}</span>
                 </Link>
               );
@@ -187,29 +183,39 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           </nav>
         </div>
 
-        {/* Footer Actions */}
-        <div className="p-4 border-t border-slate-800/80 space-y-2">
-          <Link
-            href="/"
-            target="_blank"
-            className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors"
-          >
-            <Globe className="w-4 h-4 text-blue-400" />
-            <span>View Live Website</span>
-          </Link>
+        {/* User Badge & Logout Button */}
+        <div className="space-y-4 pt-6 border-t border-slate-800">
+          <div className="flex items-center gap-3 px-2">
+            <div className="w-8 h-8 rounded-full bg-purple-500/20 border border-purple-500/30 flex items-center justify-center text-purple-400 font-bold text-xs">
+              <UserCheck className="w-4 h-4" />
+            </div>
+            <div className="overflow-hidden">
+              <p className="text-xs font-bold text-white truncate">{user?.email || "Admin User"}</p>
+              <p className="text-[10px] text-emerald-400 font-semibold">Active Session</p>
+            </div>
+          </div>
 
-          <button
-            onClick={handleLogout}
-            className="w-full flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold text-red-400 hover:bg-red-500/10 hover:text-red-300 transition-colors"
-          >
-            <LogOut className="w-4 h-4" />
-            <span>Sign Out</span>
-          </button>
+          <div className="flex items-center gap-2">
+            <Link
+              href="/"
+              target="_blank"
+              className="flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-[11px] font-bold transition-colors"
+            >
+              <Globe className="w-3.5 h-3.5" /> View Live
+            </Link>
+            <button
+              onClick={handleLogout}
+              className="p-2.5 rounded-xl bg-red-500/10 hover:bg-red-500/20 text-red-400 text-xs font-bold transition-colors"
+              title="Sign Out"
+            >
+              <LogOut className="w-4 h-4" />
+            </button>
+          </div>
         </div>
       </aside>
 
       {/* Main Content Area */}
-      <main className="flex-1 p-4 sm:p-8 min-h-screen overflow-y-auto">
+      <main className="flex-1 p-4 sm:p-8 md:p-10 overflow-y-auto max-w-full">
         {children}
       </main>
 

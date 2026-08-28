@@ -23,11 +23,8 @@ export default function SeoServicePage() {
       {/* Introduction & Technical Depth */}
       <LighthouseRadar />
       
-      {/* Service Breakdown (Enhanced with unique visuals) */}
-      <div className="relative">
-         <div className="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-white to-transparent z-10" />
-         <ServiceDetails />
-      </div>
+      {/* Complete 4-Pillar SEO Methodology */}
+      <ServiceDetails />
 
       {/* Numerical Mastery & Global Reach */}
       <KeywordGalaxy />

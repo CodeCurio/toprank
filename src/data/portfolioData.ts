@@ -7,6 +7,8 @@ export interface PortfolioProject {
   featuredImage: string;
   category: string;
   clientName: string;
+  challenge?: string;
+  solution?: string;
   liveUrl?: string;
   results: string;
   technologies: string;

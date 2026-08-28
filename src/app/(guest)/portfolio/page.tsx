@@ -1,8 +1,9 @@
 import { Metadata } from "next";
 import { SAMPLE_PORTFOLIO_PROJECTS } from "@/data/portfolioData";
 import { PortfolioHero } from "@/components/portfolio/PortfolioHero";
-import { PortfolioGrid } from "@/components/portfolio/PortfolioGrid";
+import { PortfolioGrid, PortfolioItem } from "@/components/portfolio/PortfolioGrid";
 import { ContactSection } from "@/components/sections/ContactSection";
+import { supabase } from "@/lib/supabase/client";
 
 export const metadata: Metadata = {
   title: "Our Portfolio | TopRank Digital",
@@ -12,20 +13,57 @@ export const metadata: Metadata = {
   },
 };
 
+// Revalidate every 60 seconds for fresh CMS updates
+export const revalidate = 60;
+
 export default async function PortfolioPage() {
-  const serializedProjects = SAMPLE_PORTFOLIO_PROJECTS.map((p) => ({
-    ...p,
-    excerpt: p.excerpt || "",
-    featuredImage: p.featuredImage || "",
-    clientName: p.clientName || "",
-    results: p.results || "",
-  }));
+  let projects: PortfolioItem[] = [];
+
+  try {
+    const { data: dbPortfolios, error } = await supabase
+      .from("portfolios")
+      .select("*")
+      .eq("published", true)
+      .order("created_at", { ascending: false });
+
+    if (!error && dbPortfolios && dbPortfolios.length > 0) {
+      projects = dbPortfolios.map((p) => {
+        const topResult = Array.isArray(p.results_metrics) && p.results_metrics.length > 0
+          ? `${p.results_metrics[0].value} ${p.results_metrics[0].label}`
+          : "+180% Growth";
+
+        return {
+          id: p.id,
+          title: p.title,
+          slug: p.slug,
+          excerpt: p.summary || "",
+          featuredImage: p.cover_image || "/images/placeholder-what-makes-us-different.jpg",
+          category: p.industry || "Digital Marketing",
+          clientName: p.client_name || "",
+          results: topResult,
+        };
+      });
+    }
+  } catch (err) {
+    console.error("Error fetching portfolios from Supabase:", err);
+  }
+
+  // If no database records found, fallback to sample projects
+  if (projects.length === 0) {
+    projects = SAMPLE_PORTFOLIO_PROJECTS.map((p) => ({
+      ...p,
+      excerpt: p.excerpt || "",
+      featuredImage: p.featuredImage || "",
+      clientName: p.clientName || "",
+      results: p.results || "",
+    }));
+  }
 
   return (
     <div className="flex flex-col min-h-screen bg-white">
       <main className="flex-grow">
         <PortfolioHero />
-        <PortfolioGrid initialProjects={serializedProjects} />
+        <PortfolioGrid initialProjects={projects} />
         
         {/* Case Study Methodology Section */}
         <section className="py-24 bg-white border-t border-slate-100">

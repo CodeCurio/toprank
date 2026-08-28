@@ -162,9 +162,11 @@ export function MobileMenu({ isOpen, setIsOpen }: MobileMenuProps) {
 
             {/* Sticky Bottom CTA */}
             <div className="absolute bottom-0 left-0 right-0 p-6 bg-white border-t border-slate-100 z-20">
-               <Button variant="gradient" className="w-full rounded-2xl shadow-xl shadow-blue-500/20 font-black tracking-wide py-6 text-[17px]" onClick={closeMenu}>
-                Book a Strategy Call
-              </Button>
+              <a href="tel:+919305030523" className="block w-full" onClick={closeMenu}>
+                <Button variant="gradient" className="w-full rounded-2xl shadow-xl shadow-blue-500/20 font-black tracking-wide py-6 text-[17px]">
+                  Book a Strategy Call
+                </Button>
+              </a>
             </div>
           </motion.div>
         </>

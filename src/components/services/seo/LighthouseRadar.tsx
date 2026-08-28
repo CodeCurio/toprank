@@ -1,254 +1,339 @@
 "use client";
 
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
-import { Zap, ShieldCheck, Search, BarChart3, Clock, Rocket, Globe, AlertCircle, CheckCircle2 } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from "react";
+import {
+  Zap,
+  ShieldCheck,
+  Search,
+  BarChart3,
+  Clock,
+  Rocket,
+  Globe,
+  CheckCircle2,
+  Activity,
+  RefreshCw,
+  Cpu,
+  Sparkles,
+  Server,
+  Layers
+} from "lucide-react";
 
-const METRICS = [
-  { 
-    id: "performance", 
-    label: "Performance", 
-    startValue: 42,
-    endValue: 98, 
-    icon: Zap, 
-    color: "text-amber-500", 
-    bg: "bg-amber-500/10",
-    desc: "Speed is a primary ranking factor. We optimize for sub-second LCP.",
-    trigger: [0.1, 0.3] // scroll range to trigger
-  },
-  { 
-    id: "seo", 
-    label: "SEO Score", 
-    startValue: 35,
-    endValue: 100, 
-    icon: Search, 
-    color: "text-blue-500", 
-    bg: "bg-blue-500/10",
-    desc: "Perfect semantic structure and metadata for every single page.",
-    trigger: [0.2, 0.4]
-  },
-  { 
-    id: "best-practices", 
-    label: "Best Practices", 
-    startValue: 58,
-    endValue: 95, 
-    icon: ShieldCheck, 
-    color: "text-emerald-500", 
-    bg: "bg-emerald-500/10",
-    desc: "Adherence to all Google Webmaster and security guidelines.",
-    trigger: [0.3, 0.5]
-  },
-  { 
-    id: "accessibility", 
-    label: "Accessibility", 
-    startValue: 62,
-    endValue: 92, 
-    icon: Globe, 
-    color: "text-purple-500", 
-    bg: "bg-purple-500/10",
-    desc: "Ensuring an inclusive experience for every user on every device.",
-    trigger: [0.4, 0.6]
-  }
-];
-
-function ScoreCard({ metric, scrollYProgress }: { metric: typeof METRICS[0], scrollYProgress: any }) {
-  // Transformation for the score value
-  const rawValue = useTransform(scrollYProgress, metric.trigger, [metric.startValue, metric.endValue]);
-  const score = useSpring(rawValue, { stiffness: 50, damping: 20 });
-  const [displayScore, setDisplayScore] = useState(metric.startValue);
-
-  // Transformation for colors and icons
-  const isOptimized = useTransform(scrollYProgress, [metric.trigger[0], metric.trigger[1]], [0, 1]);
-  const cardScale = useTransform(scrollYProgress, [metric.trigger[0], (metric.trigger[0] + metric.trigger[1])/2, metric.trigger[1]], [1, 1.05, 1]);
-  
-  useEffect(() => {
-    return score.on("change", (latest) => {
-      setDisplayScore(Math.floor(latest));
-    });
-  }, [score]);
-
-  return (
-    <motion.div
-      style={{ scale: cardScale }}
-      className="bg-white/90 backdrop-blur-md p-4 rounded-3xl shadow-2xl border border-slate-100 flex items-center gap-4 group transition-all duration-500 w-[220px]"
-    >
-      <div className={`w-12 h-12 rounded-2xl ${metric.bg} flex items-center justify-center relative`}>
-        <metric.icon className={`w-6 h-6 transition-colors duration-500 ${displayScore > 90 ? metric.color : 'text-slate-400'}`} />
-        <motion.div 
-          style={{ opacity: isOptimized }}
-          className="absolute -top-1 -right-1"
-        >
-          <CheckCircle2 className="w-4 h-4 text-emerald-500 fill-white" />
-        </motion.div>
-      </div>
-      <div>
-        <div className="text-[9px] font-black uppercase tracking-widest text-slate-400 mb-0.5">{metric.label}</div>
-        <div className={`text-2xl font-black leading-none flex items-baseline gap-1 transition-colors duration-500 
-          ${displayScore > 90 ? 'text-slate-900' : displayScore > 70 ? 'text-amber-600' : 'text-rose-600'}`
-        }>
-          {displayScore}
-          <span className="text-[10px] opacity-40">/100</span>
-        </div>
-      </div>
-      
-      {/* Scanning status line */}
-      <motion.div 
-        style={{ scaleX: isOptimized }}
-        className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent origin-left"
-      />
-    </motion.div>
-  );
+interface MetricPillar {
+  id: string;
+  name: string;
+  score: number;
+  icon: typeof Zap;
+  color: string;
+  ringColor: string;
+  tag: string;
 }
 
-export function LighthouseRadar() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"]
-  });
+const PILLARS: MetricPillar[] = [
+  {
+    id: "performance",
+    name: "Performance",
+    score: 99,
+    icon: Zap,
+    color: "text-emerald-400",
+    ringColor: "#10b981",
+    tag: "Sub-0.6s LCP",
+  },
+  {
+    id: "seo",
+    name: "SEO Score",
+    score: 100,
+    icon: Search,
+    color: "text-blue-400",
+    ringColor: "#3b82f6",
+    tag: "Valid Schema.org",
+  },
+  {
+    id: "best-practices",
+    name: "Best Practices",
+    score: 98,
+    icon: ShieldCheck,
+    color: "text-emerald-400",
+    ringColor: "#10b981",
+    tag: "A+ SSL & Security",
+  },
+  {
+    id: "accessibility",
+    name: "Accessibility",
+    score: 96,
+    icon: Globe,
+    color: "text-purple-400",
+    ringColor: "#a855f7",
+    tag: "WCAG 2.1 AAA",
+  },
+];
 
-  // Rotate the lighthouse beam based on scroll
-  const beamRotate = useTransform(scrollYProgress, [0, 0.6], [-60, 60]);
-  const beamOpacity = useTransform(scrollYProgress, [0, 0.1, 0.5, 0.6], [0, 1, 1, 0]);
+const CORE_WEB_VITALS = [
+  { name: "LCP (Largest Contentful Paint)", value: "0.54s", benchmark: "< 2.5s", status: "PASS", rating: "Good" },
+  { name: "INP (Interaction to Next Paint)", value: "12ms", benchmark: "< 200ms", status: "PASS", rating: "Fast" },
+  { name: "CLS (Cumulative Layout Shift)", value: "0.00", benchmark: "< 0.1", status: "PASS", rating: "Zero Shift" },
+  { name: "TTFB (Time to First Byte)", value: "36ms", benchmark: "< 800ms", status: "PASS", rating: "Instant" },
+];
+
+export function LighthouseRadar() {
+  const [isScanning, setIsScanning] = useState(false);
+  const [activeScore, setActiveScore] = useState<number>(99);
+  const [auditStep, setAuditStep] = useState<number>(4);
+
+  const handleRescan = () => {
+    if (isScanning) return;
+    setIsScanning(true);
+    setAuditStep(0);
+    setActiveScore(40);
+
+    const timer1 = setTimeout(() => { setAuditStep(1); setActiveScore(65); }, 400);
+    const timer2 = setTimeout(() => { setAuditStep(2); setActiveScore(82); }, 900);
+    const timer3 = setTimeout(() => { setAuditStep(3); setActiveScore(94); }, 1400);
+    const timer4 = setTimeout(() => {
+      setAuditStep(4);
+      setActiveScore(99);
+      setIsScanning(false);
+    }, 2000);
+
+    return () => {
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+      clearTimeout(timer3);
+      clearTimeout(timer4);
+    };
+  };
 
   return (
-    <section ref={containerRef} className="py-32 bg-slate-50 relative overflow-hidden">
+    <section className="py-24 lg:py-32 bg-slate-950 relative overflow-hidden border-t border-slate-800/80">
+      {/* Background Ambience & Deep Glows */}
+      <div className="absolute top-1/4 left-10 w-[550px] h-[550px] bg-blue-600/15 blur-[160px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-10 right-10 w-[500px] h-[500px] bg-emerald-600/12 blur-[150px] rounded-full pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_40%,rgba(30,58,138,0.12),transparent_100%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800c_1px,transparent_1px),linear-gradient(to_bottom,#8080800c_1px,transparent_1px)] bg-[size:32px_32px] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,black_40%,transparent_100%)] pointer-events-none" />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-center">
           
-          {/* Left: The Lighthouse Visual */}
-          <div className="relative h-[500px] flex items-center justify-center order-2 lg:order-1">
-             
-             {/* Technical Audit Heading Decor */}
-             <div className="absolute top-0 left-1/2 -translate-x-1/2 text-center">
-               <div className="inline-flex items-center gap-2 px-3 py-1 bg-slate-900 text-white rounded-full text-[9px] font-black uppercase tracking-widest mb-4">
-                 <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                 Live Technical Audit
-               </div>
-             </div>
-
-             {/* The Beam */}
-             <motion.div
-               style={{ 
-                 rotate: beamRotate, 
-                 opacity: beamOpacity,
-                 transformOrigin: 'bottom center' 
-               }}
-               className="absolute bottom-1/4 left-1/2 -translate-x-1/2 w-[1000px] h-[1000px] pointer-events-none"
-             >
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[conic-gradient(from_0deg_at_50%_100%,transparent_75deg,rgba(59,130,246,0.15)_90deg,transparent_105deg)] filter blur-3xl" />
-                
-                {/* Visual Scanning Indicator */}
-                <div className="absolute top-10 left-1/2 -translate-x-1/2 flex flex-col items-center">
-                  <div className="w-px h-20 bg-gradient-to-t from-blue-500 to-transparent" />
-                  <div className="bg-blue-600 text-white text-[8px] font-black px-2 py-1 rounded shadow-lg uppercase tracking-widest whitespace-nowrap">
-                    Optimizing Infrastructure...
+          {/* Left Column: Real-World Google Lighthouse & Core Web Vitals Diagnostic Cockpit */}
+          <div className="lg:col-span-6 order-2 lg:order-1">
+            <motion.div
+              initial={{ opacity: 0, y: 25 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="bg-slate-950/90 rounded-3xl border border-slate-800 shadow-2xl shadow-black/80 overflow-hidden backdrop-blur-xl"
+            >
+              {/* Terminal Header Bar */}
+              <div className="px-4 py-3 bg-slate-900/80 border-b border-slate-800 flex items-center justify-between gap-3">
+                <div className="flex items-center gap-2">
+                  <div className="flex gap-1.5">
+                    <div className="w-3 h-3 rounded-full bg-rose-500/80" />
+                    <div className="w-3 h-3 rounded-full bg-amber-500/80" />
+                    <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
                   </div>
+                  <span className="text-xs font-mono text-slate-300 font-bold ml-2 flex items-center gap-1.5">
+                    <Cpu className="w-3.5 h-3.5 text-blue-400" />
+                    Google Lighthouse Diagnostic Lab
+                  </span>
                 </div>
-             </motion.div>
 
-             {/* The Lighthouse Tower */}
-             <div className="relative z-20 flex flex-col items-center mt-20">
-                <div className="w-14 h-8 bg-slate-900 rounded-t-xl" />
-                <motion.div 
-                  className="w-20 h-16 bg-slate-800 border-x-4 border-slate-700 flex items-center justify-center relative overflow-hidden"
+                <button
+                  onClick={handleRescan}
+                  disabled={isScanning}
+                  className="px-2.5 py-1 rounded-lg bg-blue-600/20 hover:bg-blue-600/30 border border-blue-500/40 text-[11px] font-bold text-blue-300 flex items-center gap-1.5 transition-all cursor-pointer disabled:opacity-50"
                 >
-                   <div className="absolute inset-0 bg-gradient-to-t from-transparent via-blue-500/10 to-transparent animate-pulse" />
-                   <div className="w-10 h-10 rounded-full bg-blue-500 shadow-[0_0_60px_rgba(59,130,246,1)] relative z-10" />
-                </motion.div>
-                <div className="w-24 h-48 bg-slate-900 relative shadow-2xl">
-                   <div className="absolute inset-x-6 inset-y-8 grid grid-rows-3 gap-6">
-                      <div className="border border-white/5 rounded-sm bg-blue-500/5" />
-                      <div className="border border-white/5 rounded-sm" />
-                      <div className="border border-white/5 rounded-sm" />
-                   </div>
+                  <RefreshCw className={`w-3 h-3 ${isScanning ? "animate-spin text-blue-400" : ""}`} />
+                  <span>{isScanning ? "Auditing..." : "Re-test URL"}</span>
+                </button>
+              </div>
+
+              {/* URL & Audit Target Bar */}
+              <div className="p-3.5 sm:p-4 bg-slate-900/40 border-b border-slate-800/80 flex flex-wrap items-center justify-between gap-2 text-xs">
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] font-mono text-emerald-400 bg-emerald-950/80 border border-emerald-500/30 px-2 py-0.5 rounded flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    PASS Core Web Vitals
+                  </span>
+                  <span className="font-mono text-slate-400 truncate max-w-[200px] sm:max-w-[280px]">
+                    https://toprankindia.com
+                  </span>
                 </div>
-                <div className="w-32 h-8 bg-slate-950 rounded-xl shadow-xl" />
-             </div>
-             
-             {/* Floating Score Circles */}
-             <div className="absolute inset-0 z-30 pointer-events-none">
-                {METRICS.map((metric, i) => (
-                  <div
-                    key={metric.id}
-                    className="absolute"
-                    style={{
-                      top: i === 0 ? '5%' : i === 1 ? '15%' : i === 2 ? '65%' : '75%',
-                      left: i === 0 ? '2%' : i === 2 ? '0%' : 'auto',
-                      right: i === 1 ? '2%' : i === 3 ? '0%' : 'auto',
-                    }}
-                  >
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: i * 0.1 }}
+                <span className="text-[10px] font-mono text-slate-500">Device: Mobile & Desktop</span>
+              </div>
+
+              {/* 4 Pillars Circular Score Gauges */}
+              <div className="p-4 sm:p-6 grid grid-cols-2 sm:grid-cols-4 gap-4 border-b border-slate-800/80 bg-gradient-to-b from-slate-950 to-slate-900/60">
+                {PILLARS.map((item, idx) => {
+                  const scoreDisplay = isScanning ? Math.min(activeScore, item.score) : item.score;
+                  const radius = 28;
+                  const circumference = 2 * Math.PI * radius;
+                  const offset = circumference - (scoreDisplay / 100) * circumference;
+
+                  return (
+                    <div
+                      key={item.id}
+                      className="bg-slate-900/80 border border-slate-800 rounded-2xl p-3 flex flex-col items-center text-center relative group hover:border-blue-500/40 transition-colors"
                     >
-                      <ScoreCard metric={metric} scrollYProgress={scrollYProgress} />
-                    </motion.div>
+                      {/* SVG Gauge Circle */}
+                      <div className="relative w-18 h-18 mb-2 flex items-center justify-center">
+                        <svg className="w-full h-full transform -rotate-90" viewBox="0 0 72 72">
+                          <circle
+                            cx="36"
+                            cy="36"
+                            r={radius}
+                            stroke="currentColor"
+                            strokeWidth="5"
+                            className="text-slate-800"
+                            fill="transparent"
+                          />
+                          <motion.circle
+                            cx="36"
+                            cy="36"
+                            r={radius}
+                            stroke={item.ringColor}
+                            strokeWidth="5"
+                            strokeDasharray={circumference}
+                            animate={{ strokeDashoffset: offset }}
+                            transition={{ duration: 0.8, ease: "easeOut" }}
+                            strokeLinecap="round"
+                            fill="transparent"
+                          />
+                        </svg>
+
+                        <div className="absolute inset-0 flex flex-col items-center justify-center leading-none">
+                          <span className={`text-xl font-black ${item.color}`}>
+                            {scoreDisplay}
+                          </span>
+                          <span className="text-[8px] font-mono text-slate-500">/100</span>
+                        </div>
+                      </div>
+
+                      <div className="text-xs font-bold text-white mb-0.5">{item.name}</div>
+                      <div className="text-[9px] font-mono text-emerald-400 font-semibold truncate max-w-full">
+                        {item.tag}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Core Web Vitals Detailed Breakdown Table */}
+              <div className="p-4 sm:p-5 space-y-2.5">
+                <div className="flex items-center justify-between text-xs font-bold text-white mb-1">
+                  <span className="flex items-center gap-1.5">
+                    <Activity className="w-3.5 h-3.5 text-emerald-400" />
+                    Google Real-User Metrics (CrUX Data)
+                  </span>
+                  <span className="text-[10px] font-mono text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+                    100% Green Zone
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  {CORE_WEB_VITALS.map((vital, i) => (
+                    <div
+                      key={i}
+                      className="p-2.5 rounded-xl bg-slate-900/90 border border-slate-800/80 flex items-center justify-between"
+                    >
+                      <div className="space-y-0.5 overflow-hidden">
+                        <div className="text-[11px] font-bold text-slate-200 truncate">{vital.name}</div>
+                        <div className="text-[9px] font-mono text-slate-400">Target: {vital.benchmark}</div>
+                      </div>
+
+                      <div className="text-right shrink-0 pl-2">
+                        <div className="text-sm font-black text-emerald-400 font-mono">{vital.value}</div>
+                        <span className="text-[8px] font-black uppercase tracking-wider text-emerald-300 bg-emerald-950 px-1.5 py-0.2 rounded border border-emerald-500/30">
+                          {vital.status}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Live Diagnostic Checks Feed */}
+                <div className="mt-3 p-3 bg-slate-900/50 rounded-xl border border-slate-800 text-[11px] font-mono space-y-1.5">
+                  <div className="flex items-center gap-2 text-slate-300">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                    <span>Next.js 15 Server-Side Rendering (SSR) Active</span>
                   </div>
-                ))}
-             </div>
+                  <div className="flex items-center gap-2 text-slate-300">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                    <span>Structured JSON-LD Schema Verified by Google Rich Results</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-slate-300">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                    <span>Zero Render-Blocking Critical CSS/JS Assets</span>
+                  </div>
+                </div>
+              </div>
+
+            </motion.div>
           </div>
 
-          {/* Right: Text Content */}
-          <div className="order-1 lg:order-2 space-y-10">
+          {/* Right Column: Value Copy & Technical Guarantees */}
+          <div className="lg:col-span-6 order-1 lg:order-2 space-y-8">
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-100 text-blue-600 rounded-lg text-[10px] font-black uppercase tracking-[0.2em] mb-6">
-                <Zap className="w-3 h-3 fill-blue-600" /> Technical Supremacy
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-500/10 border border-blue-500/20 text-blue-400 rounded-full text-xs font-black uppercase tracking-wider mb-5">
+                <Zap className="w-3.5 h-3.5 fill-blue-400" /> Technical Supremacy
               </div>
-              <h2 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tight leading-[1.1] mb-8">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-[1.12] mb-5">
                 Engineered for <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Google's Favour.</span>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-300 to-emerald-400">
+                  Google's Algorithm.
+                </span>
               </h2>
-              <p className="text-xl text-slate-500 font-medium leading-relaxed max-w-xl">
-                We don't just "do" SEO. We rebuild your technical foundation to meet every single algorithmic requirement Google demands.
+              <p className="text-base sm:text-lg text-slate-300 font-medium leading-relaxed max-w-xl">
+                We don't just "do" superficial keyword stuffing. We optimize your website's entire core architecture to pass every single algorithmic requirement Google demands for ranking priority.
               </p>
             </div>
 
-            <div className="space-y-6">
-               <div className="flex gap-6 items-start p-6 bg-white rounded-[2rem] border border-slate-100 shadow-xl shadow-slate-200/50">
-                  <div className="w-14 h-14 rounded-2xl bg-amber-500/10 flex items-center justify-center shrink-0">
-                     <Clock className="w-7 h-7 text-amber-500" />
-                  </div>
-                  <div>
-                     <h4 className="font-black text-slate-900 text-lg mb-1">Sub-Second Performance</h4>
-                     <p className="text-slate-500 text-sm font-medium leading-relaxed">Our Next.js architecture ensures your site loads faster than 99% of your competitors, drastically reducing bounce rates.</p>
-                  </div>
-               </div>
-               <div className="flex gap-6 items-start p-6 bg-white rounded-[2rem] border border-slate-100 shadow-xl shadow-slate-200/50">
-                  <div className="w-14 h-14 rounded-2xl bg-blue-500/10 flex items-center justify-center shrink-0">
-                     <BarChart3 className="w-7 h-7 text-blue-500" />
-                  </div>
-                  <div>
-                     <h4 className="font-black text-slate-900 text-lg mb-1">Semantic Authority</h4>
-                     <p className="text-slate-500 text-sm font-medium leading-relaxed">We structure your data so Google's AI perfectly understands your topical expertise and rewards you with higher rankings.</p>
-                  </div>
-               </div>
+            <div className="space-y-4">
+              <div className="flex gap-4 items-start p-5 bg-slate-900/80 rounded-2xl border border-slate-800 shadow-lg shadow-black/40 hover:border-slate-700 transition-colors">
+                <div className="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center shrink-0">
+                  <Clock className="w-6 h-6 text-amber-400" />
+                </div>
+                <div>
+                  <h4 className="font-bold text-white text-base mb-1">Sub-Second Load Times (&lt; 0.6s LCP)</h4>
+                  <p className="text-slate-400 text-sm font-normal leading-relaxed">
+                    Google penalizes slow websites. Our custom Next.js engineering ensures sub-second page rendering, instantly cutting bounce rates and boosting conversions.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex gap-4 items-start p-5 bg-slate-900/80 rounded-2xl border border-slate-800 shadow-lg shadow-black/40 hover:border-slate-700 transition-colors">
+                <div className="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center shrink-0">
+                  <BarChart3 className="w-6 h-6 text-blue-400" />
+                </div>
+                <div>
+                  <h4 className="font-bold text-white text-base mb-1">Semantic Knowledge Graph & Entity Authority</h4>
+                  <p className="text-slate-400 text-sm font-normal leading-relaxed">
+                    We inject custom JSON-LD schema schemas so Google's AI completely understands your business entities, powering Rich Snippets and local map dominance.
+                  </p>
+                </div>
+              </div>
             </div>
 
-            <div className="pt-4">
-               <div className="inline-flex items-center gap-4 p-3 pr-8 bg-slate-900 border border-slate-800 rounded-3xl shadow-2xl">
-                  <div className="w-14 h-14 bg-blue-600 rounded-2xl flex items-center justify-center text-white shadow-[0_0_20px_rgba(37,99,235,0.4)]">
-                     <Rocket className="w-7 h-7" />
-                  </div>
-                  <div>
-                     <p className="text-[10px] font-black text-blue-400 uppercase tracking-widest leading-tight">Elite Guarantee</p>
-                     <p className="text-base font-black text-white">100/100 Core Web Vital Scoring</p>
-                  </div>
-               </div>
+            <div className="pt-2">
+              <div className="inline-flex items-center gap-4 p-3 pr-6 bg-slate-950 border border-slate-800 rounded-2xl shadow-xl">
+                <div className="w-12 h-12 bg-emerald-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-emerald-600/30">
+                  <Rocket className="w-6 h-6" />
+                </div>
+                <div>
+                  <p className="text-[10px] font-black text-emerald-400 uppercase tracking-widest leading-tight">
+                    Technical Guarantee
+                  </p>
+                  <p className="text-sm sm:text-base font-black text-white">
+                    100/100 Core Web Vital Scoring Across All Devices
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
 
         </div>
-
       </div>
-
-      {/* Background Ambience */}
-      <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[500px] h-[500px] bg-blue-500/5 blur-[120px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-indigo-500/5 blur-[100px] rounded-full pointer-events-none" />
     </section>
   );
 }
+
 

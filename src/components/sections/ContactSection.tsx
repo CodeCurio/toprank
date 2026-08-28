@@ -105,10 +105,10 @@ export function ContactSection() {
       console.error("Supabase lead insertion error:", err);
     }
 
-    const text = `Hi TopRank Team, I'm ${formData.name}.\n\nPhone: ${formData.phone}\n🔹 *Interested in:* ${formData.service}\n\n📝 *Message:* ${formData.message}\n\nPlease let me know how we can proceed!`;
+    const text = `Hi TopRank Team, I'm ${formData.name}.\n\n📞 *Phone:* ${formData.phone || "Not specified"}\n🔹 *Interested in:* ${formData.service}\n\n📝 *Message:* ${formData.message || "I'd like to get a quote/consultation."}\n\nPlease let me know how we can proceed!`;
     const encodedText = encodeURIComponent(text);
     setTimeout(() => {
-      window.open(`https://wa.me/91${phone.raw}?text=${encodedText}`, "_blank");
+      window.open(`https://wa.me/919115439115?text=${encodedText}`, "_blank");
       setIsSubmitting(false);
     }, 400);
   };
@@ -176,6 +176,18 @@ export function ContactSection() {
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   placeholder="e.g. Rahul Sharma"
+                  className="w-full bg-slate-900/80 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-blue-500 transition-all"
+                />
+              </div>
+
+              <div>
+                <label className="block text-slate-300 text-[11px] font-bold uppercase tracking-wider mb-1.5">Phone Number</label>
+                <input
+                  required
+                  type="tel"
+                  value={formData.phone}
+                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  placeholder="e.g. +91 98765 43210"
                   className="w-full bg-slate-900/80 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-blue-500 transition-all"
                 />
               </div>

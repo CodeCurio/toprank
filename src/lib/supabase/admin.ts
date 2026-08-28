@@ -1,14 +1,17 @@
 import { createClient } from "@supabase/supabase-js";
 
-const supabaseUrl =
-  process.env.NEXT_PUBLIC_SUPABASE_URL ||
-  "https://wxdbburfdxkqmxmmexbi.supabase.co";
+function cleanEnv(val?: string) {
+  if (!val) return "";
+  return val.replace(/^["']|["']$/g, "").trim().replace(/\/+$/, "");
+}
 
-const supabaseServiceRoleKey =
-  process.env.SUPABASE_SERVICE_ROLE_KEY ||
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind4ZGJidXJmZHhrcW14bW1leGJpIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4NTA4ODk1NywiZXhwIjoyMTAwNjY0OTU3fQ.77sgBebrbBDuea_oomezYBLoOLw0aAA1eDB_CB5zLdw";
+const rawUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const rawServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-export const supabaseAdmin = createClient(supabaseUrl, supabaseServiceRoleKey, {
+const supabaseUrl = cleanEnv(rawUrl) || "https://phrtgsxwgcnvyywrzkwp.supabase.co";
+const supabaseServiceKey = cleanEnv(rawServiceKey) || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBocnRnc3h3Z2Nudnl5d3J6a3dwIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4NzY0NzQ4NiwiZXhwIjoyMTAzMjIzNDg2fQ.uuVFP5SHT31YrJxBqmD6gItFQac7bLcOvVoA1B9MFJ8";
+
+export const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey, {
   auth: {
     persistSession: false,
     autoRefreshToken: false,

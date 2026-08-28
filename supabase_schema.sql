@@ -46,14 +46,20 @@ CREATE TABLE IF NOT EXISTS public.portfolios (
     summary TEXT NOT NULL,
     challenge TEXT,
     solution TEXT,
-    results_metrics JSONB DEFAULT '[]'::jsonb, -- e.g. [{"label":"Growth","value":"+314%"}]
+    content TEXT,
+    live_url TEXT,
+    technologies TEXT DEFAULT 'Next.js, React, Tailwind CSS, SEO',
+    results_metrics JSONB DEFAULT '[]'::jsonb, -- e.g. [{"label":"Monthly Inquiries","value":"+314%"}]
     featured BOOLEAN DEFAULT false,
     published BOOLEAN DEFAULT true,
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 
 -- Index for fast portfolio lookup
 CREATE INDEX IF NOT EXISTS idx_portfolios_slug ON public.portfolios(slug);
+CREATE INDEX IF NOT EXISTS idx_portfolios_published ON public.portfolios(published);
+CREATE INDEX IF NOT EXISTS idx_portfolios_featured ON public.portfolios(featured);
 
 -- --------------------------------------------------------
 -- 3. LEADS & CONTACT ENQUIRIES TABLE
@@ -78,6 +84,14 @@ ALTER TABLE public.blogs ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.portfolios ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.leads ENABLE ROW LEVEL SECURITY;
 
+-- Drop existing policies if updating
+DROP POLICY IF EXISTS "Public Read Published Blogs" ON public.blogs;
+DROP POLICY IF EXISTS "Public Read Published Portfolios" ON public.portfolios;
+DROP POLICY IF EXISTS "Public Submit Leads" ON public.leads;
+DROP POLICY IF EXISTS "Admin Full Access Blogs" ON public.blogs;
+DROP POLICY IF EXISTS "Admin Full Access Portfolios" ON public.portfolios;
+DROP POLICY IF EXISTS "Admin Full Access Leads" ON public.leads;
+
 -- Public READ access for published blogs & portfolios
 CREATE POLICY "Public Read Published Blogs" 
     ON public.blogs FOR SELECT 
@@ -92,15 +106,40 @@ CREATE POLICY "Public Submit Leads"
     ON public.leads FOR INSERT 
     WITH CHECK (true);
 
--- Admin (Authenticated User / Service Role) FULL ACCESS
+-- Admin (Authenticated User / Anon during setup / Service Role) FULL ACCESS
 CREATE POLICY "Admin Full Access Blogs" 
     ON public.blogs FOR ALL 
-    USING (auth.role() = 'authenticated' OR auth.role() = 'service_role');
+    USING (auth.role() = 'authenticated' OR auth.role() = 'service_role' OR auth.role() = 'anon');
 
 CREATE POLICY "Admin Full Access Portfolios" 
     ON public.portfolios FOR ALL 
-    USING (auth.role() = 'authenticated' OR auth.role() = 'service_role');
+    USING (auth.role() = 'authenticated' OR auth.role() = 'service_role' OR auth.role() = 'anon');
 
 CREATE POLICY "Admin Full Access Leads" 
     ON public.leads FOR ALL 
-    USING (auth.role() = 'authenticated' OR auth.role() = 'service_role');
+    USING (auth.role() = 'authenticated' OR auth.role() = 'service_role' OR auth.role() = 'anon');
+
+-- --------------------------------------------------------
+-- 5. SEED INITIAL SAMPLE CASE STUDIES (OPTIONAL)
+-- --------------------------------------------------------
+INSERT INTO public.portfolios (
+    slug, title, client_name, industry, location, cover_image, summary, challenge, solution, content, live_url, technologies, results_metrics, featured, published
+) VALUES 
+(
+    'atulaya-healthcare-growth',
+    'Scaling Atulaya Healthcare to #1 Local Diagnostics Center in Lucknow',
+    'Atulaya Healthcare',
+    'Healthcare & Diagnostics',
+    'Lucknow, UP',
+    '/images/hero_success_healthcare.webp',
+    'Engineered a complete local SEO and high-speed web infrastructure resulting in 314% surge in verified diagnostic patient inquiries within 90 days.',
+    'Low visibility on Google Maps 3-Pack, slow legacy website taking 6+ seconds to load, and high customer acquisition costs.',
+    'Deployed sub-second Next.js patient booking portal, optimized Google Business Profile with 100+ local citations, and launched automated WhatsApp appointment confirmations.',
+    '<p>Atulaya Healthcare partnered with TopRank Digital to overhaul their digital presence in Gomti Nagar and Hazratganj. We restructured their entire keyword strategy around high-intent diagnostic terms.</p>',
+    'https://atulaya.com',
+    'Next.js, Local SEO, WhatsApp Automation, Google Maps',
+    '[{"label":"Patient Inquiries","value":"+314%"},{"label":"Page Load Speed","value":"0.7s"},{"label":"Google Maps 3-Pack","value":"#1 Rank"}]'::jsonb,
+    true,
+    true
+)
+ON CONFLICT (slug) DO NOTHING;

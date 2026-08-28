@@ -15,6 +15,7 @@ import {
   Send
 } from "lucide-react";
 import LogoImg from "../images/TopRank logo.webp";
+import { useState } from "react";
 import { usePhone } from "@/hooks/usePhone";
 
 // Animation Variants
@@ -42,6 +43,17 @@ const staggerContainer = {
 
 export function Footer() {
   const phone = usePhone();
+  const [newsletterEmail, setNewsletterEmail] = useState("");
+
+  const handleNewsletterSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newsletterEmail) return;
+    const text = `Hi TopRank Team, I would like to subscribe to your digital growth updates.\n\n📧 *Email:* ${newsletterEmail}`;
+    const encodedText = encodeURIComponent(text);
+    window.open(`https://wa.me/919115439115?text=${encodedText}`, "_blank");
+    setNewsletterEmail("");
+  };
+
   return (
     <footer className="relative bg-slate-950 text-slate-300 pt-20 pb-10 overflow-hidden">
       {/* Background Decorative Elements */}
@@ -203,9 +215,11 @@ export function Footer() {
 
             <div className="pt-6 border-t border-slate-800/50">
               <h4 className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-3">Subscribe Updates</h4>
-              <form className="flex relative" onSubmit={(e) => e.preventDefault()}>
+              <form className="flex relative" onSubmit={handleNewsletterSubmit}>
                 <input 
                   type="email" 
+                  value={newsletterEmail}
+                  onChange={(e) => setNewsletterEmail(e.target.value)}
                   placeholder="Email address" 
                   className="w-full bg-slate-900/40 border border-slate-800 text-white px-4 py-2.5 rounded-xl focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition-all placeholder:text-slate-600 font-medium text-xs"
                   required

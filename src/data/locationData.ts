@@ -41,6 +41,11 @@ export const locations: Record<string, LocationInfo> = {
         title: "Social Media Marketing in Lucknow",
         description: "Scale your brand on Meta & Instagram in Lucknow. We build dominant social media architectures for your business.",
         icon: "Megaphone"
+      },
+      "web-designer-in-lucknow": {
+        title: "Web Designer in Lucknow",
+        description: "Looking for a professional web designer in Lucknow? We design and develop custom Next.js websites built for zero-latency performance and high lead conversions.",
+        icon: "Monitor"
       }
     }
   },
@@ -110,6 +115,11 @@ export const locations: Record<string, LocationInfo> = {
         title: "Social Media Marketing in Gonda",
         description: "Scale your brand on Meta, Instagram & WhatsApp in Gonda. We build dominant social media strategies for your local business.",
         icon: "Megaphone"
+      },
+      "web-designer-in-gonda": {
+        title: "Web Designer in Gonda",
+        description: "Looking for a professional web designer in Gonda? We build modern, fast-loading, and mobile-friendly websites to help local Gonda businesses dominate online.",
+        icon: "Monitor"
       }
     }
   },

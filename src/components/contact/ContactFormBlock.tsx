@@ -4,19 +4,46 @@ import { motion } from "framer-motion";
 import { Send, User, Mail, Phone, MessageSquare } from "lucide-react";
 import { useState } from "react";
 
+import { supabase } from "@/lib/supabase/client";
+
 export function ContactFormBlock() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    service: "",
+    message: ""
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    // Simulate API call
+
+    try {
+      await supabase.from("leads").insert([
+        {
+          name: formData.name,
+          phone: formData.phone,
+          service_requested: formData.service || "General Inquiry",
+          message: `Email: ${formData.email} | Notes: ${formData.message}`,
+          status: "New",
+        },
+      ]);
+    } catch (err) {
+      console.error("Supabase lead insertion error:", err);
+    }
+
+    const text = `Hi TopRank Team, I would like to request a strategy consultation.\n\n👤 *Name:* ${formData.name}\n📞 *Phone:* ${formData.phone}\n📧 *Email:* ${formData.email}\n🎯 *Service:* ${formData.service || "General Strategy"}\n\n📝 *Project Details:*\n${formData.message}\n\nPlease let me know the next steps!`;
+    const encodedText = encodeURIComponent(text);
+
     setTimeout(() => {
+      window.open(`https://wa.me/919115439115?text=${encodedText}`, "_blank");
       setLoading(false);
       setSuccess(true);
       setTimeout(() => setSuccess(false), 5000);
-    }, 1500);
+    }, 400);
   };
 
   return (
@@ -85,7 +112,14 @@ export function ContactFormBlock() {
                        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
                          <User className="h-5 w-5" />
                        </div>
-                       <input required type="text" className="w-full bg-slate-50 border border-slate-200 rounded-xl py-4 pl-12 pr-4 text-slate-900 font-medium placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow" placeholder="John Doe" />
+                       <input 
+                          required 
+                          type="text" 
+                          value={formData.name}
+                          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                          className="w-full bg-slate-50 border border-slate-200 rounded-xl py-4 pl-12 pr-4 text-slate-900 font-medium placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow" 
+                          placeholder="John Doe" 
+                        />
                      </div>
                    </div>
 
@@ -95,7 +129,14 @@ export function ContactFormBlock() {
                        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
                          <Phone className="h-5 w-5" />
                        </div>
-                       <input required type="tel" className="w-full bg-slate-50 border border-slate-200 rounded-xl py-4 pl-12 pr-4 text-slate-900 font-medium placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow" placeholder="+91 XXXXX XXXXX" />
+                       <input 
+                          required 
+                          type="tel" 
+                          value={formData.phone}
+                          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                          className="w-full bg-slate-50 border border-slate-200 rounded-xl py-4 pl-12 pr-4 text-slate-900 font-medium placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow" 
+                          placeholder="+91 XXXXX XXXXX" 
+                        />
                      </div>
                    </div>
                  </div>
@@ -106,20 +147,32 @@ export function ContactFormBlock() {
                      <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
                        <Mail className="h-5 w-5" />
                      </div>
-                     <input required type="email" className="w-full bg-slate-50 border border-slate-200 rounded-xl py-4 pl-12 pr-4 text-slate-900 font-medium placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow" placeholder="john@company.com" />
+                     <input 
+                        required 
+                        type="email" 
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        className="w-full bg-slate-50 border border-slate-200 rounded-xl py-4 pl-12 pr-4 text-slate-900 font-medium placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow" 
+                        placeholder="john@company.com" 
+                      />
                    </div>
                  </div>
 
                  <div className="space-y-2">
                    <label className="text-xs font-bold uppercase tracking-widest text-slate-500 ml-1">Service Required</label>
                    <div className="relative">
-                     <select required defaultValue="" className="w-full bg-slate-50 border border-slate-200 rounded-xl py-4 px-4 text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow appearance-none">
+                     <select 
+                        required 
+                        value={formData.service}
+                        onChange={(e) => setFormData({ ...formData, service: e.target.value })}
+                        className="w-full bg-slate-50 border border-slate-200 rounded-xl py-4 px-4 text-slate-900 font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow appearance-none"
+                      >
                        <option value="" disabled>Select an objective...</option>
-                       <option value="local-seo">Dominate Local Search (GMB/Local SEO)</option>
-                       <option value="national-seo">Scale Nationally (Ecommerce/B2B SEO)</option>
-                       <option value="web-dev">Build a High-Converting Website</option>
-                       <option value="ppc">Generate Immediate Leads (PPC/Ads)</option>
-                       <option value="full-stack">Full-Stack Digital Growth Partner</option>
+                       <option value="Dominate Local Search (GMB/Local SEO)">Dominate Local Search (GMB/Local SEO)</option>
+                       <option value="Scale Nationally (Ecommerce/B2B SEO)">Scale Nationally (Ecommerce/B2B SEO)</option>
+                       <option value="Build a High-Converting Website">Build a High-Converting Website</option>
+                       <option value="Generate Immediate Leads (PPC/Ads)">Generate Immediate Leads (PPC/Ads)</option>
+                       <option value="Full-Stack Digital Growth Partner">Full-Stack Digital Growth Partner</option>
                      </select>
                      <div className="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none text-slate-400">
                        <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -133,7 +186,14 @@ export function ContactFormBlock() {
                      <div className="absolute top-4 left-0 pl-4 pointer-events-none text-slate-400">
                        <MessageSquare className="h-5 w-5" />
                      </div>
-                     <textarea required rows={4} className="w-full bg-slate-50 border border-slate-200 rounded-xl py-4 pl-12 pr-4 text-slate-900 font-medium placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow resize-none" placeholder="Tell us about your current digital performance and where you want to be in 6 months..."></textarea>
+                     <textarea 
+                        required 
+                        rows={4} 
+                        value={formData.message}
+                        onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                        className="w-full bg-slate-50 border border-slate-200 rounded-xl py-4 pl-12 pr-4 text-slate-900 font-medium placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow resize-none" 
+                        placeholder="Tell us about your current digital performance and where you want to be in 6 months..."
+                      />
                    </div>
                  </div>
 

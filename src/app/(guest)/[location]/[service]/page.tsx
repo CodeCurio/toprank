@@ -1,8 +1,9 @@
 import { locations, LocationSlug, ServiceSlug } from "@/data/locationData";
-import { ServiceHero } from "@/components/services/seo/ServiceHero";
-import { ServiceDetails } from "@/components/services/seo/ServiceDetails";
-import { ServiceProof } from "@/components/services/seo/ServiceProof";
-import { ServiceConversion } from "@/components/services/seo/ServiceConversion";
+import { LocationWebDev } from "@/components/services/custom/LocationWebDev";
+import { LocationPPC } from "@/components/services/custom/LocationPPC";
+import { LocationGMB } from "@/components/services/custom/LocationGMB";
+import { LocationSocialMedia } from "@/components/services/custom/LocationSocialMedia";
+import { LocationSEO } from "@/components/services/custom/LocationSEO";
 import { WebDesignerChandigarh } from "@/components/services/custom/WebDesignerChandigarh";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -28,7 +29,7 @@ export async function generateMetadata({ params }: ServicePageProps): Promise<Me
     : `${service.title} in ${location.name}`;
 
   return {
-    title,
+    title: `${title} | TopRank Digital Service`,
     description: service.description,
     alternates: {
       canonical: `https://www.toprankindia.com/${location.slug}/${serviceParam}`
@@ -41,7 +42,7 @@ export default async function LocationServicePage({ params }: ServicePageProps) 
   const location = locations[locationParam as LocationSlug];
   const service = location?.services[serviceParam as ServiceSlug];
 
-  if (!service) {
+  if (!location || !service) {
     notFound();
   }
 
@@ -49,17 +50,53 @@ export default async function LocationServicePage({ params }: ServicePageProps) 
     return <WebDesignerChandigarh />;
   }
 
-  // Note: For now we use the SEO components for all services as a template, 
-  // but we pass location context to them. Future scaling will involve 
-  // specialized components for PPC, Web, etc.
-  
+  if (serviceParam === "website-development" || serviceParam.startsWith("web-designer-in-")) {
+    return (
+      <LocationWebDev 
+        locationName={location.name} 
+        locationSlug={location.slug} 
+        regions={location.regions} 
+      />
+    );
+  }
+
+  if (serviceParam === "ppc-services" || serviceParam.includes("ppc") || serviceParam.includes("ads")) {
+    return (
+      <LocationPPC 
+        locationName={location.name} 
+        locationSlug={location.slug} 
+        regions={location.regions} 
+      />
+    );
+  }
+
+  if (serviceParam === "gmb-services" || serviceParam.includes("gmb") || serviceParam.includes("map")) {
+    return (
+      <LocationGMB 
+        locationName={location.name} 
+        locationSlug={location.slug} 
+        regions={location.regions} 
+      />
+    );
+  }
+
+  if (serviceParam === "social-media-marketing" || serviceParam.includes("social")) {
+    return (
+      <LocationSocialMedia 
+        locationName={location.name} 
+        locationSlug={location.slug} 
+        regions={location.regions} 
+      />
+    );
+  }
+
+  // Default to LocationSEO layout
   return (
-    <main className="min-h-screen bg-slate-50 flex flex-col">
-      <ServiceHero locationName={location.name} serviceTitle={service.title} />
-      <ServiceDetails locationName={location.name} />
-      <ServiceProof locationName={location.name} />
-      <ServiceConversion locationName={location.name} />
-    </main>
+    <LocationSEO 
+      locationName={location.name} 
+      locationSlug={location.slug} 
+      regions={location.regions} 
+    />
   );
 }
 

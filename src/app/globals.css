@@ -45,3 +45,27 @@ body {
 .blog-content pre code { background-color: transparent; color: inherit; padding: 0; font-weight: 400; border: none; }
 .blog-content img { border-radius: 1rem; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); margin-top: 3rem; margin-bottom: 3rem; max-width: 100%; height: auto; border: 1px solid #cbd5e1; }
 .blog-content strong { font-weight: 800; color: #0f172a; }
+
+/* Infinite Marquee Tickers */
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes marquee-reverse {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 35s linear infinite;
+}
+
+.animate-marquee-reverse {
+  display: flex;
+  width: max-content;
+  animation: marquee-reverse 35s linear infinite;
+}
+

@@ -210,10 +210,16 @@ export function Hero({ location, content }: HeroProps) {
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] as const }}
               className="flex flex-col sm:flex-row gap-4 mb-12 relative z-20"
             >
-              <AnimatedCTA text={ctaTextToUse} className="w-full sm:w-auto shadow-[0_8px_30px_rgb(249,115,22,0.3)]" />
-              <Button variant="outline" size="lg" className="h-14 px-8 text-lg font-bold bg-white/95 md:bg-white/50 md:backdrop-blur-sm border-slate-200 text-slate-700 hover:bg-white hover:text-blue-600">
-                View Our Case Studies
-              </Button>
+              <AnimatedCTA 
+                text={ctaTextToUse} 
+                href="tel:+919305030523"
+                className="w-full sm:w-auto shadow-[0_8px_30px_rgb(249,115,22,0.3)]" 
+              />
+              <Link href="/portfolio" className="w-full sm:w-auto">
+                <Button variant="outline" size="lg" className="w-full h-14 px-8 text-lg font-bold bg-white/95 md:bg-white/50 md:backdrop-blur-sm border-slate-200 text-slate-700 hover:bg-white hover:text-blue-600">
+                  View Our Case Studies
+                </Button>
+              </Link>
             </motion.div>
 
             {/* Expertise Tags (Replaces Old Reviews Position) */}

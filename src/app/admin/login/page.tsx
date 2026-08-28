@@ -19,41 +19,40 @@ export default function AdminLoginPage() {
     setError(null);
 
     try {
-      // 1. Always call local server API route to authenticate with Supabase server-to-server
-      const res = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+      // 1. Direct Client Sign In
+      const { data, error: signInError } = await supabase.auth.signInWithPassword({
+        email: email.trim(),
+        password: password,
       });
 
-      const result = await res.json();
-
-      if (!res.ok || result.error) {
-        throw new Error(result.error || "Authentication failed. Please check credentials.");
-      }
-
-      if (result.session) {
-        // 2. Persist session directly in browser localStorage to avoid network fetch on redirect
-        try {
-          const projectRef = "wxdbburfdxkqmxmmexbi";
-          localStorage.setItem(`sb-${projectRef}-auth-token`, JSON.stringify(result.session));
-          
+      if (signInError) {
+        // Fallback to server API if client throws network error
+        const res = await fetch("/api/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: email.trim(), password }),
+        });
+        const result = await res.json();
+        if (!res.ok || result.error) {
+          throw new Error(result.error || signInError.message);
+        }
+        if (result.session) {
           await supabase.auth.setSession({
             access_token: result.session.access_token,
             refresh_token: result.session.refresh_token,
           });
-        } catch (e) {
-          console.warn("Storage warning:", e);
         }
-
-        // 3. Perform clean page redirect to Admin Overview
-        window.location.href = "/admin";
-      } else {
-        throw new Error("No active session returned.");
       }
 
+      // Mark session in localStorage
+      if (typeof window !== "undefined") {
+        localStorage.setItem("toprank_admin_logged_in", "true");
+      }
+
+      // Smooth redirect to Portfolios / Admin
+      window.location.href = "/admin/portfolios";
     } catch (err: any) {
-      console.error("Login catch error:", err);
+      console.error("Login error:", err);
       setError(err.message || "Failed to log in. Please check your credentials.");
     } finally {
       setLoading(false);
@@ -77,13 +76,13 @@ export default function AdminLoginPage() {
             <ShieldCheck className="w-3.5 h-3.5" /> Portal Control Panel
           </div>
           <h1 className="text-2xl font-black text-white tracking-tight">Admin Sign In</h1>
-          <p className="text-slate-400 text-xs mt-1 font-medium">Log in to manage blogs, portfolios &amp; leads</p>
+          <p className="text-slate-400 text-xs mt-1 font-medium">Log in to manage portfolios, blogs &amp; leads</p>
         </div>
 
         {/* Error Alert */}
         {error && (
-          <div className="mb-6 p-4 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-400 text-xs font-bold flex items-center gap-2">
-            <AlertCircle className="w-4 h-4 shrink-0" />
+          <div className="mb-6 p-4 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-400 text-xs font-bold flex items-start gap-2.5 leading-relaxed">
+            <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
             <span>{error}</span>
           </div>
         )}
@@ -101,7 +100,7 @@ export default function AdminLoginPage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="yash@toprankindia.com"
+                placeholder="admin@toprankindia.com"
                 className="w-full pl-10 pr-4 py-3 bg-slate-950/80 border border-slate-800 focus:border-blue-500 rounded-xl text-sm font-bold text-white placeholder-slate-600 focus:outline-none transition-colors"
               />
             </div>

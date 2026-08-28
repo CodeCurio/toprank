@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import slugify from "slugify";
@@ -11,7 +11,6 @@ import {
   Plus,
   Trash2,
   Star,
-  Sparkles,
   ExternalLink,
   Globe,
   Image as ImageIcon,
@@ -28,104 +27,8 @@ import {
   Check,
   Zap,
   Code2,
-  RefreshCw,
-  PlusCircle,
   X,
 } from "lucide-react";
-
-// Curated 1-Click Templates for instant creation
-const CASE_STUDY_TEMPLATES = [
-  {
-    name: "🏥 Healthcare & Clinic",
-    title: "Scaling Local Diagnostics Clinic to #1 on Google Maps in Lucknow",
-    clientName: "Atulaya Diagnostics",
-    industry: "Healthcare & Diagnostics",
-    location: "Lucknow, UP",
-    liveUrl: "https://atulaya.com",
-    technologies: "Next.js, Local SEO, WhatsApp Automation, Google Maps 3-Pack, Schema Markup",
-    coverImage: "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=1200&q=80",
-    metrics: [
-      { label: "Patient Inquiries", value: "+314%" },
-      { label: "Google Maps Ranking", value: "#1 Spot" },
-      { label: "Mobile Page Speed", value: "0.6s" },
-    ],
-    summary: "Transformed digital visibility across Gomti Nagar and Hazratganj with a sub-second booking site and hyper-targeted Google Local SEO.",
-    challenge: "• Low ranking on Google Maps behind competitors.\n• Outdated website taking 6+ seconds to load.\n• High patient drop-off and zero automated appointment tracking.",
-    solution: "• Built custom Next.js patient web app with instant WhatsApp confirmation.\n• Optimized Google Business Profile with 120+ verified local citations.\n• Deployed hyper-localized healthcare schema for multi-branch indexing.",
-    content: `<h2>Project Overview</h2>
-<p>The clinic needed a dominant local footprint to capture high-intent diagnostic searches in prime Lucknow hubs.</p>
-<h2>Strategic Blueprint</h2>
-<ul>
-  <li>Engineered a lightning-fast Next.js patient portal with direct booking triggers.</li>
-  <li>Structured local citations and geo-tagged service pages for diagnostic tests.</li>
-  <li>Integrated automated WhatsApp follow-ups for inquiries.</li>
-</ul>
-<h2>The Transformation</h2>
-<p>Within 90 days, verified patient phone inquiries surged by 314%, capturing top spots across 18 target keywords.</p>`,
-  },
-  {
-    name: "🏢 Real Estate Lead Gen",
-    title: "1,200+ High-Net-Worth Property Leads for Premium Luxury Villa Launch",
-    clientName: "Apex Urban Spaces",
-    industry: "Real Estate",
-    location: "Delhi NCR",
-    liveUrl: "https://apexspaces.example.com",
-    technologies: "Meta Ads, Google Ads, Next.js, WhatsApp Automation, Tailwind CSS",
-    coverImage: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1200&q=80",
-    metrics: [
-      { label: "Qualified Inquiries", value: "1,250+" },
-      { label: "Cost Per Lead (CPL)", value: "-54%" },
-      { label: "Site Visit Bookings", value: "320+" },
-    ],
-    summary: "Built high-converting real estate sales funnels and multi-channel PPC campaigns delivering 1,200+ verified site visits.",
-    challenge: "• Expensive lead cost on generic property portals.\n• Low lead intent and high rate of fake phone numbers.\n• Slow mobile brochure download times.",
-    solution: "• Built interactive 3D floorplan landing funnel with OTP mobile verification.\n• Scaled high-intent Google Search campaigns for NRI and luxury buyers.\n• Deployed instant WhatsApp brochure delivery within 3 seconds.",
-    content: `<h2>The Growth Strategy</h2>
-<p>We created a dedicated ultra-fast interactive landing page showcasing virtual walk-throughs and luxury villa amenities.</p>
-<h2>Key Takeaways</h2>
-<p>Reduced average cost per lead by 54% while tripling weekend site tour attendance.</p>`,
-  },
-  {
-    name: "🛍️ E-Commerce ROAS",
-    title: "Tripled D2C Store Sales to ₹45L/Month via UI Re-Engineering & Paid Ads",
-    clientName: "Nexus Fashion Collective",
-    industry: "Retail & E-commerce",
-    location: "Mumbai, MH",
-    liveUrl: "https://nexusstore.example.com",
-    technologies: "Next.js, Tailwind CSS, Shopify, Meta Ads, GA4 Tracking",
-    coverImage: "https://images.unsplash.com/photo-1556742049-0a67ef86e963?auto=format&fit=crop&w=1200&q=80",
-    metrics: [
-      { label: "Monthly Revenue", value: "₹45.2 Lakhs" },
-      { label: "Ad ROAS", value: "4.8x" },
-      { label: "Checkout Conversion", value: "+82%" },
-    ],
-    summary: "Re-engineered modern headless storefront with single-click checkout, driving massive repeat purchase rates.",
-    challenge: "• High cart abandonment rate of 78% on slow standard theme.\n• Rising customer acquisition cost on Meta Ads.\n• Poor mobile search and filter experience.",
-    solution: "• Headless Next.js storefront with 0.4s instant page transitions.\n• 1-Click Fast Checkout with automated address autofill.\n• Retention email & WhatsApp sequences for abandoned carts.",
-    content: `<h2>The Challenge & Execution</h2>
-<p>By slashing checkout friction and creating dynamic product bundling, the store boosted average order value by 38%.</p>`,
-  },
-  {
-    name: "🍽️ Restaurant & Hospitality",
-    title: "Filling 80+ Tables Daily: Hyperlocal Brand & Dine-In Campaign",
-    clientName: "Royal Awadh Gourmet",
-    industry: "Hospitality & Dining",
-    location: "Lucknow, UP",
-    liveUrl: "https://royalawadh.example.com",
-    technologies: "Meta Ads, Local SEO, Google Maps 3-Pack, WhatsApp Automation",
-    coverImage: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80",
-    metrics: [
-      { label: "Weekend Table Bookings", value: "100% Full" },
-      { label: "Instagram Reach", value: "450k/mo" },
-      { label: "Google 5-Star Reviews", value: "+280" },
-    ],
-    summary: "Positioned the luxury restaurant as Lucknow's top dining destination through viral food storytelling and Google Maps supremacy.",
-    challenge: "• New location struggled with weekday footfall.\n• Competitors dominated top search terms for 'best fine dining'.",
-    solution: "• Viral cinematic food reels campaign driving over 450,000 local impressions.\n• Smart QR review cards generating 280+ verified 5-star Google reviews.",
-    content: `<h2>Culinary Digital Dominance</h2>
-<p>Strategically targeted food enthusiasts within a 10km radius with mouthwatering short-form videos.</p>`,
-  },
-];
 
 // Rich Tech Stack Options with Visual Icons
 const TECH_STACK_CATALOG = [
@@ -178,11 +81,14 @@ const PRESET_METRICS = [
   { label: "Qualified Leads", value: "1,200+" },
 ];
 
-export default function NewPortfolioPage() {
+export default function EditPortfolioPage({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter();
+  const resolvedParams = use(params);
+  const portfolioId = resolvedParams.id;
+
   const [title, setTitle] = useState("");
   const [slug, setSlug] = useState("");
-  const [isSlugCustom, setIsSlugCustom] = useState(false);
+  const [isSlugCustom, setIsSlugCustom] = useState(true);
   const [clientName, setClientName] = useState("");
   const [industry, setIndustry] = useState("Healthcare & Diagnostics");
   const [location, setLocation] = useState("Lucknow, UP");
@@ -190,7 +96,7 @@ export default function NewPortfolioPage() {
   const [challenge, setChallenge] = useState("");
   const [solution, setSolution] = useState("");
   const [content, setContent] = useState("");
-  const [coverImage, setCoverImage] = useState(PRESET_COVERS[0].url);
+  const [coverImage, setCoverImage] = useState("");
   const [liveUrl, setLiveUrl] = useState("");
   
   // Selected Tech Stack Array
@@ -198,37 +104,84 @@ export default function NewPortfolioPage() {
     "Next.js",
     "Tailwind CSS",
     "Local SEO",
-    "WhatsApp Automation",
   ]);
   const [customTechInput, setCustomTechInput] = useState("");
 
-  const [featured, setFeatured] = useState(true);
+  const [featured, setFeatured] = useState(false);
   const [published, setPublished] = useState(true);
 
   // Dynamic Growth Metrics
   const [metrics, setMetrics] = useState<{ label: string; value: string }[]>([
-    { label: "Verified Leads", value: "+314%" },
-    { label: "Google Rank", value: "#1 Spot" },
-    { label: "Speed Score", value: "99/100" },
+    { label: "Google GMB Leads", value: "+314%" },
+    { label: "Search Keyword Rankings", value: "#1 Spot" },
   ]);
 
-  const [loading, setLoading] = useState(false);
-  const [saveAndAddNext, setSaveAndAddNext] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [copiedSlug, setCopiedSlug] = useState(false);
 
-  // Keyboard shortcut Ctrl+S / Cmd+S
+  useEffect(() => {
+    fetchPortfolio();
+  }, [portfolioId]);
+
+  // Keyboard shortcut Ctrl+S
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.ctrlKey || e.metaKey) && e.key === "s") {
         e.preventDefault();
-        const submitBtn = document.getElementById("main-portfolio-submit-btn");
+        const submitBtn = document.getElementById("edit-portfolio-submit-btn");
         if (submitBtn) submitBtn.click();
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
+
+  const fetchPortfolio = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const res = await fetch(`/api/portfolios/${portfolioId}`);
+      if (!res.ok) {
+        throw new Error("Failed to load portfolio details from database.");
+      }
+      const json = await res.json();
+      const data = json.data;
+
+      if (data) {
+        setTitle(data.title || "");
+        setSlug(data.slug || "");
+        setClientName(data.client_name || "");
+        setIndustry(data.industry || "Healthcare & Diagnostics");
+        setLocation(data.location || "Lucknow, UP");
+        setSummary(data.summary || "");
+        setChallenge(data.challenge || "");
+        setSolution(data.solution || "");
+        setContent(data.content || "");
+        setCoverImage(data.cover_image || "");
+        setLiveUrl(data.live_url || "");
+        
+        if (data.technologies) {
+          const parsed = typeof data.technologies === "string"
+            ? data.technologies.split(",").map((t: string) => t.trim()).filter(Boolean)
+            : Array.isArray(data.technologies) ? data.technologies : [];
+          setSelectedTech(parsed);
+        }
+
+        setFeatured(Boolean(data.featured));
+        setPublished(data.published !== false);
+        if (data.results_metrics && Array.isArray(data.results_metrics)) {
+          setMetrics(data.results_metrics);
+        }
+      }
+    } catch (err: any) {
+      console.error("Error fetching portfolio:", err);
+      setError(err.message || "Failed to load portfolio item");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleTitleChange = (val: string) => {
     setTitle(val);
@@ -252,30 +205,6 @@ export default function NewPortfolioPage() {
       setSelectedTech([...selectedTech, trimmed]);
     }
     setCustomTechInput("");
-  };
-
-  const applyTemplate = (tpl: (typeof CASE_STUDY_TEMPLATES)[0]) => {
-    setTitle(tpl.title);
-    setSlug(slugify(tpl.title, { lower: true, strict: true }));
-    setIsSlugCustom(false);
-    setClientName(tpl.clientName);
-    setIndustry(tpl.industry);
-    setLocation(tpl.location);
-    setLiveUrl(tpl.liveUrl);
-    
-    // Parse technologies from template
-    const parsedTech = tpl.technologies
-      .split(",")
-      .map((t) => t.trim())
-      .filter(Boolean);
-    setSelectedTech(parsedTech);
-
-    setCoverImage(tpl.coverImage);
-    setMetrics(tpl.metrics);
-    setSummary(tpl.summary);
-    setChallenge(tpl.challenge);
-    setSolution(tpl.solution);
-    setContent(tpl.content);
   };
 
   const addMetric = (label = "Growth Metric", value = "+100%") => {
@@ -304,14 +233,14 @@ export default function NewPortfolioPage() {
     setTimeout(() => setCopiedSlug(false), 2000);
   };
 
-  const handleFormSubmit = async (e: React.FormEvent, stayOnPage = false) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!title.trim() || !clientName.trim()) {
       setError("Please fill in both Case Study Title and Client Name.");
       return;
     }
 
-    setLoading(true);
+    setSaving(true);
     setError(null);
 
     const payload = {
@@ -333,37 +262,36 @@ export default function NewPortfolioPage() {
     };
 
     try {
-      const res = await fetch("/api/portfolios", {
-        method: "POST",
+      const res = await fetch(`/api/portfolios/${portfolioId}`, {
+        method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
 
       const resData = await res.json();
       if (!res.ok || resData.error) {
-        throw new Error(resData.error || "Failed to create portfolio in database.");
+        throw new Error(resData.error || "Failed to update portfolio in database.");
       }
 
-      if (stayOnPage) {
-        // Reset form for next item
-        setTitle("");
-        setSlug("");
-        setClientName("");
-        setSummary("");
-        setChallenge("");
-        setSolution("");
-        setContent("");
-        alert("Case study saved successfully! You can now add the next one.");
-      } else {
-        router.push("/admin/portfolios");
-      }
+      router.push("/admin/portfolios");
     } catch (err: any) {
-      console.error("Create portfolio error:", err);
-      setError(err.message || "Failed to save portfolio to database.");
+      console.error("Update portfolio error:", err);
+      setError(err.message || "Failed to update case study.");
     } finally {
-      setLoading(false);
+      setSaving(false);
     }
   };
+
+  if (loading) {
+    return (
+      <div className="max-w-4xl mx-auto py-24 text-center space-y-3">
+        <div className="w-8 h-8 border-2 border-purple-500 border-t-transparent rounded-full animate-spin mx-auto" />
+        <p className="text-slate-400 text-xs font-bold uppercase tracking-widest">
+          Loading Case Study Details...
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-7xl mx-auto space-y-8 pb-16">
@@ -377,52 +305,25 @@ export default function NewPortfolioPage() {
           <ArrowLeft className="w-4 h-4" /> Back to Portfolios
         </Link>
         <div className="flex items-center gap-3">
-          <span className="hidden sm:inline-flex text-[11px] text-slate-500 font-mono">
-            Pro-tip: Press <kbd className="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-300">Ctrl+S</kbd> to save
-          </span>
+          <Link
+            href={`/portfolio/${slug}`}
+            target="_blank"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-bold border border-slate-700 transition-colors"
+          >
+            <ExternalLink className="w-3.5 h-3.5" /> View Live Page
+          </Link>
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[11px] font-black uppercase tracking-wider">
-            <Zap className="w-3 h-3" /> 100% Database Connected
+            <Zap className="w-3 h-3" /> Database Sync Active
           </span>
-        </div>
-      </div>
-
-      {/* ⚡ 1-Click Fast Templates Banner */}
-      <div className="bg-gradient-to-r from-purple-950/70 via-slate-900 to-blue-950/70 border border-purple-800/40 rounded-3xl p-5 sm:p-6 shadow-xl">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-3">
-          <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-xl bg-purple-500/20 text-purple-300 border border-purple-500/30">
-              <Sparkles className="w-4 h-4" />
-            </div>
-            <div>
-              <h2 className="text-sm font-black text-white">⚡ 1-Click Fast Case Study Generator</h2>
-              <p className="text-xs text-slate-400">
-                Click any industry template below to instantly load high-converting copy, tech stack &amp; metrics
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-1">
-          {CASE_STUDY_TEMPLATES.map((tpl, i) => (
-            <button
-              key={i}
-              type="button"
-              onClick={() => applyTemplate(tpl)}
-              className="px-3.5 py-2.5 rounded-2xl bg-slate-900/90 hover:bg-purple-600 hover:text-white border border-slate-800 hover:border-purple-500 text-left text-xs font-bold text-slate-300 transition-all flex items-center justify-between group shadow-sm"
-            >
-              <span>{tpl.name}</span>
-              <span className="text-[10px] text-purple-400 group-hover:text-white font-mono">Auto-Fill ➔</span>
-            </button>
-          ))}
         </div>
       </div>
 
       {/* Main Grid: Form Left (7 Cols), Live Preview & Publish Sidebar Right (5 Cols) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         
-        {/* LEFT COLUMN: Main Form Inputs */}
+        {/* LEFT COLUMN: Form Inputs */}
         <div className="lg:col-span-7 space-y-6">
-          <form onSubmit={(e) => handleFormSubmit(e, false)} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
             
             {/* Error Message */}
             {error && (
@@ -652,7 +553,7 @@ export default function NewPortfolioPage() {
                   </button>
                 </div>
 
-                {/* Selected Custom Tags (if any outside catalog) */}
+                {/* Selected Custom Tags */}
                 {selectedTech.filter((t) => !TECH_STACK_CATALOG.some((c) => c.id === t)).length > 0 && (
                   <div className="flex flex-wrap gap-1.5 pt-2">
                     {selectedTech
@@ -855,13 +756,13 @@ export default function NewPortfolioPage() {
             {/* Mobile Submit Button */}
             <div className="block lg:hidden space-y-3">
               <button
-                id="main-portfolio-submit-btn"
+                id="edit-portfolio-submit-btn"
                 type="submit"
-                disabled={loading}
+                disabled={saving}
                 className="w-full py-4 rounded-2xl bg-gradient-to-r from-orange-500 via-pink-500 to-blue-600 text-white font-black text-sm uppercase tracking-wider shadow-lg shadow-orange-500/20 hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
               >
                 <Save className="w-4 h-4" />
-                <span>{loading ? "Saving to Database..." : "Publish Case Study"}</span>
+                <span>{saving ? "Saving Changes..." : "Update Case Study"}</span>
               </button>
             </div>
           </form>
@@ -1025,26 +926,16 @@ export default function NewPortfolioPage() {
               </label>
             </div>
 
-            {/* Desktop Action Buttons */}
-            <div className="hidden lg:block space-y-3 pt-2">
+            {/* Desktop Action Save Button */}
+            <div className="hidden lg:block pt-2">
               <button
                 type="button"
-                onClick={(e) => handleFormSubmit(e, false)}
-                disabled={loading}
+                onClick={handleSubmit}
+                disabled={saving}
                 className="w-full py-4 rounded-2xl bg-gradient-to-r from-orange-500 via-pink-500 to-blue-600 text-white font-black text-xs uppercase tracking-wider shadow-lg shadow-orange-500/20 hover:shadow-orange-500/40 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 disabled:opacity-50"
               >
                 <Save className="w-4 h-4" />
-                <span>{loading ? "Saving to Database..." : "Publish Case Study"}</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={(e) => handleFormSubmit(e, true)}
-                disabled={loading}
-                className="w-full py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white font-bold text-xs border border-slate-700 transition-all flex items-center justify-center gap-2"
-              >
-                <PlusCircle className="w-4 h-4 text-purple-400" />
-                <span>Save &amp; Add Another</span>
+                <span>{saving ? "Saving to Database..." : "Update Case Study"}</span>
               </button>
             </div>
 

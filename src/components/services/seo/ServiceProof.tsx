@@ -1,7 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Check, X, TrendingUp, Calendar, AlertCircle } from "lucide-react";
+import { Check, X, TrendingUp, Calendar, AlertCircle, Sparkles } from "lucide-react";
+import { BrandTrustEngine } from "./BrandTrustEngine";
 
 interface ServiceProofProps {
   locationName?: string;
@@ -159,45 +160,96 @@ export function ServiceProof({ locationName = "Lucknow" }: ServiceProofProps) {
 
         {/* 10. Why Choose Us (Differentiation Layer) */}
         <div>
-           <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true, margin: "-100px" }} className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center bg-slate-900 rounded-[3rem] p-10 lg:p-16 text-white relative overflow-hidden">
+           <motion.div 
+             initial={{ opacity: 0, y: 30 }} 
+             whileInView={{ opacity: 1, y: 0 }} 
+             viewport={{ once: true, margin: "-100px" }} 
+             transition={{ duration: 0.7 }}
+             className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center bg-slate-950 rounded-[2.5rem] lg:rounded-[3rem] p-8 sm:p-10 lg:p-14 text-white relative overflow-hidden border border-slate-800 shadow-2xl"
+           >
+             {/* Subtle ambient lighting inside container */}
+             <div className="absolute top-0 right-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-[120px] pointer-events-none" />
+             <div className="absolute bottom-0 left-1/4 w-80 h-80 bg-indigo-600/10 rounded-full blur-[100px] pointer-events-none" />
              
-             <div className="relative z-10">
-               <h2 className="text-3xl md:text-5xl font-black mb-8 leading-[1.1]">Why 100+ Brands <br/>Trust Us.</h2>
-               <div className="space-y-6">
-                 <div className="flex gap-4 items-start">
-                   <div className="bg-blue-500/20 p-3 rounded-xl"><TrendingUp className="w-6 h-6 text-blue-400" /></div>
+             {/* Left Column: Value Proposition & Proof Points */}
+             <div className="lg:col-span-6 relative z-10">
+               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-bold mb-6">
+                 <Sparkles className="w-3.5 h-3.5" />
+                 PROVEN TRACK RECORD
+               </div>
+
+               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black mb-6 leading-[1.15] tracking-tight">
+                 Why 100+ Brands <br />
+                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-sky-300 to-indigo-300">
+                   Trust Us To Win.
+                 </span>
+               </h2>
+
+               <p className="text-slate-400 text-sm sm:text-base font-medium mb-8 leading-relaxed">
+                 We eliminate the uncertainty of digital marketing by pairing mathematical SEO precision with deep market understanding.
+               </p>
+
+               <div className="space-y-4 sm:space-y-5 mb-8">
+                 {/* Feature 1 */}
+                 <div className="flex gap-4 items-start p-3.5 rounded-2xl bg-slate-900/50 border border-slate-800/60 hover:border-slate-700 transition-colors">
+                   <div className="bg-blue-500/20 p-2.5 rounded-xl flex-shrink-0 text-blue-400">
+                     <TrendingUp className="w-5 h-5" />
+                   </div>
                    <div>
-                     <h3 className="font-bold text-lg mb-1">Data Over Guesses</h3>
-                     <p className="text-slate-400 text-sm leading-relaxed">We don't rely on luck. Our strategies are forged from live data pulled from successful campaigns across 100+ clients.</p>
+                     <h3 className="font-bold text-white text-base mb-1">Data Over Guesses</h3>
+                     <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">
+                       We don't rely on luck. Our campaigns are engineered with empirical search intent data, algorithmic reverse-engineering, and continuous SERP telemetry.
+                     </p>
                    </div>
                  </div>
-                  <div className="flex gap-4 items-start">
-                    <div className="bg-rose-500/20 p-3 rounded-xl"><AlertCircle className="w-6 h-6 text-rose-400" /></div>
-                    <div>
-                      <h3 className="font-bold text-lg mb-1">Local Market Supremacy</h3>
-                      <p className="text-slate-400 text-sm leading-relaxed">Headquartered in Lucknow with active operations in {locationName}, we intimately understand the local search behavior, giving you a definitive edge over remote agencies.</p>
-                    </div>
-                  </div>
-                 <div className="flex gap-4 items-start">
-                   <div className="bg-orange-500/20 p-3 rounded-xl"><Calendar className="w-6 h-6 text-orange-400" /></div>
-                   <div>
-                     <h3 className="font-bold text-lg mb-1">No Lock-in Contracts</h3>
-                     <p className="text-slate-400 text-sm leading-relaxed">We retain clients through exceptional results, not legal bindings. You stay with us because your revenue is growing.</p>
+
+                 {/* Feature 2 */}
+                 <div className="flex gap-4 items-start p-3.5 rounded-2xl bg-slate-900/50 border border-slate-800/60 hover:border-slate-700 transition-colors">
+                   <div className="bg-rose-500/20 p-2.5 rounded-xl flex-shrink-0 text-rose-400">
+                     <AlertCircle className="w-5 h-5" />
                    </div>
+                   <div>
+                     <h3 className="font-bold text-white text-base mb-1">Local Market Supremacy</h3>
+                     <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">
+                       Headquartered in Lucknow with active operations in {locationName}, we intimately understand local hyper-targeted buyer queries, giving you an unbeatable edge over remote agencies.
+                     </p>
+                   </div>
+                 </div>
+
+                 {/* Feature 3 */}
+                 <div className="flex gap-4 items-start p-3.5 rounded-2xl bg-slate-900/50 border border-slate-800/60 hover:border-slate-700 transition-colors">
+                   <div className="bg-emerald-500/20 p-2.5 rounded-xl flex-shrink-0 text-emerald-400">
+                     <Calendar className="w-5 h-5" />
+                   </div>
+                   <div>
+                     <h3 className="font-bold text-white text-base mb-1">Zero Lock-In Contracts</h3>
+                     <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">
+                       We retain 98.6% of clients purely through compounding ROI and verifiable organic revenue growth, never through restrictive legal handcuffs.
+                     </p>
+                   </div>
+                 </div>
+               </div>
+
+               {/* Quick Stats Footnote */}
+               <div className="grid grid-cols-3 gap-3 pt-4 border-t border-slate-800/80">
+                 <div>
+                   <p className="text-xl sm:text-2xl font-black text-white">100+</p>
+                   <p className="text-[11px] text-slate-400 font-medium">Brands Scaled</p>
+                 </div>
+                 <div>
+                   <p className="text-xl sm:text-2xl font-black text-blue-400">3.8x</p>
+                   <p className="text-[11px] text-slate-400 font-medium">Avg. Organic ROI</p>
+                 </div>
+                 <div>
+                   <p className="text-xl sm:text-2xl font-black text-emerald-400">98.6%</p>
+                   <p className="text-[11px] text-slate-400 font-medium">Client Retention</p>
                  </div>
                </div>
              </div>
 
-             <div className="relative z-10 hidden md:block">
-               <div className="absolute inset-0 bg-blue-500/10 blur-[100px] rounded-full point-events-none" />
-               {/* Decorative Graphic */}
-               <div className="aspect-square border border-slate-700/50 rounded-full relative animate-[spin_40s_linear_infinite] ml-auto w-3/4">
-                 <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-slate-800 border border-slate-600 w-16 h-16 rounded-2xl flex items-center justify-center rotate-45 shadow-2xl">
-                   <span className="font-black text-blue-400 -rotate-45">SEO</span>
-                 </div>
-                 <div className="absolute bottom-0 right-1/4 bg-slate-800 border border-slate-600 w-12 h-12 rounded-full" />
-                 <div className="absolute top-1/2 -left-6 -translate-y-1/2 bg-slate-800 border border-slate-600 w-10 h-10 rounded-full" />
-               </div>
+             {/* Right Column: Live Interactive Brand Trust & Performance Engine */}
+             <div className="lg:col-span-6 relative z-10">
+               <BrandTrustEngine />
              </div>
            </motion.div>
         </div>

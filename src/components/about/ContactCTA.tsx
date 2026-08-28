@@ -28,7 +28,7 @@ export function ContactCTA() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <AnimatedCTA text="Get a Free Proposal" className="w-full sm:w-auto bg-white text-blue-600 hover:bg-slate-50" />
             <a 
-              href="https://wa.me/91XXXXXXXXXX" 
+              href="https://wa.me/919115439115?text=Hi%20TopRank%20Team%2C%20I%20would%20like%20to%20claim%20my%20free%20proposal%20and%20consultation." 
               target="_blank"
               rel="noopener noreferrer"
               className="w-full sm:w-auto px-8 py-4 bg-transparent border border-white/30 text-white rounded-xl text-xs md:text-sm font-black uppercase tracking-widest hover:bg-white/10 transition-all text-center"
