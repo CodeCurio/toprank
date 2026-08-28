@@ -7,24 +7,33 @@ import { SERVICES_DATA } from '@/lib/services-data';
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://www.toprankindia.com';
 
-  // 1. Static Routes
+  // 1. Core Static Routes
   const staticRoutes: MetadataRoute.Sitemap = [
     '',
     '/about',
     '/contact',
     '/services',
-    '/seo-services-in-lucknow',
-    '/seo-services-in-chandigarh',
-    '/seo-services-in-mohali',
-    '/seo-services-in-gonda',
-    '/services/website-development-lucknow',
     '/blog',
     '/portfolio',
   ].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
-    changeFrequency: 'weekly',
-    priority: route === '' ? 1 : 0.8,
+    changeFrequency: 'weekly' as const,
+    priority: route === '' ? 1.0 : 0.8,
+  }));
+
+  // 2. High-Intent City SEO & Web Development Landing Pages
+  const cityLandingRoutes: MetadataRoute.Sitemap = [
+    '/seo-services-in-lucknow',
+    '/seo-services-in-chandigarh',
+    '/seo-services-in-mohali',
+    '/seo-services-in-gonda',
+    '/services/website-development-lucknow',
+  ].map((route) => ({
+    url: `${baseUrl}${route}`,
+    lastModified: new Date(),
+    changeFrequency: 'daily' as const,
+    priority: 0.95,
   }));
 
   // 2. Location Routes
@@ -96,6 +105,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   return [
     ...staticRoutes,
+    ...cityLandingRoutes,
     ...locationRoutes,
     ...serviceRoutes,
     ...postRoutes,
