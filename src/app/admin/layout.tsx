@@ -54,7 +54,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         if (typeof window !== "undefined") {
           const loggedInMark = localStorage.getItem("toprank_admin_logged_in");
           if (loggedInMark === "true" && isMounted) {
-            setUser({ email: "admin@toprankindia.com" });
+            setUser({ email: "connect@toprankindia.com" });
             setLoading(false);
             return;
           }

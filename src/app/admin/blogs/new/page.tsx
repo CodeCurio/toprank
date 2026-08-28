@@ -32,23 +32,25 @@ export default function NewBlogPage() {
     setError(null);
 
     try {
-      const { data, error: insertError } = await supabase
-        .from("blogs")
-        .insert([
-          {
-            title,
-            slug: slug || slugify(title, { lower: true, strict: true }),
-            excerpt,
-            content,
-            cover_image: coverImage,
-            category,
-            read_time: readTime,
-            published,
-          },
-        ])
-        .select();
+      const res = await fetch("/api/blogs", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title,
+          slug: slug || slugify(title, { lower: true, strict: true }),
+          excerpt,
+          content,
+          cover_image: coverImage,
+          category,
+          read_time: readTime,
+          published,
+        }),
+      });
 
-      if (insertError) throw insertError;
+      const resData = await res.json();
+      if (!res.ok || resData.error) {
+        throw new Error(resData.error || "Failed to create blog post");
+      }
 
       router.push("/admin/blogs");
     } catch (err: any) {

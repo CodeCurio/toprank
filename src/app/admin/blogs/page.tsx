@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { supabase } from "@/lib/supabase/client";
 import Link from "next/link";
 import {
   FileText,
@@ -14,12 +13,16 @@ import {
   XCircle,
   ExternalLink,
   Sparkles,
+  RefreshCw,
+  Database,
 } from "lucide-react";
 
 export default function AdminBlogsPage() {
   const [blogs, setBlogs] = useState<any[]>([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
+  const [isFallback, setIsFallback] = useState(false);
+  const [seeding, setSeeding] = useState(false);
 
   useEffect(() => {
     fetchBlogs();
@@ -28,28 +31,50 @@ export default function AdminBlogsPage() {
   const fetchBlogs = async () => {
     setLoading(true);
     try {
-      const { data, error } = await supabase
-        .from("blogs")
-        .select("*")
-        .order("created_at", { ascending: false });
-
-      if (error) throw error;
-      setBlogs(data || []);
+      const res = await fetch("/api/blogs");
+      const json = await res.json();
+      setBlogs(json.data || []);
+      setIsFallback(Boolean(json.isFallback));
     } catch (err) {
-      console.error("Error fetching blogs:", err);
+      console.error("Error fetching blogs from API:", err);
     } finally {
       setLoading(false);
     }
   };
 
+  const handleSeedSample = async () => {
+    if (!confirm("Do you want to seed default high-quality blog posts into the database?")) return;
+    setSeeding(true);
+    try {
+      const res = await fetch("/api/blogs", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "seed_sample" }),
+      });
+      const data = await res.json();
+      if (!res.ok || data.error) throw new Error(data.error || "Failed to seed sample blogs");
+      alert("Sample blog posts seeded successfully!");
+      fetchBlogs();
+    } catch (err: any) {
+      alert(err.message || "Failed to seed blogs");
+    } finally {
+      setSeeding(false);
+    }
+  };
+
   const togglePublishStatus = async (id: string, currentStatus: boolean) => {
     try {
-      const { error } = await supabase
-        .from("blogs")
-        .update({ published: !currentStatus, updated_at: new Date().toISOString() })
-        .eq("id", id);
+      const res = await fetch(`/api/blogs/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ published: !currentStatus }),
+      });
 
-      if (error) throw error;
+      if (!res.ok) {
+        const errData = await res.json();
+        throw new Error(errData.error || "Failed to update publish status");
+      }
+
       setBlogs(blogs.map((b) => (b.id === id ? { ...b, published: !currentStatus } : b)));
     } catch (err: any) {
       alert("Failed to update status: " + err.message);
@@ -60,17 +85,25 @@ export default function AdminBlogsPage() {
     if (!confirm(`Are you sure you want to delete "${title}"?`)) return;
 
     try {
-      const { error } = await supabase.from("blogs").delete().eq("id", id);
-      if (error) throw error;
+      const res = await fetch(`/api/blogs/${id}`, {
+        method: "DELETE",
+      });
+
+      if (!res.ok) {
+        const errData = await res.json();
+        throw new Error(errData.error || "Failed to delete blog post");
+      }
+
       setBlogs(blogs.filter((b) => b.id !== id));
     } catch (err: any) {
       alert("Failed to delete blog: " + err.message);
     }
   };
 
-  const filteredBlogs = blogs.filter((b) =>
-    b.title?.toLowerCase().includes(search.toLowerCase()) ||
-    b.category?.toLowerCase().includes(search.toLowerCase())
+  const filteredBlogs = blogs.filter(
+    (b) =>
+      b.title?.toLowerCase().includes(search.toLowerCase()) ||
+      b.category?.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
@@ -86,12 +119,26 @@ export default function AdminBlogsPage() {
           <p className="text-xs text-slate-400 font-medium">Create, publish, edit and delete articles for your website</p>
         </div>
 
-        <Link
-          href="/admin/blogs/new"
-          className="px-5 py-3 rounded-xl bg-gradient-to-r from-orange-500 via-pink-500 to-blue-600 text-white font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-orange-500/20 hover:scale-105 active:scale-95 transition-all"
-        >
-          <Plus className="w-4 h-4" /> Add New Blog Post
-        </Link>
+        <div className="flex flex-wrap items-center gap-3">
+          {isFallback && (
+            <button
+              onClick={handleSeedSample}
+              disabled={seeding}
+              className="px-4 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs uppercase tracking-wider flex items-center gap-2 border border-slate-700 transition-colors disabled:opacity-50"
+              title="Save default blog articles into database"
+            >
+              <Database className="w-4 h-4 text-blue-400" />
+              <span>{seeding ? "Seeding..." : "Seed Database"}</span>
+            </button>
+          )}
+
+          <Link
+            href="/admin/blogs/new"
+            className="px-5 py-3 rounded-xl bg-gradient-to-r from-orange-500 via-pink-500 to-blue-600 text-white font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-orange-500/20 hover:scale-105 active:scale-95 transition-all"
+          >
+            <Plus className="w-4 h-4" /> Add New Blog Post
+          </Link>
+        </div>
       </div>
 
       {/* Search Bar */}
@@ -109,8 +156,9 @@ export default function AdminBlogsPage() {
       {/* Blogs List Table */}
       <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 overflow-hidden">
         {loading ? (
-          <div className="py-12 text-center text-slate-500 text-xs font-bold uppercase tracking-widest">
-            Loading Blog Posts...
+          <div className="py-12 text-center text-slate-500 text-xs font-bold uppercase tracking-widest flex items-center justify-center gap-2">
+            <RefreshCw className="w-4 h-4 animate-spin text-blue-400" />
+            <span>Loading Blog Posts...</span>
           </div>
         ) : filteredBlogs.length > 0 ? (
           <div className="overflow-x-auto">
@@ -167,13 +215,6 @@ export default function AdminBlogsPage() {
                         >
                           <ExternalLink className="w-3.5 h-3.5" />
                         </Link>
-                        <Link
-                          href={`/admin/blogs/${blog.id}/edit`}
-                          className="p-2 rounded-lg bg-blue-500/10 text-blue-400 hover:bg-blue-500/20 transition-colors"
-                          title="Edit Post"
-                        >
-                          <Edit className="w-3.5 h-3.5" />
-                        </Link>
                         <button
                           onClick={() => deleteBlog(blog.id, blog.title)}
                           className="p-2 rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500/20 transition-colors"
@@ -192,12 +233,22 @@ export default function AdminBlogsPage() {
           <div className="py-12 text-center space-y-3">
             <FileText className="w-10 h-10 text-slate-700 mx-auto" />
             <p className="text-slate-400 text-xs font-bold uppercase tracking-wider">No blog posts found</p>
-            <Link
-              href="/admin/blogs/new"
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-orange-500 text-white font-bold text-xs"
-            >
-              <Plus className="w-4 h-4" /> Create First Blog Post
-            </Link>
+            <div className="flex justify-center gap-3">
+              <button
+                onClick={handleSeedSample}
+                disabled={seeding}
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs"
+              >
+                <Database className="w-4 h-4 text-blue-400" />
+                <span>Seed Sample Posts</span>
+              </button>
+              <Link
+                href="/admin/blogs/new"
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-bold text-xs"
+              >
+                <Plus className="w-4 h-4" /> Create First Blog Post
+              </Link>
+            </div>
           </div>
         )}
       </div>

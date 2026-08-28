@@ -13,8 +13,9 @@ export const metadata: Metadata = {
   },
 };
 
-// Revalidate every 60 seconds for fresh CMS updates
-export const revalidate = 60;
+// Force dynamic fetching for instant real-time CMS updates
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export default async function PortfolioPage() {
   let projects: PortfolioItem[] = [];

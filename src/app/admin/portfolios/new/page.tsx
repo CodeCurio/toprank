@@ -7,18 +7,13 @@ import slugify from "slugify";
 import {
   ArrowLeft,
   Save,
-  Briefcase,
   Plus,
   Trash2,
   Star,
-  Sparkles,
-  ExternalLink,
   Globe,
-  Image as ImageIcon,
   CheckCircle2,
   Layers,
   TrendingUp,
-  Tag,
   Building,
   List,
   Eye,
@@ -26,156 +21,38 @@ import {
   Unlock,
   Copy,
   Check,
-  Zap,
   Code2,
-  RefreshCw,
   PlusCircle,
   X,
+  Sparkles,
 } from "lucide-react";
-
-// Curated 1-Click Templates for instant creation
-const CASE_STUDY_TEMPLATES = [
-  {
-    name: "🏥 Healthcare & Clinic",
-    title: "Scaling Local Diagnostics Clinic to #1 on Google Maps in Lucknow",
-    clientName: "Atulaya Diagnostics",
-    industry: "Healthcare & Diagnostics",
-    location: "Lucknow, UP",
-    liveUrl: "https://atulaya.com",
-    technologies: "Next.js, Local SEO, WhatsApp Automation, Google Maps 3-Pack, Schema Markup",
-    coverImage: "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=1200&q=80",
-    metrics: [
-      { label: "Patient Inquiries", value: "+314%" },
-      { label: "Google Maps Ranking", value: "#1 Spot" },
-      { label: "Mobile Page Speed", value: "0.6s" },
-    ],
-    summary: "Transformed digital visibility across Gomti Nagar and Hazratganj with a sub-second booking site and hyper-targeted Google Local SEO.",
-    challenge: "• Low ranking on Google Maps behind competitors.\n• Outdated website taking 6+ seconds to load.\n• High patient drop-off and zero automated appointment tracking.",
-    solution: "• Built custom Next.js patient web app with instant WhatsApp confirmation.\n• Optimized Google Business Profile with 120+ verified local citations.\n• Deployed hyper-localized healthcare schema for multi-branch indexing.",
-    content: `<h2>Project Overview</h2>
-<p>The clinic needed a dominant local footprint to capture high-intent diagnostic searches in prime Lucknow hubs.</p>
-<h2>Strategic Blueprint</h2>
-<ul>
-  <li>Engineered a lightning-fast Next.js patient portal with direct booking triggers.</li>
-  <li>Structured local citations and geo-tagged service pages for diagnostic tests.</li>
-  <li>Integrated automated WhatsApp follow-ups for inquiries.</li>
-</ul>
-<h2>The Transformation</h2>
-<p>Within 90 days, verified patient phone inquiries surged by 314%, capturing top spots across 18 target keywords.</p>`,
-  },
-  {
-    name: "🏢 Real Estate Lead Gen",
-    title: "1,200+ High-Net-Worth Property Leads for Premium Luxury Villa Launch",
-    clientName: "Apex Urban Spaces",
-    industry: "Real Estate",
-    location: "Delhi NCR",
-    liveUrl: "https://apexspaces.example.com",
-    technologies: "Meta Ads, Google Ads, Next.js, WhatsApp Automation, Tailwind CSS",
-    coverImage: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1200&q=80",
-    metrics: [
-      { label: "Qualified Inquiries", value: "1,250+" },
-      { label: "Cost Per Lead (CPL)", value: "-54%" },
-      { label: "Site Visit Bookings", value: "320+" },
-    ],
-    summary: "Built high-converting real estate sales funnels and multi-channel PPC campaigns delivering 1,200+ verified site visits.",
-    challenge: "• Expensive lead cost on generic property portals.\n• Low lead intent and high rate of fake phone numbers.\n• Slow mobile brochure download times.",
-    solution: "• Built interactive 3D floorplan landing funnel with OTP mobile verification.\n• Scaled high-intent Google Search campaigns for NRI and luxury buyers.\n• Deployed instant WhatsApp brochure delivery within 3 seconds.",
-    content: `<h2>The Growth Strategy</h2>
-<p>We created a dedicated ultra-fast interactive landing page showcasing virtual walk-throughs and luxury villa amenities.</p>
-<h2>Key Takeaways</h2>
-<p>Reduced average cost per lead by 54% while tripling weekend site tour attendance.</p>`,
-  },
-  {
-    name: "🛍️ E-Commerce ROAS",
-    title: "Tripled D2C Store Sales to ₹45L/Month via UI Re-Engineering & Paid Ads",
-    clientName: "Nexus Fashion Collective",
-    industry: "Retail & E-commerce",
-    location: "Mumbai, MH",
-    liveUrl: "https://nexusstore.example.com",
-    technologies: "Next.js, Tailwind CSS, Shopify, Meta Ads, GA4 Tracking",
-    coverImage: "https://images.unsplash.com/photo-1556742049-0a67ef86e963?auto=format&fit=crop&w=1200&q=80",
-    metrics: [
-      { label: "Monthly Revenue", value: "₹45.2 Lakhs" },
-      { label: "Ad ROAS", value: "4.8x" },
-      { label: "Checkout Conversion", value: "+82%" },
-    ],
-    summary: "Re-engineered modern headless storefront with single-click checkout, driving massive repeat purchase rates.",
-    challenge: "• High cart abandonment rate of 78% on slow standard theme.\n• Rising customer acquisition cost on Meta Ads.\n• Poor mobile search and filter experience.",
-    solution: "• Headless Next.js storefront with 0.4s instant page transitions.\n• 1-Click Fast Checkout with automated address autofill.\n• Retention email & WhatsApp sequences for abandoned carts.",
-    content: `<h2>The Challenge & Execution</h2>
-<p>By slashing checkout friction and creating dynamic product bundling, the store boosted average order value by 38%.</p>`,
-  },
-  {
-    name: "🍽️ Restaurant & Hospitality",
-    title: "Filling 80+ Tables Daily: Hyperlocal Brand & Dine-In Campaign",
-    clientName: "Royal Awadh Gourmet",
-    industry: "Hospitality & Dining",
-    location: "Lucknow, UP",
-    liveUrl: "https://royalawadh.example.com",
-    technologies: "Meta Ads, Local SEO, Google Maps 3-Pack, WhatsApp Automation",
-    coverImage: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80",
-    metrics: [
-      { label: "Weekend Table Bookings", value: "100% Full" },
-      { label: "Instagram Reach", value: "450k/mo" },
-      { label: "Google 5-Star Reviews", value: "+280" },
-    ],
-    summary: "Positioned the luxury restaurant as Lucknow's top dining destination through viral food storytelling and Google Maps supremacy.",
-    challenge: "• New location struggled with weekday footfall.\n• Competitors dominated top search terms for 'best fine dining'.",
-    solution: "• Viral cinematic food reels campaign driving over 450,000 local impressions.\n• Smart QR review cards generating 280+ verified 5-star Google reviews.",
-    content: `<h2>Culinary Digital Dominance</h2>
-<p>Strategically targeted food enthusiasts within a 10km radius with mouthwatering short-form videos.</p>`,
-  },
-];
-
-// Rich Tech Stack Options with Visual Icons
-const TECH_STACK_CATALOG = [
-  { id: "Next.js", label: "Next.js", icon: "⚡", category: "Frontend" },
-  { id: "React", label: "React", icon: "⚛️", category: "Frontend" },
-  { id: "Tailwind CSS", label: "Tailwind CSS", icon: "🎨", category: "Frontend" },
-  { id: "TypeScript", label: "TypeScript", icon: "🟦", category: "Frontend" },
-  { id: "Local SEO", label: "Local SEO", icon: "📍", category: "Marketing" },
-  { id: "Google Maps 3-Pack", label: "Google Maps 3-Pack", icon: "🗺️", category: "Marketing" },
-  { id: "Google Ads", label: "Google Ads", icon: "📈", category: "Marketing" },
-  { id: "Meta Ads", label: "Meta Ads", icon: "🎯", category: "Marketing" },
-  { id: "WhatsApp Automation", label: "WhatsApp API", icon: "💬", category: "Automation" },
-  { id: "SEO Schema", label: "SEO Schema", icon: "🔍", category: "Marketing" },
-  { id: "Shopify", label: "Shopify", icon: "🛍️", category: "E-Commerce" },
-  { id: "WordPress", label: "WordPress", icon: "📰", category: "CMS" },
-  { id: "Supabase", label: "Supabase", icon: "⚡", category: "Backend" },
-  { id: "Node.js", label: "Node.js", icon: "🟢", category: "Backend" },
-  { id: "GA4 Tracking", label: "GA4 Tracking", icon: "📊", category: "Analytics" },
-  { id: "Figma UI/UX", label: "Figma UI/UX", icon: "✨", category: "Design" },
-];
-
-const PRESET_COVERS = [
-  { label: "Healthcare", url: "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=1200&q=80" },
-  { label: "Real Estate", url: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1200&q=80" },
-  { label: "E-Commerce", url: "https://images.unsplash.com/photo-1556742049-0a67ef86e963?auto=format&fit=crop&w=1200&q=80" },
-  { label: "Hospitality", url: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80" },
-  { label: "Tech & SaaS", url: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80" },
-  { label: "Education", url: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1200&q=80" },
-];
+import { ImageUploader } from "@/components/admin/ImageUploader";
 
 const POPULAR_INDUSTRIES = [
   "Healthcare & Diagnostics",
-  "Real Estate",
+  "Real Estate & Architecture",
   "Retail & E-commerce",
   "Hospitality & Dining",
-  "Education & Coaching",
   "Technology & SaaS",
-  "Legal & Professional",
+  "Education & Coaching",
+  "Automotive & Local Services",
   "Manufacturing & B2B",
+  "Other",
 ];
 
-const POPULAR_CITIES = ["Lucknow, UP", "Delhi NCR", "Mumbai, MH", "Bangalore, KA", "Kanpur, UP", "Pan-India"];
-
-const PRESET_METRICS = [
-  { label: "Inquiries Growth", value: "+314%" },
-  { label: "Google Maps Rank", value: "#1 Spot" },
-  { label: "Return on Ad Spend", value: "4.8x ROI" },
-  { label: "Page Load Speed", value: "0.6s" },
-  { label: "Organic Traffic", value: "+280%" },
-  { label: "Qualified Leads", value: "1,200+" },
+const COMMON_TECH_TAGS = [
+  "SEO & Local Search",
+  "Google Maps 3-Pack",
+  "Next.js",
+  "React",
+  "Tailwind CSS",
+  "Google Ads (PPC)",
+  "Meta Ads (FB/IG)",
+  "WhatsApp Automation",
+  "UI/UX Design",
+  "Shopify",
+  "WordPress",
+  "Lead Generation Funnel",
 ];
 
 export default function NewPortfolioPage() {
@@ -185,35 +62,36 @@ export default function NewPortfolioPage() {
   const [isSlugCustom, setIsSlugCustom] = useState(false);
   const [clientName, setClientName] = useState("");
   const [industry, setIndustry] = useState("Healthcare & Diagnostics");
+  const [customIndustry, setCustomIndustry] = useState("");
   const [location, setLocation] = useState("Lucknow, UP");
+  const [liveUrl, setLiveUrl] = useState("");
+  const [coverImage, setCoverImage] = useState("");
+  
+  // Deliverables / Tech stack
+  const [selectedTech, setSelectedTech] = useState<string[]>([
+    "SEO & Local Search",
+    "Next.js",
+    "Google Maps 3-Pack",
+  ]);
+  const [customTechInput, setCustomTechInput] = useState("");
+
+  // Results & Growth Metrics
+  const [metrics, setMetrics] = useState<{ label: string; value: string }[]>([
+    { label: "Lead Growth", value: "+310%" },
+    { label: "Google Maps Rank", value: "#1 Spot" },
+  ]);
+
+  // Story breakdown
   const [summary, setSummary] = useState("");
   const [challenge, setChallenge] = useState("");
   const [solution, setSolution] = useState("");
   const [content, setContent] = useState("");
-  const [coverImage, setCoverImage] = useState(PRESET_COVERS[0].url);
-  const [liveUrl, setLiveUrl] = useState("");
-  
-  // Selected Tech Stack Array
-  const [selectedTech, setSelectedTech] = useState<string[]>([
-    "Next.js",
-    "Tailwind CSS",
-    "Local SEO",
-    "WhatsApp Automation",
-  ]);
-  const [customTechInput, setCustomTechInput] = useState("");
 
-  const [featured, setFeatured] = useState(true);
+  // Publishing flags
+  const [featured, setFeatured] = useState(false);
   const [published, setPublished] = useState(true);
 
-  // Dynamic Growth Metrics
-  const [metrics, setMetrics] = useState<{ label: string; value: string }[]>([
-    { label: "Verified Leads", value: "+314%" },
-    { label: "Google Rank", value: "#1 Spot" },
-    { label: "Speed Score", value: "99/100" },
-  ]);
-
   const [loading, setLoading] = useState(false);
-  const [saveAndAddNext, setSaveAndAddNext] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [copiedSlug, setCopiedSlug] = useState(false);
 
@@ -237,50 +115,26 @@ export default function NewPortfolioPage() {
     }
   };
 
-  const toggleTech = (techName: string) => {
-    if (selectedTech.includes(techName)) {
-      setSelectedTech(selectedTech.filter((t) => t !== techName));
+  const toggleTech = (tag: string) => {
+    if (selectedTech.includes(tag)) {
+      setSelectedTech(selectedTech.filter((t) => t !== tag));
     } else {
-      setSelectedTech([...selectedTech, techName]);
+      setSelectedTech([...selectedTech, tag]);
     }
   };
 
   const addCustomTech = () => {
-    if (!customTechInput.trim()) return;
     const trimmed = customTechInput.trim();
+    if (!trimmed) return;
     if (!selectedTech.includes(trimmed)) {
       setSelectedTech([...selectedTech, trimmed]);
     }
     setCustomTechInput("");
   };
 
-  const applyTemplate = (tpl: (typeof CASE_STUDY_TEMPLATES)[0]) => {
-    setTitle(tpl.title);
-    setSlug(slugify(tpl.title, { lower: true, strict: true }));
-    setIsSlugCustom(false);
-    setClientName(tpl.clientName);
-    setIndustry(tpl.industry);
-    setLocation(tpl.location);
-    setLiveUrl(tpl.liveUrl);
-    
-    // Parse technologies from template
-    const parsedTech = tpl.technologies
-      .split(",")
-      .map((t) => t.trim())
-      .filter(Boolean);
-    setSelectedTech(parsedTech);
-
-    setCoverImage(tpl.coverImage);
-    setMetrics(tpl.metrics);
-    setSummary(tpl.summary);
-    setChallenge(tpl.challenge);
-    setSolution(tpl.solution);
-    setContent(tpl.content);
-  };
-
-  const addMetric = (label = "Growth Metric", value = "+100%") => {
+  const addMetric = () => {
     if (metrics.length >= 4) return;
-    setMetrics([...metrics, { label, value }]);
+    setMetrics([...metrics, { label: "Metric Label", value: "+100%" }]);
   };
 
   const removeMetric = (index: number) => {
@@ -293,7 +147,7 @@ export default function NewPortfolioPage() {
     setMetrics(updated);
   };
 
-  const insertBullet = (setter: (fn: (prev: string) => string) => void) => {
+  const insertBullet = (setter: React.Dispatch<React.SetStateAction<string>>) => {
     setter((prev) => (prev ? `${prev}\n• ` : "• "));
   };
 
@@ -307,26 +161,28 @@ export default function NewPortfolioPage() {
   const handleFormSubmit = async (e: React.FormEvent, stayOnPage = false) => {
     e.preventDefault();
     if (!title.trim() || !clientName.trim()) {
-      setError("Please fill in both Case Study Title and Client Name.");
+      setError("Please provide both Project Title and Client Name.");
       return;
     }
 
     setLoading(true);
     setError(null);
 
+    const finalIndustry = industry === "Other" && customIndustry.trim() ? customIndustry.trim() : industry;
+
     const payload = {
-      title,
-      slug: slug || slugify(title, { lower: true, strict: true }),
-      client_name: clientName,
-      industry,
-      location,
-      summary,
-      challenge,
-      solution,
-      content,
+      title: title.trim(),
+      slug: slug.trim() || slugify(title.trim(), { lower: true, strict: true }),
+      client_name: clientName.trim(),
+      industry: finalIndustry,
+      location: location.trim(),
+      summary: summary.trim(),
+      challenge: challenge.trim(),
+      solution: solution.trim(),
+      content: content.trim(),
       results_metrics: metrics,
-      cover_image: coverImage,
-      live_url: liveUrl,
+      cover_image: coverImage.trim(),
+      live_url: liveUrl.trim(),
       technologies: selectedTech.join(", "),
       featured,
       published,
@@ -341,19 +197,19 @@ export default function NewPortfolioPage() {
 
       const resData = await res.json();
       if (!res.ok || resData.error) {
-        throw new Error(resData.error || "Failed to create portfolio in database.");
+        throw new Error(resData.error || "Failed to save portfolio.");
       }
 
       if (stayOnPage) {
-        // Reset form for next item
         setTitle("");
         setSlug("");
         setClientName("");
+        setCoverImage("");
         setSummary("");
         setChallenge("");
         setSolution("");
         setContent("");
-        alert("Case study saved successfully! You can now add the next one.");
+        alert("Portfolio project saved successfully!");
       } else {
         router.push("/admin/portfolios");
       }
@@ -366,94 +222,75 @@ export default function NewPortfolioPage() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto space-y-8 pb-16">
+    <div className="max-w-7xl mx-auto space-y-8 pb-20">
       
-      {/* Top Navigation */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <Link
-          href="/admin/portfolios"
-          className="inline-flex items-center gap-2 text-xs font-bold text-slate-400 hover:text-white transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4" /> Back to Portfolios
-        </Link>
+      {/* Top Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-6">
+        <div>
+          <Link
+            href="/admin/portfolios"
+            className="inline-flex items-center gap-2 text-xs font-bold text-slate-400 hover:text-white transition-colors mb-2"
+          >
+            <ArrowLeft className="w-4 h-4" /> Back to Portfolios
+          </Link>
+          <h1 className="text-2xl font-black text-white tracking-tight">Add New Portfolio Project</h1>
+          <p className="text-xs text-slate-400 mt-0.5">
+            Showcase real client results, growth metrics, and custom deliverables.
+          </p>
+        </div>
+
         <div className="flex items-center gap-3">
-          <span className="hidden sm:inline-flex text-[11px] text-slate-500 font-mono">
-            Pro-tip: Press <kbd className="px-1.5 py-0.5 rounded bg-slate-800 border border-slate-700 text-slate-300">Ctrl+S</kbd> to save
-          </span>
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[11px] font-black uppercase tracking-wider">
-            <Zap className="w-3 h-3" /> 100% Database Connected
-          </span>
+          <button
+            type="button"
+            onClick={(e) => handleFormSubmit(e, false)}
+            disabled={loading}
+            className="px-6 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-black text-xs uppercase tracking-wider shadow-lg shadow-blue-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-2 disabled:opacity-50"
+          >
+            <Save className="w-4 h-4" />
+            <span>{loading ? "Saving..." : "Save Project"}</span>
+          </button>
         </div>
       </div>
 
-      {/* ⚡ 1-Click Fast Templates Banner */}
-      <div className="bg-gradient-to-r from-purple-950/70 via-slate-900 to-blue-950/70 border border-purple-800/40 rounded-3xl p-5 sm:p-6 shadow-xl">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-3">
-          <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-xl bg-purple-500/20 text-purple-300 border border-purple-500/30">
-              <Sparkles className="w-4 h-4" />
-            </div>
-            <div>
-              <h2 className="text-sm font-black text-white">⚡ 1-Click Fast Case Study Generator</h2>
-              <p className="text-xs text-slate-400">
-                Click any industry template below to instantly load high-converting copy, tech stack &amp; metrics
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-1">
-          {CASE_STUDY_TEMPLATES.map((tpl, i) => (
-            <button
-              key={i}
-              type="button"
-              onClick={() => applyTemplate(tpl)}
-              className="px-3.5 py-2.5 rounded-2xl bg-slate-900/90 hover:bg-purple-600 hover:text-white border border-slate-800 hover:border-purple-500 text-left text-xs font-bold text-slate-300 transition-all flex items-center justify-between group shadow-sm"
-            >
-              <span>{tpl.name}</span>
-              <span className="text-[10px] text-purple-400 group-hover:text-white font-mono">Auto-Fill ➔</span>
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Main Grid: Form Left (7 Cols), Live Preview & Publish Sidebar Right (5 Cols) */}
+      {/* Main Grid: Left Form (7 Cols) & Right Sidebar Preview (5 Cols) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         
         {/* LEFT COLUMN: Main Form Inputs */}
         <div className="lg:col-span-7 space-y-6">
           <form onSubmit={(e) => handleFormSubmit(e, false)} className="space-y-6">
             
-            {/* Error Message */}
+            {/* Error banner */}
             {error && (
-              <div className="p-4 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-400 text-xs font-bold">
-                {error}
+              <div className="p-4 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-400 text-xs font-bold flex items-center gap-2">
+                <span>{error}</span>
               </div>
             )}
 
-            {/* SECTION 1: Core Details */}
+            {/* 1. Core Project Information */}
             <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-7 space-y-5 shadow-xl">
               <div className="flex items-center gap-2 border-b border-slate-800/80 pb-4">
-                <Building className="w-4 h-4 text-orange-400" />
-                <h3 className="text-sm font-black text-white uppercase tracking-wider">1. Project &amp; Client Overview</h3>
+                <Building className="w-4 h-4 text-blue-400" />
+                <h3 className="text-sm font-black text-white uppercase tracking-wider">
+                  1. Project &amp; Client Info
+                </h3>
               </div>
 
               {/* Title */}
               <div>
                 <label className="block text-xs font-black uppercase tracking-wider text-slate-300 mb-2">
-                  Case Study Title <span className="text-orange-400">*</span>
+                  Project / Case Study Title <span className="text-orange-400">*</span>
                 </label>
                 <input
                   type="text"
                   required
                   value={title}
                   onChange={(e) => handleTitleChange(e.target.value)}
-                  placeholder="e.g. Scaling Atulaya Healthcare to #1 on Google Maps in Lucknow"
-                  className="w-full px-4 py-3 bg-slate-950 border border-slate-800 focus:border-purple-500 rounded-2xl text-sm font-bold text-white placeholder-slate-600 focus:outline-none transition-colors"
+                  placeholder="e.g. Scaling Local Diagnostics Clinic to #1 on Google Maps"
+                  className="w-full px-4 py-3 bg-slate-950 border border-slate-800 focus:border-blue-500 rounded-xl text-sm font-bold text-white placeholder-slate-600 focus:outline-none transition-colors"
                 />
               </div>
 
-              {/* Slug with Unlock Toggle & Copy */}
+              {/* Slug */}
               <div>
                 <div className="flex items-center justify-between mb-2">
                   <label className="text-xs font-black uppercase tracking-wider text-slate-300">
@@ -462,13 +299,13 @@ export default function NewPortfolioPage() {
                   <button
                     type="button"
                     onClick={() => setIsSlugCustom(!isSlugCustom)}
-                    className="text-[11px] font-bold text-purple-400 hover:text-purple-300 flex items-center gap-1"
+                    className="text-[11px] font-bold text-blue-400 hover:text-blue-300 flex items-center gap-1"
                   >
                     {isSlugCustom ? <Unlock className="w-3 h-3" /> : <Lock className="w-3 h-3" />}
                     <span>{isSlugCustom ? "Custom slug active" : "Auto-generated"}</span>
                   </button>
                 </div>
-                <div className="flex items-center gap-2 bg-slate-950 border border-slate-800 rounded-2xl px-4 py-3">
+                <div className="flex items-center gap-2 bg-slate-950 border border-slate-800 rounded-xl px-4 py-3">
                   <span className="text-xs text-slate-500 font-mono">/portfolio/</span>
                   <input
                     type="text"
@@ -478,14 +315,14 @@ export default function NewPortfolioPage() {
                       setIsSlugCustom(true);
                       setSlug(e.target.value);
                     }}
-                    placeholder="atulaya-healthcare-growth"
-                    className="w-full bg-transparent text-sm font-mono text-purple-400 focus:outline-none"
+                    placeholder="project-slug-name"
+                    className="w-full bg-transparent text-sm font-mono text-blue-400 focus:outline-none"
                   />
                   <button
                     type="button"
                     onClick={handleCopySlug}
                     className="p-1 text-slate-500 hover:text-white transition-colors"
-                    title="Copy relative URL"
+                    title="Copy URL"
                   >
                     {copiedSlug ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
                   </button>
@@ -503,131 +340,127 @@ export default function NewPortfolioPage() {
                     required
                     value={clientName}
                     onChange={(e) => setClientName(e.target.value)}
-                    placeholder="Atulaya Diagnostics"
-                    className="w-full px-4 py-3 bg-slate-950 border border-slate-800 focus:border-purple-500 rounded-2xl text-sm font-bold text-white placeholder-slate-600 focus:outline-none transition-colors"
+                    placeholder="e.g. Atulaya Diagnostics"
+                    className="w-full px-4 py-3 bg-slate-950 border border-slate-800 focus:border-blue-500 rounded-xl text-sm font-bold text-white placeholder-slate-600 focus:outline-none transition-colors"
                   />
                 </div>
 
                 <div>
                   <label className="block text-xs font-black uppercase tracking-wider text-slate-300 mb-2">
-                    City / Region
+                    City / Location
                   </label>
                   <input
                     type="text"
                     value={location}
                     onChange={(e) => setLocation(e.target.value)}
-                    placeholder="Lucknow, UP"
-                    className="w-full px-4 py-3 bg-slate-950 border border-slate-800 focus:border-purple-500 rounded-2xl text-sm font-bold text-white placeholder-slate-600 focus:outline-none transition-colors"
+                    placeholder="e.g. Lucknow, UP / Pan-India"
+                    className="w-full px-4 py-3 bg-slate-950 border border-slate-800 focus:border-blue-500 rounded-xl text-sm font-bold text-white placeholder-slate-600 focus:outline-none transition-colors"
                   />
                 </div>
               </div>
 
-              {/* Quick City Chips */}
-              <div className="flex items-center gap-1.5 flex-wrap">
-                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Quick City:</span>
-                {POPULAR_CITIES.map((c) => (
-                  <button
-                    key={c}
-                    type="button"
-                    onClick={() => setLocation(c)}
-                    className={`px-2.5 py-1 rounded-xl text-[11px] font-bold transition-colors ${
-                      location === c
-                        ? "bg-purple-600 text-white"
-                        : "bg-slate-950 border border-slate-800 text-slate-400 hover:text-white"
-                    }`}
+              {/* Industry & Live URL */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-black uppercase tracking-wider text-slate-300 mb-2">
+                    Industry / Category
+                  </label>
+                  <select
+                    value={industry}
+                    onChange={(e) => setIndustry(e.target.value)}
+                    className="w-full px-4 py-3 bg-slate-950 border border-slate-800 focus:border-blue-500 rounded-xl text-sm font-bold text-white focus:outline-none transition-colors"
                   >
-                    {c}
-                  </button>
-                ))}
-              </div>
+                    {POPULAR_INDUSTRIES.map((ind) => (
+                      <option key={ind} value={ind} className="bg-slate-900 text-white">
+                        {ind}
+                      </option>
+                    ))}
+                  </select>
 
-              {/* Industry Select & Chips */}
-              <div>
-                <label className="block text-xs font-black uppercase tracking-wider text-slate-300 mb-2">
-                  Industry / Category
-                </label>
-                <div className="flex items-center gap-2 flex-wrap mb-3">
-                  {POPULAR_INDUSTRIES.map((ind) => (
-                    <button
-                      key={ind}
-                      type="button"
-                      onClick={() => setIndustry(ind)}
-                      className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
-                        industry === ind
-                          ? "bg-gradient-to-r from-orange-500 to-pink-500 text-white shadow-md shadow-orange-500/20"
-                          : "bg-slate-950 border border-slate-800 text-slate-400 hover:text-white"
-                      }`}
-                    >
-                      {ind}
-                    </button>
-                  ))}
+                  {industry === "Other" && (
+                    <input
+                      type="text"
+                      value={customIndustry}
+                      onChange={(e) => setCustomIndustry(e.target.value)}
+                      placeholder="Type custom industry..."
+                      className="w-full mt-2 px-4 py-2.5 bg-slate-950 border border-slate-800 focus:border-blue-500 rounded-xl text-xs font-bold text-white placeholder-slate-600 focus:outline-none"
+                    />
+                  )}
                 </div>
-              </div>
 
-              {/* Live URL */}
-              <div>
-                <label className="block text-xs font-black uppercase tracking-wider text-slate-300 mb-2">
-                  Live Client URL (Optional)
-                </label>
-                <div className="relative">
-                  <Globe className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
-                  <input
-                    type="url"
-                    value={liveUrl}
-                    onChange={(e) => setLiveUrl(e.target.value)}
-                    placeholder="https://clientwebsite.com"
-                    className="w-full pl-10 pr-4 py-3 bg-slate-950 border border-slate-800 focus:border-purple-500 rounded-2xl text-sm font-bold text-white placeholder-slate-600 focus:outline-none transition-colors"
-                  />
+                <div>
+                  <label className="block text-xs font-black uppercase tracking-wider text-slate-300 mb-2">
+                    Live Client URL (Optional)
+                  </label>
+                  <div className="relative">
+                    <Globe className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                    <input
+                      type="url"
+                      value={liveUrl}
+                      onChange={(e) => setLiveUrl(e.target.value)}
+                      placeholder="https://clientwebsite.com"
+                      className="w-full pl-10 pr-4 py-3 bg-slate-950 border border-slate-800 focus:border-blue-500 rounded-xl text-sm font-bold text-white placeholder-slate-600 focus:outline-none transition-colors"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* SECTION 2: Visual Tech Stack Selector (Clickable Badges + Custom) */}
+            {/* 2. Cover Image Upload */}
+            <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-7 space-y-4 shadow-xl">
+              <ImageUploader
+                value={coverImage}
+                onChange={(url) => setCoverImage(url)}
+                label="2. Featured Cover Image"
+                helperText="Upload a high-quality mockup, banner, or screenshot of the client project (PNG, JPG, WebP)"
+              />
+            </div>
+
+            {/* 3. Tech Stack & Deliverables */}
             <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-7 space-y-4 shadow-xl">
               <div className="flex items-center justify-between border-b border-slate-800/80 pb-4">
                 <div className="flex items-center gap-2">
                   <Code2 className="w-4 h-4 text-blue-400" />
                   <h3 className="text-sm font-black text-white uppercase tracking-wider">
-                    2. Tech Stack &amp; Deliverables
+                    3. Tech Stack &amp; Deliverables
                   </h3>
                 </div>
-                <span className="text-[11px] font-bold text-purple-400 font-mono">
+                <span className="text-[11px] font-bold text-blue-400 font-mono">
                   {selectedTech.length} selected
                 </span>
               </div>
 
-              {/* Visual Tech Chips Grid */}
+              {/* Quick Tag Chips */}
               <div>
                 <p className="text-xs text-slate-400 mb-3">
-                  Click on technologies/services below to toggle them on or off:
+                  Click tags to toggle them on or off:
                 </p>
                 <div className="flex flex-wrap gap-2">
-                  {TECH_STACK_CATALOG.map((item) => {
-                    const isSelected = selectedTech.includes(item.id);
+                  {COMMON_TECH_TAGS.map((tag) => {
+                    const isSelected = selectedTech.includes(tag);
                     return (
                       <button
-                        key={item.id}
+                        key={tag}
                         type="button"
-                        onClick={() => toggleTech(item.id)}
-                        className={`px-3 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
+                        onClick={() => toggleTech(tag)}
+                        className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
                           isSelected
-                            ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md shadow-blue-500/20 scale-105"
+                            ? "bg-blue-600 text-white shadow-md shadow-blue-500/20 scale-105"
                             : "bg-slate-950 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700"
                         }`}
                       >
-                        <span className="text-sm">{item.icon}</span>
-                        <span>{item.label}</span>
-                        {isSelected && <Check className="w-3.5 h-3.5 text-emerald-300" />}
+                        <span>{tag}</span>
+                        {isSelected && <Check className="w-3 h-3 text-white" />}
                       </button>
                     );
                   })}
                 </div>
               </div>
 
-              {/* Custom Tech Stack Tag Input */}
+              {/* Custom Tag Input */}
               <div className="pt-2">
                 <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">
-                  + Add Custom Tech / Service Tag:
+                  + Add Custom Tag:
                 </label>
                 <div className="flex items-center gap-2">
                   <input
@@ -640,8 +473,8 @@ export default function NewPortfolioPage() {
                         addCustomTech();
                       }
                     }}
-                    placeholder="e.g., Python, PostgreSQL, HubSpot CRM"
-                    className="flex-1 px-4 py-2.5 bg-slate-950 border border-slate-800 focus:border-purple-500 rounded-xl text-xs font-bold text-white placeholder-slate-600 focus:outline-none"
+                    placeholder="e.g. Supabase, GA4, Custom CRM"
+                    className="flex-1 px-4 py-2.5 bg-slate-950 border border-slate-800 focus:border-blue-500 rounded-xl text-xs font-bold text-white placeholder-slate-600 focus:outline-none"
                   />
                   <button
                     type="button"
@@ -652,20 +485,20 @@ export default function NewPortfolioPage() {
                   </button>
                 </div>
 
-                {/* Selected Custom Tags (if any outside catalog) */}
-                {selectedTech.filter((t) => !TECH_STACK_CATALOG.some((c) => c.id === t)).length > 0 && (
-                  <div className="flex flex-wrap gap-1.5 pt-2">
+                {/* Custom tags list */}
+                {selectedTech.filter((t) => !COMMON_TECH_TAGS.includes(t)).length > 0 && (
+                  <div className="flex flex-wrap gap-1.5 pt-3">
                     {selectedTech
-                      .filter((t) => !TECH_STACK_CATALOG.some((c) => c.id === t))
-                      .map((customT) => (
+                      .filter((t) => !COMMON_TECH_TAGS.includes(t))
+                      .map((t) => (
                         <span
-                          key={customT}
-                          className="inline-flex items-center gap-1 px-2.5 py-1 bg-purple-950/60 border border-purple-700 text-purple-300 rounded-lg text-xs font-bold"
+                          key={t}
+                          className="inline-flex items-center gap-1 px-2.5 py-1 bg-blue-950/60 border border-blue-700 text-blue-300 rounded-lg text-xs font-bold"
                         >
-                          🏷️ {customT}
+                          {t}
                           <button
                             type="button"
-                            onClick={() => toggleTech(customT)}
+                            onClick={() => toggleTech(t)}
                             className="hover:text-red-400"
                           >
                             <X className="w-3 h-3" />
@@ -677,18 +510,18 @@ export default function NewPortfolioPage() {
               </div>
             </div>
 
-            {/* SECTION 3: Dynamic Growth Metrics */}
+            {/* 4. Growth Metrics & Proof Points */}
             <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-7 space-y-4 shadow-xl">
               <div className="flex items-center justify-between border-b border-slate-800/80 pb-4">
                 <div className="flex items-center gap-2">
                   <TrendingUp className="w-4 h-4 text-emerald-400" />
                   <h3 className="text-sm font-black text-white uppercase tracking-wider">
-                    3. Growth Metrics &amp; Proof Points
+                    4. Results &amp; Key Metrics
                   </h3>
                 </div>
                 <button
                   type="button"
-                  onClick={() => addMetric()}
+                  onClick={addMetric}
                   disabled={metrics.length >= 4}
                   className="px-3 py-1.5 rounded-xl bg-blue-600/20 hover:bg-blue-600 text-blue-400 hover:text-white text-xs font-bold flex items-center gap-1.5 transition-all disabled:opacity-40"
                 >
@@ -696,23 +529,7 @@ export default function NewPortfolioPage() {
                 </button>
               </div>
 
-              {/* Quick Presets */}
-              <div className="flex items-center gap-1.5 flex-wrap">
-                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Quick Presets:</span>
-                {PRESET_METRICS.map((pm, i) => (
-                  <button
-                    key={i}
-                    type="button"
-                    onClick={() => addMetric(pm.label, pm.value)}
-                    className="px-2.5 py-1 rounded-xl bg-slate-950 hover:bg-emerald-500/20 text-slate-400 hover:text-emerald-300 border border-slate-800 text-[11px] font-bold transition-all"
-                  >
-                    + {pm.value} ({pm.label})
-                  </button>
-                ))}
-              </div>
-
-              {/* Metric Row Inputs */}
-              <div className="space-y-3 pt-1">
+              <div className="space-y-3">
                 {metrics.map((m, idx) => (
                   <div
                     key={idx}
@@ -720,20 +537,20 @@ export default function NewPortfolioPage() {
                   >
                     <div className="flex-1">
                       <span className="text-[10px] font-bold text-slate-500 uppercase block mb-1">
-                        Metric Label #{idx + 1}
+                        Metric Name #{idx + 1}
                       </span>
                       <input
                         type="text"
-                        placeholder="e.g. Monthly Inquiries"
+                        placeholder="e.g. Inquiries Growth"
                         value={m.label}
                         onChange={(e) => updateMetric(idx, "label", e.target.value)}
-                        className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-xs font-bold text-white focus:outline-none focus:border-purple-500"
+                        className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-xs font-bold text-white focus:outline-none focus:border-blue-500"
                       />
                     </div>
 
                     <div className="w-36">
                       <span className="text-[10px] font-bold text-emerald-400 uppercase block mb-1">
-                        Value / Result
+                        Result / Value
                       </span>
                       <input
                         type="text"
@@ -757,37 +574,32 @@ export default function NewPortfolioPage() {
               </div>
             </div>
 
-            {/* SECTION 4: Case Study Narrative (Summary, Challenge, Solution) */}
+            {/* 5. Case Study Story & Content */}
             <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-7 space-y-6 shadow-xl">
               <div className="flex items-center gap-2 border-b border-slate-800/80 pb-4">
-                <Layers className="w-4 h-4 text-purple-400" />
+                <Layers className="w-4 h-4 text-indigo-400" />
                 <h3 className="text-sm font-black text-white uppercase tracking-wider">
-                  4. Case Study Story &amp; Results
+                  5. Case Study Details &amp; Narrative
                 </h3>
               </div>
 
               {/* Summary */}
               <div>
-                <div className="flex items-center justify-between mb-2">
-                  <label className="text-xs font-black uppercase tracking-wider text-slate-300">
-                    High-Level Summary <span className="text-orange-400">*</span>
-                  </label>
-                  <span className="text-[10px] text-slate-500 font-mono">{summary.length} chars</span>
-                </div>
+                <label className="block text-xs font-black uppercase tracking-wider text-slate-300 mb-2">
+                  Short Summary / Excerpt <span className="text-orange-400">*</span>
+                </label>
                 <textarea
                   rows={2}
                   required
                   value={summary}
                   onChange={(e) => setSummary(e.target.value)}
-                  placeholder="Engineered a complete local SEO and high-speed web infrastructure resulting in 314% surge in patient bookings."
-                  className="w-full px-4 py-3 bg-slate-950 border border-slate-800 focus:border-purple-500 rounded-2xl text-xs font-medium text-white placeholder-slate-600 focus:outline-none transition-colors leading-relaxed"
+                  placeholder="Brief 1-2 sentence overview of the transformation and outcome..."
+                  className="w-full px-4 py-3 bg-slate-950 border border-slate-800 focus:border-blue-500 rounded-2xl text-xs font-medium text-white placeholder-slate-600 focus:outline-none transition-colors leading-relaxed"
                 />
               </div>
 
-              {/* Challenge & Solution Side by Side with Toolbar */}
+              {/* Challenge & Solution */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                
-                {/* Challenge */}
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <label className="text-xs font-black uppercase tracking-wider text-slate-300">
@@ -805,12 +617,11 @@ export default function NewPortfolioPage() {
                     rows={4}
                     value={challenge}
                     onChange={(e) => setChallenge(e.target.value)}
-                    placeholder="• Low visibility on Google Maps 3-Pack&#10;• Slow legacy website taking 6+ seconds&#10;• Poor mobile conversion"
-                    className="w-full px-4 py-3 bg-slate-950 border border-slate-800 focus:border-purple-500 rounded-2xl text-xs font-medium text-white placeholder-slate-600 focus:outline-none transition-colors leading-relaxed"
+                    placeholder="• Low rankings on Google&#10;• High cost per lead&#10;• Slow website speed"
+                    className="w-full px-4 py-3 bg-slate-950 border border-slate-800 focus:border-blue-500 rounded-2xl text-xs font-medium text-white placeholder-slate-600 focus:outline-none transition-colors leading-relaxed"
                   />
                 </div>
 
-                {/* Solution */}
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <label className="text-xs font-black uppercase tracking-wider text-slate-300">
@@ -828,55 +639,52 @@ export default function NewPortfolioPage() {
                     rows={4}
                     value={solution}
                     onChange={(e) => setSolution(e.target.value)}
-                    placeholder="• Built custom sub-second Next.js web portal&#10;• Optimized Google Business Profile with 100+ citations&#10;• Integrated automated WhatsApp confirmations"
-                    className="w-full px-4 py-3 bg-slate-950 border border-slate-800 focus:border-purple-500 rounded-2xl text-xs font-medium text-white placeholder-slate-600 focus:outline-none transition-colors leading-relaxed"
+                    placeholder="• Built fast responsive Next.js web portal&#10;• Local citation SEO campaign&#10;• Automated WhatsApp lead capture"
+                    className="w-full px-4 py-3 bg-slate-950 border border-slate-800 focus:border-blue-500 rounded-2xl text-xs font-medium text-white placeholder-slate-600 focus:outline-none transition-colors leading-relaxed"
                   />
                 </div>
               </div>
 
-              {/* Detailed Breakdown / HTML */}
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <label className="text-xs font-black uppercase tracking-wider text-slate-300">
-                    Detailed Breakdown &amp; Client Story (HTML / Paragraphs)
-                  </label>
-                  <span className="text-[10px] text-purple-400 font-mono">Supports HTML tags</span>
-                </div>
+              {/* Full Content */}
+              <div>
+                <label className="block text-xs font-black uppercase tracking-wider text-slate-300 mb-2">
+                  Full Case Study Story (Optional / HTML supported)
+                </label>
                 <textarea
-                  rows={5}
+                  rows={4}
                   value={content}
                   onChange={(e) => setContent(e.target.value)}
-                  placeholder="<h2>Execution Highlights</h2>&#10;<p>Comprehensive breakdown of strategy, month-by-month results, and client satisfaction...</p>"
-                  className="w-full px-4 py-3 bg-slate-950 border border-slate-800 focus:border-purple-500 rounded-2xl text-xs font-mono text-white placeholder-slate-600 focus:outline-none transition-colors leading-relaxed"
+                  placeholder="Detailed breakdown of the strategy, month-by-month results, and client quote..."
+                  className="w-full px-4 py-3 bg-slate-950 border border-slate-800 focus:border-blue-500 rounded-2xl text-xs font-mono text-white placeholder-slate-600 focus:outline-none transition-colors leading-relaxed"
                 />
               </div>
             </div>
 
             {/* Mobile Submit Button */}
-            <div className="block lg:hidden space-y-3">
+            <div className="block lg:hidden">
               <button
                 id="main-portfolio-submit-btn"
                 type="submit"
                 disabled={loading}
-                className="w-full py-4 rounded-2xl bg-gradient-to-r from-orange-500 via-pink-500 to-blue-600 text-white font-black text-sm uppercase tracking-wider shadow-lg shadow-orange-500/20 hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+                className="w-full py-4 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-black text-sm uppercase tracking-wider shadow-lg shadow-blue-500/20 hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
               >
                 <Save className="w-4 h-4" />
-                <span>{loading ? "Saving to Database..." : "Publish Case Study"}</span>
+                <span>{loading ? "Saving..." : "Save Portfolio Project"}</span>
               </button>
             </div>
           </form>
         </div>
 
-        {/* RIGHT COLUMN: Sticky Real-time Preview & Settings */}
+        {/* RIGHT COLUMN: Sticky Real-time Card Preview & Publish Controls */}
         <div className="lg:col-span-5 space-y-6">
-          
-          {/* Live Card Preview Box */}
           <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 shadow-xl sticky top-6 space-y-6">
+            
+            {/* Header */}
             <div className="flex items-center justify-between border-b border-slate-800/80 pb-3">
               <div className="flex items-center gap-2">
-                <Eye className="w-4 h-4 text-purple-400" />
+                <Eye className="w-4 h-4 text-blue-400" />
                 <h3 className="text-xs font-black text-white uppercase tracking-wider">
-                  Live Website Card Preview
+                  Live Card Preview
                 </h3>
               </div>
               <span className="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
@@ -884,10 +692,10 @@ export default function NewPortfolioPage() {
               </span>
             </div>
 
-            {/* Simulated Frontend Card */}
+            {/* Simulated Live Card */}
             <div className="bg-slate-950 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl group transition-all">
-              {/* Cover Image with Badges */}
-              <div className="relative aspect-video w-full bg-slate-900 overflow-hidden">
+              {/* Cover Image */}
+              <div className="relative aspect-video w-full bg-slate-900 overflow-hidden flex items-center justify-center">
                 {coverImage ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
@@ -896,27 +704,28 @@ export default function NewPortfolioPage() {
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center text-slate-600">
-                    <ImageIcon className="w-8 h-8" />
+                  <div className="text-center p-6">
+                    <p className="text-xs font-bold text-slate-500">No Image Uploaded Yet</p>
+                    <p className="text-[10px] text-slate-600 mt-1">Upload a cover image above</p>
                   </div>
                 )}
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent pointer-events-none" />
 
                 {/* Top Badges */}
                 <div className="absolute top-3 left-3 right-3 flex items-center justify-between">
-                  <span className="bg-slate-900/90 backdrop-blur-md border border-slate-700 text-purple-300 text-[10px] font-bold px-2.5 py-1 rounded-lg">
-                    {industry || "Industry"}
+                  <span className="bg-slate-900/90 backdrop-blur-md border border-slate-700 text-blue-300 text-[10px] font-bold px-2.5 py-1 rounded-lg">
+                    {industry === "Other" && customIndustry ? customIndustry : industry}
                   </span>
                   {featured && (
-                    <span className="inline-flex items-center gap-1 bg-orange-500 text-white text-[9px] font-black uppercase px-2 py-0.5 rounded-full shadow-md shadow-orange-500/40">
+                    <span className="inline-flex items-center gap-1 bg-amber-500 text-white text-[9px] font-black uppercase px-2 py-0.5 rounded-full shadow-md">
                       <Star className="w-2.5 h-2.5 fill-white" /> Featured
                     </span>
                   )}
                 </div>
 
                 {/* Growth Metric Badge */}
-                {metrics[0] && (
-                  <div className="absolute bottom-3 right-3 bg-gradient-to-r from-orange-500 to-pink-500 text-white px-3 py-1 rounded-xl text-xs font-black shadow-lg">
+                {metrics[0] && metrics[0].value && (
+                  <div className="absolute bottom-3 right-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-3 py-1 rounded-xl text-xs font-black shadow-lg">
                     {metrics[0].value} {metrics[0].label}
                   </div>
                 )}
@@ -924,20 +733,20 @@ export default function NewPortfolioPage() {
 
               {/* Card Body */}
               <div className="p-4 space-y-2.5">
-                <p className="text-[11px] font-bold text-purple-400 uppercase tracking-wider">
+                <p className="text-[11px] font-bold text-blue-400 uppercase tracking-wider">
                   {clientName || "Client Name"} · {location || "City"}
                 </p>
                 <h4 className="text-sm font-black text-white line-clamp-2 leading-snug">
-                  {title || "Your High-Impact Case Study Title Will Appear Here"}
+                  {title || "Your Project Title Will Appear Here"}
                 </h4>
                 <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed">
-                  {summary || "Your case study summary and outcome highlights will appear here..."}
+                  {summary || "Your short summary and outcome highlights will appear here..."}
                 </p>
 
-                {/* Visual Tech Stack Tags in Preview */}
+                {/* Tags */}
                 {selectedTech.length > 0 && (
                   <div className="flex flex-wrap gap-1 pt-1">
-                    {selectedTech.slice(0, 4).map((t, idx) => (
+                    {selectedTech.slice(0, 3).map((t, idx) => (
                       <span
                         key={idx}
                         className="px-2 py-0.5 bg-slate-900 border border-slate-800 rounded-md text-[10px] font-bold text-slate-300"
@@ -945,70 +754,27 @@ export default function NewPortfolioPage() {
                         {t}
                       </span>
                     ))}
-                    {selectedTech.length > 4 && (
+                    {selectedTech.length > 3 && (
                       <span className="px-1.5 py-0.5 text-[9px] font-bold text-slate-500">
-                        +{selectedTech.length - 4} more
+                        +{selectedTech.length - 3} more
                       </span>
                     )}
                   </div>
                 )}
-
-                <div className="pt-2 border-t border-slate-800 flex items-center justify-between text-[11px] text-slate-400 font-bold">
-                  <span>View Full Case Study</span>
-                  <span className="text-purple-400">➔</span>
-                </div>
               </div>
             </div>
 
-            {/* Cover Image Selector */}
-            <div className="space-y-3 pt-2">
-              <label className="block text-xs font-black uppercase tracking-wider text-slate-300">
-                Cover Image URL
-              </label>
-              
-              <input
-                type="text"
-                value={coverImage}
-                onChange={(e) => setCoverImage(e.target.value)}
-                placeholder="https://images.unsplash.com/... or /images/case.webp"
-                className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-xs font-mono text-white placeholder-slate-600 focus:outline-none focus:border-purple-500"
-              />
-
-              {/* 1-Click Preset Cover Images */}
-              <div>
-                <span className="text-[10px] font-bold text-slate-500 uppercase block mb-1.5">
-                  1-Click Unsplash Stock Images:
-                </span>
-                <div className="grid grid-cols-3 gap-2">
-                  {PRESET_COVERS.map((preset, i) => (
-                    <button
-                      key={i}
-                      type="button"
-                      onClick={() => setCoverImage(preset.url)}
-                      className={`px-2 py-1.5 rounded-xl text-[10px] font-bold border text-center truncate transition-all ${
-                        coverImage === preset.url
-                          ? "bg-purple-600 border-purple-500 text-white"
-                          : "bg-slate-950 border-slate-800 text-slate-400 hover:text-white"
-                      }`}
-                    >
-                      {preset.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Status & Featured Toggles */}
+            {/* Publish & Featured Toggles */}
             <div className="space-y-3 pt-2 border-t border-slate-800">
               <label className="flex items-center justify-between p-3 rounded-2xl bg-slate-950 border border-slate-800 cursor-pointer hover:border-slate-700 transition-colors">
                 <span className="text-xs font-black text-white flex items-center gap-2">
-                  <Star className="w-3.5 h-3.5 text-orange-400" /> Feature on Homepage
+                  <Star className="w-3.5 h-3.5 text-amber-400" /> Feature on Homepage
                 </span>
                 <input
                   type="checkbox"
                   checked={featured}
                   onChange={(e) => setFeatured(e.target.checked)}
-                  className="w-4 h-4 rounded text-orange-500 bg-slate-900 border-slate-700 accent-orange-500"
+                  className="w-4 h-4 rounded text-blue-600 bg-slate-900 border-slate-700 accent-blue-600"
                 />
               </label>
 
@@ -1020,7 +786,7 @@ export default function NewPortfolioPage() {
                   type="checkbox"
                   checked={published}
                   onChange={(e) => setPublished(e.target.checked)}
-                  className="w-4 h-4 rounded text-blue-500 bg-slate-900 border-slate-700 accent-blue-500"
+                  className="w-4 h-4 rounded text-blue-600 bg-slate-900 border-slate-700 accent-blue-600"
                 />
               </label>
             </div>
@@ -1031,10 +797,10 @@ export default function NewPortfolioPage() {
                 type="button"
                 onClick={(e) => handleFormSubmit(e, false)}
                 disabled={loading}
-                className="w-full py-4 rounded-2xl bg-gradient-to-r from-orange-500 via-pink-500 to-blue-600 text-white font-black text-xs uppercase tracking-wider shadow-lg shadow-orange-500/20 hover:shadow-orange-500/40 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+                className="w-full py-4 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-black text-xs uppercase tracking-wider shadow-lg shadow-blue-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 disabled:opacity-50"
               >
                 <Save className="w-4 h-4" />
-                <span>{loading ? "Saving to Database..." : "Publish Case Study"}</span>
+                <span>{loading ? "Saving Project..." : "Save & Publish Project"}</span>
               </button>
 
               <button
@@ -1043,7 +809,7 @@ export default function NewPortfolioPage() {
                 disabled={loading}
                 className="w-full py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white font-bold text-xs border border-slate-700 transition-all flex items-center justify-center gap-2"
               >
-                <PlusCircle className="w-4 h-4 text-purple-400" />
+                <PlusCircle className="w-4 h-4 text-blue-400" />
                 <span>Save &amp; Add Another</span>
               </button>
             </div>

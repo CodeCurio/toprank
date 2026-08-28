@@ -19,18 +19,28 @@ export default function AdminLoginPage() {
     setError(null);
 
     try {
+      const cleanEmail = email.trim();
+
       // 1. Direct Client Sign In
       const { data, error: signInError } = await supabase.auth.signInWithPassword({
-        email: email.trim(),
+        email: cleanEmail,
         password: password,
       });
 
       if (signInError) {
-        // Fallback to server API if client throws network error
+        // If it's explicitly wrong credentials, throw user-friendly error immediately
+        if (
+          signInError.message?.toLowerCase().includes("invalid login credentials") ||
+          signInError.message?.toLowerCase().includes("invalid grant")
+        ) {
+          throw new Error("Invalid login credentials. Please double check your email and password.");
+        }
+
+        // Otherwise fallback to server API in case of client-side network / CORS restrictions
         const res = await fetch("/api/auth/login", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: email.trim(), password }),
+          body: JSON.stringify({ email: cleanEmail, password }),
         });
         const result = await res.json();
         if (!res.ok || result.error) {
@@ -100,7 +110,7 @@ export default function AdminLoginPage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="admin@toprankindia.com"
+                placeholder="connect@toprankindia.com"
                 className="w-full pl-10 pr-4 py-3 bg-slate-950/80 border border-slate-800 focus:border-blue-500 rounded-xl text-sm font-bold text-white placeholder-slate-600 focus:outline-none transition-colors"
               />
             </div>

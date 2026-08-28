@@ -32,42 +32,27 @@ export default function AdminDashboardPage() {
 
   const fetchStats = async () => {
     try {
-      // Fetch Blogs Count
-      const { count: blogsCount } = await supabase
-        .from("blogs")
-        .select("*", { count: "exact", head: true });
+      // Fetch data in parallel via robust internal APIs
+      const [blogsRes, portfoliosRes, leadsRes] = await Promise.allSettled([
+        fetch("/api/blogs").then((r) => r.json()),
+        fetch("/api/portfolios").then((r) => r.json()),
+        fetch("/api/leads").then((r) => r.json()),
+      ]);
 
-      // Fetch Portfolios Count
-      const { count: portfoliosCount } = await supabase
-        .from("portfolios")
-        .select("*", { count: "exact", head: true });
+      const blogsData = blogsRes.status === "fulfilled" ? blogsRes.value?.data || [] : [];
+      const portfoliosData = portfoliosRes.status === "fulfilled" ? portfoliosRes.value?.data || [] : [];
+      const leadsData = leadsRes.status === "fulfilled" ? leadsRes.value?.data || [] : [];
 
-      // Fetch Total Leads Count
-      const { count: leadsCount } = await supabase
-        .from("leads")
-        .select("*", { count: "exact", head: true });
-
-      // Fetch New Leads Count
-      const { count: newLeadsCount } = await supabase
-        .from("leads")
-        .select("*", { count: "exact", head: true })
-        .eq("status", "New");
-
-      // Fetch Recent 5 Leads
-      const { data: leads } = await supabase
-        .from("leads")
-        .select("*")
-        .order("created_at", { ascending: false })
-        .limit(5);
+      const newLeads = leadsData.filter((l: any) => l.status === "New");
 
       setStats({
-        blogsCount: blogsCount || 0,
-        portfoliosCount: portfoliosCount || 0,
-        leadsCount: leadsCount || 0,
-        newLeadsCount: newLeadsCount || 0,
+        blogsCount: blogsData.length,
+        portfoliosCount: portfoliosData.length,
+        leadsCount: leadsData.length,
+        newLeadsCount: newLeads.length,
       });
 
-      setRecentLeads(leads || []);
+      setRecentLeads(leadsData.slice(0, 5));
     } catch (err) {
       console.error("Error loading admin stats:", err);
     } finally {

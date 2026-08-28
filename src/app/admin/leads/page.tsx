@@ -29,13 +29,9 @@ export default function AdminLeadsPage() {
   const fetchLeads = async () => {
     setLoading(true);
     try {
-      const { data, error } = await supabase
-        .from("leads")
-        .select("*")
-        .order("created_at", { ascending: false });
-
-      if (error) throw error;
-      setLeads(data || []);
+      const res = await fetch("/api/leads");
+      const json = await res.json();
+      setLeads(json.data || []);
     } catch (err) {
       console.error("Error fetching leads:", err);
     } finally {
@@ -45,12 +41,17 @@ export default function AdminLeadsPage() {
 
   const updateLeadStatus = async (id: string, newStatus: string) => {
     try {
-      const { error } = await supabase
-        .from("leads")
-        .update({ status: newStatus })
-        .eq("id", id);
+      const res = await fetch(`/api/leads/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: newStatus }),
+      });
 
-      if (error) throw error;
+      if (!res.ok) {
+        const errData = await res.json();
+        throw new Error(errData.error || "Failed to update status");
+      }
+
       setLeads(leads.map((l) => (l.id === id ? { ...l, status: newStatus } : l)));
     } catch (err: any) {
       alert("Failed to update status: " + err.message);
@@ -61,8 +62,15 @@ export default function AdminLeadsPage() {
     if (!confirm(`Are you sure you want to delete lead enquiry from "${name}"?`)) return;
 
     try {
-      const { error } = await supabase.from("leads").delete().eq("id", id);
-      if (error) throw error;
+      const res = await fetch(`/api/leads/${id}`, {
+        method: "DELETE",
+      });
+
+      if (!res.ok) {
+        const errData = await res.json();
+        throw new Error(errData.error || "Failed to delete lead");
+      }
+
       setLeads(leads.filter((l) => l.id !== id));
     } catch (err: any) {
       alert("Failed to delete lead: " + err.message);

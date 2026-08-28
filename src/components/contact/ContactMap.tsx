@@ -12,7 +12,7 @@ const locations = [
     phone: "+91 93050 30523",
     email: "connect@toprankindia.com",
     hours: "Monday - Sunday, 24x7",
-    embedParams: "https://maps.google.com/maps?q=TopRank%20Digital%20Service,%20Lucknow&t=&z=15&ie=UTF8&iwloc=&output=embed",
+    embedParams: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d225.40266407933288!2d80.9997749234823!3d26.83717480352987!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399be3e41920850b%3A0x46d2900944856043!2sTopRank%20Digital%20Service%20%7C%20Website%20Designer%20%26%20SEO%20Company!5e1!3m2!1sen!2sin!4v1774077241204!5m2!1sen!2sin",
     directionLink: "https://share.google/585sAqmLbXxpCuos9"
   },
   {
@@ -34,7 +34,7 @@ const locations = [
     phone: "+91 91154 39115",
     email: "connect@toprankindia.com",
     hours: "Monday - Sunday, 24x7",
-    embedParams: "https://maps.google.com/maps?q=Shop%20no%2012%2C%20sector%2069%2C%20mohali%2C%20160069&t=&z=15&ie=UTF8&iwloc=&output=embed",
+    embedParams: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13100.18795423636!2d76.70796437277613!3d30.68211679471311!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390fefc0dd7854f7%3A0xb6fd51bb2dcd4f3a!2sTopRank%20Digital%20Service%20-%20Best%20Website%20Designing%2FSEO%2FDigital%20Marketing%20Company%20in%20Mohali!5e0!3m2!1sen!2sin!4v1787931538019!5m2!1sen!2sin",
     directionLink: "https://www.google.com/maps/search/?api=1&query=Shop+no+12,+sector+69,+mohali,+160069"
   },
   {
