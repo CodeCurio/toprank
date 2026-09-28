@@ -17,16 +17,18 @@ import {
   X,
   UserCheck,
 } from "lucide-react";
+import { AdminThemeProvider, useAdminTheme } from "@/components/admin/AdminThemeContext";
+import { ThemeToggle } from "@/components/admin/ThemeToggle";
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
+function AdminLayoutContent({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
+  const { isLight } = useAdminTheme();
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<any>(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
-    // Skip auth check if currently on the login page
     if (pathname === "/admin/login") {
       setLoading(false);
       return;
@@ -50,7 +52,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           return;
         }
 
-        // Check local storage marker
         if (typeof window !== "undefined") {
           const loggedInMark = localStorage.getItem("toprank_admin_logged_in");
           if (loggedInMark === "true" && isMounted) {
@@ -60,7 +61,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           }
         }
 
-        // If no active session or user found, redirect to login
         if (isMounted) {
           router.push("/admin/login");
         }
@@ -109,9 +109,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-950 text-white flex flex-col items-center justify-center gap-3">
-        <div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
-        <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Opening Control Center...</p>
+      <div className={`min-h-screen flex flex-col items-center justify-center gap-3 ${isLight ? "bg-slate-50 text-slate-900" : "bg-slate-950 text-white"}`}>
+        <div className="w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full animate-spin" />
+        <p className="text-xs font-bold uppercase tracking-widest text-slate-500">
+          Opening Control Center...
+        </p>
       </div>
     );
   }
@@ -124,25 +126,36 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   ];
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col md:flex-row font-sans selection:bg-purple-600 selection:text-white">
+    <div className={`min-h-screen flex flex-col md:flex-row font-sans transition-colors duration-200 ${
+      isLight ? "bg-slate-50 text-slate-900 selection:bg-blue-600 selection:text-white" : "bg-slate-950 text-slate-100 selection:bg-purple-600 selection:text-white"
+    }`}>
       
       {/* Mobile Top Navbar */}
-      <div className="md:hidden flex items-center justify-between p-4 bg-slate-900 border-b border-slate-800">
+      <div className={`md:hidden flex items-center justify-between p-4 border-b ${
+        isLight ? "bg-white border-slate-200 text-slate-900" : "bg-slate-900 border-slate-800 text-white"
+      }`}>
         <div className="flex items-center gap-2">
-          <Image src={LogoImg} alt="TopRank Logo" className="h-7 w-auto object-contain brightness-0 invert" />
-          <span className="text-xs font-black uppercase tracking-widest text-purple-400">Admin</span>
+          <Image src={LogoImg} alt="TopRank Logo" className={`h-7 w-auto object-contain ${!isLight ? "brightness-0 invert" : ""}`} />
+          <span className="text-xs font-black uppercase tracking-widest text-blue-600">Admin</span>
         </div>
-        <button
-          onClick={() => setSidebarOpen(!sidebarOpen)}
-          className="p-2 rounded-xl bg-slate-800 text-slate-300"
-        >
-          {sidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-        </button>
+        <div className="flex items-center gap-2">
+          <ThemeToggle variant="icon" />
+          <button
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+            className={`p-2 rounded-xl ${isLight ? "bg-slate-100 text-slate-700" : "bg-slate-800 text-slate-300"}`}
+          >
+            {sidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+        </div>
       </div>
 
       {/* Sidebar Navigation */}
       <aside
-        className={`fixed md:sticky top-0 left-0 z-50 h-screen w-64 bg-slate-900/95 backdrop-blur-xl border-r border-slate-800 flex flex-col justify-between p-6 transition-transform duration-300 ${
+        className={`fixed md:sticky top-0 left-0 z-50 h-screen w-64 flex flex-col justify-between p-6 transition-all duration-300 ${
+          isLight
+            ? "bg-white/95 backdrop-blur-xl border-r border-slate-200 shadow-sm"
+            : "bg-slate-900/95 backdrop-blur-xl border-r border-slate-800"
+        } ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
         }`}
       >
@@ -150,14 +163,23 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           {/* Logo & Portal Badge */}
           <div>
             <Link href="/admin" className="flex items-center gap-2 mb-2">
-              <div className="bg-white p-1.5 rounded-xl">
+              <div className={`p-1.5 rounded-xl border ${isLight ? "bg-slate-50 border-slate-200" : "bg-white border-transparent"}`}>
                 <Image src={LogoImg} alt="TopRank Logo" className="h-6 w-auto object-contain" />
               </div>
-              <span className="text-sm font-black text-white tracking-tight">TopRank Admin</span>
+              <span className={`text-sm font-black tracking-tight ${isLight ? "text-slate-900" : "text-white"}`}>
+                TopRank Admin
+              </span>
             </Link>
-            <span className="inline-block text-[9px] font-black uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400">
-              Control Center
-            </span>
+            <div className="flex items-center justify-between">
+              <span className="inline-block text-[9px] font-black uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-600">
+                Control Center
+              </span>
+              <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                isLight ? "bg-slate-100 text-slate-600" : "bg-slate-800 text-slate-400"
+              }`}>
+                v2.0
+              </span>
+            </div>
           </div>
 
           {/* Navigation Links */}
@@ -171,11 +193,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                   onClick={() => setSidebarOpen(false)}
                   className={`flex items-center gap-3 px-4 py-3 rounded-2xl text-xs font-bold transition-all ${
                     isActive
-                      ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-600/20"
+                      ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-600/25 scale-[1.02]"
+                      : isLight
+                      ? "text-slate-600 hover:text-slate-900 hover:bg-slate-100/80"
                       : "text-slate-400 hover:text-white hover:bg-slate-800/60"
                   }`}
                 >
-                  <item.icon className={`w-4 h-4 ${isActive ? "text-white" : "text-slate-400"}`} />
+                  <item.icon className={`w-4 h-4 ${isActive ? "text-white" : isLight ? "text-slate-500" : "text-slate-400"}`} />
                   <span>{item.name}</span>
                 </Link>
               );
@@ -183,29 +207,50 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           </nav>
         </div>
 
-        {/* User Badge & Logout Button */}
-        <div className="space-y-4 pt-6 border-t border-slate-800">
+        {/* User Badge, Theme Switcher & Logout */}
+        <div className={`space-y-4 pt-6 border-t ${isLight ? "border-slate-200" : "border-slate-800"}`}>
+          {/* Theme Toggle Pill in Sidebar */}
+          <div className="flex items-center justify-between px-1">
+            <span className={`text-[11px] font-bold uppercase tracking-wider ${isLight ? "text-slate-500" : "text-slate-400"}`}>
+              Theme:
+            </span>
+            <ThemeToggle variant="pill" />
+          </div>
+
+          {/* User Status */}
           <div className="flex items-center gap-3 px-2">
-            <div className="w-8 h-8 rounded-full bg-purple-500/20 border border-purple-500/30 flex items-center justify-center text-purple-400 font-bold text-xs">
+            <div className={`w-8 h-8 rounded-full border flex items-center justify-center font-bold text-xs ${
+              isLight ? "bg-blue-50 border-blue-200 text-blue-600" : "bg-purple-500/20 border-purple-500/30 text-purple-400"
+            }`}>
               <UserCheck className="w-4 h-4" />
             </div>
             <div className="overflow-hidden">
-              <p className="text-xs font-bold text-white truncate">{user?.email || "Admin User"}</p>
-              <p className="text-[10px] text-emerald-400 font-semibold">Active Session</p>
+              <p className={`text-xs font-bold truncate ${isLight ? "text-slate-900" : "text-white"}`}>
+                {user?.email || "Admin User"}
+              </p>
+              <p className="text-[10px] text-emerald-600 font-semibold flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                Active Session
+              </p>
             </div>
           </div>
 
+          {/* Action Row */}
           <div className="flex items-center gap-2">
             <Link
               href="/"
               target="_blank"
-              className="flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-[11px] font-bold transition-colors"
+              className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl text-[11px] font-bold transition-colors ${
+                isLight
+                  ? "bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200"
+                  : "bg-slate-800 hover:bg-slate-700 text-slate-300"
+              }`}
             >
-              <Globe className="w-3.5 h-3.5" /> View Live
+              <Globe className="w-3.5 h-3.5 text-blue-500" /> View Website
             </Link>
             <button
               onClick={handleLogout}
-              className="p-2.5 rounded-xl bg-red-500/10 hover:bg-red-500/20 text-red-400 text-xs font-bold transition-colors"
+              className="p-2.5 rounded-xl bg-red-500/10 hover:bg-red-500/20 text-red-500 text-xs font-bold transition-colors border border-red-500/20"
               title="Sign Out"
             >
               <LogOut className="w-4 h-4" />
@@ -220,5 +265,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       </main>
 
     </div>
+  );
+}
+
+export default function AdminLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <AdminThemeProvider>
+      <AdminLayoutContent>{children}</AdminLayoutContent>
+    </AdminThemeProvider>
   );
 }

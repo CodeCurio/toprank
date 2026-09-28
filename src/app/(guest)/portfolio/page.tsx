@@ -41,7 +41,10 @@ export default async function PortfolioPage() {
           featuredImage: p.cover_image || "/images/placeholder-what-makes-us-different.jpg",
           category: p.industry || "Digital Marketing",
           clientName: p.client_name || "",
+          location: p.location || "",
           results: topResult,
+          technologies: p.technologies || "",
+          featured: Boolean(p.featured),
         };
       });
     }
@@ -52,11 +55,17 @@ export default async function PortfolioPage() {
   // If no database records found, fallback to sample projects
   if (projects.length === 0) {
     projects = SAMPLE_PORTFOLIO_PROJECTS.map((p) => ({
-      ...p,
+      id: p.id,
+      title: p.title,
+      slug: p.slug,
       excerpt: p.excerpt || "",
       featuredImage: p.featuredImage || "",
+      category: p.category,
       clientName: p.clientName || "",
+      location: p.location || "Lucknow, UP",
       results: p.results || "",
+      technologies: p.technologies || "",
+      featured: true,
     }));
   }
 

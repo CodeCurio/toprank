@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
 import slugify from "slugify";
 import { ArrowLeft, Save, Loader2, Settings2, Image as ImageIcon, Type, Clock, Tag } from "lucide-react";
@@ -15,11 +15,11 @@ const BlogRichEditor = dynamic(
   { ssr: false, loading: () => <div className="h-96 rounded-2xl border border-slate-200 animate-pulse bg-slate-50" /> }
 );
 
-export default function NewBlogPage() {
+export default function EditBlogPage() {
   const router = useRouter();
+  const { id } = useParams<{ id: string }>();
   const { isLight } = useAdminTheme();
-  
-  // State
+
   const [title, setTitle] = useState("");
   const [slug, setSlug] = useState("");
   const [excerpt, setExcerpt] = useState("");
@@ -29,16 +29,43 @@ export default function NewBlogPage() {
   const [readTime, setReadTime] = useState("5 min read");
   const [published, setPublished] = useState(true);
   
-  const [loading, setLoading] = useState(false);
+  const [fetchLoading, setFetchLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  
+
   // Mobile sidebar toggle
   const [showSidebar, setShowSidebar] = useState(false);
+
+  // Load existing blog data
+  useEffect(() => {
+    if (!id) return;
+    const load = async () => {
+      try {
+        const res = await fetch(`/api/blogs/${id}`);
+        const json = await res.json();
+        if (!res.ok || json.error) throw new Error(json.error || "Failed to load blog");
+        const blog = json.data;
+        setTitle(blog.title || "");
+        setSlug(blog.slug || "");
+        setExcerpt(blog.excerpt || "");
+        setContent(blog.content || "");
+        setCoverImage(blog.cover_image || "");
+        setCategory(blog.category || "Digital Marketing");
+        setReadTime(blog.read_time || "5 min read");
+        setPublished(Boolean(blog.published));
+      } catch (err: any) {
+        setError(err.message || "Failed to load blog post");
+      } finally {
+        setFetchLoading(false);
+      }
+    };
+    load();
+  }, [id]);
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const val = e.target.value;
     setTitle(val);
-    setSlug(slugify(val, { lower: true, strict: true }));
+    if (!slug) setSlug(slugify(val, { lower: true, strict: true }));
     
     // Auto-resize
     e.target.style.height = "auto";
@@ -50,12 +77,12 @@ export default function NewBlogPage() {
     if (!title) return setError("Title is required.");
     if (!content || content === "<p></p>") return setError("Article content cannot be empty.");
     
-    setLoading(true);
+    setSaving(true);
     setError(null);
 
     try {
-      const res = await fetch("/api/blogs", {
-        method: "POST",
+      const res = await fetch(`/api/blogs/${id}`, {
+        method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           title,
@@ -71,14 +98,14 @@ export default function NewBlogPage() {
 
       const resData = await res.json();
       if (!res.ok || resData.error) {
-        throw new Error(resData.error || "Failed to create blog post");
+        throw new Error(resData.error || "Failed to update blog post");
       }
 
       router.push("/admin/blogs");
     } catch (err: any) {
-      setError(err.message || "Failed to create blog post");
+      setError(err.message || "Failed to update blog post");
     } finally {
-      setLoading(false);
+      setSaving(false);
     }
   };
 
@@ -91,6 +118,15 @@ export default function NewBlogPage() {
   const labelCls = `block text-[11px] font-bold uppercase tracking-wider mb-1.5 flex items-center gap-1.5 ${
     isLight ? "text-slate-600" : "text-slate-400"
   }`;
+
+  if (fetchLoading) {
+    return (
+      <div className="flex-1 flex flex-col items-center justify-center min-h-[50vh] text-slate-400 gap-4">
+        <Loader2 className="w-8 h-8 animate-spin text-blue-500" />
+        <span className="text-sm font-bold uppercase tracking-wider">Loading Article...</span>
+      </div>
+    );
+  }
 
   return (
     <form onSubmit={handleSubmit} className="max-w-7xl mx-auto flex flex-col h-full min-h-[calc(100vh-100px)]">
@@ -107,7 +143,7 @@ export default function NewBlogPage() {
             <ArrowLeft className="w-5 h-5" />
           </Link>
           <span className={`text-sm font-bold tracking-wide ${isLight ? "text-slate-900" : "text-white"}`}>
-            Drafting New Post
+            Editing Post
           </span>
         </div>
 
@@ -124,13 +160,13 @@ export default function NewBlogPage() {
 
           <button
             type="submit"
-            disabled={loading}
+            disabled={saving}
             className="px-6 py-2.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase tracking-wider shadow-lg shadow-blue-500/20 active:scale-95 transition-all flex items-center gap-2 disabled:opacity-50"
           >
-            {loading ? (
+            {saving ? (
               <><Loader2 className="w-4 h-4 animate-spin" /><span>Saving...</span></>
             ) : (
-              <><Save className="w-4 h-4" /><span>{published ? 'Publish' : 'Save Draft'}</span></>
+              <><Save className="w-4 h-4" /><span>Save Changes</span></>
             )}
           </button>
         </div>
@@ -278,8 +314,8 @@ export default function NewBlogPage() {
                 className="w-4 h-4 rounded text-blue-600 bg-slate-100 border-slate-300 accent-blue-600"
               />
               <div className="flex flex-col">
-                <span className={`text-sm font-bold ${isLight ? "text-slate-900" : "text-white"}`}>Publish Immediately</span>
-                <span className={`text-[10px] ${isLight ? "text-slate-500" : "text-slate-400"}`}>Visible on the main website</span>
+                <span className={`text-sm font-bold ${isLight ? "text-slate-900" : "text-white"}`}>Publish on Website</span>
+                <span className={`text-[10px] ${isLight ? "text-slate-500" : "text-slate-400"}`}>Uncheck to save as Draft</span>
               </div>
             </label>
           </div>

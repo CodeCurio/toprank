@@ -1,7 +1,10 @@
-import { SAMPLE_BLOG_POSTS } from "@/data/blogData";
+import { getPublishedBlogs } from "@/lib/supabase/blogs";
 import Link from "next/link";
 import { Metadata } from "next";
-import { ArrowRight, Calendar, User } from "lucide-react";
+import { ArrowRight, Calendar } from "lucide-react";
+
+// Revalidate every 60 seconds (ISR) — fresh content without full SSR cost.
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: "Blog | TopRank Digital Service",
@@ -17,14 +20,11 @@ export default async function BlogPage({
   searchParams: Promise<{ page?: string }>;
 }) {
   const params = await searchParams;
-  const page = parseInt(params.page || "1", 10);
+  const page = Math.max(1, parseInt(params.page || "1", 10));
   const limit = 6;
-  const skip = (page - 1) * limit;
 
-  const posts = SAMPLE_BLOG_POSTS.slice(skip, skip + limit);
-  const totalPosts = SAMPLE_BLOG_POSTS.length;
-
-  const totalPages = Math.max(1, Math.ceil(totalPosts / limit));
+  const { posts, total, error } = await getPublishedBlogs(page, limit);
+  const totalPages = Math.max(1, Math.ceil(total / limit));
 
   return (
     <>
@@ -53,43 +53,47 @@ export default async function BlogPage({
           </p>
         </div>
 
-        {posts.length === 0 ? (
+        {error && (
+          <div className="text-center text-slate-500 py-8 text-sm bg-red-50 rounded-2xl border border-red-100 mb-8">
+            Unable to load articles at this time. Please try again later.
+          </div>
+        )}
+
+        {posts.length === 0 && !error ? (
           <div className="text-center text-slate-500 py-32 bg-white rounded-3xl border border-slate-200/60 shadow-sm">
             <p className="text-2xl font-bold text-slate-900 mb-2">No transmissions received yet.</p>
             <p className="text-slate-500">Check back soon for high-converting content.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-            {posts.map((post: any) => (
+            {posts.map((post) => (
               <Link key={post.id} href={`/blog/${post.slug}`} className="group h-full">
                 <article className="h-full bg-white rounded-2xl shadow-[0_10px_30px_-15px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.12)] border border-slate-200/60 hover:border-blue-200 overflow-hidden hover:-translate-y-1 transition-all duration-300 flex flex-col relative z-20">
                   
-                  {post.featuredImage && (
+                  {post.cover_image && (
                     <div className="aspect-[16/10] w-full overflow-hidden relative border-b border-slate-100">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
-                        src={post.featuredImage}
-                        alt={post.title}
+                        src={post.cover_image}
+                        alt={post.title ?? "Blog post"}
                         className="w-full h-full object-cover transform group-hover:scale-105 transition duration-500 ease-out"
                         width={600}
-                        height={400}
+                        height={375}
                       />
                     </div>
                   )}
 
                   <div className="p-6 sm:p-8 flex-1 flex flex-col relative">
                     <div className="flex items-center gap-4 text-xs font-bold uppercase tracking-widest mb-4">
-                       <time className="text-slate-400 flex items-center gap-1.5" dateTime={new Date(post.createdAt).toISOString()}>
+                       <time className="text-slate-400 flex items-center gap-1.5" dateTime={post.created_at}>
                          <Calendar className="w-3.5 h-3.5" />
-                         {new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric" }).format(new Date(post.createdAt))}
+                         {new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric" }).format(new Date(post.created_at!))}
                        </time>
                        
-                       {/* @ts-ignore */}
-                       {post.categories && post.categories.length > 0 && (
+                       {post.category && (
                          <>
                            <span className="text-slate-300">&bull;</span>
-                           {/* @ts-ignore */}
-                           <span className="text-blue-600 font-black">{post.categories[0].name}</span>
+                           <span className="text-blue-600 font-black">{post.category}</span>
                          </>
                        )}
                     </div>
@@ -149,6 +153,7 @@ export default async function BlogPage({
             )}
           </div>
         )}
+
         {/* Editorial & Learning Hub Section */}
         <section className="mt-24 border-t border-slate-200 pt-16">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
@@ -166,7 +171,7 @@ export default async function BlogPage({
                 </p>
               </div>
               <div className="space-y-3">
-                <h4 className="font-bold text-slate-900">Performance Ads & Attribution</h4>
+                <h4 className="font-bold text-slate-900">Performance Ads &amp; Attribution</h4>
                 <p className="text-slate-500 text-xs font-medium leading-relaxed">
                   Tactical guides on structuring paid campaigns on Google Ads and Meta platforms, configuring multi-touch attribution pipelines, reducing cost-per-lead, and maximizing Return on Ad Spend (ROAS).
                 </p>

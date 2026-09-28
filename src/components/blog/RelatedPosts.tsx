@@ -1,20 +1,20 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 
+/** Matches the partial BlogPost shape returned by getRelatedBlogs(). */
 export interface RelatedPost {
   id: string;
   title: string;
   slug: string;
-  featuredImage: string | null;
-  createdAt: Date;
-  categories: { id: string; name: string }[];
+  cover_image: string | null;
+  category: string;
+  created_at: string;
 }
 
 export default function RelatedPosts({ posts }: { posts: RelatedPost[] }) {
-  if (posts.length === 0) return null;
+  if (!posts || posts.length === 0) return null;
 
   return (
     <div className="bg-white rounded-2xl p-6 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.05)] border border-slate-100 relative overflow-hidden">
@@ -29,11 +29,11 @@ export default function RelatedPosts({ posts }: { posts: RelatedPost[] }) {
         {posts.map((post) => (
           <Link key={post.id} href={`/blog/${post.slug}`} className="group block">
             <article className="flex gap-4 items-start">
-              {post.featuredImage && (
+              {post.cover_image && (
                  <div className="w-20 h-20 shrink-0 rounded-xl overflow-hidden border border-slate-100 relative shadow-sm">
-                   { }
-                   <Image 
-                      src={post.featuredImage} 
+                   {/* eslint-disable-next-line @next/next/no-img-element */}
+                   <img
+                      src={post.cover_image}
                       alt={post.title}
                       width={80}
                       height={80}
@@ -42,16 +42,16 @@ export default function RelatedPosts({ posts }: { posts: RelatedPost[] }) {
                  </div>
               )}
               <div className="flex-1 min-w-0 flex flex-col justify-center">
-                {post.categories && post.categories.length > 0 && (
+                {post.category && (
                    <span className="text-[10px] font-bold text-blue-600 uppercase tracking-wider mb-1.5 block truncate">
-                     {post.categories[0].name}
+                     {post.category}
                    </span>
                 )}
                 <h5 className="font-bold text-slate-800 text-sm leading-snug line-clamp-2 group-hover:text-blue-600 transition-colors mb-2">
                   {post.title}
                 </h5>
                 <span className="text-[11px] font-medium text-slate-400 truncate block">
-                  {new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric" }).format(new Date(post.createdAt))}
+                  {new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric" }).format(new Date(post.created_at))}
                 </span>
               </div>
             </article>

@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { UploadCloud, X, Check, Loader2, Link as LinkIcon, RefreshCw, AlertCircle } from "lucide-react";
+import { UploadCloud, X, Check, Loader2, Link as LinkIcon, AlertCircle } from "lucide-react";
+import { useAdminTheme } from "./AdminThemeContext";
 
 interface ImageUploaderProps {
   value: string;
@@ -16,6 +17,7 @@ export function ImageUploader({
   label = "Cover / Featured Image",
   helperText = "Upload high quality PNG, JPG, or WebP (Max 15MB)",
 }: ImageUploaderProps) {
+  const { isLight } = useAdminTheme();
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [localBlobUrl, setLocalBlobUrl] = useState<string | null>(null);
@@ -23,7 +25,6 @@ export function ImageUploader({
   const [urlInput, setUrlInput] = useState(value || "");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Sync external value
   useEffect(() => {
     if (value) {
       setUrlInput(value);
@@ -45,7 +46,6 @@ export function ImageUploader({
       return;
     }
 
-    // Instant local preview for zero-delay user feedback
     const blobPreview = URL.createObjectURL(file);
     setLocalBlobUrl(blobPreview);
     setUploading(true);
@@ -102,15 +102,21 @@ export function ImageUploader({
     <div className="space-y-3">
       {/* Header & Mode Switcher */}
       <div className="flex items-center justify-between">
-        <label className="block text-xs font-black uppercase tracking-wider text-slate-300">
-          {label} <span className="text-orange-400">*</span>
+        <label className={`block text-xs font-black uppercase tracking-wider ${isLight ? "text-slate-800" : "text-slate-300"}`}>
+          {label} <span className="text-orange-500">*</span>
         </label>
-        <div className="flex items-center gap-1 bg-slate-950 border border-slate-800 p-0.5 rounded-lg text-[11px] font-bold">
+        <div className={`flex items-center gap-1 border p-0.5 rounded-lg text-[11px] font-bold ${
+          isLight ? "bg-slate-100 border-slate-200" : "bg-slate-950 border-slate-800"
+        }`}>
           <button
             type="button"
             onClick={() => setMode("upload")}
             className={`px-2.5 py-1 rounded-md transition-colors flex items-center gap-1 ${
-              mode === "upload" ? "bg-blue-600 text-white shadow" : "text-slate-400 hover:text-white"
+              mode === "upload"
+                ? "bg-blue-600 text-white shadow"
+                : isLight
+                ? "text-slate-600 hover:text-slate-900"
+                : "text-slate-400 hover:text-white"
             }`}
           >
             <UploadCloud className="w-3 h-3" /> Upload File
@@ -119,7 +125,11 @@ export function ImageUploader({
             type="button"
             onClick={() => setMode("url")}
             className={`px-2.5 py-1 rounded-md transition-colors flex items-center gap-1 ${
-              mode === "url" ? "bg-blue-600 text-white shadow" : "text-slate-400 hover:text-white"
+              mode === "url"
+                ? "bg-blue-600 text-white shadow"
+                : isLight
+                ? "text-slate-600 hover:text-slate-900"
+                : "text-slate-400 hover:text-white"
             }`}
           >
             <LinkIcon className="w-3 h-3" /> Direct URL
@@ -129,7 +139,7 @@ export function ImageUploader({
 
       {/* Error notification */}
       {error && (
-        <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 text-xs font-bold flex items-center gap-2">
+        <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/30 text-red-500 text-xs font-bold flex items-center gap-2">
           <AlertCircle className="w-4 h-4 shrink-0" />
           <span>{error}</span>
         </div>
@@ -137,19 +147,14 @@ export function ImageUploader({
 
       {/* Image Preview if image is present */}
       {displayImage ? (
-        <div className="relative aspect-video w-full rounded-2xl overflow-hidden border border-slate-800 bg-slate-950 group">
+        <div className={`relative aspect-[16/10] w-full rounded-2xl overflow-hidden border group ${
+          isLight ? "bg-slate-100 border-slate-200" : "bg-slate-950 border-slate-800"
+        }`}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={displayImage}
             alt="Uploaded Preview"
             className="w-full h-full object-cover"
-            onError={(e) => {
-              // If image fails, attempt fallback or show styling
-              const target = e.target as HTMLImageElement;
-              if (value && value.startsWith("http") && !target.src.includes("/uploads/")) {
-                console.warn("Retrying with relative path...");
-              }
-            }}
           />
 
           {uploading && (
@@ -192,6 +197,8 @@ export function ImageUploader({
               className={`border-2 border-dashed rounded-2xl p-8 text-center cursor-pointer transition-all flex flex-col items-center justify-center gap-3 ${
                 uploading
                   ? "border-blue-500 bg-blue-500/5 cursor-wait"
+                  : isLight
+                  ? "border-slate-300 hover:border-blue-500 bg-slate-50/80 hover:bg-slate-100/80"
                   : "border-slate-800 hover:border-blue-500/60 bg-slate-950/60 hover:bg-slate-900/60"
               }`}
             >
@@ -209,19 +216,21 @@ export function ImageUploader({
 
               {uploading ? (
                 <div className="flex flex-col items-center gap-2">
-                  <Loader2 className="w-8 h-8 text-blue-400 animate-spin" />
-                  <p className="text-xs font-bold text-blue-300">Processing image upload...</p>
+                  <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
+                  <p className="text-xs font-bold text-blue-600">Processing image upload...</p>
                 </div>
               ) : (
                 <>
-                  <div className="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/20 text-blue-400 flex items-center justify-center">
+                  <div className={`w-12 h-12 rounded-2xl border flex items-center justify-center ${
+                    isLight ? "bg-blue-50 border-blue-200 text-blue-600" : "bg-blue-500/10 border-blue-500/20 text-blue-400"
+                  }`}>
                     <UploadCloud className="w-6 h-6" />
                   </div>
                   <div>
-                    <p className="text-xs font-black text-white">
+                    <p className={`text-xs font-black ${isLight ? "text-slate-800" : "text-white"}`}>
                       Click to upload or drag &amp; drop
                     </p>
-                    <p className="text-[11px] text-slate-400 mt-1">{helperText}</p>
+                    <p className={`text-[11px] mt-1 ${isLight ? "text-slate-500" : "text-slate-400"}`}>{helperText}</p>
                   </div>
                 </>
               )}
@@ -234,12 +243,16 @@ export function ImageUploader({
                 value={urlInput}
                 onChange={(e) => setUrlInput(e.target.value)}
                 placeholder="https://images.unsplash.com/... or /uploads/image.png"
-                className="flex-1 px-4 py-3 bg-slate-950 border border-slate-800 focus:border-blue-500 rounded-xl text-xs font-mono text-white placeholder-slate-600 focus:outline-none transition-colors"
+                className={`flex-1 px-4 py-3 border rounded-xl text-xs font-mono focus:outline-none transition-colors ${
+                  isLight
+                    ? "bg-slate-50 border-slate-200 text-slate-900 placeholder-slate-400 focus:bg-white focus:border-blue-500 shadow-2xs"
+                    : "bg-slate-950 border-slate-800 text-white placeholder-slate-600 focus:border-blue-500"
+                }`}
               />
               <button
                 type="button"
                 onClick={handleUrlApply}
-                className="px-4 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold transition-colors"
+                className="px-4 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold transition-colors shadow-xs"
               >
                 Apply URL
               </button>
@@ -248,7 +261,19 @@ export function ImageUploader({
         </>
       )}
 
-      {/* Hidden file input when preview is visible */}
+      {/* Recommended Sizing & Mockup Framing Guidance */}
+      <div className={`flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[11px] p-3.5 rounded-2xl border shadow-2xs ${
+        isLight ? "bg-slate-100/90 border-slate-200 text-slate-600" : "bg-slate-950/80 border-slate-800/90 text-slate-400"
+      }`}>
+        <div className="flex items-center gap-1.5">
+          <span className="font-bold text-blue-600">📐 Best Resolution:</span>
+          <span className={`font-medium ${isLight ? "text-slate-800" : "text-slate-300"}`}>1920 × 1200 (16:10) or 1920 × 1080 (16:9)</span>
+        </div>
+        <div className={`text-[10px] font-medium ${isLight ? "text-slate-500" : "text-slate-400"}`}>
+          💡 <span className="text-amber-600 font-bold">Pro-Tip:</span> Keep ~5-10% canvas padding around device mockups
+        </div>
+      </div>
+
       <input
         ref={fileInputRef}
         type="file"

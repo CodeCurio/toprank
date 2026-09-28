@@ -1,31 +1,35 @@
-import { SAMPLE_BLOG_POSTS } from "@/data/blogData";
+import { getBlogBySlug, getAllPublishedSlugs, getRelatedBlogs } from "@/lib/supabase/blogs";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import Link from "next/link";
-import { ArrowLeft, Calendar, User, Share2, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, Calendar } from "lucide-react";
 import slugify from "slugify";
 import TableOfContents, { HeadingItem } from "@/components/blog/TableOfContents";
-import RelatedPosts from "@/components/blog/RelatedPosts";
+import RelatedPosts, { RelatedPost } from "@/components/blog/RelatedPosts";
+
+// Cache each article page for 60 seconds (ISR)
+export const revalidate = 60;
 
 export async function generateStaticParams() {
-  return SAMPLE_BLOG_POSTS.map((post) => ({ slug: post.slug }));
+  const slugs = await getAllPublishedSlugs();
+  return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const post = SAMPLE_BLOG_POSTS.find((p) => p.slug === slug);
+  const { post } = await getBlogBySlug(slug);
   
   if (!post) {
     return { title: "Post Not Found" };
   }
 
   return {
-    title: post.title,
+    title: `${post.title} | TopRank Blog`,
     description: post.excerpt || "Read this article to master your digital growth.",
     openGraph: {
       title: post.title,
       description: post.excerpt || "Read this article to master your digital growth.",
-      images: post.featuredImage ? [{ url: post.featuredImage }] : [],
+      images: post.cover_image ? [{ url: post.cover_image }] : [],
     },
     alternates: {
       canonical: `https://www.toprankindia.com/blog/${slug}`,
@@ -39,34 +43,33 @@ export default async function BlogPostPage({
   params: Promise<{ slug: string }>
 }) {
   const { slug } = await params;
-  const post = SAMPLE_BLOG_POSTS.find((p) => p.slug === slug);
+  const { post, error } = await getBlogBySlug(slug);
 
-  if (!post) {
+  if (!post || error) {
     notFound();
   }
 
-  const relatedPosts = SAMPLE_BLOG_POSTS.filter(
-    (p) => p.id !== post.id && p.categories.some((c) => post.categories.some((pc) => pc.id === c.id))
-  ).slice(0, 3);
+  // Fetch related posts by same category
+  const relatedPosts = (await getRelatedBlogs(post.category, slug, 3)) as RelatedPost[];
 
-  // Generate Table of Contents
+  // Generate Table of Contents from HTML headings
   const headings: HeadingItem[] = [];
   const slugCounts: Record<string, number> = {};
 
-  const processedContent = post.content.replace(
+  const processedContent = (post.content || "").replace(
     /<h([2-3])(.*?)>(.*?)<\/h\1>/gi,
     (match: string, level: string, attrs: string, text: string) => {
-      const cleanText = text.replace(/<[^>]*>?/gm, '');
-      let slug = slugify(cleanText, { lower: true, strict: true }) || `heading-${headings.length}`;
-      if (slugCounts[slug]) {
-        slugCounts[slug]++;
-        slug = `${slug}-${slugCounts[slug]}`;
+      const cleanText = text.replace(/<[^>]*>?/gm, "");
+      let headingSlug = slugify(cleanText, { lower: true, strict: true }) || `heading-${headings.length}`;
+      if (slugCounts[headingSlug]) {
+        slugCounts[headingSlug]++;
+        headingSlug = `${headingSlug}-${slugCounts[headingSlug]}`;
       } else {
-        slugCounts[slug] = 1;
+        slugCounts[headingSlug] = 1;
       }
-      headings.push({ id: slug, text: cleanText, level: parseInt(level) });
-      if (attrs.includes('id=')) return match;
-      return `<h${level}${attrs} id="${slug}">${text}</h${level}>`;
+      headings.push({ id: headingSlug, text: cleanText, level: parseInt(level) });
+      if (attrs.includes("id=")) return match;
+      return `<h${level}${attrs} id="${headingSlug}">${text}</h${level}>`;
     }
   );
 
@@ -82,15 +85,11 @@ export default async function BlogPostPage({
             Back to Journal
           </Link>
           
-          {/* @ts-ignore */}
-          {post.categories && post.categories.length > 0 && (
+          {post.category && (
              <div className="flex items-center gap-3 mb-6">
-                {/* @ts-ignore */}
-                {post.categories.map((cat: any) => (
-                  <Link href={`/category/${cat.slug}`} key={cat.id} className="text-[10px] font-black bg-blue-100 text-blue-700 px-3.5 py-1.5 rounded-full uppercase tracking-widest border border-blue-200 shadow-sm hover:bg-blue-600 hover:text-white transition-colors">
-                    {cat.name}
-                  </Link>
-                ))}
+                <span className="text-[10px] font-black bg-blue-100 text-blue-700 px-3.5 py-1.5 rounded-full uppercase tracking-widest border border-blue-200 shadow-sm">
+                  {post.category}
+                </span>
              </div>
           )}
 
@@ -102,26 +101,33 @@ export default async function BlogPostPage({
              <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-black text-sm shadow-md border-2 border-white ring-2 ring-slate-100">TR</div>
                 <div className="flex flex-col items-start leading-tight">
-                   <span className="text-slate-900">TopRank Content Team</span>
+                   <span className="text-slate-900">{post.author || "TopRank Editorial Team"}</span>
                    <span className="text-[10px] uppercase tracking-wider text-slate-400">Editorial</span>
                 </div>
              </div>
              
              <div className="h-6 w-px bg-slate-200"></div>
              
-             <time dateTime={new Date(post.createdAt).toISOString()} className="flex items-center gap-2 text-slate-600 text-[13px] uppercase tracking-widest">
+             <time dateTime={post.created_at} className="flex items-center gap-2 text-slate-600 text-[13px] uppercase tracking-widest">
               <Calendar className="w-4 h-4 text-blue-500" />
-              {new Intl.DateTimeFormat("en-US", { month: "long", day: "numeric", year: "numeric" }).format(new Date(post.createdAt))}
+              {new Intl.DateTimeFormat("en-US", { month: "long", day: "numeric", year: "numeric" }).format(new Date(post.created_at))}
              </time>
+
+             {post.read_time && (
+               <>
+                 <div className="h-6 w-px bg-slate-200"></div>
+                 <span className="text-slate-500 text-[13px] uppercase tracking-widest">{post.read_time}</span>
+               </>
+             )}
           </div>
         </div>
 
-        {post.featuredImage && (
+        {post.cover_image && (
           <div className="w-full max-w-6xl mx-auto rounded-[2rem] lg:rounded-[3rem] overflow-hidden shadow-2xl shadow-slate-200/50 border border-slate-200/60 aspect-[16/9] lg:aspect-[21/9] relative z-10 bg-slate-100 isolate">
              <div className="absolute inset-0 bg-blue-600/5 mix-blend-multiply z-10 pointer-events-none"></div>
              {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={post.featuredImage}
+              src={post.cover_image}
               alt={post.title}
               className="w-full h-full object-cover transform scale-100 transition-transform duration-[20s] ease-linear hover:scale-105"
               width={1200}
@@ -137,20 +143,22 @@ export default async function BlogPostPage({
           {/* Main Content Column */}
           <div className="flex-1 w-full max-w-3xl mx-auto lg:mx-0 order-1 overflow-hidden min-w-0">
              <div className="bg-white/80 backdrop-blur-3xl rounded-[2rem] p-6 md:p-10 shadow-sm border border-slate-200/50 break-words mb-12">
-                <div
-                  className="blog-content relative max-w-none text-left"
-                  dangerouslySetInnerHTML={{ __html: processedContent }}
-                />
+                {processedContent ? (
+                  <div
+                    className="blog-content relative max-w-none text-left"
+                    dangerouslySetInnerHTML={{ __html: processedContent }}
+                  />
+                ) : (
+                  <p className="text-slate-400 italic">No content available.</p>
+                )}
                 
-                {/* @ts-ignore */}
                 {post.tags && post.tags.length > 0 && (
                    <div className="mt-16 pt-8 border-t border-slate-100 flex flex-wrap items-center gap-3">
                       <span className="text-xs font-black text-slate-400 uppercase tracking-widest mr-2">Tags:</span>
-                      {/* @ts-ignore */}
-                      {post.tags.map((tag: any) => (
-                        <Link href={`/tag/${tag.slug}`} key={tag.id} className="text-[11px] font-bold px-3 py-1.5 bg-slate-50 border border-slate-200 text-slate-600 uppercase tracking-widest rounded-lg hover:bg-slate-100 transition-colors">
-                          #{tag.name}
-                        </Link>
+                      {post.tags.map((tag: string) => (
+                        <span key={tag} className="text-[11px] font-bold px-3 py-1.5 bg-slate-50 border border-slate-200 text-slate-600 uppercase tracking-widest rounded-lg">
+                          #{tag}
+                        </span>
                       ))}
                    </div>
                 )}
@@ -181,7 +189,6 @@ export default async function BlogPostPage({
                {headings.length > 0 && <TableOfContents headings={headings} />}
 
                {/* Related Blogs Widget */}
-               {/* @ts-ignore */}
                <RelatedPosts posts={relatedPosts} />
              </div>
           </aside>
