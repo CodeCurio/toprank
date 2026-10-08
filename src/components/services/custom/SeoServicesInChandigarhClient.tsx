@@ -205,7 +205,7 @@ export function SeoServicesInChandigarhClient() {
             "@type": "LocalBusiness",
             "name": "TopRank Digital Service - SEO Services in Chandigarh",
             "image": "https://www.toprankindia.com/icon.jpg",
-            "telephone": ["+91 91154 39115", "+91 98886 16677"],
+            "telephone": ["+91 93050 30523", "+91 91154 39115"],
             "url": "https://www.toprankindia.com/seo-services-in-chandigarh",
             "address": {
               "@type": "PostalAddress",
@@ -1515,11 +1515,11 @@ export function SeoServicesInChandigarhClient() {
                   Shop No 8, Sector 34B, Chandigarh, 160034
                 </div>
                 <div className="flex flex-wrap gap-4 text-xs font-bold">
+                  <a href="tel:+919305030523" className="inline-flex items-center gap-1.5 text-blue-400 hover:text-blue-300">
+                    <Phone className="w-3.5 h-3.5" /> +91 93050 30523
+                  </a>
                   <a href="tel:+919115439115" className="inline-flex items-center gap-1.5 text-blue-400 hover:text-blue-300">
                     <Phone className="w-3.5 h-3.5" /> +91 91154 39115
-                  </a>
-                  <a href="tel:+919888616677" className="inline-flex items-center gap-1.5 text-blue-400 hover:text-blue-300">
-                    <Phone className="w-3.5 h-3.5" /> +91 98886 16677
                   </a>
                 </div>
               </div>

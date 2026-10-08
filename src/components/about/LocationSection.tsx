@@ -39,7 +39,7 @@ const OFFICE_LOCATIONS: OfficeLocation[] = [
     isHQ: true,
     name: "TopRank HQ — Lucknow",
     address: "A42/32, Sulabh Awas, Sector 01, Gomti Nagar, Lucknow, Uttar Pradesh 226010",
-    phone: "+91 99191 19904",
+    phone: "+91 93050 30523",
     hours: "Mon - Sat: 9:30 AM - 7:30 PM",
     embedUrl:
       "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d225.40266407933288!2d80.9997749234823!3d26.83717480352987!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399be3e41920850b%3A0x46d2900944856043!2sTopRank%20Digital%20Service%20%7C%20Website%20Designer%20%26%20SEO%20Company!5e1!3m2!1sen!2sin!4v1774077241204!5m2!1sen!2sin",
@@ -54,7 +54,7 @@ const OFFICE_LOCATIONS: OfficeLocation[] = [
     isHQ: false,
     name: "Branch Office — Chandigarh",
     address: "Shop No 8, Sector 34B, Chandigarh, 160034",
-    phone: "+91 98886 16677",
+    phone: "+91 93050 30523",
     hours: "Mon - Sat: 9:30 AM - 7:00 PM",
     embedUrl:
       "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d214.36906273567996!2d76.77083449988736!3d30.72107089597058!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390fed78f284b3ff%3A0x6914cb2c221efc85!2sTopRank%20Digital%20Service%20-%20Website%20Designer%20%26%20SEO%20Company!5e0!3m2!1sen!2sin!4v1776942376382!5m2!1sen!2sin",
@@ -69,7 +69,7 @@ const OFFICE_LOCATIONS: OfficeLocation[] = [
     isHQ: false,
     name: "Tech Operations — Mohali",
     address: "Shop No 12, Sector 69, Mohali, Punjab 160069",
-    phone: "+91 98886 16677",
+    phone: "+91 91154 39115",
     hours: "Mon - Sat: 9:30 AM - 7:00 PM",
     embedUrl:
       "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13100.18795423636!2d76.70796437277613!3d30.68211679471311!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390fefc0dd7854f7%3A0xb6fd51bb2dcd4f3a!2sTopRank%20Digital%20Service%20-%20Best%20Website%20Designing%2FSEO%2FDigital%20Marketing%20Company%20in%20Mohali!5e0!3m2!1sen!2sin!4v1787931538019!5m2!1sen!2sin",
@@ -84,7 +84,7 @@ const OFFICE_LOCATIONS: OfficeLocation[] = [
     isHQ: false,
     name: "Regional Office — Gonda",
     address: "Shop No A6, Zila Panchayat Market, Ambedkar Chauraha, Housing Colony, Gonda, Uttar Pradesh 271001",
-    phone: "+91 99191 19904",
+    phone: "+91 91154 39115",
     hours: "Mon - Sat: 10:00 AM - 6:30 PM",
     embedUrl:
       "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1775.4129477835843!2d81.9408255815506!3d27.13029324754563!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3999f3f944b9113f%3A0xdf48fbededaeab98!2sTopRank%20Digital%20Service!5e0!3m2!1sen!2sin!4v1776942238764!5m2!1sen!2sin",
@@ -119,6 +119,36 @@ export function LocationSection() {
 
   return (
     <section className="py-20 lg:py-28 bg-gradient-to-b from-white via-slate-50/50 to-white relative border-t border-slate-100 overflow-hidden">
+      {/* Schema Markup for Physical Locations */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@graph": OFFICE_LOCATIONS.map((loc) => ({
+              "@type": "LocalBusiness",
+              "@id": `https://www.toprankindia.com/about#${loc.id}`,
+              "name": `TopRank Digital Service - ${loc.city}`,
+              "description": `${loc.type} of TopRank Digital Service in ${loc.city}, ${loc.state}`,
+              "url": "https://www.toprankindia.com/about",
+              "telephone": loc.phone,
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": loc.address,
+                "addressLocality": loc.city,
+                "addressRegion": loc.state,
+                "addressCountry": "IN",
+              },
+              "parentOrganization": {
+                "@type": "Organization",
+                "name": "TopRank Digital Service",
+                "url": "https://www.toprankindia.com",
+                "telephone": ["+91 93050 30523", "+91 91154 39115"]
+              }
+            }))
+          })
+        }}
+      />
       
       {/* Background Decorative Blur */}
       <div className="absolute top-1/4 -left-40 w-96 h-96 bg-rose-500/5 blur-[120px] rounded-full pointer-events-none" />

@@ -205,7 +205,7 @@ export function SeoServicesInMohaliClient() {
             "@type": "LocalBusiness",
             "name": "TopRank Digital Service - SEO Services in Mohali",
             "image": "https://www.toprankindia.com/icon.jpg",
-            "telephone": ["+91 91154 39115", "+91 98886 16677"],
+            "telephone": ["+91 91154 39115", "+91 93050 30523"],
             "url": "https://www.toprankindia.com/seo-services-in-mohali",
             "address": {
               "@type": "PostalAddress",
@@ -1518,8 +1518,8 @@ export function SeoServicesInMohaliClient() {
                   <a href="tel:+919115439115" className="inline-flex items-center gap-1.5 text-blue-400 hover:text-blue-300">
                     <Phone className="w-3.5 h-3.5" /> +91 91154 39115
                   </a>
-                  <a href="tel:+919888616677" className="inline-flex items-center gap-1.5 text-blue-400 hover:text-blue-300">
-                    <Phone className="w-3.5 h-3.5" /> +91 98886 16677
+                  <a href="tel:+919305030523" className="inline-flex items-center gap-1.5 text-blue-400 hover:text-blue-300">
+                    <Phone className="w-3.5 h-3.5" /> +91 93050 30523
                   </a>
                 </div>
               </div>

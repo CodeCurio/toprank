@@ -1516,11 +1516,11 @@ export function SeoServicesInLucknowClient() {
                   A42/32, Sulabh Awas, Sector 01, Gomti Nagar, Lucknow, UP 226010
                 </div>
                 <div className="flex flex-wrap gap-4 text-xs font-bold">
-                  <a href="tel:+919115439115" className="inline-flex items-center gap-1.5 text-blue-400 hover:text-blue-300">
-                    <Phone className="w-3.5 h-3.5" /> +91 91154 39115
-                  </a>
                   <a href="tel:+919305030523" className="inline-flex items-center gap-1.5 text-blue-400 hover:text-blue-300">
                     <Phone className="w-3.5 h-3.5" /> +91 93050 30523
+                  </a>
+                  <a href="tel:+919115439115" className="inline-flex items-center gap-1.5 text-blue-400 hover:text-blue-300">
+                    <Phone className="w-3.5 h-3.5" /> +91 91154 39115
                   </a>
                 </div>
               </div>

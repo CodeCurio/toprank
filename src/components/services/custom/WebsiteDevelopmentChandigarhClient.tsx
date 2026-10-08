@@ -102,7 +102,7 @@ export function WebsiteDevelopmentChandigarhClient() {
             "name": "TopRank Digital Service - Website Development Company in Chandigarh",
             "image": "https://www.toprankindia.com/icon.jpg",
             "url": "https://www.toprankindia.com/services/website-development-chandigarh",
-            "telephone": "+919115439115",
+            "telephone": ["+91 93050 30523", "+91 91154 39115"],
             "priceRange": "₹18,000 - ₹85,000",
             "address": {
               "@type": "PostalAddress",
@@ -206,10 +206,10 @@ export function WebsiteDevelopmentChandigarhClient() {
                 <Sparkles className="w-4 h-4 fill-white" /> Get Free Website Quote
               </a>
               <a 
-                href="tel:+919115439115" 
+                href="tel:+919305030523" 
                 className="w-full sm:w-auto px-6 sm:px-9 py-3.5 sm:py-4 rounded-xl sm:rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white font-black text-xs sm:text-sm uppercase tracking-wider sm:tracking-widest transition-all backdrop-blur-md flex items-center justify-center gap-2"
               >
-                <Phone className="w-4 h-4 text-blue-400" /> Call: +91 91154 39115
+                <Phone className="w-4 h-4 text-blue-400" /> Call: +91 93050 30523
               </a>
             </motion.div>
 
